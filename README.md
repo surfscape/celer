@@ -1,2 +1,2 @@
-# celer
-The advanced toolbox for Windows 10/11
+# Celer
+> The advanced toolbox for Windows 10/11
