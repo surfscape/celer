@@ -47,5 +47,6 @@ namespace Celer.Views.Windows
                 }
             }
         }
+ 
     }
 }

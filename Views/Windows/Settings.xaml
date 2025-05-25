@@ -91,15 +91,13 @@
                         </Grid>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Limpeza">
+                <TabItem>
+                    <TabItem.Header>
+                        <local:TabHeaderData Title="Limpeza" Icon="Trash2" />
+                    </TabItem.Header>
                     <StackPanel>
                         <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
-                            <TextBlock Margin="0,0,12,0" VerticalAlignment="Center">Preset padrão</TextBlock>
-                            <ComboBox Width="200">
-                                <ComboBoxItem Content="Rápido" IsSelected="True" />
-                                <ComboBoxItem Content="Avançado" />
-                                <ComboBoxItem Content="Customizado" />
-                            </ComboBox>
+                            <CheckBox Content="Ativar exportação do log de limpeza" IsChecked="{Binding EnableExportCleaningLog}" />
                         </StackPanel>
                         <TextBlock Style="{DynamicResource Heading2}">
                             Avançadas
@@ -115,26 +113,22 @@
                                     Kind="CircleHelp"
                                     ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
                             </StackPanel>
-                            <GroupBox Margin="0,15,0,0" Header="Caminhos">
+                            <GroupBox Margin="0,15,0,0" Header="Caminhos" SnapsToDevicePixels="True" UseLayoutRounding="True">
                                 <StackPanel>
                                     <ListBox
                                         x:Name="pathsListBox"
                                         Height="100"
                                         ItemsSource="{Binding Paths}" />
                                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                        <TextBox Width="250" Text="{Binding NewPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button
-                                            Margin="5,0,0,0"
-                                            Padding="5"
-                                            Command="{Binding AddPathCommand}"
-                                            Content="Add" />
+                                            Margin="0,0,8,0"
+                                            Command="{Binding PickAndAddPathCommand}"
+                                            Content="Procurar e Adicionar Pasta" />
+                                        <Button
+                                            Command="{Binding RemovePathCommand}"
+                                            CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"
+                                            Content="Remover caminho selecionado" />
                                     </StackPanel>
-                                    <Button
-                                        Margin="0,5,0,0"
-                                        Padding="5"
-                                        Command="{Binding RemovePathCommand}"
-                                        CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"
-                                        Content="Remove Selected" />
                                 </StackPanel>
                             </GroupBox>
                         </StackPanel>

@@ -19,6 +19,7 @@ namespace Celer.ViewModels
         private bool _initialEnableRounding;
         private string _initialCurrentTheme = string.Empty;
         private List<string> _initialPaths = [];
+        private bool _initialEnableExportCleaningLog;
 
         /// <summary>
         /// Varibles that will be binded to the view
@@ -42,9 +43,15 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private string trackProcess = MainConfiguration.Default.ALERTS_TrackProcess ?? string.Empty;
         partial void OnTrackProcessChanged(string value) => CheckForUnsavedChanges();
-
         public bool AreInnerAlertsEnabled => EnableAlerts != false;
         public bool IsProcessTrackingTextBoxEnabled => AreInnerAlertsEnabled && EnableAlertTrackProcess;
+
+        /// <summary>
+        /// Clean Engine preferences
+        /// </summary>
+        [ObservableProperty]
+        private bool enableExportCleaningLog = MainConfiguration.Default.CLEANENGINE_ExportLog;
+        partial void OnEnableExportCleaningLogChanged(bool value) => CheckForUnsavedChanges();
 
         public bool? EnableAlerts
         {
@@ -113,6 +120,7 @@ namespace Celer.ViewModels
             _initialEnableRounding = EnableRounding;
             _initialCurrentTheme = CurrentTheme;
             _initialPaths = [.. Paths];
+            _initialEnableExportCleaningLog = EnableExportCleaningLog;
         }
 
         private void OnPathsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -127,7 +135,7 @@ namespace Celer.ViewModels
                            EnableAlertTrackProcess != _initialEnableAlertTrackProcess ||
                            !string.Equals(TrackProcess, _initialTrackProcess, System.StringComparison.Ordinal) ||
                            EnableRounding != _initialEnableRounding ||
-                           !string.Equals(CurrentTheme, _initialCurrentTheme, System.StringComparison.Ordinal);
+                           !string.Equals(CurrentTheme, _initialCurrentTheme, System.StringComparison.Ordinal) || enableExportCleaningLog != _initialEnableExportCleaningLog;
 
             if (!changed)
             {
@@ -260,15 +268,23 @@ namespace Celer.ViewModels
             return true;
         }
 
+
         [RelayCommand]
-        private void AddPath()
+        private void PickAndAddPath()
         {
-            if (!string.IsNullOrWhiteSpace(NewPath) && !Paths.Contains(NewPath))
+            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog
             {
-                Paths.Add(NewPath);
-                NewPath = string.Empty;
+                Description = "Escolha uma pasta para adicionar.",
+                UseDescriptionForTitle = true,
+                ShowNewFolderButton = true
+            };
+
+            if (dialog.ShowDialog() == true && !Paths.Contains(dialog.SelectedPath))
+            {
+                Paths.Add(dialog.SelectedPath);
             }
         }
+
 
         [RelayCommand]
         private void RemovePath(string? pathToRemove)
@@ -277,6 +293,6 @@ namespace Celer.ViewModels
             {
                 Paths.Remove(pathToRemove);
             }
-        }
+        }   
     }
 }

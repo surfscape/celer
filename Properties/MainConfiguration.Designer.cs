@@ -141,5 +141,17 @@ namespace Celer.Properties {
                 this["DISKS_ShowHiddenDrives"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CLEANENGINE_ExportLog {
+            get {
+                return ((bool)(this["CLEANENGINE_ExportLog"]));
+            }
+            set {
+                this["CLEANENGINE_ExportLog"] = value;
+            }
+        }
     }
 }

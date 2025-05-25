@@ -2,20 +2,91 @@
     x:Class="Celer.Views.UserControls.MainApp.Limpeza"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CleanEngine}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
+    </UserControl.Resources>
     <Border Padding="12,6">
-        <Border
-            Margin="0,0,0,6"
-            Padding="0,0,0,6"
-            BorderBrush="Gray"
-            BorderThickness="0,0,0,1">
-            <StackPanel>
-                <TextBlock Style="{StaticResource Heading1}">Limpeza</TextBlock>
-                <TextBlock Style="{StaticResource Subheading}">Limpe ficheiros desnecessários, lixo, e otimize base de dados de aplicações</TextBlock>
-            </StackPanel>
-        </Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border
+                Margin="0,0,0,6"
+                Padding="0,0,0,6"
+                BorderBrush="Gray"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Heading1}">Limpeza</TextBlock>
+                    <TextBlock Style="{StaticResource Subheading}">Limpe ficheiros desnecessários, lixo, e otimize base de dados de aplicações</TextBlock>
+                </StackPanel>
+            </Border>
+            <Grid Grid.Row="1" Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0">
+                    <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
+                        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Categories}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander
+                                            Margin="0,0,0,10"
+                                            Header="{Binding Name}"
+                                            IsExpanded="True">
+
+
+                                            <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding Items}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel Margin="5">
+                                                            <CheckBox
+                                                                VerticalAlignment="Center"
+                                                                Content="{Binding Name}"
+                                                                IsChecked="{Binding IsChecked}" />
+
+                                                        </DockPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </DockPanel>
+                <DockPanel Grid.Column="1" Margin="10,0,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            Margin="0,0,0,5"
+                            Style="{DynamicResource Heading2}"
+                            Text="Registo" />
+                        <ScrollViewer Height="300" VerticalScrollBarVisibility="Auto">
+                            <TextBlock Text="{Binding LogText}" TextWrapping="Wrap" />
+                        </ScrollViewer>
+                        <TextBlock
+                            Margin="0,10,0,10"
+                            FontWeight="Bold"
+                            Text="{Binding TotalFreedText, Converter={StaticResource MemorySizeConverter}, StringFormat=Espaço libertado: {0}}" />
+                        <Button
+                            Width="100"
+                            Command="{Binding CleanCommand}"
+                            Content="Começar"
+                            IsEnabled="{Binding CanClean}" />
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+        </Grid>
     </Border>
 </UserControl>
