@@ -36,5 +36,8 @@ namespace Celer.ViewModels
 
         [RelayCommand]
         public void Navigate(string viewName) => NavigateTo(viewName);
+
+        [RelayCommand]
+        public void BackToMain() => NavigateTo("Main");
     }
 }

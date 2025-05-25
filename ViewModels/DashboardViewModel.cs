@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Windows.Threading;
+
 namespace Celer.ViewModels;
 public partial class DashboardViewModel : ObservableObject
 {
