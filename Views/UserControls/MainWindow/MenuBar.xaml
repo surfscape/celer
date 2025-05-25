@@ -46,11 +46,9 @@
                                             <Style TargetType="ContentPresenter">
                                                 <Setter Property="Visibility" Value="Visible" />
                                                 <Style.Triggers>
-                                                    <!--  Hide the icon if IsCheckable is true  -->
                                                     <DataTrigger Binding="{Binding IsCheckable, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
-                                                    <!--  Hide the icon if it is not set  -->
                                                     <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
@@ -73,7 +71,6 @@
                                 PopupAnimation="Fade">
                                 <Border
                                     Padding="0"
-                                    Background="{DynamicResource WindowBackground}"
                                     BorderBrush="#404040"
                                     BorderThickness="1"
                                     SnapsToDevicePixels="True">
@@ -125,7 +122,7 @@
             </MenuItem>
             <MenuItem Click="CloseApp_Click" Header="_Sair" />
         </MenuItem>
-        <MenuItem Header="_Vista">
+        <MenuItem x:Name="NavigationMenu" Header="_Vista">
             <MenuItem Header="_Estado" />
             <MenuItem Header="_Limpeza" />
             <MenuItem Header="_Otimização" />
@@ -140,12 +137,8 @@
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="MonitorCheck" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="_Atualizar Definições">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="DatabaseBackup" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="_Verificar Atualizações">
+
+            <MenuItem Click="CheckUpdates_Click" Header="_Verificar Atualizações">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="RefreshCw" />
                 </MenuItem.Icon>
@@ -155,7 +148,7 @@
                 x:Name="EnableSchoolFeatureCheckbox"
                 Header="_Ativar Ferramentas Escolares"
                 IsCheckable="True"
-                IsChecked="{Binding schoolFeatureCheckStatus}" />
+                IsChecked="{Binding SchoolFeatureCheckStatus}" />
         </MenuItem>
         <MenuItem Header="_Avançado">
             <MenuItem Header="_Gestão de Software">
