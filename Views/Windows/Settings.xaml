@@ -7,16 +7,17 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:Celer.ViewModels" d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
-    mc:Ignorable="d"
+    xmlns:vm="clr-namespace:Celer.ViewModels"
     Title="Definições"
     Width="860"
     Height="550"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    Closing="Window_Closing"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     Style="{StaticResource {x:Type Window}}"
     WindowStartupLocation="CenterOwner"
-    Closing="Window_Closing">
+    mc:Ignorable="d">
     <Window.Resources>
         <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
     </Window.Resources>
@@ -29,19 +30,30 @@
             </Grid.RowDefinitions>
             <TextBlock
                 Grid.Row="0"
-                Margin="0,0,0,6"
                 Style="{StaticResource Heading1}">
                 Definições
             </TextBlock>
-            <TabControl Grid.Row="1" Style="{StaticResource CelerSmallStripTab}">
-                <TabItem Header="Geral">
+            <TabControl Grid.Row="1" Style="{StaticResource CelerStripTab}" Margin="0">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type iconPacks:PackIconLucide}">
+                        <Setter Property="Margin" Value="0,0,8,0" />
+                        <Setter Property="Width" Value="14" />
+                        <Setter Property="Height" Value="14" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
+                    </Style>
+                </TabControl.Resources>
+                <TabItem>
+                    <TabItem.Header>
+                        <local:TabHeaderData Title="Geral" Icon="Settings" />
+                    </TabItem.Header>
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border Padding="0,0,10,0">
+                            <Border Padding="0,8,0,0">
                                 <StackPanel Grid.Column="0">
                                     <TextBlock Style="{DynamicResource Heading2}">
                                         Visualização e Aparência
@@ -134,27 +146,20 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Otimização">
+                <TabItem>
+                    <TabItem.Header>
+                        <local:TabHeaderData Title="Avançado" Icon="Settings" />
+                    </TabItem.Header>
                     <StackPanel>
-                       
+                        <TextBlock>
+                            Test
+                        </TextBlock>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Manutenção e Reparação">
-                    <StackPanel>
-
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="Privacidade e Segurança">
-                    <StackPanel>
-
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="Avançado">
-                    <StackPanel>
-
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="Experimental">
+                <TabItem>
+                    <TabItem.Header>
+                        <local:TabHeaderData Title="Experimentos" Icon="FlaskConical" />
+                    </TabItem.Header>
                     <StackPanel>
                         <TextBlock Style="{DynamicResource Heading1}">Funções experimentais</TextBlock>
                         <TextBlock Foreground="#ff7070" TextWrapping="Wrap">Esta secção contem configurações que não devem ser utilizadas no dia-a-dia já que as mesmas estão em fase de testes e podem deteriorar a experiência da aplicação!</TextBlock>
@@ -186,10 +191,28 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                <Button Content="OK" Command="{Binding OkCommand}" Margin="0,0,5,0" Width="85" Padding="5" />
-                <Button Content="Cancelar" Command="{Binding CancelCommand}" Margin="0,0,5,0" Width="85" Padding="5" />
-                <Button Content="Aplicar" Command="{Binding ApplyCommand}" Width="85" Padding="5" />
+            <StackPanel
+                Grid.Row="2"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Width="85"
+                    Margin="0,0,5,0"
+                    Padding="5"
+                    Command="{Binding OkCommand}"
+                    Content="OK" />
+                <Button
+                    Width="85"
+                    Margin="0,0,5,0"
+                    Padding="5"
+                    Command="{Binding CancelCommand}"
+                    Content="Cancelar" />
+                <Button
+                    Width="85"
+                    Padding="5"
+                    Command="{Binding ApplyCommand}"
+                    Content="Aplicar" />
             </StackPanel>
         </Grid>
     </Border>
