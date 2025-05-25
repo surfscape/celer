@@ -26,6 +26,11 @@ namespace Celer.Views.UserControls.MainWindow
             OpenWindow<AmbientChecker>();
         }
 
+        private void CheckUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow<SurfScapeGateway>();
+        }
+
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow<Settings>();

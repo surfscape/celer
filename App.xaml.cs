@@ -1,4 +1,5 @@
 ﻿using Celer.Views.Windows;
+using Celer.Views.Windows.Utils;
 using System.Windows;
 
 namespace Celer;
@@ -16,6 +17,8 @@ public partial class App : Application
         if (!onboarding)
         {
             MainWindow mainWindow = new();
+            SurfScapeGateway surfScapeGateway = new();
+            surfScapeGateway.ShowDialog();
             mainWindow.Show();
         }
         else
