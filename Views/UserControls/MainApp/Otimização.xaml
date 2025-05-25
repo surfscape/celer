@@ -1,0 +1,87 @@
+﻿<UserControl
+    x:Class="Celer.Views.UserControls.MainApp.Otimização"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Padding="12,6">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border
+                Margin="0,0,0,6"
+                Padding="0,0,0,6"
+                BorderBrush="Gray"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Heading1}">Otimização</TextBlock>
+                    <TextBlock Style="{StaticResource Subheading}">Ferramentas para ajudar a melhorar a performance do sistema</TextBlock>
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Row="1">
+                <UniformGrid Margin="-10,-5,0,0">
+                    <UniformGrid.Resources>
+                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                            <Setter Property="Margin" Value="10,10,0,0" />
+                            <Setter Property="Padding" Value="12" />
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="VerticalContentAlignment" Value="Top" />
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button>
+                        <StackPanel>
+                            <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                <iconPacks:PackIconLucide
+                                    Width="20"
+                                    Height="20"
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="MemoryStick" />
+                                <TextBlock FontSize="18" Foreground="white">Gestor de Memória</TextBlock>
+                            </StackPanel>
+                            <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button>
+                        <StackPanel>
+                            <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                <iconPacks:PackIconLucide
+                                    Width="20"
+                                    Height="20"
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="ChartSpline" />
+                                <TextBlock FontSize="18" Foreground="white">Gestor de Arranque</TextBlock>
+                            </StackPanel>
+                            <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button>
+                        <StackPanel>
+                            <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                <iconPacks:PackIconBootstrapIcons
+                                    Width="20"
+                                    Height="20"
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="GpuCard" />
+                                <TextBlock FontSize="18" Foreground="white">Gestor Gráfico</TextBlock>
+                            </StackPanel>
+                            <TextBlock TextWrapping="Wrap">Configurações do adaptador gráfico e do gestor de janelas do Windows</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </UniformGrid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

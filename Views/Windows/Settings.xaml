@@ -1,0 +1,203 @@
+﻿<Window
+    x:Class="Celer.Views.Windows.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Celer.ViewModels" d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    mc:Ignorable="d"
+    Title="Definições"
+    Width="860"
+    Height="550"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Style="{StaticResource {x:Type Window}}"
+    WindowStartupLocation="CenterOwner"
+    Closing="Window_Closing">
+    <Window.Resources>
+        <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
+    </Window.Resources>
+    <Border Padding="12,6,12,12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,6"
+                Style="{StaticResource Heading1}">
+                Definições
+            </TextBlock>
+            <TabControl Grid.Row="1" Style="{StaticResource CelerSmallStripTab}">
+                <TabItem Header="Geral">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Padding="0,0,10,0">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Style="{DynamicResource Heading2}">
+                                        Visualização e Aparência
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="Tema:" />
+                                        <ComboBox
+                                            Margin="5,0,0,0"
+                                            Padding="6,2,6,4"
+                                            ItemsSource="{Binding ComboOptions}"
+                                            SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,10,0,0" Style="{DynamicResource Heading2}">
+                                        Alertas
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap">Mostra alertas na dashboard quando algum componente do PC atinge um limite definido</TextBlock>
+                                    <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                                        <CheckBox
+                                            Content="Ativar alertas"
+                                            IsChecked="{Binding EnableAlerts, Mode=TwoWay}"
+                                            IsThreeState="True" />
+                                        <StackPanel Margin="20,4">
+                                            <CheckBox
+                                                Content="Ativar monitorização de CPU"
+                                                IsChecked="{Binding EnableAlertCPUTracking, Mode=TwoWay}"
+                                                IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <CheckBox
+                                                Content="Ativar monitorização de memória"
+                                                IsChecked="{Binding EnableAlertMemoryTracking, Mode=TwoWay}"
+                                                IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <CheckBox
+                                                Content="Ativar monitorização de processo"
+                                                IsChecked="{Binding EnableAlertTrackProcess, Mode=TwoWay}"
+                                                IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <Label
+                                                Padding="0"
+                                                Content="Process to track:"
+                                                IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}" />
+                                            <TextBox
+                                                IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}"
+                                                Text="{Binding TrackProcess, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                ToolTip="Enable 'Ativar monitorização de processo' to track a process." />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Limpeza">
+                    <StackPanel>
+                        <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" VerticalAlignment="Center">Preset padrão</TextBlock>
+                            <ComboBox Width="200">
+                                <ComboBoxItem Content="Rápido" IsSelected="True" />
+                                <ComboBoxItem Content="Avançado" />
+                                <ComboBoxItem Content="Customizado" />
+                            </ComboBox>
+                        </StackPanel>
+                        <TextBlock Style="{DynamicResource Heading2}">
+                            Avançadas
+                        </TextBlock>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label>Localização das assinaturas</Label>
+                                <iconPacks:PackIconLucide
+                                    Width="15"
+                                    Height="15"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="CircleHelp"
+                                    ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
+                            </StackPanel>
+                            <GroupBox Margin="0,15,0,0" Header="Caminhos">
+                                <StackPanel>
+                                    <ListBox
+                                        x:Name="pathsListBox"
+                                        Height="100"
+                                        ItemsSource="{Binding Paths}" />
+                                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                        <TextBox Width="250" Text="{Binding NewPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button
+                                            Margin="5,0,0,0"
+                                            Padding="5"
+                                            Command="{Binding AddPathCommand}"
+                                            Content="Add" />
+                                    </StackPanel>
+                                    <Button
+                                        Margin="0,5,0,0"
+                                        Padding="5"
+                                        Command="{Binding RemovePathCommand}"
+                                        CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"
+                                        Content="Remove Selected" />
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Otimização">
+                    <StackPanel>
+                       
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Manutenção e Reparação">
+                    <StackPanel>
+
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Privacidade e Segurança">
+                    <StackPanel>
+
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Avançado">
+                    <StackPanel>
+
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Experimental">
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource Heading1}">Funções experimentais</TextBlock>
+                        <TextBlock Foreground="#ff7070" TextWrapping="Wrap">Esta secção contem configurações que não devem ser utilizadas no dia-a-dia já que as mesmas estão em fase de testes e podem deteriorar a experiência da aplicação!</TextBlock>
+                        <Border
+                            Padding="8"
+                            BorderBrush="Gray"
+                            BorderThickness="1">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Margin" Value="0,0,0,16" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <StackPanel>
+                                    <WrapPanel>
+                                        <CheckBox Content="Ativar Sandboxing" />
+                                    </WrapPanel>
+                                    <TextBlock TextWrapping="Wrap">Ativa a funcionalidade de executar aplicações num espaço seguro. Se ativado a opção 'Sandbox' irá aparecer na secção 'Privacidade e Segurança'</TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,0">
+                                    <WrapPanel>
+                                        <CheckBox Content="Ativar Sandboxing" />
+                                    </WrapPanel>
+                                    <TextBlock TextWrapping="Wrap">Ativa a funcionalidade de executar aplicações num espaço seguro. Se ativado a opção 'Sandbox' irá aparecer na secção 'Privacidade e Segurança'</TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="OK" Command="{Binding OkCommand}" Margin="0,0,5,0" Width="85" Padding="5" />
+                <Button Content="Cancelar" Command="{Binding CancelCommand}" Margin="0,0,5,0" Width="85" Padding="5" />
+                <Button Content="Aplicar" Command="{Binding ApplyCommand}" Width="85" Padding="5" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
+

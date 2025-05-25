@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="ContainerBackground">#252525</Color>
+    <Color x:Key="StrongText">White</Color>
+    <Color x:Key="DefaultText">#cecece</Color>
+
+
+    <SolidColorBrush x:Key="AppBackground" Color="#191A1A" />
+    <SolidColorBrush x:Key="Primary" Color="#99cfff" />
+    <SolidColorBrush x:Key="Border" Color="#3d4043" />
+    <SolidColorBrush x:Key="ActiveContainer" Color="#132839"></SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryText" Color="{StaticResource StrongText}" />
+    <SolidColorBrush x:Key="SecondaryText" Color="{StaticResource DefaultText}" />
+</ResourceDictionary>

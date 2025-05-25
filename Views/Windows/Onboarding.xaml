@@ -1,0 +1,78 @@
+﻿<Window
+    x:Class="Celer.Views.Windows.Onboarding"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Bem-vindo ao Celer!"
+    Width="800"
+    Height="450"
+    Icon="/celer_icon.ico"
+    ResizeMode="NoResize"
+    Style="{StaticResource {x:Type Window}}"
+    WindowStartupLocation="CenterScreen">
+    <Border BorderBrush="Gray" BorderThickness="0,1,0,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                Padding="12"
+                BorderBrush="Gray"
+                BorderThickness="0,0,1,0">
+                <StackPanel>
+                    <Image Width="124" Source="/Resources/Assets/celer_logo.png" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Padding="12">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Margin" Value="0,0,0,8" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Style="{StaticResource Heading1}">Bem-vindo ao Celer!</TextBlock>
+                    <TextBlock
+                        Style="{StaticResource Subheading}"
+                        TextWrapping="Wrap"
+                        UseLayoutRounding="False">
+                        Celer é o teu canivete suíço para Windows que te ajuda a ter o controle do teu sistema, outra vez.
+                    </TextBlock>
+                    <TextBlock>Antes de começar a utilizar a aplicação, por-favor leia e aceite os nossos Termos de Serviço.</TextBlock>
+                    <Border
+                        Margin="0,8"
+                        BorderBrush="Gray"
+                        BorderThickness="1">
+                        <ScrollViewer>
+                            <TextBlock>
+                                CELER TERMOS DE SERVIÇO - 22/04/2025<LineBreak />
+                                Celer é uma aplicação para Windows desenvolvida e distribuída pelo projeto SurfScape.</TextBlock>
+                        </ScrollViewer>
+                    </Border>
+                    <CheckBox>
+                        <TextBlock>
+                            Li e aceito os Termos de Serviço e a&#160;<Hyperlink NavigateUri="https://surfscape.neocities.org/celer/end-user/privacidade" RequestNavigate="Hyperlink_RequestNavigate">Política de Privacidade</Hyperlink> </TextBlock>
+                    </CheckBox>
+                    <CheckBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Permitir que o Celer execute no fundo</TextBlock>
+                            <iconPacks:PackIconLucide
+                                Width="15"
+                                Height="15"
+                                Margin="8,0,0,0"
+                                Foreground="#7575ff"
+                                Kind="BadgeHelp"
+                                ToolTip="Ao ativar esta opção o Celer ira ficar a executar no background quando ligar o Windows ou quando fechar o programa." />
+                        </StackPanel>
+
+                    </CheckBox>
+                    <Button>Iniciar</Button>
+                </StackPanel>
+
+            </Border>
+        </Grid>
+    </Border>
+</Window>
