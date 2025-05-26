@@ -49,7 +49,7 @@
                         <TabItem.Header>
                             <local:TabHeaderData Title="Otimização" Icon="Rocket" />
                         </TabItem.Header>
-                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding OtimizaoControl}" />
+                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding OtimizacaoControl}" />
                     </TabItem>
                     <TabItem x:Name="Manutencao">
                         <TabItem.Header>
