@@ -11,7 +11,7 @@ using System.Management;
 using System.Windows.Threading;
 
 namespace Celer.ViewModels;
-public partial class DashboardViewModel : ObservableObject
+public partial class DashboardViewModel : ObservableObject, ITabLifecycle
 {
     private readonly DispatcherTimer _timer;
     private readonly PerformanceCounter _cpuCounter;
@@ -40,7 +40,6 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<DiskInformation> diskData = [];
 
-
     /// <summary>
     /// CPU Data
     /// </summary>
@@ -48,7 +47,6 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private double cpuClockSpeed;
     [ObservableProperty] private int processCount;
     [ObservableProperty] private int threadCount;
-
 
     /// <summary>
     /// GPU Data
@@ -59,6 +57,16 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private string gpuDirectXVersion = "Not Supported";
     [ObservableProperty] private string gpuFeatureLevel = "Unavailable";
     [ObservableProperty] private float gpuGeneralUsage;
+
+    public void OnActivated()
+    {
+        _timer?.Start();
+    }
+
+    public void OnDeactivated()
+    {
+        _timer?.Stop();
+    }
 
     public DashboardViewModel(NavigationService navigationService)
     {
@@ -120,7 +128,7 @@ public partial class DashboardViewModel : ObservableObject
             if (activeGpu != null)
             {
                 GpuName = activeGpu["Name"]?.ToString();
-                GpuVendor = activeGpu["AdapterCompatibility"]?.ToString();
+                GpuVendor = activeGpu["AdapterCompatibility"].ToString();
                 GpuDriverVersion = activeGpu["DriverVersion"]?.ToString();
             }
 
