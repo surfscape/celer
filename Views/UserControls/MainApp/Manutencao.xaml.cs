@@ -1,18 +1,19 @@
 ﻿using Celer.ViewModels;
 using System.Windows.Controls;
 
-
 namespace Celer.Views.UserControls.MainApp
 {
     /// <summary>
     /// Interaction logic for Manutenção.xaml
     /// </summary>
-    public partial class Manutenção : UserControl
+    public partial class Manutencao : UserControl
     {
-        public Manutenção()
+        private readonly ManutencaoViewModel _viewModel;
+        public Manutencao(ManutencaoViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new ManutencaoViewModel();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

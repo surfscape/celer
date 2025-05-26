@@ -1,5 +1,6 @@
 ﻿using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Celer.Views.UserControls.MainApp.SubManutencao;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
 
@@ -7,18 +8,25 @@ namespace Celer.ViewModels
 {
     public partial class ManutencaoViewModel : ObservableObject
     {
-        private readonly Dictionary<string, UserControl> _views = new()
-        {
-            { "BatteryManagement", new Views.UserControls.MainApp.SubManutencao.Battery() },
-        };
+        private readonly Dictionary<string, UserControl> _views;
 
         [ObservableProperty]
         private UserControl currentView;
 
-        public ManutencaoViewModel()
+
+        private readonly NavigationService _navigationService;
+        public ManutencaoViewModel(NavigationService navigationService, Battery batterView)
         {
+            _navigationService = navigationService;
+            _navigationService.Register("Manutencao", NavigateTo);
+
+            _views = new Dictionary<string, UserControl>
+            {
+                { "Battery", batterView },
+            };
+
+
             CurrentView = null;
-            NavigationService.Register("Manutencao", NavigateTo);
         }
         public void NavigateTo(string viewName)
         {

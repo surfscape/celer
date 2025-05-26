@@ -16,6 +16,7 @@ public partial class DashboardViewModel : ObservableObject
     private readonly DispatcherTimer _timer;
     private readonly PerformanceCounter _cpuCounter;
     private readonly PerformanceCounter _availableMemoryCounter;
+    private readonly NavigationService _navigationService;
 
     [ObservableProperty]
     private string windowsVersion;
@@ -59,7 +60,7 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private string gpuFeatureLevel = "Unavailable";
     [ObservableProperty] private float gpuGeneralUsage;
 
-    public DashboardViewModel()
+    public DashboardViewModel(NavigationService navigationService)
     {
         _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
@@ -74,6 +75,7 @@ public partial class DashboardViewModel : ObservableObject
         LoadCpuInfo();
         LoadGpuInfo();
 
+        _navigationService = navigationService;
 
         _timer = new DispatcherTimer
         {
@@ -311,8 +313,8 @@ public partial class DashboardViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private static void NavigateToOptimization(string view)
+    private void NavigateToOptimization(string view)
     {
-        NavigationService.Navigate("Otimizacao", view);
+        _navigationService.Navigate("Otimizacao", view);
     }
 }

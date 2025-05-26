@@ -8,10 +8,12 @@ namespace Celer.Views.UserControls.MainApp
     /// </summary>
     public partial class Dashboard : UserControl
     {
-        public Dashboard()
+        private readonly DashboardViewModel _viewModel;
+        public Dashboard(DashboardViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new DashboardViewModel();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

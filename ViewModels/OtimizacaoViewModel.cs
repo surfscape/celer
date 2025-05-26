@@ -1,4 +1,5 @@
 ﻿using Celer.Services;
+using Celer.Views.UserControls.MainApp.SubOtimização;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
@@ -7,25 +8,33 @@ namespace Celer.ViewModels
 {
     public partial class OtimizacaoViewModel : ObservableObject
     {
-        private readonly Dictionary<string, UserControl> _views = new()
-        {
-            { "Main", new Views.UserControls.MainApp.Otimização() },
-            { "MemoryManager", new Views.UserControls.MainApp.SubOtimização.MemoryManagement() },
-        };
+        private readonly Dictionary<string, UserControl> _views;
 
         [ObservableProperty]
-        private UserControl currentView;
+        private UserControl? currentView;
 
-        public OtimizacaoViewModel()
+        private readonly NavigationService _navigationService;
+
+        public OtimizacaoViewModel(NavigationService navigationService, MemoryManagement memoryView)
         {
-            CurrentView = _views["Main"];
-            NavigationService.Register("Otimizacao", NavigateTo);
+            _navigationService = navigationService;
+            _navigationService.Register("Otimizacao", NavigateTo);
+
+            _views = new Dictionary<string, UserControl>
+            {
+                { "Memory", memoryView }
+            };
+
+            CurrentView = null;
         }
 
         public void NavigateTo(string viewName)
         {
-            if (string.IsNullOrEmpty(viewName))
-                viewName = "Main";
+            if (string.IsNullOrEmpty(viewName) || viewName == "Main")
+            {
+                CurrentView = null;
+                return;
+            }
 
             if (_views.TryGetValue(viewName, out var view))
             {
@@ -34,6 +43,9 @@ namespace Celer.ViewModels
         }
 
         [RelayCommand]
-        public void BackToMain() => CurrentView = _views["Main"];
+        public void Navigate(string viewName) => NavigateTo(viewName);
+
+        [RelayCommand]
+        public void BackToMain() => NavigateTo("Main");
     }
 }

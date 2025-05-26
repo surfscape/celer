@@ -34,6 +34,8 @@
     <PackageReference Include="DynamicAero2" Version="1.2.1" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.5" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="System.Management" Version="9.0.4" />
   </ItemGroup>

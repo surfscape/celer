@@ -1,10 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+﻿using Celer.Services;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainWindow
 {
@@ -13,10 +13,13 @@ namespace Celer.Views.UserControls.MainWindow
     /// </summary>
     public partial class MenuBar : UserControl
     {
-        public MenuBar()
+        private readonly MenuBarNavigation _menuBarNavigation;
+        public MenuBar(MenuBarNavigation menuBarNavigation)
         {
             InitializeComponent();
             EnableSchoolFeatureCheckbox.IsEnabled = Properties.MainConfiguration.Default.SchoolFeature;
+            _menuBarNavigation = menuBarNavigation;
+            NavigationMenu.DataContext = _menuBarNavigation;
         }
 
         private void EnableSchoolFeatureCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -65,6 +68,24 @@ namespace Celer.Views.UserControls.MainWindow
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Close();
+     
         }
     }
+
+    public partial class MenuBarNavigation : ObservableObject
+    {
+        private readonly NavigationService _navigationService;
+
+        public MenuBarNavigation(NavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
+        [RelayCommand]
+        private void NavigateToOptimization(string tab)
+        {
+            _navigationService.Navigate(tab);
+        }
+    }
+
 }
