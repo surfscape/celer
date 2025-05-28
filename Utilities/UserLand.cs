@@ -6,7 +6,7 @@ namespace Celer.Utilities
 {
     public class UserLand
     {
-        public void OpenLink(string url)
+        public static void OpenLink(string url)
         {
             try
             {
