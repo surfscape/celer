@@ -122,14 +122,34 @@
             </MenuItem>
             <MenuItem Click="CloseApp_Click" Header="_Sair" />
         </MenuItem>
-        <MenuItem x:Name="NavigationMenu" Header="_Vista">
-            <MenuItem Header="_Estado" />
-            <MenuItem Header="_Limpeza" />
-            <MenuItem Header="_Otimização" />
-            <MenuItem Header="_Manutenção" />
-            <MenuItem Header="_Privacidade &amp; Segurança" />
-            <MenuItem Header="_Avançado" />
-            <MenuItem Header="_Aparência" />
+        <MenuItem
+            x:Name="NavigationMenu"
+            d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
+            Header="_Vista">
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Dashboard"
+                Header="_Estado" />
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Limpeza"
+                Header="_Limpeza" />
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Otimizacao"
+                Header="_Otimização" />
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Manutencao"
+                Header="_Manutenção" />
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Privacidade"
+                Header="_Privacidade &amp; Segurança" />
+            <MenuItem
+                Command="{Binding NavigateToTabCommand}"
+                CommandParameter="Avancado"
+                Header="_Avançado" />
         </MenuItem>
         <MenuItem Header="_Ferramentas">
             <MenuItem Click="OpenAmbientChecker_Click" Header="_Análise de Ambiente">

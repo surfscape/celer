@@ -82,7 +82,7 @@ namespace Celer.Views.UserControls.MainWindow
         }
 
         [RelayCommand]
-        private void NavigateToOptimization(string tab)
+        private void NavigateToTab(string tab)
         {
             _navigationService.Navigate(tab);
         }
