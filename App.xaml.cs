@@ -17,18 +17,19 @@ namespace Celer;
 /// </summary>
 public partial class App : Application
 {
-
-    public static IHost AppHost { get; private set; }
+    public static IHost? AppHost { get; private set; }
 
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                // register main services, these include services that are used across the application and also the main window
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<NavigationService>();
                 services.AddSingleton<MainWindowViewModel>();
 
+                // viewmodels for windows and tabs
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<CleanEngine>();
                 services.AddTransient<OtimizacaoViewModel>();
@@ -38,6 +39,7 @@ public partial class App : Application
                 services.AddTransient<PrivacidadeViewModel>();
                 services.AddTransient<MenuBarNavigation>();
 
+                // usercontrols themselves (and other views that need access to the services)
                 services.AddTransient<Dashboard>();
                 services.AddTransient<Limpeza>();
                 services.AddTransient<Otimizacao>();
@@ -48,32 +50,37 @@ public partial class App : Application
             .Build();
     }
 
-    protected override async void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
     {
         Celer.Properties.MainConfiguration.Default.Reset();
         bool onboarding = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
 
-        if (!onboarding)
+        if (AppHost == null)
         {
-  
-            var surfScapeGateway = new SurfScapeGateway();
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
-            surfScapeGateway.ShowDialog();
-            mainWindow.Show();
-
+            MessageBox.Show("Erro ao inicializar AppHost. Por favor, reinicie a aplicação ou tenta fazer a sua reinstalação", "Erro de infrastutura", MessageBoxButton.OK, MessageBoxImage.Error);
+            throw new InvalidOperationException("AppHost não foi inicializado");
         }
-        else
+        if (onboarding)
         {
-            var onboardingWindow = AppHost.Services.GetRequiredService<Onboarding>();
+            var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
         }
-
+        var surfScapeGateway = new SurfScapeGateway();
+        var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+        surfScapeGateway.ShowDialog();
+        mainWindow.Show();
         base.OnStartup(e);
     }
 
     protected override async void OnExit(ExitEventArgs e)
     {
-        await AppHost.StopAsync();
+        if(AppHost != null)
+        {
+            await AppHost.StopAsync();
+            AppHost.Dispose();
+            AppHost = null;
+            base.OnExit(e);
+        }
         base.OnExit(e);
     }
 }
