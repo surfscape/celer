@@ -1,12 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using Celer.Models;
+using Celer.Services;
+using Celer.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
 
 namespace Celer.Views.Windows.Utils
@@ -16,47 +11,55 @@ namespace Celer.Views.Windows.Utils
     /// </summary>
     public partial class SurfScapeGateway : Window
     {
+        private readonly SurfScapeGatewayViewModel _viewModel;
         public SurfScapeGateway()
         {
             InitializeComponent();
-            var viewModel = new SurfScapeGatewayViewModel
-            {
-                IsDone = Close
-            };
-            DataContext = viewModel;
+            _viewModel = new SurfScapeGatewayViewModel { IsDone =  Close };
+            DataContext = _viewModel;
+            Loaded += SurfScapeGateway_Loaded;
+        }
+        private async void SurfScapeGateway_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.InitializeAsync();
         }
 
         public partial class SurfScapeGatewayViewModel : ObservableObject
         {
-            [ObservableProperty]
-            private string? currentTask;
-
             public Action? IsDone { get; set; }
+
+            [ObservableProperty] private string currentTask;
 
             public SurfScapeGatewayViewModel()
             {
-                // Start async task without blocking constructor
-                _ = InitializeAsync();
+                CurrentTask = "A iniciar Celer...";
+                
             }
 
-            private async Task InitializeAsync()
+            public async Task InitializeAsync()
             {
-                try
+                CurrentTask = "A verificar ligação com a internet...";
+                bool isOnline = UserLand.IsInternetAvailable();
+                await Task.Delay(500);
+                if (isOnline)
                 {
-                    CurrentTask = "A procurar por atualizações";
-                    await Task.Delay(2000); // Simulate work
-
-                    CurrentTask = "A fazer download de assinaturas de limpeza";
-                    await Task.Delay(1500); // Simulate more work
-
-                    IsDone?.Invoke(); // Signal to close
+                    CurrentTask = "A buscar assinaturas de limpeza...";
+                    bool success = await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
+                    if (success)
+                    {
+                        AppGlobals.EnableCleanEngine = true;
+                        CurrentTask = "Assinaturas atualizadas. A inicar Celer";
+                        IsDone?.Invoke();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    CurrentTask = $"Ocorreu um erro: {ex.Message}";
-                }
+                CurrentTask = "Sem internet, a buscar assinaturas locais";
+                bool hasLocalDb = CleaningSignatureManager.HasLocalDatabase();
+                AppGlobals.EnableCleanEngine = hasLocalDb;
+                CurrentTask = hasLocalDb
+                    ? "Assinatuas locais encontradas!"
+                    : "Clean Engine desligado: assinaturas não encontradas";
+                IsDone?.Invoke();
             }
         }
     }
-
 }

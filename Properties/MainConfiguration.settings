@@ -35,5 +35,14 @@
     <Setting Name="CLEANENGINE_ExportLog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CLEANENGINE_DefaultSource" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://surfscape.github.io/celer/signatures/cleaning.json</Value>
+    </Setting>
+    <Setting Name="CLEANENGINE_CustomSource" Type="(Web Service URL)" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CLEANENGINE_AllowCustomSource" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

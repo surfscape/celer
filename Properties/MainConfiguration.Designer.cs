@@ -153,5 +153,39 @@ namespace Celer.Properties {
                 this["CLEANENGINE_ExportLog"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://surfscape.github.io/celer/signatures/cleaning.json")]
+        public string CLEANENGINE_DefaultSource {
+            get {
+                return ((string)(this["CLEANENGINE_DefaultSource"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        public string CLEANENGINE_CustomSource {
+            get {
+                return ((string)(this["CLEANENGINE_CustomSource"]));
+            }
+            set {
+                this["CLEANENGINE_CustomSource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CLEANENGINE_AllowCustomSource {
+            get {
+                return ((bool)(this["CLEANENGINE_AllowCustomSource"]));
+            }
+            set {
+                this["CLEANENGINE_AllowCustomSource"] = value;
+            }
+        }
     }
 }

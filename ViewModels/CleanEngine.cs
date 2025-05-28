@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Celer.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -11,45 +11,20 @@ namespace Celer.ViewModels
 {
     public partial class CleanEngine : ObservableObject
     {
-        // private const string JsonUrl = "https://surfscape.github.io/services/celer_v1/signatures/clean.json";
-        private const string LocalJson = "cleanup.json";
-
         [ObservableProperty] private ObservableCollection<CleanupCategory> categories = [];
         [ObservableProperty] private string logText = string.Empty;
         [ObservableProperty] private double totalFreedText = 0;
         [ObservableProperty] private bool canClean = false;
         [ObservableProperty] private object? selectedItem;
+        
 
-
-        public CleanEngine()
-        {
+        public CleanEngine() { 
             LoadJson();
         }
 
         private void LoadJson()
         {
-            try
-            {
-                /* using var client = new HttpClient();
-                 var json = await client.GetStringAsync(JsonUrl);
-                 File.WriteAllText(LocalJson, json);
-                 ParseJson(json);*/
-                var json = File.ReadAllText(LocalJson);
-                ParseJson(json);
-            }
-            catch
-            {
-                if (File.Exists(LocalJson))
-                {
-                    var json = File.ReadAllText(LocalJson);
-                    ParseJson(json);
-                }
-                else
-                {
-                    LogText = "No JSON data available. Cleaning disabled.";
-                    CanClean = false;
-                }
-            }
+            
         }
 
         private void ParseJson(string json)
@@ -72,10 +47,11 @@ namespace Celer.ViewModels
             }
             CanClean = true;
         }
+
         [RelayCommand]
         private async Task CleanAsync()
         {
-            LogText += ("A iniciar Celer Clean Engine...");
+            LogText += ("A iniciar Celer Cleaning Engine...");
             TotalFreedText = 0;
 
             long totalFreed = 0;

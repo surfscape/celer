@@ -25,19 +25,18 @@ public partial class App : Application
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                services.AddSingleton<MainWindow>();
                 services.AddSingleton<NavigationService>();
-
                 services.AddSingleton<MainWindowViewModel>();
+
                 services.AddTransient<DashboardViewModel>();
-                services.AddTransient<LimpezaViewModel>();
+                services.AddTransient<CleanEngine>();
                 services.AddTransient<OtimizacaoViewModel>();
                 services.AddTransient<MemoryManagement>();
                 services.AddTransient<ManutencaoViewModel>();
                 services.AddTransient<Battery>();
                 services.AddTransient<PrivacidadeViewModel>();
                 services.AddTransient<MenuBarNavigation>();
-
-                services.AddSingleton<MainWindow>();
 
                 services.AddTransient<Dashboard>();
                 services.AddTransient<Limpeza>();
@@ -56,11 +55,12 @@ public partial class App : Application
 
         if (!onboarding)
         {
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+  
             var surfScapeGateway = new SurfScapeGateway();
-            mainWindow.DataContext = AppHost.Services.GetRequiredService<MainWindowViewModel>();
+            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
             surfScapeGateway.ShowDialog();
             mainWindow.Show();
+
         }
         else
         {

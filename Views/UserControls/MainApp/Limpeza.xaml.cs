@@ -8,10 +8,13 @@ namespace Celer.Views.UserControls.MainApp
     /// </summary>
     public partial class Limpeza : UserControl
     {
-        public Limpeza()
+        private readonly CleanEngine _viewModel;
+        public Limpeza(CleanEngine viewModel)
         {
             InitializeComponent();
-            DataContext = new CleanEngine();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
+            
         }
     }
 }
