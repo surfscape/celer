@@ -1,5 +1,4 @@
 ﻿using Celer.Models;
-using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -7,43 +6,55 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 
 namespace Celer.ViewModels
 {
     public partial class CleanEngine : ObservableObject
     {
         [ObservableProperty] private ObservableCollection<CleanupCategory> categories = [];
-        [ObservableProperty] private string logText = string.Empty;
         [ObservableProperty] private double totalFreedText = 0;
         [ObservableProperty] private bool canClean = AppGlobals.EnableCleanEngine;
         [ObservableProperty] private object? selectedItem;
 
-        public CleanEngine() { 
+        public ObservableCollection<string> LogEntries { get; } = [];
+
+        public CleanEngine()
+        {
             LoadJson();
+        }
+
+        private void AddLog(string message)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LogEntries.Add(message);
+            });
         }
 
         private void LoadJson()
         {
             const string path = "signatures.json";
-            
+
             if (!File.Exists(path))
             {
-                LogText = "Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações\n";
+                AddLog("Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações");
                 AppGlobals.EnableCleanEngine = false;
+                return;
             }
+
             try
             {
-                LogText = "A carregar assinaturas...\n";
+                AddLog("A carregar assinaturas...");
                 var json = File.ReadAllText(path);
                 ParseJson(json);
                 AppGlobals.EnableCleanEngine = true;
-                LogText += "Assinaturas carregadas com sucesso!\n";
+                AddLog("Assinaturas carregadas com sucesso!");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                LogText = $"Ocorreu um erro a carregar as assinaturas: {e.Message}\n";
+                AddLog($"Ocorreu um erro a carregar as assinaturas: {e.Message}");
                 AppGlobals.EnableCleanEngine = false;
-
             }
         }
 
@@ -86,7 +97,7 @@ namespace Celer.ViewModels
 
             if (selectedItems.Count == 0)
             {
-                LogText += "É necessário selecionar pelo menos um item para iniciar a limpeza.\n";
+                AddLog("É necessário selecionar pelo menos um item para iniciar a limpeza.");
                 CanClean = true;
                 return;
             }
@@ -108,7 +119,7 @@ namespace Celer.ViewModels
 
             if (toClose.Count > 0)
             {
-                LogText += "É necessário fechar as seguintes aplicações para continuar:\n" + string.Join("\n", toClose) + "\n";
+                AddLog("É necessário fechar as seguintes aplicações para continuar:\n" + string.Join("\n", toClose));
                 return;
             }
 
@@ -118,7 +129,8 @@ namespace Celer.ViewModels
             await Task.Run(() =>
             {
                 CanClean = false;
-                LogText += "A iniciar Celer Cleaning Engine...\n";
+                AddLog("A iniciar Celer Cleaning Engine...");
+
                 foreach (var item in selectedItems)
                 {
                     string resolvedPath = Environment.ExpandEnvironmentVariables(item.Path);
@@ -143,7 +155,6 @@ namespace Celer.ViewModels
                                     log.AppendLine($"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}");
                                 }
                             }
-
                             try
                             {
                                 dir.Delete(true);
@@ -161,6 +172,7 @@ namespace Celer.ViewModels
                             };
                             freed += fileInfo.Length;
                             fileInfo.Delete();
+                            log.AppendLine($"Removido o ficheiro: {fileInfo.FullName}");
                         }
 
                         log.AppendLine($"Removido {resolvedPath} ({freed / 1024} KB)");
@@ -174,11 +186,17 @@ namespace Celer.ViewModels
                 }
             });
 
-            LogText += log.ToString();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (var line in log.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    LogEntries.Add(line);
+                }
+            });
+
             TotalFreedText = (long)(totalFreed / 1024f / 1024f);
+            AppGlobals.EnableCleanEngine = true;
         }
-
-
 
         public partial class CleanupItem : ObservableObject
         {

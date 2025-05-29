@@ -72,9 +72,19 @@
                             Margin="0,0,0,5"
                             Style="{DynamicResource Heading2}"
                             Text="Registo" />
-                        <ScrollViewer Height="300" VerticalScrollBarVisibility="Auto">
-                            <TextBlock Text="{Binding LogText}" TextWrapping="Wrap" />
-                        </ScrollViewer>
+                        <ListBox
+                            Name="LogListBox"
+                            Height="300"
+                            ItemsSource="{Binding LogEntries}"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Standard">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <TextBlock
                             Margin="0,10,0,10"
                             FontWeight="Bold"

@@ -16,5 +16,6 @@ namespace Celer.Views.UserControls.MainApp
             DataContext = _viewModel;
             
         }
+        
     }
 }
