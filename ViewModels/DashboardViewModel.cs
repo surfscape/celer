@@ -11,12 +11,18 @@ using System.Management;
 using System.Windows.Threading;
 
 namespace Celer.ViewModels;
-public partial class DashboardViewModel : ObservableObject, ITabLifecycle
+public partial class DashboardViewModel : ObservableObject
 {
-    private readonly DispatcherTimer _timer;
-    private readonly PerformanceCounter _cpuCounter;
-    private readonly PerformanceCounter _availableMemoryCounter;
     private readonly NavigationService _navigationService;
+    private DispatcherTimer _timer;
+    private  PerformanceCounter _cpuCounter;
+    private  PerformanceCounter _availableMemoryCounter;
+
+    /// <summary>
+    /// Used to track if the dashboard is loading data and to show a loading bar if true
+    /// </summary>
+    [ObservableProperty]
+    private bool isLoading = true;
 
     [ObservableProperty]
     private string windowsVersion;
@@ -40,6 +46,9 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
     [ObservableProperty]
     private ObservableCollection<DiskInformation> diskData = [];
 
+    [ObservableProperty]
+    private ObservableCollection<AlertModel> alerts = [];
+
     /// <summary>
     /// CPU Data
     /// </summary>
@@ -58,39 +67,55 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
     [ObservableProperty] private string gpuFeatureLevel = "Unavailable";
     [ObservableProperty] private float gpuGeneralUsage;
 
-    public void OnActivated()
-    {
-        _timer?.Start();
-    }
-
-    public void OnDeactivated()
-    {
-        _timer?.Stop();
-    }
 
     public DashboardViewModel(NavigationService navigationService)
     {
-        _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
-
-        _cpuCounter.NextValue();
-
-        windowsVersion = GetWindowsVersion();
-        postTime = GetPostTime();
-        totalMemory = GetTotalMemory();
-
-        GetDriveInfo();
-        LoadCpuInfo();
-        LoadGpuInfo();
-
         _navigationService = navigationService;
+    }
 
-        _timer = new DispatcherTimer
+    public async Task InitializeAsync()
+    {        
+        try
         {
-            Interval = TimeSpan.FromSeconds(1)
-        };
-        _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
-        _timer.Start();
+            await Task.Run(() =>
+            {
+                _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
+                _cpuCounter.NextValue();
+
+                WindowsVersion = GetWindowsVersion();
+                PostTime = GetPostTime();
+                TotalMemory = GetTotalMemory();
+
+                LoadCpuInfo();
+                LoadGpuInfo();
+            });
+
+            GetDriveInfo();
+
+            _timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
+            _timer.Start();
+
+            if (MainConfiguration.Default.ALERTS_CPUTrackingEnable ||
+                MainConfiguration.Default.ALERTS_MemoryTrackingEnable ||
+                MainConfiguration.Default.ALERTS_EnableTrackProcess)
+            {
+                var alertService = new AlertMonitoringService(this.Alerts);
+                alertService.StartMonitoring();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Erro na inicialização: {ex}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private async Task UpdateSystemDataAsync()
@@ -121,15 +146,15 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
     {
         try
         {
-            using var searcher = new ManagementObjectSearcher("select * from Win32_VideoController");
+            using var searcher = new ManagementObjectSearcher("SELECT Name, AdapterCompatibility, DriverVersion, AdapterRAM FROM Win32_VideoController");
             var gpus = searcher.Get().Cast<ManagementObject>();
 
             var activeGpu = gpus.OrderByDescending(g => Convert.ToUInt64(g["AdapterRAM"] ?? 0)).FirstOrDefault();
             if (activeGpu != null)
             {
-                GpuName = activeGpu["Name"]?.ToString();
+                GpuName = activeGpu["Name"].ToString();
                 GpuVendor = activeGpu["AdapterCompatibility"].ToString();
-                GpuDriverVersion = activeGpu["DriverVersion"]?.ToString();
+                GpuDriverVersion = activeGpu["DriverVersion"].ToString()!;
             }
 
             LoadDxDiagInfo();
@@ -175,7 +200,7 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
         {
             Debug.WriteLine($"Error getting Windows version: {ex.Message}");
         }
-        return "Windows";
+        return "Microsoft Windows";
     }
 
     private static double GetPostTime()
@@ -240,7 +265,7 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
     }
     private void LoadDxDiagInfo()
     {
-        string dxdiagPath = Path.Combine(Path.GetTempPath(), "dxdiag.xml");
+        string dxdiagPath = "dxdiag.xml";
         try
         {
             var proc = new Process
@@ -248,7 +273,7 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "dxdiag.exe",
-                    Arguments = $"/x \"{dxdiagPath}\"",
+                    Arguments = "/x dxdiag.xml",
                     UseShellExecute = true,
                     CreateNoWindow = true
                 }
@@ -262,8 +287,6 @@ public partial class DashboardViewModel : ObservableObject, ITabLifecycle
                 if (xml.Contains("DDIVersion"))
                 {
                     GpuDirectXVersion = ExtractXmlValue(xml, "DDIVersion");
-                    GpuFeatureLevel = ExtractXmlValue(xml, "FeatureLevels");
-
                 }
             }
             while (!File.Exists(dxdiagPath) || proc.HasExited);

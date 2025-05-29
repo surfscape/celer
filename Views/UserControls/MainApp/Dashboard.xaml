@@ -7,7 +7,6 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:local1="clr-namespace:Celer"
-    xmlns:local2="clr-namespace:Celer.Views.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}"
@@ -15,6 +14,7 @@
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
         <converters:DiskSizeConverter x:Key="DiskSizeConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         <DataTemplate x:Key="ItemTemplate">
             <WrapPanel>
                 <TextBlock Margin="5,0,0,0" Text="{Binding Name}" />
@@ -26,194 +26,271 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <Border Padding="12,6">
-            <StackPanel
+
+        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar
+                    Width="200"
+                    Height="12"
+                    Margin="0,0,0,4"
+                    HorizontalAlignment="Center"
+                    IsIndeterminate="True" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Center"
+                    Text="A carregar dados" />
+            </StackPanel>
+        </Grid>
+
+        <Grid
+            xmlns:local2="clr-namespace:Celer.Views.Components"
+            x:Name="MainContent"
+            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Border Padding="12,6">
+                <StackPanel
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Orientation="Vertical">
+                    <Border
+                        Margin="0,0,0,6"
+                        Padding="0,0,0,6"
+                        BorderBrush="Gray"
+                        BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Heading1}">Estado do Sistema</TextBlock>
+                            <TextBlock Style="{StaticResource Subheading}">Verifique o estado e a saúde dos vários componentes do sistema.</TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Margin" Value="0,0,16,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource Heading2}" Text="CPU" />
+                            <TextBlock
+                                Margin="0,0,0,8"
+                                FontSize="14"
+                                FontWeight="DemiBold"
+                                Text="{Binding CpuName}"
+                                TextWrapping="Wrap" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="48" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar
+                                    Height="16"
+                                    Margin="0,0,8,0"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding CpuUsage}" />
+                                <TextBlock Grid.Column="1" Text="{Binding CpuUsage, StringFormat={}{0}%}" />
+                            </Grid>
+                            <StackPanel Margin="0,4,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Margin="0,2" Orientation="Horizontal">
+                                        <TextBlock FontWeight="SemiBold" Text="Processos: " />
+                                        <TextBlock Text="{Binding ProcessCount}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="8,2" Orientation="Horizontal">
+                                        <TextBlock FontWeight="SemiBold" Text="Threads: " />
+                                        <TextBlock Text="{Binding ThreadCount}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="SemiBold" Text="Clock máximo (sem Turbo): " />
+                                    <TextBlock Text="{Binding CpuClockSpeed, StringFormat={}{0} MHz}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource Heading2}" Text="Memória" />
+                            <TextBlock Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Total: {0}}" />
+                            <TextBlock Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Em utilização: {0}}" />
+                            <TextBlock Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Disponível: {0}}" />
+                            <ProgressBar
+                                Height="16"
+                                Margin="0,8,0,10"
+                                Maximum="{Binding TotalMemory}"
+                                Minimum="0"
+                                Value="{Binding UsedMemory}" />
+                            <Button
+                                Margin="0,0,0,0"
+                                Command="{Binding NavigateToOptimizationCommand}"
+                                CommandParameter="Memory">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconControl
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource SecondaryText}"
+                                        Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
+                                    <TextBlock>Abrir gestor de memória</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource Heading2}" Text="GPU" />
+                            <TextBlock FontWeight="DemiBold" Text="{Binding GpuName}" />
+                            <TextBlock Text="{Binding GpuVendor}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="48" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar
+                                    Height="16"
+                                    Margin="0,8,8,6"
+                                    Maximum="100"
+                                    Minimum="1"
+                                    Value="{Binding GpuGeneralUsage}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding GpuGeneralUsage, StringFormat={}{0:F1} %}" />
+                            </Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Driver: " />
+                                <TextBlock Text="{Binding GpuDriverVersion}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="DirectX: " />
+                                <TextBlock Text="{Binding GpuDirectXVersion}" />
+                            </StackPanel>
+                            <Button
+                                Margin="0,8,0,0"
+                                Command="{Binding NavigateToOptimizationCommand}"
+                                CommandParameter="Graphics">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconControl
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource SecondaryText}"
+                                        Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
+                                    <TextBlock>Abrir gestor gráfico</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Margin" Value="0,0,16,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Heading2}">Discos</TextBlock>
+                            <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}" />
+                            <Button Margin="0,8,0,0" Command="{Binding RefreshDisksCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconControl
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource SecondaryText}"
+                                        Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
+                                    <TextBlock>Atualizar</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="0,0,0,0">
+                            <local2:HeadingHelp
+                                HelpText="Notificações relacionadas ao estado do sistema, estas podem ser alterada nas definições"
+                                Label="Alertas"
+                                LabelStyleKey="Heading2" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ListBox ItemsSource="{Binding Alerts}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <iconPacks:PackIconLucide
+                                                    Grid.Column="0"
+                                                    Width="18"
+                                                    Height="18"
+                                                    Margin="0,0,8,0"
+                                                    VerticalAlignment="Top"
+                                                    Kind="{Binding Icon}" />
+
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        Text="{Binding Title}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock
+                                                        FontSize="12"
+                                                        Foreground="Gray"
+                                                        Text="{Binding Description}"
+                                                        TextWrapping="Wrap" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border
+                Grid.Row="1"
+                Padding="4,8,4,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Orientation="Vertical">
-                <Border
-                    Margin="0,0,0,6"
-                    Padding="0,0,0,6"
-                    BorderBrush="Gray"
-                    BorderThickness="0,0,0,1">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Heading1}">Estado do Sistema</TextBlock>
-                        <TextBlock Style="{StaticResource Subheading}">Verifique o estado e a saúde dos vários componentes do sistema.</TextBlock>
-                    </StackPanel>
-                </Border>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="StackPanel">
-                            <Setter Property="Margin" Value="0,0,16,0" />
-                        </Style>
-                    </Grid.Resources>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Style="{StaticResource Heading2}" Text="CPU" />
-                        <TextBlock
-                            Margin="0,0,0,8"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Text="{Binding CpuName}"
-                            TextWrapping="Wrap" />
-                        <StackPanel Orientation="Horizontal">
-                            <ProgressBar
-                                Width="200"
-                                Margin="0,0,8,0"
-                                HorizontalAlignment="Left"
-                                Maximum="100"
-                                Minimum="0"
-                                Value="{Binding CpuUsage}" />
-                            <TextBlock Text="{Binding CpuUsage, StringFormat={}{0}%}" />
-                        </StackPanel>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel Margin="0,2" Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="Processos: " />
-                                    <TextBlock Text="{Binding ProcessCount}" />
-                                </StackPanel>
-                                <StackPanel Margin="8,2" Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="Threads: " />
-                                    <TextBlock Text="{Binding ThreadCount}" />
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="SemiBold" Text="Clock máximo (sem Turbo): " />
-                                <TextBlock Text="{Binding CpuClockSpeed, StringFormat={}{0} MHz}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Style="{StaticResource Heading2}" Text="Memória" />
-                        <TextBlock Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Total: {0}}" />
-                        <TextBlock Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Em utilização: {0}}" />
-                        <TextBlock Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Disponível: {0}}" />
-                        <Button
-                            Margin="0,8,0,0"
-                            Command="{Binding NavigateToOptimizationCommand}"
-                            CommandParameter="MemoryManagement">
-                            <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconControl
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource SecondaryText}"
-                                    Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
-                                <TextBlock>Abrir gestor de memória</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Style="{StaticResource Heading2}" Text="GPU" />
-
-                        <TextBlock FontWeight="Medium" Text="{Binding GpuName}" />
-                        <TextBlock Text="{Binding GpuVendor}" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Utilização geral: " />
-                            <TextBlock Text="{Binding GpuGeneralUsage, StringFormat={}{0:F1} %}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Driver: " />
-                            <TextBlock Text="{Binding GpuDriverVersion}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="DirectX: " />
-                            <TextBlock Text="{Binding GpuDirectXVersion}" />
-                        </StackPanel>
-                        <Button
-                            Margin="0,8,0,0"
-                            Command="{Binding NavigateToOptimizationCommand}"
-                            CommandParameter="Graphics">
-                            <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconControl
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource SecondaryText}"
-                                    Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
-                                <TextBlock>Abrir gestor gráfico</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-                <Grid Margin="0,16,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="StackPanel">
-                            <Setter Property="Margin" Value="0,0,16,0" />
-                        </Style>
-                    </Grid.Resources>
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Heading2}">Discos</TextBlock>
-                        <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}" />
-                        <Button Margin="0,8,0,0" Command="{Binding RefreshDisksCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconControl
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource SecondaryText}"
-                                    Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
-                                <TextBlock>Atualizar</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="0,8,0,0">
-                        <local2:HeadingHelp
-                            HelpText="Notificações relacionadas ao estado do sistema, estas podem ser alterada nas definições"
-                            Label="Alertas"
-                            LabelStyleKey="Heading2" />
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
-        </Border>
-        <Border
-            Grid.Row="1"
-            Padding="8,4"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            BorderBrush="Gray"
-            BorderThickness="0,1,0,0">
-            <DockPanel>
-                <iconPacks:PackIconControl
-                    Margin="0,0,8,0"
-                    VerticalAlignment="Center"
-                    Foreground="{DynamicResource SecondaryText}"
-                    Kind="{x:Static iconPacks:PackIconIoniconsKind.LogoWindows}" />
-                <TextBlock Text="{Binding WindowsVersion}" />
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                BorderBrush="#353535"
+                BorderThickness="0,1,0,0">
+                <DockPanel>
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
                         Foreground="{DynamicResource SecondaryText}"
-                        Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
-                    <TextBlock Text="{Binding PostTime, StringFormat=Tempo de POST: {0:F2} segundos}">
-                        <TextBlock.TextDecorations>
-                            <TextDecoration Location="Underline">
-                                <TextDecoration.Pen>
-                                    <Pen Brush="White" Thickness="1">
-                                        <Pen.DashStyle>
-                                            <DashStyle Dashes="0,3" />
-                                        </Pen.DashStyle>
-                                    </Pen>
-                                </TextDecoration.Pen>
-                            </TextDecoration>
-                        </TextBlock.TextDecorations>
-                        <TextBlock.ToolTip>
-                            <ToolTip>O tempo que a BIOS demora para inicar. Um valor muito alto (acima de 70 segundos) pode significar alguma falha/conflito de hardware.</ToolTip>
-                        </TextBlock.ToolTip>
-                    </TextBlock>
-                </StackPanel>
-
-            </DockPanel>
-        </Border>
+                        Kind="{x:Static iconPacks:PackIconIoniconsKind.LogoWindows}" />
+                    <TextBlock Text="{Binding WindowsVersion}" />
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <iconPacks:PackIconControl
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource SecondaryText}"
+                            Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
+                        <TextBlock Text="{Binding PostTime, StringFormat=Tempo de POST: {0:F2} segundos}">
+                            <TextBlock.TextDecorations>
+                                <TextDecoration Location="Underline">
+                                    <TextDecoration.Pen>
+                                        <Pen Brush="White" Thickness="1">
+                                            <Pen.DashStyle>
+                                                <DashStyle Dashes="0,3" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </TextDecoration.Pen>
+                                </TextDecoration>
+                            </TextBlock.TextDecorations>
+                            <TextBlock.ToolTip>
+                                <ToolTip>O tempo que a BIOS demora para inicar. Um valor muito alto (acima de 70 segundos) pode significar alguma falha/conflito de hardware.</ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
