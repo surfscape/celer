@@ -20,9 +20,6 @@
     <Style TargetType="{x:Type Window}">
         <Setter Property="Background" Value="{DynamicResource AppBackground}" />
     </Style>
-    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
-        <Setter Property="Padding" Value="10,5" />
-    </Style>
     <Style BasedOn="{StaticResource {x:Type ProgressBar}}" TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Primary}"></Setter>
     </Style>
