@@ -11,7 +11,7 @@ namespace Celer.ViewModels
         private readonly Dictionary<string, UserControl> _views;
 
         [ObservableProperty]
-        private UserControl currentView;
+        private UserControl? currentView;
 
 
         private readonly NavigationService _navigationService;
@@ -24,7 +24,6 @@ namespace Celer.ViewModels
             {
                 { "Battery", batterView },
             };
-
 
             CurrentView = null;
         }
