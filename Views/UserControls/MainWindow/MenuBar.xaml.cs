@@ -1,5 +1,7 @@
-﻿using Celer.Services;
+﻿using Celer.Properties;
+using Celer.Services;
 using Celer.Views.Windows;
+using Celer.Views.Windows.Dialogs;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -17,15 +19,50 @@ namespace Celer.Views.UserControls.MainWindow
         public MenuBar(MenuBarNavigation menuBarNavigation)
         {
             InitializeComponent();
-            EnableSchoolFeatureCheckbox.IsEnabled = Properties.MainConfiguration.Default.SchoolFeature;
             _menuBarNavigation = menuBarNavigation;
             NavigationMenu.DataContext = _menuBarNavigation;
+            EnableSchoolFeatureCheckbox.DataContext = new SchoolDataContext();
         }
 
-        private void EnableSchoolFeatureCheckbox_Checked(object sender, RoutedEventArgs e)
+        public partial class SchoolDataContext : ObservableObject
         {
-            Properties.MainConfiguration.Default.SchoolFeature = EnableSchoolFeatureCheckbox.IsChecked;
-            Properties.MainConfiguration.Default.Save();
+            [ObservableProperty]
+            private bool isEnabled = MainConfiguration.Default.EnableSchoolFeatures;
+
+            public SchoolDataContext () {
+            }
+
+            [RelayCommand]
+            private void ToggleSchoolFeature()
+            {
+                if(MainConfiguration.Default.EnableSchoolFeatures)
+                {
+                    MainConfiguration.Default.EnableSchoolFeatures = false;
+                    MainConfiguration.Default.Save();
+                }
+                else
+                {
+                    var dialog = new SchoolKeyDialog
+                    {
+                        Owner = Application.Current.MainWindow
+                    };
+
+                    if (dialog.ShowDialog() == true)
+                    {
+                        if (dialog.EnteredText == "a-tua-chave-correta")
+                        {
+                            MainConfiguration.Default.EnableSchoolFeatures = true;
+                            MainConfiguration.Default.Save();
+                        }
+                        else
+                        {
+                            MessageBox.Show("A chave não está correta ou o model do equipamento não é compatível.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                
+            }
+
         }
 
         private void OpenAmbientChecker_Click(object sender, RoutedEventArgs e)
@@ -76,10 +113,7 @@ namespace Celer.Views.UserControls.MainWindow
     {
         private readonly NavigationService _navigationService;
 
-        public MenuBarNavigation(NavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
+        public MenuBarNavigation(NavigationService navigationService) => _navigationService = navigationService;
 
         [RelayCommand]
         private void NavigateToTab(string tab)

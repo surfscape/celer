@@ -5,7 +5,7 @@
     <Setting Name="HasUserDoneSetup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="SchoolFeature" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableSchoolFeatures" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ALERTS_CPUTrackingEnable" Type="System.Boolean" Scope="User">
@@ -43,6 +43,9 @@
     </Setting>
     <Setting Name="CLEANENGINE_AllowCustomSource" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ALERTS_CPUTrackingLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
     </Setting>
   </Settings>
 </SettingsFile>

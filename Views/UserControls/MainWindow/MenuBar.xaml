@@ -166,9 +166,11 @@
             <Separator />
             <MenuItem
                 x:Name="EnableSchoolFeatureCheckbox"
+                d:DataContext="{d:DesignInstance Type=local:SchoolDataContext}"
+                Command="{Binding ToggleSchoolFeatureCommand}"
                 Header="_Ativar Ferramentas Escolares"
                 IsCheckable="True"
-                IsChecked="{Binding SchoolFeatureCheckStatus}" />
+                IsChecked="{Binding IsEnabled}" />
         </MenuItem>
         <MenuItem Header="_Avançado">
             <MenuItem Header="_Gestão de Software">

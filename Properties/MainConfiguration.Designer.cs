@@ -38,12 +38,12 @@ namespace Celer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SchoolFeature {
+        public bool EnableSchoolFeatures {
             get {
-                return ((bool)(this["SchoolFeature"]));
+                return ((bool)(this["EnableSchoolFeatures"]));
             }
             set {
-                this["SchoolFeature"] = value;
+                this["EnableSchoolFeatures"] = value;
             }
         }
         
@@ -185,6 +185,18 @@ namespace Celer.Properties {
             }
             set {
                 this["CLEANENGINE_AllowCustomSource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int ALERTS_CPUTrackingLimit {
+            get {
+                return ((int)(this["ALERTS_CPUTrackingLimit"]));
+            }
+            set {
+                this["ALERTS_CPUTrackingLimit"] = value;
             }
         }
     }
