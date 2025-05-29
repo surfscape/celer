@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:Celer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:OtimizacaoViewModel}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:OtimizacaoViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -52,7 +54,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Top" />
                             </Style>
                         </UniformGrid.Resources>
-                        <Button>
+                        <Button Command="{Binding NavigateCommand}" CommandParameter="Memory">
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                     <iconPacks:PackIconLucide
@@ -67,7 +69,7 @@
                                 <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
                             </StackPanel>
                         </Button>
-                        <Button>
+                        <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                     <iconPacks:PackIconLucide
@@ -82,7 +84,7 @@
                                 <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
                             </StackPanel>
                         </Button>
-                        <Button>
+                        <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                     <iconPacks:PackIconBootstrapIcons
