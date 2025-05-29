@@ -15,16 +15,18 @@ namespace Celer.Views.Windows
         {
             InitializeComponent();
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+            async Task<MessageBoxResult> value(string title, string message, MessageBoxButton buttons, MessageBoxImage icon)
+            {
+                return MessageBox.Show(this, message, title, buttons, icon);
+            }
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             _viewModel = new SettingsViewModel
             {
-                ShowDialogAsync = async (title, message, buttons, icon) =>
-                {
-                    return MessageBox.Show(this, message, title, buttons, icon);
-                },
-
+                ShowDialogAsync = value,
                 CloseWindowAction = () =>
                     {
-                        this.Close();
+                        Close();
                     }
             };
 
