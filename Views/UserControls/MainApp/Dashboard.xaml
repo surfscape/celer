@@ -257,8 +257,8 @@
                                                         Text="{Binding Title}"
                                                         TextTrimming="CharacterEllipsis" />
                                                     <TextBlock
-                                                        FontSize="12"
-                                                        Foreground="#747474"
+                                                        FontSize="13"
+                                                        Foreground="#A4A4A4"
                                                         Text="{Binding Description}"
                                                         TextWrapping="Wrap" />
                                                 </StackPanel>
