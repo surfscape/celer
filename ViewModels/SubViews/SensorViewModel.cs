@@ -62,5 +62,31 @@ namespace Celer.ViewModels.SubViews
                 category.Update();
         }
 
+        public void StartTimer()
+        {
+            if (!_updateTimer.IsEnabled)
+            {
+                _computer = new()
+                {
+                    IsCpuEnabled = true,
+                    IsGpuEnabled = true,
+                    IsMotherboardEnabled = true,
+                    IsStorageEnabled = true,
+                    IsMemoryEnabled = true
+                };
+                _computer.Open();
+
+                Categories.Clear();
+                LoadSensors();
+
+                _updateTimer.Start();
+            }
+        }
+
+        public void StopTimer()
+        {
+            _updateTimer.Stop();
+            _computer.Close();
+        }
     }
 }

@@ -3,46 +3,52 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Celer.Views.UserControls.MainApp.SubManutencao;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
+using Celer.Models;
 
 namespace Celer.ViewModels
 {
     public partial class ManutencaoViewModel : ObservableObject
     {
-        private readonly Dictionary<string, UserControl> _views;
+        private readonly Dictionary<string, NavigationSubView> _views;
 
         [ObservableProperty]
-        private UserControl? currentView;
+        private NavigationSubView? currentNamedView;
 
+        public UserControl? CurrentView => CurrentNamedView?.Control;
+
+        public string? CurrentViewName => CurrentNamedView?.Name;
 
         private readonly NavigationService _navigationService;
-        public ManutencaoViewModel(NavigationService navigationService, Battery batterView)
+
+        public ManutencaoViewModel(NavigationService navigationService, Battery batteryView)
         {
             _navigationService = navigationService;
             _navigationService.Register("Manutencao", NavigateTo);
 
-            _views = new Dictionary<string, UserControl>
-            {
-                { "Battery", batterView },
-            };
-
-            CurrentView = null;
-        }
-        public void NavigateTo(string viewName)
+            _views = new Dictionary<string, NavigationSubView>
         {
-            if (string.IsNullOrEmpty(viewName) || viewName == "Main")
+            { "Battery", new NavigationSubView("Estado da Bateria", batteryView) },
+        };
+
+            CurrentNamedView = null;
+        }
+
+        public void NavigateTo(string viewKey)
+        {
+            if (string.IsNullOrEmpty(viewKey) || viewKey == "Main")
             {
-                CurrentView = null;
+                CurrentNamedView = null;
                 return;
             }
 
-            if (_views.TryGetValue(viewName, out var view))
+            if (_views.TryGetValue(viewKey, out var view))
             {
-                CurrentView = view;
+                CurrentNamedView = view;
             }
         }
 
         [RelayCommand]
-        public void Navigate(string viewName) => NavigateTo(viewName);
+        public void Navigate(string viewKey) => NavigateTo(viewKey);
 
         [RelayCommand]
         public void BackToMain() => NavigateTo("Main");
