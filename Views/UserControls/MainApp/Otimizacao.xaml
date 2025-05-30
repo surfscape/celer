@@ -17,91 +17,126 @@
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Border Padding="12,6">
+    <Border>
         <StackPanel>
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Button
-                    Margin="0,0,0,8"
-                    HorizontalAlignment="Left"
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Main"
-                    Content="← Voltar" />
-                <ContentControl Content="{Binding CurrentView}" />
-            </StackPanel>
-
-            <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Border
-                    Margin="0,0,0,6"
-                    Padding="0,0,0,6"
-                    BorderBrush="Gray"
-                    BorderThickness="0,0,0,1">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Heading1}">Otimização</TextBlock>
-                        <TextBlock Style="{StaticResource Subheading}">Ferramentas para ajudar a melhorar a performance do sistema</TextBlock>
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,8,0"
+                            Padding="14,8"
+                            HorizontalAlignment="Center"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Main"
+                            Style="{StaticResource TransparentButton}">
+                            <iconPacks:PackIconLucide
+                                Margin="0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="ArrowLeft" />
+                        </Button>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Foreground="White"
+                            Text="{Binding CurrentViewName}" />
                     </StackPanel>
                 </Border>
-                <StackPanel Grid.Row="1">
-                    <UniformGrid Margin="-10,-5,0,0">
-                        <UniformGrid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-                                <Setter Property="Margin" Value="10,10,0,0" />
-                                <Setter Property="Padding" Value="12" />
-                                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                <Setter Property="VerticalContentAlignment" Value="Top" />
-                            </Style>
-                        </UniformGrid.Resources>
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="Memory">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="MemoryStick" />
-                                    <TextBlock FontSize="18" Foreground="white">Gestor de Memória</TextBlock>
+                <Border Padding="12,8">
+                    <ContentControl Content="{Binding CurrentView}" />
+                </Border>
+            </StackPanel>
+            <Border Padding="12,8">
+                <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Margin="0,0,0,6"
+                        Padding="0,0,0,6"
+                        BorderBrush="Gray"
+                        BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Heading1}">Otimização</TextBlock>
+                            <TextBlock Style="{StaticResource Subheading}">Ferramentas para ajudar a melhorar a performance do sistema</TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Grid.Row="1">
+                        <UniformGrid Margin="-10,-5,0,0">
+                            <UniformGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                                    <Setter Property="Margin" Value="10,10,0,0" />
+                                    <Setter Property="Padding" Value="12" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                    <Setter Property="VerticalContentAlignment" Value="Top" />
+                                </Style>
+                            </UniformGrid.Resources>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Memory">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="MemoryStick" />
+                                        <TextBlock FontSize="18" Foreground="white">Gestor de Memória</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="ChartSpline" />
-                                    <TextBlock FontSize="18" Foreground="white">Gestor de Arranque</TextBlock>
+                            </Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="ChartSpline" />
+                                        <TextBlock FontSize="18" Foreground="white">Gestor de Arranque</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconBootstrapIcons
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="GpuCard" />
-                                    <TextBlock FontSize="18" Foreground="white">Gestor Gráfico</TextBlock>
+                            </Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconBootstrapIcons
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="GpuCard" />
+                                        <TextBlock FontSize="18" Foreground="white">Gestor Gráfico</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Configurações do adaptador gráfico e do gestor de janelas do Windows</TextBlock>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Configurações do adaptador gráfico e do gestor de janelas do Windows</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </UniformGrid>
-                </StackPanel>
-            </Grid>
+                            </Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Sensors">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="Thermometer" />
+                                        <TextBlock FontSize="18" Foreground="white">Sensores</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Visualização da temperatura, em tempo real, dos sensores disponíveis do computador</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </StackPanel>
     </Border>
 </UserControl>

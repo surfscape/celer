@@ -21,12 +21,25 @@
         <StackPanel>
 
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Button
-                    Margin="0,0,0,8"
-                    HorizontalAlignment="Left"
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Main"
-                    Content="← Voltar" />
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Style="{StaticResource TransparentButton}"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="Main">
+                        <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconLucide
+                                Margin="0,0,8,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource SecondaryText}"
+                                Kind="ArrowLeft" />
+                        <TextBlock Text="Voltar" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="{Binding CurrentViewName}" />
+                </StackPanel>
                 <ContentControl Content="{Binding CurrentView}" />
             </StackPanel>
 

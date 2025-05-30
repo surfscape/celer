@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System.Windows;
 using Celer.Views.UserControls.MainApp.SubOtimização;
 using Celer.Views.UserControls.MainApp.SubManutencao;
+using Celer.ViewModels.SubViews;
 
 namespace Celer;
 
@@ -37,7 +38,10 @@ public partial class App : Application
                 services.AddTransient<MemoryManagement>();
                 services.AddTransient<ManutencaoViewModel>();
                 services.AddTransient<Battery>();
+                services.AddTransient<Sensors>();
+                services.AddTransient<SensorViewModel>();
                 services.AddTransient<PrivacidadeViewModel>();
+                
 
 
                 // usercontrols themselves (and other views that need access to the services)
