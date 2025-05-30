@@ -16,13 +16,27 @@
         <converters:DiskSizeConverter x:Key="DiskSizeConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         <DataTemplate x:Key="ItemTemplate">
-            <WrapPanel>
-                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" />
-                <TextBlock Margin="5,0,0,0" Text="{Binding Label}" />
-                <TextBlock Margin="5,0,0,0" Text="{Binding Format}" />
-                <TextBlock Margin="5,0,0,0" Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço {0}}" />
-                <TextBlock Margin="5,0,0,0" Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço Utilizado: {0}}" />
-            </WrapPanel>
+            <Border Padding="4,4">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="0,0,0,0"
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Text="{Binding Name}" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Text="{Binding Label}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,0,0,0" Text="{Binding Format, StringFormat=Formato: {0}}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço {0}}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço Utilizado: {0}}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
@@ -184,7 +198,7 @@
                     </Grid>
                     <Grid Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
@@ -194,7 +208,14 @@
                         </Grid.Resources>
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading2}">Discos</TextBlock>
-                            <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}" />
+                            <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Focusable" Value="False" />
+                                        <Setter Property="IsHitTestVisible" Value="False" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
                             <Button Margin="0,8,0,0" Command="{Binding RefreshDisksCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <iconPacks:PackIconControl
@@ -230,8 +251,6 @@
                                                     Margin="0,0,8,0"
                                                     VerticalAlignment="Top"
                                                     Kind="{Binding Icon}" />
-
-
                                                 <StackPanel Grid.Column="1">
                                                     <TextBlock
                                                         FontWeight="Bold"
@@ -239,13 +258,19 @@
                                                         TextTrimming="CharacterEllipsis" />
                                                     <TextBlock
                                                         FontSize="12"
-                                                        Foreground="Gray"
+                                                        Foreground="#747474"
                                                         Text="{Binding Description}"
                                                         TextWrapping="Wrap" />
                                                 </StackPanel>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="Focusable" Value="False" />
+                                            <Setter Property="IsHitTestVisible" Value="False" />
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
                                 </ListBox>
                             </Grid>
                         </StackPanel>
