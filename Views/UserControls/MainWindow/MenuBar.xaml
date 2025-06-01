@@ -20,7 +20,6 @@
                             <Border
                                 x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
-                                Background="{DynamicResource AppBackground}"
                                 BorderThickness="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -71,6 +70,7 @@
                                 PopupAnimation="Fade">
                                 <Border
                                     Padding="0"
+                                    Background="#da1f1f1f"
                                     BorderBrush="#404040"
                                     BorderThickness="1"
                                     SnapsToDevicePixels="True">
@@ -166,11 +166,9 @@
             <Separator />
             <MenuItem
                 x:Name="EnableSchoolFeatureCheckbox"
-                d:DataContext="{d:DesignInstance Type=local:SchoolDataContext}"
-                Command="{Binding ToggleSchoolFeatureCommand}"
                 Header="_Ativar Ferramentas Escolares"
                 IsCheckable="True"
-                IsChecked="{Binding IsEnabled}" />
+                IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
         </MenuItem>
         <MenuItem Header="_Avançado">
             <MenuItem Header="_Gestão de Software">

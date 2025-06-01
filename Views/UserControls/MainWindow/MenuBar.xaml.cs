@@ -26,42 +26,68 @@ namespace Celer.Views.UserControls.MainWindow
 
         public partial class SchoolDataContext : ObservableObject
         {
-            [ObservableProperty]
-            private bool isEnabled = MainConfiguration.Default.EnableSchoolFeatures;
-
-            public SchoolDataContext () {
-            }
-
-            [RelayCommand]
-            private void ToggleSchoolFeature()
+            private bool _isEnabled;
+            public bool IsEnabled
             {
-                if(MainConfiguration.Default.EnableSchoolFeatures)
+                get => _isEnabled;
+                set
                 {
-                    MainConfiguration.Default.EnableSchoolFeatures = false;
-                    MainConfiguration.Default.Save();
-                }
-                else
-                {
-                    var dialog = new SchoolKeyDialog
-                    {
-                        Owner = Application.Current.MainWindow
-                    };
+                    if (_isEnabled == value)
+                        return;
 
-                    if (dialog.ShowDialog() == true)
+                    // Desativar: sempre permitido
+                    if (value == false)
                     {
-                        if (dialog.EnteredText == "a-tua-chave-correta")
+                        _isEnabled = false;
+                        MainConfiguration.Default.EnableSchoolFeatures = false;
+                        MainConfiguration.Default.Save();
+                        OnPropertyChanged();
+                    }
+                    else // Ativar: requer validação
+                    {
+                        var dialog = new SchoolKeyDialog
                         {
-                            MainConfiguration.Default.EnableSchoolFeatures = true;
-                            MainConfiguration.Default.Save();
+                            Owner = Application.Current.MainWindow
+                        };
+
+                        if (dialog.ShowDialog() == true)
+                        {
+                            if (dialog.EnteredText == Secrets.Default.SchoolProvisionKey1 || dialog.EnteredText == Secrets.Default.SchoolProvisionKey2 || dialog.EnteredText == Secrets.Default.SchoolProvisionKey3)
+                            {
+                                _isEnabled = true;
+                                MainConfiguration.Default.EnableSchoolFeatures = true;
+                                MainConfiguration.Default.Save();
+                                OnPropertyChanged();
+                            }
+                            else
+                            {
+                                MessageBox.Show("A chave não está correta ou o modelo do equipamento não é compatível.",
+                                    "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                                // Rejeitar a mudança
+                                Application.Current.Dispatcher.InvokeAsync(() =>
+                                {
+                                    OnPropertyChanged(nameof(IsEnabled));
+                                });
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("A chave não está correta ou o model do equipamento não é compatível.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                            // Cancelado pelo utilizador, revertendo visualmente
+                            Application.Current.Dispatcher.InvokeAsync(() =>
+                            {
+                                OnPropertyChanged(nameof(IsEnabled));
+                            });
                         }
                     }
                 }
-                
             }
+
+
+            public SchoolDataContext()
+            {
+            }
+
 
         }
 
@@ -86,26 +112,26 @@ namespace Celer.Views.UserControls.MainWindow
         /// <param name="window">Object of the desired window to open</param>
         private static void OpenWindow<T>() where T : Window, new()
         {
-                Window? window = Application.Current.Windows.OfType<T>().FirstOrDefault();
-                if (window == null || !window.IsVisible)
-                {
+            Window? window = Application.Current.Windows.OfType<T>().FirstOrDefault();
+            if (window == null || !window.IsVisible)
+            {
                 window = new T
                 {
                     Owner = Application.Current.MainWindow
                 };
                 window.ShowDialog();
-                    window.Closed += (s, args) => window = null;
-                }
-                else
-                {
-                    window.Activate();
-                }
+                window.Closed += (s, args) => window = null;
+            }
+            else
+            {
+                window.Activate();
+            }
         }
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Close();
-     
+
         }
     }
 
