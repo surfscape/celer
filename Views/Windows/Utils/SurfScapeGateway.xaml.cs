@@ -15,7 +15,7 @@ namespace Celer.Views.Windows.Utils
         public SurfScapeGateway()
         {
             InitializeComponent();
-            _viewModel = new SurfScapeGatewayViewModel { IsDone =  Close };
+            _viewModel = new SurfScapeGatewayViewModel { IsDone = Close };
             DataContext = _viewModel;
             Loaded += SurfScapeGateway_Loaded;
         }
@@ -33,7 +33,7 @@ namespace Celer.Views.Windows.Utils
             public SurfScapeGatewayViewModel()
             {
                 CurrentTask = "A iniciar Celer...";
-                
+
             }
 
             public async Task InitializeAsync()

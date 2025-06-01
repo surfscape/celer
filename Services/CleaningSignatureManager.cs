@@ -26,7 +26,8 @@ namespace Celer.Services
                     return true;
                 }
             }
-            catch { 
+            catch
+            {
             }
             return false;
         }

@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Translations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="DynamicAero2" Version="1.2.1" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
@@ -76,6 +72,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Signatures.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\UserControls\MainApp\ManutencaoViews\" />
   </ItemGroup>
 
 </Project>

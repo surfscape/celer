@@ -2,7 +2,7 @@
 using Celer.Properties;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows; 
+using System.Windows;
 
 namespace Celer.Services
 {
@@ -89,7 +89,7 @@ namespace Celer.Services
 
             float cpuUsage = _cpuCounter.NextValue();
             Thread.Sleep(500);
-            cpuUsage = _cpuCounter.NextValue(); 
+            cpuUsage = _cpuCounter.NextValue();
 
             DispatchUpdateAlerts(() =>
             {
@@ -159,7 +159,8 @@ namespace Celer.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error getting process '{_watchedProcessName}': {ex.Message}");
-                DispatchUpdateAlerts(() => {
+                DispatchUpdateAlerts(() =>
+                {
                     var existing = _alerts.FirstOrDefault(a => a.Type == AlertType.Process);
                     if (existing != null) _alerts.Remove(existing);
                 });
@@ -177,7 +178,7 @@ namespace Celer.Services
                     {
 
                         using var counter = new PerformanceCounter("Process", "Working Set - Private", proc.ProcessName, true);
-                        counter.NextValue(); 
+                        counter.NextValue();
                         Thread.Sleep(100);
                         float memoryMB = counter.NextValue() / (1024f * 1024f);
 
@@ -201,7 +202,7 @@ namespace Celer.Services
                     }
                     catch (InvalidOperationException ex) when (ex.Message.Contains("Instance") && ex.Message.Contains("does not exist"))
                     {
- 
+
                         Debug.WriteLine($"Process instance for '{_watchedProcessName}' disappeared. {ex.Message}");
                         if (existing != null) _alerts.Remove(existing);
                     }

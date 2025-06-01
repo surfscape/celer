@@ -5,7 +5,7 @@ namespace Celer.Utilities
 {
     public static class AppExecution
     {
-    public static void RestartApplication()
+        public static void RestartApplication()
         {
             Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
