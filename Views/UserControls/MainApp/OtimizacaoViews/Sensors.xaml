@@ -1,15 +1,12 @@
 ﻿<UserControl
-    x:Class="Celer.Views.UserControls.MainApp.SubOtimização.Sensors"
+    x:Class="Celer.Views.UserControls.MainApp.OtimizacaoViews.Sensors"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.SubOtimização"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:subviews="clr-namespace:Celer.ViewModels.SubViews"
-    d:DataContext="{d:DesignInstance Type=subviews:SensorViewModel}"
+    xmlns:otimizacaovm="clr-namespace:Celer.ViewModels.OtimizacaoVM"
     mc:Ignorable="d">
-
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <ItemsControl ItemsSource="{Binding Categories}">
             <ItemsControl.ItemsPanel>
@@ -19,16 +16,16 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Expander IsExpanded="{Binding IsExpanded}" Margin="8">
+                    <Expander Margin="8" IsExpanded="{Binding IsExpanded}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconLucide
-                                Width="17"
-                                Height="17"
-                                Margin="0,0,8,0"
-                                VerticalAlignment="Center"
-                                Foreground="{DynamicResource SecondaryText}"
-                                Kind="{Binding Icon}" />
+                                    Width="17"
+                                    Height="17"
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SecondaryText}"
+                                    Kind="{Binding Icon}" />
                                 <TextBlock FontSize="17" Text="{Binding Name}" />
                             </StackPanel>
                         </Expander.Header>

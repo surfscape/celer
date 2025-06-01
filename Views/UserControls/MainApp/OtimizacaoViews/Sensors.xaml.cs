@@ -1,9 +1,9 @@
-﻿using Celer.Services;
-using Celer.ViewModels.SubViews;
+﻿using Celer.Interfaces;
+using Celer.ViewModels.OtimizacaoVM;
 using System.Windows.Controls;
 
 
-namespace Celer.Views.UserControls.MainApp.SubOtimização
+namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {
     /// <summary>
     /// Interaction logic for Sensors.xaml

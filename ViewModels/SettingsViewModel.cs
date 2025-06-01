@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Celer.Properties;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Celer.Properties;
 using System.Windows;
 
 namespace Celer.ViewModels
@@ -199,7 +199,7 @@ namespace Celer.ViewModels
         private bool CanApply() => HasUnsavedChanges;
 
 
-        [RelayCommand] 
+        [RelayCommand]
         private void Ok()
         {
             Save();
@@ -229,7 +229,7 @@ namespace Celer.ViewModels
                     RevertChanges();
                     CloseWindowAction?.Invoke();
                 }
-               
+
             }
             else
             {
@@ -260,7 +260,7 @@ namespace Celer.ViewModels
                 {
                     return true;
                 }
-                else 
+                else
                 {
                     return false;
                 }
@@ -293,6 +293,6 @@ namespace Celer.ViewModels
             {
                 Paths.Remove(pathToRemove);
             }
-        }   
+        }
     }
 }

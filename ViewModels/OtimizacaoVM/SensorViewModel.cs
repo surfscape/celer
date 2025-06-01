@@ -4,11 +4,11 @@ using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 
-namespace Celer.ViewModels.SubViews
+namespace Celer.ViewModels.OtimizacaoVM
 {
     public partial class SensorViewModel : ObservableObject
     {
-        public ObservableCollection<SensorCategoryViewModel> Categories { get; } = [];
+        public ObservableCollection<SensorCategoryModel> Categories { get; } = [];
 
         private Computer _computer;
 
@@ -40,7 +40,7 @@ namespace Celer.ViewModels.SubViews
             foreach (var hardware in _computer.Hardware)
             {
                 hardware.Update();
-                var category = new SensorCategoryViewModel(hardware.HardwareType.ToString());
+                var category = new SensorCategoryModel(hardware.HardwareType.ToString());
 
                 foreach (var sensor in hardware.Sensors)
                 {

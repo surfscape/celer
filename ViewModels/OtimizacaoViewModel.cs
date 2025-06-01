@@ -1,6 +1,6 @@
 ﻿using Celer.Models;
 using Celer.Services;
-using Celer.Views.UserControls.MainApp.SubOtimização;
+using Celer.Views.UserControls.MainApp.OtimizacaoViews;
 
 namespace Celer.ViewModels
 {
@@ -11,13 +11,14 @@ namespace Celer.ViewModels
 
         protected override Dictionary<string, NavigationSubView> SubViews => _views;
 
-        public OtimizacaoViewModel(NavigationService navigationService, MemoryManagement memoryView, Sensors sensors)
+        public OtimizacaoViewModel(NavigationService navigationService, MemoryManagement memoryView, Sensors sensorsView, Battery batteryView)
             : base(navigationService, "Otimizacao")
         {
             _views = new Dictionary<string, NavigationSubView>
             {
                 { "Memory", new NavigationSubView("Gestão de Memória", memoryView) },
-                { "Sensors", new NavigationSubView("Sensores", sensors) }
+                { "Battery", new NavigationSubView("Gestão de Bateria", batteryView) },
+                { "Sensors", new NavigationSubView("Sensores", sensorsView) }
             };
         }
     }

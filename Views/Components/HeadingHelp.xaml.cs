@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.Components { 
+namespace Celer.Views.Components
+{
     public partial class HeadingHelp : UserControl
     {
         public HeadingHelp()

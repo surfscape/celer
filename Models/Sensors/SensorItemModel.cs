@@ -3,7 +3,7 @@
 namespace Celer.Models.Sensors
 {
 
-    public partial class SensorItemViewModel : ObservableObject
+    public partial class SensorItemModel : ObservableObject
     {
         public string Name { get; }
 
@@ -12,7 +12,7 @@ namespace Celer.Models.Sensors
 
         private readonly LibreHardwareMonitor.Hardware.ISensor _sensor;
 
-        public SensorItemViewModel(LibreHardwareMonitor.Hardware.ISensor sensor)
+        public SensorItemModel(LibreHardwareMonitor.Hardware.ISensor sensor)
         {
             _sensor = sensor;
             Name = sensor.Name;

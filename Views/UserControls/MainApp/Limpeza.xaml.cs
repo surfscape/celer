@@ -14,8 +14,8 @@ namespace Celer.Views.UserControls.MainApp
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
-            
+
         }
-        
+
     }
 }

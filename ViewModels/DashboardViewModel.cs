@@ -1,4 +1,5 @@
 ﻿using Celer.Models;
+using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,8 +16,8 @@ public partial class DashboardViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private DispatcherTimer _timer;
-    private  PerformanceCounter _cpuCounter;
-    private  PerformanceCounter _availableMemoryCounter;
+    private PerformanceCounter _cpuCounter;
+    private PerformanceCounter _availableMemoryCounter;
 
     /// <summary>
     /// Used to track if the dashboard is loading data and to show a loading bar if true
@@ -74,7 +75,7 @@ public partial class DashboardViewModel : ObservableObject
     }
 
     public async Task InitializeAsync()
-    {        
+    {
         try
         {
             await Task.Run(() =>

@@ -3,33 +3,37 @@ using System.Collections.ObjectModel;
 
 namespace Celer.Models.Sensors
 {
-    public partial class SensorCategoryViewModel : ObservableObject
+    public partial class SensorCategoryModel : ObservableObject
     {
         public string? Name { get; }
         public MahApps.Metro.IconPacks.PackIconLucideKind Icon { get; }
 
-        public ObservableCollection<SensorItemViewModel> Sensors { get; } = new();
+        public ObservableCollection<SensorItemModel> Sensors { get; } = new();
 
         [ObservableProperty]
         private bool isExpanded = true;
 
-        public SensorCategoryViewModel(string name)
+        public SensorCategoryModel(string name)
         {
-            if(name == "Cpu")
+            if (name == "Cpu")
             {
                 Name = "Processador";
                 Icon = MahApps.Metro.IconPacks.PackIconLucideKind.Cpu;
             }
-            if(name == "Storage")
+            if (name == "Storage")
             {
                 Name = "Armazenamento";
                 Icon = MahApps.Metro.IconPacks.PackIconLucideKind.Cylinder;
+            }
+            else
+            {
+                Name = name;
             }
         }
 
         public void AddSensor(LibreHardwareMonitor.Hardware.ISensor sensor)
         {
-            Sensors.Add(new SensorItemViewModel(sensor));
+            Sensors.Add(new SensorItemModel(sensor));
         }
 
         public void Update()

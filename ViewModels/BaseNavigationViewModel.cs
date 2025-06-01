@@ -1,4 +1,5 @@
-﻿using Celer.Models;
+﻿using Celer.Interfaces;
+using Celer.Models;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

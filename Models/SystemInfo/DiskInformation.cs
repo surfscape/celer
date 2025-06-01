@@ -1,4 +1,4 @@
-﻿namespace Celer.Models
+﻿namespace Celer.Models.SystemInfo
 {
     public class DiskInformation
     {

@@ -1,15 +1,14 @@
 ﻿using Celer.Services;
 using Celer.ViewModels;
-using Celer.Views.UserControls.MainWindow;
+using Celer.ViewModels.OtimizacaoVM;
 using Celer.Views.UserControls.MainApp;
+using Celer.Views.UserControls.MainApp.OtimizacaoViews;
+using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
-using Celer.Views.UserControls.MainApp.SubOtimização;
-using Celer.Views.UserControls.MainApp.SubManutencao;
-using Celer.ViewModels.SubViews;
 
 namespace Celer;
 
@@ -34,23 +33,26 @@ public partial class App : Application
                 services.AddTransient<MenuBarNavigation>();
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<CleanEngine>();
+
+
                 services.AddTransient<OtimizacaoViewModel>();
                 services.AddTransient<MemoryManagement>();
-                services.AddTransient<ManutencaoViewModel>();
-                services.AddTransient<Battery>();
-                services.AddTransient<Sensors>();
+                services.AddTransient<BatteryViewModel>();
                 services.AddTransient<SensorViewModel>();
-                services.AddTransient<PrivacidadeViewModel>();
-                
 
+
+                services.AddTransient<ManutencaoViewModel>();
+                services.AddTransient<PrivacidadeViewModel>();
 
                 // usercontrols themselves (and other views that need access to the services)
+                services.AddTransient<MenuBar>();
                 services.AddTransient<Dashboard>();
                 services.AddTransient<Limpeza>();
                 services.AddTransient<Otimizacao>();
+                services.AddTransient<Battery>();
+                services.AddTransient<Sensors>();
                 services.AddTransient<Manutencao>();
                 services.AddTransient<Privacidade>();
-                services.AddTransient<MenuBar>();
             })
             .Build();
     }
@@ -79,7 +81,7 @@ public partial class App : Application
 
     protected override async void OnExit(ExitEventArgs e)
     {
-        if(AppHost != null)
+        if (AppHost != null)
         {
             await AppHost.StopAsync();
             AppHost.Dispose();

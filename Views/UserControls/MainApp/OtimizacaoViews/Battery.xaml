@@ -1,0 +1,100 @@
+﻿<UserControl
+    x:Class="Celer.Views.UserControls.MainApp.OtimizacaoViews.Battery"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:converters1="clr-namespace:Celer.Converters.Battery"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OtimizacaoViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:otimizacao="clr-namespace:Celer.ViewModels.OtimizacaoVM"
+    d:DataContext="{d:DesignInstance Type=otimizacao:BatteryViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters1:ChargingConverter x:Key="ChargingConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel
+                Margin="0,0,0,16"
+                Orientation="Vertical"
+                Visibility="{Binding HasBattery, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Style="{StaticResource Heading1}" Text="Estado da Bateria" />
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Margin" Value="0,0,0,8" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock
+                        FontSize="24"
+                        Foreground="white"
+                        Text="{Binding BatteryPercentage, StringFormat={}{0}%}" />
+                    <ProgressBar
+                        Height="16"
+                        Margin="0,0,0,8"
+                        Maximum="100"
+                        Minimum="0"
+                        Value="{Binding BatteryPercentage}" />
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="0,0,16,0" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock Text="{Binding IsCharging, StringFormat='Estado: {0}', Converter={StaticResource ChargingConverter}}" />
+                        <TextBlock Text="{Binding BatteryTimeRemaining, StringFormat='Tempo Restante: {0:g}'}" Visibility="{Binding IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
+                        <TextBlock Text="{Binding BatteryHealthPercentage, StringFormat='Saúde da Bateria: {0}%'}" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="Margin" Value="0,0,16,0" />
+                    </Style>
+                </Grid.Resources>
+                <Border Grid.Column="0">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource Heading1}" Text="Plano de Energia" />
+                        <ComboBox
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding PowerPlans}"
+                            SelectedItem="{Binding SelectedPowerPlan, Mode=TwoWay}" />
+                        <Button
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Left"
+                            Command="{Binding ApplyPowerPlanCommand}"
+                            Content="Aplicar" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Margin="0">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Heading1}" Text="Ações" />
+                        <StackPanel>
+                            <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
+                                <CheckBox.Content>
+                                    <StackPanel>
+                                        <TextBlock Foreground="White">Ativar arranque rápido (Fast Startup)</TextBlock>
+                                        <TextBlock TextWrapping="Wrap">Ignora a verifição de componentes do computador para acelarar a sua inicialização.</TextBlock>
+                                    </StackPanel>
+
+                                </CheckBox.Content>
+                            </CheckBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+
+        </StackPanel>
+    </Grid>
+</UserControl>

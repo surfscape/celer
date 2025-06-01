@@ -1,9 +1,8 @@
-﻿using Celer.Services;
+﻿using Celer.Models;
+using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Celer.Views.UserControls.MainApp.SubManutencao;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
-using Celer.Models;
 
 namespace Celer.ViewModels
 {
@@ -20,14 +19,13 @@ namespace Celer.ViewModels
 
         private readonly NavigationService _navigationService;
 
-        public ManutencaoViewModel(NavigationService navigationService, Battery batteryView)
+        public ManutencaoViewModel(NavigationService navigationService)
         {
             _navigationService = navigationService;
             _navigationService.Register("Manutencao", NavigateTo);
 
             _views = new Dictionary<string, NavigationSubView>
         {
-            { "Battery", new NavigationSubView("Estado da Bateria", batteryView) },
         };
 
             CurrentNamedView = null;

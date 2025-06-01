@@ -68,21 +68,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Top" />
                             </Style>
                         </UniformGrid.Resources>
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="Battery" />
-                                    <TextBlock FontSize="18" Foreground="White">Gestor de Bateria</TextBlock>
-                                </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Verifique o estado da bateria do computador (amperagem, saúde, e avisos)</TextBlock>
-                            </StackPanel>
-                        </Button>
+
                         <Button Command="{Binding NavigateCommand}" CommandParameter="SystemRepair">
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,4" Orientation="Horizontal">

@@ -9,9 +9,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <DynamicAero2:Theme Color="Dark" />
-                <ResourceDictionary Source="/Themes/DarkTheme.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
