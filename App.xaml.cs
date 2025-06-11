@@ -34,12 +34,11 @@ public partial class App : Application
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<CleanEngine>();
 
-
                 services.AddTransient<OtimizacaoViewModel>();
-                services.AddTransient<MemoryManagement>();
+                services.AddTransient<MemoryViewModel>();
                 services.AddTransient<BatteryViewModel>();
+                services.AddTransient<VideoViewModel>();
                 services.AddTransient<SensorViewModel>();
-
 
                 services.AddTransient<ManutencaoViewModel>();
                 services.AddTransient<PrivacidadeViewModel>();
@@ -49,7 +48,9 @@ public partial class App : Application
                 services.AddTransient<Dashboard>();
                 services.AddTransient<Limpeza>();
                 services.AddTransient<Otimizacao>();
+                services.AddTransient<MemoryManagement>();
                 services.AddTransient<Battery>();
+                services.AddTransient<Video>();
                 services.AddTransient<Sensors>();
                 services.AddTransient<Manutencao>();
                 services.AddTransient<Privacidade>();

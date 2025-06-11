@@ -1,0 +1,123 @@
+﻿<UserControl
+    x:Class="Celer.Views.UserControls.MainApp.OtimizacaoViews.Video"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OtimizacaoViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:otimizacaovm="clr-namespace:Celer.ViewModels.OtimizacaoVM"
+    d:DataContext="{d:DesignInstance Type=otimizacaovm:VideoViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BoolToGpuTypeConverter x:Key="BoolToGpuTypeConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar
+                    Width="200"
+                    Height="12"
+                    Margin="0,0,0,4"
+                    HorizontalAlignment="Center"
+                    IsIndeterminate="True" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Center"
+                    Text="A carregar dados" />
+            </StackPanel>
+        </Grid>
+        <StackPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
+            <DockPanel>
+                <TextBlock Style="{StaticResource Heading1}">GPU</TextBlock>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock Margin="0,0,12,0" VerticalAlignment="Center">GPU ativa:</TextBlock>
+                    <ComboBox
+                        Width="300"
+                        DisplayMemberPath="Name"
+                        ItemsSource="{Binding Gpus}"
+                        SelectedItem="{Binding SelectedGpu}" />
+                </StackPanel>
+            </DockPanel>
+            <Border Padding="0,0,0,8">
+                <UniformGrid Columns="5" DataContext="{Binding SelectedGpu}">
+                    <UniformGrid.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0,12,0,0" />
+                        </Style>
+                        <Style x:Key="Title" TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="17" />
+                            <Setter Property="FontWeight" Value="DemiBold" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </UniformGrid.Resources>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Marca" />
+                        <TextBlock Text="{Binding Manufacturer}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Modelo" />
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Driver" />
+                        <TextBlock Text="{Binding DriverVersion}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Tipo" />
+                        <TextBlock Text="{Binding IsInternal, Converter={StaticResource BoolToGpuTypeConverter}}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Versão do DirectX" />
+                        <TextBlock Text="{Binding DirectXVersion}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Versão do WDDM" />
+                        <TextBlock Text="{Binding WddmVersion}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="WHQL" />
+                        <TextBlock Text="{Binding IsWhqlLogoPresent}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="HDR Suportado: " />
+                        <TextBlock Text="{Binding SupportsHDR}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Paravirtualização: " />
+                        <TextBlock Text="{Binding SupportsParavirtualization}" />
+                    </StackPanel>
+                </UniformGrid>
+            </Border>
+            <StackPanel DataContext="{Binding SelectedGpu}">
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Memória Total: " />
+                <TextBlock Text="{Binding MemoryTotalMb, StringFormat={}{0} MB}" />
+
+                <TextBlock FontWeight="Bold" Text="Memória Usada: " />
+                <TextBlock Text="{Binding MemoryUsedMb, StringFormat={}{0} MB}" />
+
+
+
+                <TextBlock FontWeight="Bold" Text="Memória Dedicada: " />
+                <TextBlock Text="{Binding DedicatedMemoryMb, StringFormat={}{0} MB}" />
+
+                <TextBlock FontWeight="Bold" Text="Memória Partilhada: " />
+                <TextBlock Text="{Binding SharedMemoryMb, StringFormat={}{0} MB}" />
+
+
+
+
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
