@@ -2,12 +2,156 @@
     x:Class="Celer.Views.UserControls.MainApp.OtimizacaoViews.MemoryManagement"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:otimizacaovm="clr-namespace:Celer.ViewModels.OtimizacaoVM"
+    d:DataContext="{d:DesignInstance Type=otimizacaovm:MemoryViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock>Test</TextBlock>
-    </Grid>
+    <UserControl.Resources>
+        <converters:BooleanToSlotTextConverter x:Key="BoolToSlotTextConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="Title" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="FontWeight" Value="DemiBold" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock Style="{StaticResource Heading1}">Estado de memória</TextBlock>
+        <UniformGrid Columns="3">
+            <UniformGrid.Resources>
+                <Style TargetType="{x:Type WrapPanel}">
+                    <Setter Property="Margin" Value="0,12,0,0" />
+                </Style>
+            </UniformGrid.Resources>
+            <StackPanel>
+                <TextBlock Style="{StaticResource Title}" Text="Memória Total" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.TotalMemoryMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Style="{StaticResource Title}" Text="Em Utilização" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.UsedMemoryMB, StringFormat='{}{0:F0} MB'}" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Style="{StaticResource Title}" Text="Velocidade" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.SpeedMHz, StringFormat='{}{0:F0} MHz'}" />
+            </StackPanel>
+        </UniformGrid>
+        <TextBlock
+            Margin="0,12,0,8"
+            FontSize="20"
+            FontWeight="Light"
+            Foreground="White">
+            Memória Virtual
+        </TextBlock>
+        <UniformGrid Columns="3">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Title}" Text="Total " />
+                    <StackPanel
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        ToolTip="O total de memória virtual nunca é exato já que altera consoante a utilização do sistema">
+                        <iconPacks:PackIconLucide
+                            Width="17"
+                            Height="17"
+                            Foreground="{DynamicResource SecondaryText}"
+                            Kind="CircleHelp" />
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.VirtualTotalMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Style="{StaticResource Title}" Text="Em Utilização " />
+                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.VirtualUsedMB, StringFormat='{}{0:F1} MB'}" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Style="{StaticResource Title}" Text="Utilização" />
+                <ProgressBar
+                    Height="16"
+                    Margin="0,4,0,0"
+                    VerticalAlignment="Center"
+                    Maximum="100"
+                    Value="{Binding Memory.VirtualUsagePercentage, Mode=OneWay}" />
+            </StackPanel>
+        </UniformGrid>
+        <Border
+            Margin="0,12,0,6"
+            BorderBrush="{DynamicResource Border}"
+            BorderThickness="0,1,0,0" />
+        <TextBlock Margin="0,2,0,8" Style="{StaticResource Heading2}">Ações</TextBlock>
+        <UniformGrid Margin="0,0,0,8" Columns="3">
+            <Button Margin="0,0,8,0" Command="{Binding CleanCacheCommand}">
+                <WrapPanel>
+                    <iconPacks:PackIconLucide
+                        Width="20"
+                        Height="20"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource SecondaryText}"
+                        Kind="Trash" />
+                    <TextBlock>Limpar Cache</TextBlock>
+                </WrapPanel>
+
+            </Button>
+            <Button Margin="0,0,8,0" Command="{Binding CompressMemoryCommand}">
+                <WrapPanel>
+                    <iconPacks:PackIconLucide
+                        Width="20"
+                        Height="20"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource SecondaryText}"
+                        Kind="HardDriveDownload" />
+                    <TextBlock>Comprimir Memória</TextBlock>
+                </WrapPanel>
+            </Button>
+            <Button Command="{Binding EditPagefileCommand}">
+                <WrapPanel>
+                    <iconPacks:PackIconLucide
+                        Width="20"
+                        Height="20"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource SecondaryText}"
+                        Kind="Microchip" />
+                    <TextBlock>Editar memória virtual</TextBlock>
+                </WrapPanel>
+            </Button>
+        </UniformGrid>
+        <TextBlock Style="{StaticResource Heading2}">Slots de Memória</TextBlock>
+        <ItemsControl ItemsSource="{Binding Slots}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Expander Header="{Binding SlotNumber, StringFormat=Slot {0}}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,4,0,0">
+                            <TextBlock Text="{Binding IsOccupied, Converter={StaticResource BoolToSlotTextConverter}}" Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+                            <StackPanel Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="{Binding Manufacturer, StringFormat='Marca: {0}'}" />
+                                <TextBlock Text="{Binding Model, StringFormat='Modelo: {0}'}" />
+                                <TextBlock Text="{Binding SizeMB, StringFormat='Tamanho: {0} MB'}" />
+                                <TextBlock Text="{Binding FormFactor, StringFormat='Formato: {0}'}" />
+                                <TextBlock Text="{Binding MemoryType, StringFormat='Tipo: {0}'}" />
+                                <TextBlock Text="{Binding SerialNumber, StringFormat='Série: {0}'}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
 </UserControl>

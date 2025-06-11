@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Celer.ViewModels.OtimizacaoVM;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {
@@ -7,9 +8,10 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
     /// </summary>
     public partial class MemoryManagement : UserControl
     {
-        public MemoryManagement()
+        public MemoryManagement(MemoryViewModel memoryViewModel)
         {
             InitializeComponent();
+            DataContext = memoryViewModel;
         }
     }
 }
