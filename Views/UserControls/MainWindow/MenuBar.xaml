@@ -170,35 +170,46 @@
                 IsCheckable="True"
                 IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
         </MenuItem>
-        <MenuItem Header="_Avançado">
-            <MenuItem Header="_Gestão de Software">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Package" />
-                </MenuItem.Icon>
-            </MenuItem>
-        </MenuItem>
-        <MenuItem Header="_Ajuda">
-            <MenuItem Header="_Suporte">
+        <MenuItem x:Name="AboutMenu" Header="_Ajuda">
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://surfscape.neocities.org/support"
+                Header="_Suporte">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="LifeBuoy" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="_Guia de Utilizador" />
-            <MenuItem Header="_Discord">
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://surfscape.github.io/tidepool/projects/celer/"
+                Header="_Guia de Utilizador" />
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://discord.gg/dY4GSudRxv"
+                Header="_Discord">
                 <MenuItem.Icon>
                     <iconPacks:PackIconBootstrapIcons Foreground="{DynamicResource SecondaryText}" Kind="Discord" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="_Formulário de Feedback">
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/jryIYOly60yYlx1sMiUFvgfa5JML2QV4aLDfPNDeags/"
+                Header="_Formulário de Feedback">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="HandHelping" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="_Relatar Erros" />
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/C1r1yBjeghM5pg1Nzc4s050GsWA18ZKGQ83FNlAQ0zo/"
+                Header="_Relatar Erros" />
             <Separator />
-            <MenuItem Header="_Estado de Serviços" />
-            <MenuItem Header="_Sobre">
+            <MenuItem
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://surfscape.github.io/services/status/"
+                Header="_Estado de Serviços" />
+            <MenuItem Command="{Binding OpenAboutWindow}" Header="_Sobre">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Info" />
                 </MenuItem.Icon>

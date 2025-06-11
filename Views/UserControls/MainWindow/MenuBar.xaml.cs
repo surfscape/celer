@@ -5,6 +5,7 @@ using Celer.Views.Windows.Dialogs;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,6 +23,35 @@ namespace Celer.Views.UserControls.MainWindow
             _menuBarNavigation = menuBarNavigation;
             NavigationMenu.DataContext = _menuBarNavigation;
             EnableSchoolFeatureCheckbox.DataContext = new SchoolDataContext();
+            AboutMenu.DataContext = new AboutDataContext();
+        }
+
+        public partial class AboutDataContext : ObservableObject
+        {
+            [RelayCommand]
+            private void OpenLink(string url)
+            {
+                if (!string.IsNullOrEmpty(url))
+                {
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = url,
+                            UseShellExecute = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                       Debug.WriteLine("Erro ao abrir link: " + ex.Message);
+                    }
+                }
+            }
+
+            public AboutDataContext()
+            {
+
+            }
         }
 
         public partial class SchoolDataContext : ObservableObject
@@ -35,7 +65,6 @@ namespace Celer.Views.UserControls.MainWindow
                     if (_isEnabled == value)
                         return;
 
-                    // Desativar: sempre permitido
                     if (value == false)
                     {
                         _isEnabled = false;
@@ -43,7 +72,7 @@ namespace Celer.Views.UserControls.MainWindow
                         MainConfiguration.Default.Save();
                         OnPropertyChanged();
                     }
-                    else // Ativar: requer validação
+                    else
                     {
                         var dialog = new SchoolKeyDialog
                         {
@@ -73,7 +102,6 @@ namespace Celer.Views.UserControls.MainWindow
                         }
                         else
                         {
-                            // Cancelado pelo utilizador, revertendo visualmente
                             Application.Current.Dispatcher.InvokeAsync(() =>
                             {
                                 OnPropertyChanged(nameof(IsEnabled));
@@ -83,11 +111,9 @@ namespace Celer.Views.UserControls.MainWindow
                 }
             }
 
-
             public SchoolDataContext()
             {
             }
-
 
         }
 
