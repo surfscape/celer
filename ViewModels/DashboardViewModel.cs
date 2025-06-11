@@ -2,6 +2,7 @@
 using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
+using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -287,7 +288,7 @@ public partial class DashboardViewModel : ObservableObject
 
                 if (xml.Contains("DDIVersion"))
                 {
-                    GpuDirectXVersion = ExtractXmlValue(xml, "DDIVersion");
+                    GpuDirectXVersion = XML.ExtractXmlValue(xml, "DDIVersion");
                 }
             }
             while (!File.Exists(dxdiagPath) || proc.HasExited);
@@ -324,16 +325,6 @@ public partial class DashboardViewModel : ObservableObject
         }
 
         return usage;
-    }
-
-    private static string ExtractXmlValue(string xml, string key)
-    {
-        int idx = xml.IndexOf(key, StringComparison.OrdinalIgnoreCase);
-        if (idx < 0) return "Unknown";
-
-        var snippet = xml.Substring(idx, 200);
-        var value = snippet.Split('>').Skip(1).FirstOrDefault()?.Split('<').FirstOrDefault();
-        return value?.Trim() ?? "Unknown";
     }
 
     [RelayCommand]
