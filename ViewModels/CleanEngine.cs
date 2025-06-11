@@ -7,28 +7,36 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Celer.ViewModels
 {
-    public partial class CleanEngine : ObservableObject
+public partial class CleanEngine : ObservableObject
     {
         [ObservableProperty] private ObservableCollection<CleanupCategory> categories = [];
         [ObservableProperty] private double totalFreedText = 0;
         [ObservableProperty] private bool canClean = AppGlobals.EnableCleanEngine;
         [ObservableProperty] private object? selectedItem;
 
-        public ObservableCollection<string> LogEntries { get; } = [];
+
+        public class LogBook()
+        {
+            public string? LogEntry { get; set; }
+            public SolidColorBrush LogColor { get; set; } = new SolidColorBrush(Colors.Gray);
+        }
+
+        public ObservableCollection<LogBook> LogEntries { get; } = [];
 
         public CleanEngine()
         {
             LoadJson();
         }
 
-        private void AddLog(string message)
+        private void AddLog(string message, Color foreground)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                LogEntries.Add(message);
+                LogEntries.Add(new LogBook { LogEntry = message, LogColor = new SolidColorBrush(foreground) });
             });
         }
 
@@ -38,22 +46,22 @@ namespace Celer.ViewModels
 
             if (!File.Exists(path))
             {
-                AddLog("Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações");
+                AddLog("Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações", Colors.Red);
                 AppGlobals.EnableCleanEngine = false;
                 return;
             }
 
             try
             {
-                AddLog("A carregar assinaturas...");
+                AddLog("A carregar assinaturas...", Colors.Green);
                 var json = File.ReadAllText(path);
                 ParseJson(json);
                 AppGlobals.EnableCleanEngine = true;
-                AddLog("Assinaturas carregadas com sucesso!");
+                AddLog("Assinaturas carregadas com sucesso!", Colors.YellowGreen);
             }
             catch (Exception e)
             {
-                AddLog($"Ocorreu um erro a carregar as assinaturas: {e.Message}");
+                AddLog($"Ocorreu um erro a carregar as assinaturas: {e.Message}", Colors.Red);
                 AppGlobals.EnableCleanEngine = false;
             }
         }
@@ -97,7 +105,7 @@ namespace Celer.ViewModels
 
             if (selectedItems.Count == 0)
             {
-                AddLog("É necessário selecionar pelo menos um item para iniciar a limpeza.");
+                AddLog("É necessário selecionar pelo menos um item para iniciar a limpeza.", Colors.Orange);
                 CanClean = true;
                 return;
             }
@@ -119,7 +127,7 @@ namespace Celer.ViewModels
 
             if (toClose.Count > 0)
             {
-                AddLog("É necessário fechar as seguintes aplicações para continuar:\n" + string.Join("\n", toClose));
+                AddLog("É necessário fechar as seguintes aplicações para continuar:\n" + string.Join("\n", toClose), Colors.Red);
                 return;
             }
 
@@ -129,7 +137,7 @@ namespace Celer.ViewModels
             await Task.Run(() =>
             {
                 CanClean = false;
-                AddLog("A iniciar Celer Cleaning Engine...");
+                AddLog("A iniciar Celer Cleaning Engine...", Colors.BlueViolet);
 
                 foreach (var item in selectedItems)
                 {
@@ -190,7 +198,7 @@ namespace Celer.ViewModels
             {
                 foreach (var line in log.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    LogEntries.Add(line);
+                    LogEntries.Add(new LogBook { LogEntry = line, LogColor = new SolidColorBrush(Colors.Green) });
                 }
             });
 
