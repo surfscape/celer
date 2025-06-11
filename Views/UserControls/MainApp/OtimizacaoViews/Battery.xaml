@@ -17,7 +17,22 @@
         <converters1:ChargingConverter x:Key="ChargingConverter" />
     </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar
+                    Width="200"
+                    Height="12"
+                    Margin="0,0,0,4"
+                    HorizontalAlignment="Center"
+                    IsIndeterminate="True" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Center"
+                    Text="A carregar dados" />
+            </StackPanel>
+        </Grid>
+        <StackPanel Orientation="Vertical"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel
                 Margin="0,0,0,16"
                 Orientation="Vertical"
@@ -39,16 +54,50 @@
                         Maximum="100"
                         Minimum="0"
                         Value="{Binding BatteryPercentage}" />
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Resources>
+                    <Grid Margin="0,8">
+                        <Grid.Resources>
                             <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
                                 <Setter Property="Margin" Value="0,0,16,0" />
                             </Style>
-                        </StackPanel.Resources>
-                        <TextBlock Text="{Binding IsCharging, StringFormat='Estado: {0}', Converter={StaticResource ChargingConverter}}" />
-                        <TextBlock Text="{Binding BatteryTimeRemaining, StringFormat='Tempo Restante: {0:g}'}" Visibility="{Binding IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
-                        <TextBlock Text="{Binding BatteryHealthPercentage, StringFormat='Saúde da Bateria: {0}%'}" />
-                    </StackPanel>
+                        </Grid.Resources>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="{Binding IsCharging, StringFormat='Estado: {0}', Converter={StaticResource ChargingConverter}}" />
+                            <TextBlock Text="{Binding BatteryTimeRemaining, StringFormat='Tempo Restante: {0:g}'}" Visibility="{Binding IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
+                        </StackPanel>
+
+                        <Grid Grid.Column="1" Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0,0,0,4"
+                                Text="Saúde da Bateria" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar
+                                    Grid.Column="0"
+                                    Height="16"
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding BatteryHealthPercentage}" />
+                                <TextBlock Grid.Column="1" Text="{Binding BatteryHealthPercentage, StringFormat='{}{0}%'}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
                 </StackPanel>
             </StackPanel>
             <Grid>
@@ -78,7 +127,7 @@
                 <Border Grid.Column="1" Margin="0">
                     <StackPanel>
                         <TextBlock Style="{StaticResource Heading1}" Text="Ações" />
-                        <StackPanel>
+                        <StackPanel Margin="0,0,0,8">
                             <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
                                 <CheckBox.Content>
                                     <StackPanel>
@@ -88,7 +137,6 @@
 
                                 </CheckBox.Content>
                             </CheckBox>
-
                         </StackPanel>
                     </StackPanel>
                 </Border>
