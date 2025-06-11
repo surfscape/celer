@@ -1,27 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Windows;
 
 namespace Celer.Utilities
 {
     public class UserLand
     {
-        public static void OpenLink(string url)
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = url,
-                    UseShellExecute = true
-                });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to open link: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         public static bool IsInternetAvailable()
         {
             try
