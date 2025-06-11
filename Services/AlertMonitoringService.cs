@@ -1,12 +1,13 @@
 ﻿using Celer.Models;
 using Celer.Properties;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 
 namespace Celer.Services
 {
-    public class AlertMonitoringService
+    public partial class AlertMonitoringService : ObservableObject
     {
         private readonly ObservableCollection<AlertModel> _alerts;
         private readonly PerformanceCounter _cpuCounter;
@@ -15,9 +16,12 @@ namespace Celer.Services
         private readonly string _watchedProcessName;
         private readonly float _processMemoryThresholdMB;
 
-        private readonly bool _isCpuTrackingEnabled;
-        private readonly bool _isMemoryTrackingEnabled;
-        private readonly bool _isProcessTrackingEnabled;
+        [ObservableProperty]
+        private  bool _isCpuTrackingEnabled;
+        [ObservableProperty]
+        private  bool _isMemoryTrackingEnabled;
+        [ObservableProperty]
+        private  bool _isProcessTrackingEnabled;
 
 
         public AlertMonitoringService(ObservableCollection<AlertModel> alerts)
