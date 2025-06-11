@@ -12,39 +12,38 @@
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
     </UserControl.Resources>
-    <Border Padding="12,6">
+    <Border Padding="16,8">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Border
-                Margin="0,0,0,6"
-                Padding="0,0,0,6"
-                BorderBrush="Gray"
+                Padding="0,0,0,16"
+                BorderBrush="{StaticResource Border}"
                 BorderThickness="0,0,0,1">
                 <StackPanel>
                     <TextBlock Style="{StaticResource Heading1}">Limpeza</TextBlock>
                     <TextBlock Style="{StaticResource Subheading}">Limpe ficheiros desnecessários, lixo, e otimize base de dados de aplicações</TextBlock>
                 </StackPanel>
             </Border>
-            <Grid Grid.Row="1" Margin="0,4,0,0">
+            <Grid Grid.Row="1" Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
-                    <Border BorderBrush="Gray" BorderThickness="0,0,1,0">
+                    <Border BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,0" Padding="0,8,0,0">
                         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Categories}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Expander
-                                            Margin="0,0,0,10"
-                                            Header="{Binding Name}"
+                                            Margin="0,0,0,6"
                                             IsExpanded="True">
-
-
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="15"/>
+                                            </Expander.Header>
                                             <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding Items}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
@@ -53,12 +52,10 @@
                                                                 VerticalAlignment="Center"
                                                                 Content="{Binding Name}"
                                                                 IsChecked="{Binding IsChecked}" />
-
                                                         </DockPanel>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-
                                         </Expander>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -66,28 +63,38 @@
                         </ScrollViewer>
                     </Border>
                 </DockPanel>
-                <DockPanel Grid.Column="1" Margin="10,0,0,0">
+                <DockPanel Grid.Column="1" Margin="8,2,0,0">
                     <StackPanel Orientation="Vertical">
                         <TextBlock
-                            Margin="0,0,0,5"
+                            Margin="0,0,0,8"
                             Style="{DynamicResource Heading2}"
                             Text="Registo" />
                         <ListBox
                             Name="LogListBox"
                             Height="300"
                             ItemsSource="{Binding LogEntries}"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             VirtualizingStackPanel.IsVirtualizing="True"
                             VirtualizingStackPanel.VirtualizationMode="Standard">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Foreground="{Binding LogColor}"
+                                        Text="{Binding LogEntry}"
+                                        TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <TextBlock
-                            Margin="0,10,0,10"
-                            FontWeight="Bold"
+                            Margin="0,8"
+                            FontWeight="DemiBold"
+                            Foreground="{StaticResource PrimaryText}"
                             Text="{Binding TotalFreedText, Converter={StaticResource MemorySizeConverter}, StringFormat=Espaço libertado: {0}}" />
                         <Button
                             Width="100"

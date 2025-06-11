@@ -19,12 +19,12 @@
                 <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
             </Style>
         </TabControl.Resources>
-        <TabItem>
+        <TabItem HorizontalContentAlignment="Left">
             <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
+                <DockPanel>
                     <iconPacks:PackIconLucide Kind="Settings" />
                     <TextBlock>Overview</TextBlock>
-                </StackPanel>
+                </DockPanel>
             </TabItem.Header>
             <Border Padding="12,6">
                 <StackPanel

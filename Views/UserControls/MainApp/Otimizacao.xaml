@@ -12,7 +12,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
     <UserControl.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
@@ -20,20 +19,20 @@
     <Border>
         <StackPanel>
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Border BorderBrush="Gray" BorderThickness="0,0,0,1">
+                <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1">
                     <StackPanel Orientation="Horizontal">
                         <Button
                             Margin="0,0,8,0"
-                            Padding="14,8"
+                            Padding="16,8"
                             HorizontalAlignment="Center"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Main"
                             Style="{StaticResource TransparentButton}">
                             <iconPacks:PackIconLucide
                                 Margin="0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource SecondaryText}"
-                                    Kind="ArrowLeft" />
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource SecondaryText}"
+                                Kind="ArrowLeft" />
                         </Button>
                         <TextBlock
                             VerticalAlignment="Center"
@@ -47,16 +46,16 @@
                     <ContentControl Content="{Binding CurrentView}" />
                 </Border>
             </StackPanel>
-            <Border Padding="12,8">
+            <Border Padding="16,8">
                 <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border
-                        Margin="0,0,0,6"
-                        Padding="0,0,0,6"
-                        BorderBrush="Gray"
+                        Margin="0,0,0,8"
+                        Padding="0,0,0,16"
+                        BorderBrush="{StaticResource Border}"
                         BorderThickness="0,0,0,1">
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading1}">Otimização</TextBlock>
@@ -77,15 +76,15 @@
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                         <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="Battery" />
-                                        <TextBlock FontSize="18" Foreground="White">Gestor de Bateria</TextBlock>
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="Battery" />
+                                        <TextBlock FontSize="18" Foreground="White">Gestão de Energia</TextBlock>
                                     </StackPanel>
-                                    <TextBlock TextWrapping="Wrap">Verifique o estado da bateria do computador (amperagem, saúde, e avisos)</TextBlock>
+                                    <TextBlock TextWrapping="Wrap">Verifique o estado da bateria do computador (amperagem, saúde, e avisos) e altere planos de energia.</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Command="{Binding NavigateCommand}" CommandParameter="Memory">
@@ -103,7 +102,7 @@
                                     <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Startup">
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                         <iconPacks:PackIconLucide
@@ -118,7 +117,7 @@
                                     <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="Battery">
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Video">
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                         <iconPacks:PackIconBootstrapIcons

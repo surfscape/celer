@@ -19,7 +19,6 @@
 
     <Border Padding="12,6">
         <StackPanel>
-
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Button

@@ -23,9 +23,11 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ContentControl Content="{Binding MenuBarControl}" />
+        <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1">
+            <ContentControl Content="{Binding MenuBarControl}" />
+        </Border>
         <Border Grid.Row="1">
-            <Grid Margin="0,4,0,0">
+            <Grid Margin="0,0,0,0">
                 <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTab}">
                     <TabControl.Resources>
                         <Style TargetType="{x:Type iconPacks:PackIconLucide}">

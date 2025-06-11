@@ -15,6 +15,7 @@
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
         <converters:DiskSizeConverter x:Key="DiskSizeConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
         <DataTemplate x:Key="ItemTemplate">
             <Border Padding="4,4">
                 <StackPanel>
@@ -40,7 +41,6 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-
         <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ProgressBar
@@ -55,7 +55,6 @@
                     Text="A carregar dados" />
             </StackPanel>
         </Grid>
-
         <Grid
             xmlns:local2="clr-namespace:Celer.Views.Components"
             x:Name="MainContent"
@@ -64,15 +63,15 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <Border Padding="12,6">
+            <Border Padding="16,8">
                 <StackPanel
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Orientation="Vertical">
                     <Border
-                        Margin="0,0,0,6"
-                        Padding="0,0,0,6"
-                        BorderBrush="Gray"
+                        Margin="0,0,0,8"
+                        Padding="0,0,0,16"
+                        BorderBrush="{StaticResource Border}"
                         BorderThickness="0,0,0,1">
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading1}">Estado do Sistema</TextBlock>
@@ -96,6 +95,7 @@
                                 Margin="0,0,0,8"
                                 FontSize="14"
                                 FontWeight="DemiBold"
+                                Foreground="{DynamicResource PrimaryText}"
                                 Text="{Binding CpuName}"
                                 TextWrapping="Wrap" />
                             <Grid>
@@ -155,7 +155,10 @@
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <TextBlock Style="{StaticResource Heading2}" Text="GPU" />
-                            <TextBlock FontWeight="DemiBold" Text="{Binding GpuName}" />
+                            <TextBlock
+                                FontWeight="DemiBold"
+                                Foreground="{DynamicResource PrimaryText}"
+                                Text="{Binding GpuName}" />
                             <TextBlock Text="{Binding GpuVendor}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -184,7 +187,7 @@
                             <Button
                                 Margin="0,8,0,0"
                                 Command="{Binding NavigateToOptimizationCommand}"
-                                CommandParameter="Graphics">
+                                CommandParameter="Video">
                                 <StackPanel Orientation="Horizontal">
                                     <iconPacks:PackIconControl
                                         Margin="0,0,8,0"
@@ -236,7 +239,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <ListBox ItemsSource="{Binding Alerts}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox
+                                    ItemsSource="{Binding Alerts}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Margin="4">
@@ -250,15 +256,17 @@
                                                     Height="18"
                                                     Margin="0,0,8,0"
                                                     VerticalAlignment="Top"
+                                                    Foreground="#ff9e6a"
                                                     Kind="{Binding Icon}" />
                                                 <StackPanel Grid.Column="1">
                                                     <TextBlock
                                                         FontWeight="Bold"
+                                                        Foreground="{DynamicResource PrimaryText}"
                                                         Text="{Binding Title}"
                                                         TextTrimming="CharacterEllipsis" />
                                                     <TextBlock
                                                         FontSize="13"
-                                                        Foreground="#A4A4A4"
+                                                        Foreground="{DynamicResource SecondaryText}"
                                                         Text="{Binding Description}"
                                                         TextWrapping="Wrap" />
                                                 </StackPanel>
@@ -272,6 +280,7 @@
                                         </Style>
                                     </ListBox.ItemContainerStyle>
                                 </ListBox>
+                                <TextBlock Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=True}">Não existem alertas ativos</TextBlock>
                             </Grid>
                         </StackPanel>
                     </Grid>
@@ -279,12 +288,12 @@
             </Border>
             <Border
                 Grid.Row="1"
-                Padding="4,8,4,0"
+                Padding="12,8"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                BorderBrush="#353535"
+                BorderBrush="{DynamicResource Border}"
                 BorderThickness="0,1,0,0">
-                <DockPanel>
+                <DockPanel ToolTip="O tempo que a BIOS demora para inicar. Um valor muito alto (acima de 70 segundos) pode significar alguma falha/conflito de hardware.">
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
@@ -297,22 +306,7 @@
                             VerticalAlignment="Center"
                             Foreground="{DynamicResource SecondaryText}"
                             Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
-                        <TextBlock Text="{Binding PostTime, StringFormat=Tempo de POST: {0:F2} segundos}">
-                            <TextBlock.TextDecorations>
-                                <TextDecoration Location="Underline">
-                                    <TextDecoration.Pen>
-                                        <Pen Brush="White" Thickness="1">
-                                            <Pen.DashStyle>
-                                                <DashStyle Dashes="0,3" />
-                                            </Pen.DashStyle>
-                                        </Pen>
-                                    </TextDecoration.Pen>
-                                </TextDecoration>
-                            </TextBlock.TextDecorations>
-                            <TextBlock.ToolTip>
-                                <ToolTip>O tempo que a BIOS demora para inicar. Um valor muito alto (acima de 70 segundos) pode significar alguma falha/conflito de hardware.</ToolTip>
-                            </TextBlock.ToolTip>
-                        </TextBlock>
+                        <TextBlock Text="{Binding PostTime, StringFormat=Tempo de POST: {0:F2} segundos}" />
                     </StackPanel>
                 </DockPanel>
             </Border>
