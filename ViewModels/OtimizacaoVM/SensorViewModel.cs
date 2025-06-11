@@ -2,41 +2,61 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {
     public partial class SensorViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private bool isLoading = true;
         public ObservableCollection<SensorCategoryModel> Categories { get; } = [];
 
-        private Computer _computer;
+        private readonly Computer _computer = new Computer
+        {
+            IsCpuEnabled = true,
+            IsGpuEnabled = true,
+            IsMotherboardEnabled = true,
+            IsStorageEnabled = true,
+            IsMemoryEnabled = true
+        };
 
-        private readonly DispatcherTimer _updateTimer;
+        private DispatcherTimer _updateTimer = new()
+        {
+            Interval = TimeSpan.FromSeconds(1),
+        };
 
         public SensorViewModel()
         {
-            _computer = new()
-            {
-                IsCpuEnabled = true,
-                IsGpuEnabled = true,
-                IsMotherboardEnabled = true,
-                IsStorageEnabled = true,
-                IsMemoryEnabled = true
-            };
-            _computer.Open();
-            LoadSensors();
-
-            _updateTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1),
-            };
             _updateTimer.Tick += (_, _) => Update();
-            _updateTimer.Start();
+        }
+
+        public async Task Initialize()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    _computer.Open();
+                    LoadSensors();
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error initializing sensors: {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                IsLoading = false;
+                _updateTimer.Start();
+            }
         }
 
         private void LoadSensors()
         {
+            Application.Current.Dispatcher.Invoke(() => Categories.Clear());
+            
             foreach (var hardware in _computer.Hardware)
             {
                 hardware.Update();
@@ -49,7 +69,7 @@ namespace Celer.ViewModels.OtimizacaoVM
                 }
 
                 if (category.Sensors.Count > 0)
-                    Categories.Add(category);
+                    Application.Current.Dispatcher.Invoke(() => Categories.Add(category));
             }
         }
 
@@ -66,19 +86,8 @@ namespace Celer.ViewModels.OtimizacaoVM
         {
             if (!_updateTimer.IsEnabled)
             {
-                _computer = new()
-                {
-                    IsCpuEnabled = true,
-                    IsGpuEnabled = true,
-                    IsMotherboardEnabled = true,
-                    IsStorageEnabled = true,
-                    IsMemoryEnabled = true
-                };
                 _computer.Open();
-
-                Categories.Clear();
                 LoadSensors();
-
                 _updateTimer.Start();
             }
         }
