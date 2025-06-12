@@ -1,5 +1,5 @@
-﻿using Celer.ViewModels;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using Celer.ViewModels;
 
 namespace Celer.Views.UserControls.MainApp
 {
@@ -9,6 +9,7 @@ namespace Celer.Views.UserControls.MainApp
     public partial class Manutencao : UserControl
     {
         private readonly ManutencaoViewModel _viewModel;
+
         public Manutencao(ManutencaoViewModel viewModel)
         {
             InitializeComponent();

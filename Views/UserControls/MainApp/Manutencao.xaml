@@ -43,7 +43,7 @@
                             Text="{Binding CurrentViewName}" />
                     </StackPanel>
                 </Border>
-                <Border Padding="12,8">
+                <Border Padding="12">
                     <ContentControl Content="{Binding CurrentView}" />
                 </Border>
             </StackPanel>
@@ -74,7 +74,7 @@
                                 </Style>
                             </UniformGrid.Resources>
 
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="SystemRepair">
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Repair">
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
                                         <iconPacks:PackIconLucide

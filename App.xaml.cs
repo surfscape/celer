@@ -1,14 +1,16 @@
-﻿using Celer.Services;
+﻿using System.Windows;
+using Celer.Services;
 using Celer.ViewModels;
+using Celer.ViewModels.ManutencaoVM;
 using Celer.ViewModels.OtimizacaoVM;
 using Celer.Views.UserControls.MainApp;
+using Celer.Views.UserControls.MainApp.ManutencaoViews;
 using Celer.Views.UserControls.MainApp.OtimizacaoViews;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Windows;
 
 namespace Celer;
 
@@ -22,39 +24,44 @@ public partial class App : Application
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
-            {
-                // register main services, these include services that are used across the application and also the main window
-                services.AddSingleton<MainWindow>();
-                services.AddSingleton<NavigationService>();
-                services.AddSingleton<MainWindowViewModel>();
+            .ConfigureServices(
+                (context, services) =>
+                {
+                    // register main services, these include services that are used across the application and also the main window
+                    services.AddSingleton<MainWindow>();
+                    services.AddSingleton<NavigationService>();
+                    services.AddSingleton<MainWindowViewModel>();
 
-                // viewmodels for windows, tabs, and viewmodel (incl. usercontrols)
-                services.AddTransient<MenuBarNavigation>();
-                services.AddTransient<DashboardViewModel>();
-                services.AddTransient<CleanEngine>();
+                    // viewmodels for windows, tabs, and viewmodel (incl. usercontrols)
+                    services.AddTransient<MenuBarNavigation>();
+                    services.AddTransient<DashboardViewModel>();
+                    services.AddTransient<CleanEngine>();
 
-                services.AddTransient<OtimizacaoViewModel>();
-                services.AddTransient<MemoryViewModel>();
-                services.AddTransient<BatteryViewModel>();
-                services.AddTransient<VideoViewModel>();
-                services.AddTransient<SensorViewModel>();
+                    services.AddTransient<OtimizacaoViewModel>();
+                    services.AddTransient<MemoryViewModel>();
+                    services.AddTransient<BatteryViewModel>();
+                    services.AddTransient<VideoViewModel>();
+                    services.AddTransient<SensorViewModel>();
 
-                services.AddTransient<ManutencaoViewModel>();
-                services.AddTransient<PrivacidadeViewModel>();
+                    services.AddTransient<ManutencaoViewModel>();
+                    services.AddTransient<RepairViewModel>();
 
-                // usercontrols themselves (and other views that need access to the services)
-                services.AddTransient<MenuBar>();
-                services.AddTransient<Dashboard>();
-                services.AddTransient<Limpeza>();
-                services.AddTransient<Otimizacao>();
-                services.AddTransient<MemoryManagement>();
-                services.AddTransient<Battery>();
-                services.AddTransient<Video>();
-                services.AddTransient<Sensors>();
-                services.AddTransient<Manutencao>();
-                services.AddTransient<Privacidade>();
-            })
+                    services.AddTransient<PrivacidadeViewModel>();
+
+                    // usercontrols themselves (and other views that need access to the services)
+                    services.AddTransient<MenuBar>();
+                    services.AddTransient<Dashboard>();
+                    services.AddTransient<Limpeza>();
+                    services.AddTransient<Otimizacao>();
+                    services.AddTransient<MemoryManagement>();
+                    services.AddTransient<Battery>();
+                    services.AddTransient<Video>();
+                    services.AddTransient<Sensors>();
+                    services.AddTransient<Manutencao>();
+                    services.AddTransient<Repair>();
+                    services.AddTransient<Privacidade>();
+                }
+            )
             .Build();
     }
 
@@ -65,7 +72,12 @@ public partial class App : Application
 
         if (AppHost == null)
         {
-            MessageBox.Show("Erro ao inicializar AppHost. Por favor, reinicie a aplicação ou tenta fazer a sua reinstalação", "Erro de infrastutura", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(
+                "Erro ao inicializar AppHost. Por favor, reinicie a aplicação ou tenta fazer a sua reinstalação",
+                "Erro de infrastutura",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
             throw new InvalidOperationException("AppHost não foi inicializado");
         }
         if (onboarding)
@@ -92,4 +104,3 @@ public partial class App : Application
         base.OnExit(e);
     }
 }
-
