@@ -1,9 +1,10 @@
-﻿using Celer.Interfaces;
+﻿using System.Windows.Controls;
+using Celer.Interfaces;
 using Celer.Models;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Controls;
+
 namespace Celer.ViewModels
 {
     public abstract partial class BaseNavigationViewModel : ObservableObject
@@ -50,7 +51,6 @@ namespace Celer.ViewModels
                     newNav.OnNavigatedTo();
             }
         }
-
 
         partial void OnCurrentSubViewChanged(NavigationSubView? value)
         {

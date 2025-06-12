@@ -149,7 +149,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
                                         Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
-                                    <TextBlock>Abrir gestor de memória</TextBlock>
+                                    <TextBlock>Gestor de memória</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -194,7 +194,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
                                         Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
-                                    <TextBlock>Abrir gestor gráfico</TextBlock>
+                                    <TextBlock>Gestor gráfico</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>

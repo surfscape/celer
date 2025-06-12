@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 
-
 namespace Celer.Services.Energy
 {
     public class PowerPlan
@@ -51,7 +50,7 @@ namespace Celer.Services.Energy
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
             };
 
             using var process = Process.Start(startInfo);

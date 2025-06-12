@@ -2,15 +2,9 @@
 
 namespace Celer.Models
 {
-    public class NavigationSubView
+    public class NavigationSubView(string name, UserControl control)
     {
-        public string Name { get; }
-        public UserControl Control { get; }
-
-        public NavigationSubView(string name, UserControl control)
-        {
-            Name = name;
-            Control = control;
-        }
+        public string Name { get; } = name;
+        public UserControl Control { get; } = control;
     }
 }

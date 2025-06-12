@@ -1,6 +1,6 @@
-﻿using Celer.ViewModels;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
+using Celer.ViewModels;
 
 namespace Celer.Views.Windows
 {
@@ -16,7 +16,12 @@ namespace Celer.Views.Windows
             InitializeComponent();
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-            async Task<MessageBoxResult> value(string title, string message, MessageBoxButton buttons, MessageBoxImage icon)
+            async Task<MessageBoxResult> value(
+                string title,
+                string message,
+                MessageBoxButton buttons,
+                MessageBoxImage icon
+            )
             {
                 return MessageBox.Show(this, message, title, buttons, icon);
             }
@@ -25,9 +30,9 @@ namespace Celer.Views.Windows
             {
                 ShowDialogAsync = value,
                 CloseWindowAction = () =>
-                    {
-                        Close();
-                    }
+                {
+                    Close();
+                },
             };
 
             this.DataContext = _viewModel;
@@ -49,6 +54,5 @@ namespace Celer.Views.Windows
                 }
             }
         }
-
     }
 }

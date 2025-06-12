@@ -20,7 +20,9 @@ namespace Celer.Views.Windows.Dialogs
         {
             try
             {
-                using var searcher = new ManagementObjectSearcher("SELECT Manufacturer, Model FROM Win32_ComputerSystem");
+                using var searcher = new ManagementObjectSearcher(
+                    "SELECT Manufacturer, Model FROM Win32_ComputerSystem"
+                );
                 foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>())
                 {
                     string manufacturer = obj["Manufacturer"]?.ToString() ?? "Desconhecido";

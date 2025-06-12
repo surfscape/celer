@@ -1,14 +1,15 @@
-﻿using Celer.Properties;
-using System.IO;
+﻿using System.IO;
 using System.Net.Http;
-
+using Celer.Properties;
 
 namespace Celer.Services
 {
     public static class CleaningSignatureManager
     {
         private static readonly string LocalDbPath = "signatures.json";
-        private static readonly string DownloadUrl = MainConfiguration.Default.CLEANENGINE_DefaultSource;
+        private static readonly string DownloadUrl = MainConfiguration
+            .Default
+            .CLEANENGINE_DefaultSource;
 
         public static bool HasLocalDatabase() => File.Exists(LocalDbPath);
 
@@ -18,7 +19,6 @@ namespace Celer.Services
             {
                 using HttpClient client = new();
                 var response = await client.GetAsync(DownloadUrl);
-
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -26,11 +26,8 @@ namespace Celer.Services
                     return true;
                 }
             }
-            catch
-            {
-            }
+            catch { }
             return false;
         }
     }
-
 }

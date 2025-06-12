@@ -1,4 +1,9 @@
-﻿using Celer.Models;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Management;
+using System.Windows.Threading;
+using Celer.Models;
 using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
@@ -6,19 +11,15 @@ using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Management;
-using System.Windows.Threading;
 
 namespace Celer.ViewModels;
+
 public partial class DashboardViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
-    private DispatcherTimer _timer;
-    private PerformanceCounter _cpuCounter;
-    private PerformanceCounter _availableMemoryCounter;
+    private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
+    private PerformanceCounter? _cpuCounter;
+    private PerformanceCounter? _availableMemoryCounter;
 
     /// <summary>
     /// Used to track if the dashboard is loading data and to show a loading bar if true
@@ -27,7 +28,7 @@ public partial class DashboardViewModel : ObservableObject
     private bool isLoading = true;
 
     [ObservableProperty]
-    private string windowsVersion;
+    private string? windowsVersion;
 
     [ObservableProperty]
     private double postTime;
@@ -54,25 +55,43 @@ public partial class DashboardViewModel : ObservableObject
     /// <summary>
     /// CPU Data
     /// </summary>
-    [ObservableProperty] private string? cpuName;
-    [ObservableProperty] private double cpuClockSpeed;
-    [ObservableProperty] private int processCount;
-    [ObservableProperty] private int threadCount;
+    [ObservableProperty]
+    private string? cpuName;
+
+    [ObservableProperty]
+    private double cpuClockSpeed;
+
+    [ObservableProperty]
+    private int processCount;
+
+    [ObservableProperty]
+    private int threadCount;
 
     /// <summary>
     /// GPU Data
     /// </summary>
-    [ObservableProperty] private string? gpuName;
-    [ObservableProperty] private string? gpuVendor;
-    [ObservableProperty] private string gpuDriverVersion = "Unknown";
-    [ObservableProperty] private string gpuDirectXVersion = "Not Supported";
-    [ObservableProperty] private string gpuFeatureLevel = "Unavailable";
-    [ObservableProperty] private float gpuGeneralUsage;
+    [ObservableProperty]
+    private string? gpuName;
 
+    [ObservableProperty]
+    private string? gpuVendor;
+
+    [ObservableProperty]
+    private string gpuDriverVersion = "Unknown";
+
+    [ObservableProperty]
+    private string gpuDirectXVersion = "Not Supported";
+
+    [ObservableProperty]
+    private string gpuFeatureLevel = "Unavailable";
+
+    [ObservableProperty]
+    private float gpuGeneralUsage;
 
     public DashboardViewModel(NavigationService navigationService)
     {
         _navigationService = navigationService;
+        _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
     }
 
     public async Task InitializeAsync()
@@ -95,16 +114,11 @@ public partial class DashboardViewModel : ObservableObject
 
             GetDriveInfo();
 
-            _timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
-            _timer.Start();
-
-            if (MainConfiguration.Default.ALERTS_CPUTrackingEnable ||
-                MainConfiguration.Default.ALERTS_MemoryTrackingEnable ||
-                MainConfiguration.Default.ALERTS_EnableTrackProcess)
+            if (
+                MainConfiguration.Default.ALERTS_CPUTrackingEnable
+                || MainConfiguration.Default.ALERTS_MemoryTrackingEnable
+                || MainConfiguration.Default.ALERTS_EnableTrackProcess
+            )
             {
                 var alertService = new AlertMonitoringService(this.Alerts);
                 alertService.StartMonitoring();
@@ -117,6 +131,7 @@ public partial class DashboardViewModel : ObservableObject
         finally
         {
             IsLoading = false;
+            _timer.Start();
         }
     }
 
@@ -126,15 +141,32 @@ public partial class DashboardViewModel : ObservableObject
         {
             await Task.Run(async () =>
             {
-                AvailableMemory = _availableMemoryCounter.NextValue();
-                UsedMemory = TotalMemory - AvailableMemory;
-                CpuUsage = (float)Math.Round(_cpuCounter.NextValue(), 1);
-                ProcessCount = Process.GetProcesses().Length;
-                ThreadCount = Process.GetProcesses().Sum(p =>
+                if (_availableMemoryCounter != null)
                 {
-                    try { return p.Threads.Count; }
-                    catch { return 0; }
-                });
+                    AvailableMemory = _availableMemoryCounter.NextValue();
+                    UsedMemory = TotalMemory - AvailableMemory;
+                }
+
+                if (_cpuCounter != null)
+                {
+                    CpuUsage = (float)Math.Round(_cpuCounter.NextValue(), 1);
+                }
+
+                ProcessCount = Process.GetProcesses().Length;
+                ThreadCount = Process
+                    .GetProcesses()
+                    .Sum(p =>
+                    {
+                        try
+                        {
+                            return p.Threads.Count;
+                        }
+                        catch
+                        {
+                            return 0;
+                        }
+                    });
+
                 GpuGeneralUsage = await GetGpuUsageAsync();
             });
         }
@@ -148,10 +180,13 @@ public partial class DashboardViewModel : ObservableObject
     {
         try
         {
-            using var searcher = new ManagementObjectSearcher("SELECT Name, AdapterCompatibility, DriverVersion, AdapterRAM FROM Win32_VideoController");
+            using var searcher = new ManagementObjectSearcher(
+                "SELECT Name, AdapterCompatibility, DriverVersion, AdapterRAM FROM Win32_VideoController"
+            );
             var gpus = searcher.Get().Cast<ManagementObject>();
 
-            var activeGpu = gpus.OrderByDescending(g => Convert.ToUInt64(g["AdapterRAM"] ?? 0)).FirstOrDefault();
+            var activeGpu = gpus.OrderByDescending(g => Convert.ToUInt64(g["AdapterRAM"] ?? 0))
+                .FirstOrDefault();
             if (activeGpu != null)
             {
                 GpuName = activeGpu["Name"].ToString();
@@ -167,12 +202,13 @@ public partial class DashboardViewModel : ObservableObject
         }
     }
 
-
     private static double GetTotalMemory()
     {
         try
         {
-            using var searcher = new ManagementObjectSearcher("SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem");
+            using var searcher = new ManagementObjectSearcher(
+                "SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem"
+            );
             using var collection = searcher.Get();
             foreach (var item in collection)
             {
@@ -191,7 +227,9 @@ public partial class DashboardViewModel : ObservableObject
     {
         try
         {
-            using var searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem");
+            using var searcher = new ManagementObjectSearcher(
+                "SELECT Caption FROM Win32_OperatingSystem"
+            );
             using var collection = searcher.Get();
             foreach (var item in collection)
             {
@@ -209,7 +247,9 @@ public partial class DashboardViewModel : ObservableObject
     {
         try
         {
-            using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\Control\Session Manager\Power")!;
+            using RegistryKey key = Registry.LocalMachine.OpenSubKey(
+                @"System\CurrentControlSet\Control\Session Manager\Power"
+            )!;
             if (key != null)
             {
                 var o = key.GetValue("FwPOSTTime");
@@ -231,7 +271,9 @@ public partial class DashboardViewModel : ObservableObject
     {
         try
         {
-            using var searcher = new ManagementObjectSearcher("SELECT Name, MaxClockSpeed FROM Win32_Processor");
+            using var searcher = new ManagementObjectSearcher(
+                "SELECT Name, MaxClockSpeed FROM Win32_Processor"
+            );
             foreach (var item in searcher.Get())
             {
                 CpuName = item["Name"]?.ToString()?.Trim();
@@ -245,7 +287,6 @@ public partial class DashboardViewModel : ObservableObject
         }
     }
 
-
     private void GetDriveInfo()
     {
         DriveInfo[] allDrives = DriveInfo.GetDrives();
@@ -253,49 +294,55 @@ public partial class DashboardViewModel : ObservableObject
         {
             if (MainConfiguration.Default.DISKS_ShowHiddenDrives)
             {
-                DiskData.Add(new DiskInformation { Format = driveInfo.DriveFormat, Label = driveInfo.VolumeLabel, Name = driveInfo.Name, AvailableSpace = driveInfo.AvailableFreeSpace, Size = driveInfo.TotalSize, Type = driveInfo.DriveType.ToString(), UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace });
+                DiskData.Add(
+                    new DiskInformation
+                    {
+                        Format = driveInfo.DriveFormat,
+                        Label = driveInfo.VolumeLabel,
+                        Name = driveInfo.Name,
+                        AvailableSpace = driveInfo.AvailableFreeSpace,
+                        Size = driveInfo.TotalSize,
+                        Type = driveInfo.DriveType.ToString(),
+                        UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
+                    }
+                );
             }
             else
             {
                 if (driveInfo.IsReady)
                 {
-                    DiskData.Add(new DiskInformation { Format = driveInfo.DriveFormat, Label = driveInfo.VolumeLabel, Name = driveInfo.Name, AvailableSpace = driveInfo.AvailableFreeSpace, Size = driveInfo.TotalSize, Type = driveInfo.DriveType.ToString(), UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace });
+                    DiskData.Add(
+                        new DiskInformation
+                        {
+                            Format = driveInfo.DriveFormat,
+                            Label = driveInfo.VolumeLabel,
+                            Name = driveInfo.Name,
+                            AvailableSpace = driveInfo.AvailableFreeSpace,
+                            Size = driveInfo.TotalSize,
+                            Type = driveInfo.DriveType.ToString(),
+                            UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
+                        }
+                    );
                 }
             }
         }
-
     }
+
     private void LoadDxDiagInfo()
     {
-        string dxdiagPath = "dxdiag.xml";
         try
         {
-            var proc = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "dxdiag.exe",
-                    Arguments = "/x dxdiag.xml",
-                    UseShellExecute = true,
-                    CreateNoWindow = true
-                }
-            };
-            proc.Start();
+            string xml = File.ReadAllText("dxdiag.xml");
 
-            do
+            if (xml.Contains("DDIVersion"))
             {
-                string xml = File.ReadAllText(dxdiagPath);
-
-                if (xml.Contains("DDIVersion"))
-                {
-                    GpuDirectXVersion = XML.ExtractXmlValue(xml, "DDIVersion");
-                }
+                GpuDirectXVersion = XML.ExtractXmlValue(xml, "DDIVersion");
             }
-            while (!File.Exists(dxdiagPath) || proc.HasExited);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine("dxdiag failed: " + ex.Message);
+            Debug.WriteLine("Error loading DxDiag info: " + ex.Message);
+            GpuDirectXVersion = "N/A";
         }
     }
 
@@ -303,7 +350,8 @@ public partial class DashboardViewModel : ObservableObject
     {
         var category = new PerformanceCounterCategory("GPU Engine");
 
-        var instanceNames = category.GetInstanceNames()
+        var instanceNames = category
+            .GetInstanceNames()
             .Where(n => n.EndsWith("engtype_3D", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 

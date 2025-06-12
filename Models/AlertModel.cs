@@ -4,8 +4,9 @@
     {
         CPU,
         Memory,
-        Process
+        Process,
     }
+
     public class AlertModel
     {
         public AlertType Type { get; set; }

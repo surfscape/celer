@@ -18,10 +18,13 @@
             VerticalAlignment="Center"
             Background="Transparent"
             ToolTip="{Binding HelpText, ElementName=Root}">
-            <iconPacks:PackIconLucide
-                Foreground="{DynamicResource SecondaryText}"
-                Kind="CircleHelp"
-                Style="{StaticResource HeadingIcon}" />
+            <TextBlock Background="Transparent">
+    <iconPacks:PackIconLucide
+        Foreground="{DynamicResource SecondaryText}"
+        Kind="CircleHelp"
+        Style="{StaticResource HeadingIcon}" />
+            </TextBlock>
+
         </StackPanel>
     </StackPanel>
 </UserControl>

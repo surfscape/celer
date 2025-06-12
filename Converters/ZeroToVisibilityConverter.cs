@@ -12,7 +12,8 @@ namespace Celer.Converters
 
             bool invert = (parameter is string s && bool.TryParse(s, out bool p)) ? p : false;
 
-            if (!invert) {
+            if (!invert)
+            {
                 if (zeroValue > 0)
                 {
                     return Visibility.Visible;
@@ -20,10 +21,11 @@ namespace Celer.Converters
                 else
                 {
                     return Visibility.Collapsed;
-                } 
-            } else
+                }
+            }
+            else
             {
-                if(zeroValue > 0)
+                if (zeroValue > 0)
                 {
                     return Visibility.Collapsed;
                 }
@@ -32,10 +34,14 @@ namespace Celer.Converters
                     return Visibility.Visible;
                 }
             }
-                
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture
+        )
         {
             throw new NotImplementedException();
         }

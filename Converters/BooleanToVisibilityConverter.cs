@@ -8,8 +8,8 @@ namespace Celer.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool boolValue = (value is bool b) ? b : false;
-            bool invert = (parameter is string s && bool.TryParse(s, out bool p)) ? p : false;
+            bool boolValue = (value is bool b) && b;
+            bool invert = (parameter is string s && bool.TryParse(s, out bool p)) && p;
 
             if (invert)
             {
@@ -19,7 +19,12 @@ namespace Celer.Converters
             return boolValue ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture
+        )
         {
             throw new NotImplementedException();
         }

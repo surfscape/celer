@@ -1,31 +1,31 @@
-﻿using Celer.Services;
-using Celer.Utilities;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LibreHardwareMonitor.Hardware;
-using Microsoft.VisualBasic.Devices;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Management;
 using System.Windows;
 using System.Windows.Threading;
+using Celer.Services;
+using Celer.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LibreHardwareMonitor.Hardware;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {
     public partial class VideoViewModel : ObservableObject
     {
-        [ObservableProperty] private bool isLoading = true;
-        [ObservableProperty] private ObservableCollection<GpuInfo> gpus = [];
-        [ObservableProperty] private GpuInfo? selectedGpu;
-        
-        private readonly LibreHardwareMonitor.Hardware.Computer gpu = new LibreHardwareMonitor.Hardware.Computer
-        {
-            IsGpuEnabled = true
-        };
+        [ObservableProperty]
+        private bool isLoading = true;
+
+        [ObservableProperty]
+        private ObservableCollection<GpuInfo> gpus = [];
+
+        [ObservableProperty]
+        private GpuInfo? selectedGpu;
+
+        private readonly Computer gpu = new() { IsGpuEnabled = true };
 
         private readonly DispatcherTimer _gpuUpdateTimer = new()
         {
-            Interval = TimeSpan.FromSeconds(1)
+            Interval = TimeSpan.FromSeconds(1),
         };
 
         public VideoViewModel()
@@ -35,17 +35,19 @@ namespace Celer.ViewModels.OtimizacaoVM
 
         public async Task Initialize()
         {
-            Trace.WriteLine("ViewModel está a inicar");
             try
             {
                 gpu.Open();
                 await LoadGpusAsync();
-
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error initializing Celer video engine: {e.Message}",
-                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Error initializing Celer video engine: {e.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
             finally
             {
@@ -67,7 +69,8 @@ namespace Celer.ViewModels.OtimizacaoVM
             foreach (var gpu in wmiGpus)
             {
                 var dx = dxDiagGpus.FirstOrDefault(d =>
-                    gpu.Name.Contains(d.Name, StringComparison.OrdinalIgnoreCase));
+                    gpu.Name.Contains(d.Name, StringComparison.OrdinalIgnoreCase)
+                );
 
                 if (dx != null)
                 {
@@ -90,7 +93,9 @@ namespace Celer.ViewModels.OtimizacaoVM
         {
             var result = new List<GpuInfo>();
 
-            using var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
+            using var searcher = new ManagementObjectSearcher(
+                "SELECT * FROM Win32_VideoController"
+            );
             foreach (ManagementObject mo in searcher.Get())
             {
                 var name = mo["Name"]?.ToString() ?? "Desconhecido";
@@ -100,8 +105,16 @@ namespace Celer.ViewModels.OtimizacaoVM
                 UInt32? dedicated = null;
                 UInt32? shared = null;
 
-                try { dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024); } catch { }
-                try { shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024); } catch { }
+                try
+                {
+                    dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
+                }
+                catch { }
+                try
+                {
+                    shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
+                }
+                catch { }
 
                 var gpuInfo = new GpuInfo
                 {
@@ -112,8 +125,9 @@ namespace Celer.ViewModels.OtimizacaoVM
                     DedicatedMemoryMb = dedicated,
                     SharedMemoryMb = shared,
                     MemoryUsedMb = 0,
-                    IsInternal = name.Contains("intel", StringComparison.OrdinalIgnoreCase) ||
-                                 name.Contains("radeon graphics", StringComparison.OrdinalIgnoreCase)
+                    IsInternal =
+                        name.Contains("intel", StringComparison.OrdinalIgnoreCase)
+                        || name.Contains("radeon graphics", StringComparison.OrdinalIgnoreCase),
                 };
 
                 result.Add(gpuInfo);
@@ -129,41 +143,50 @@ namespace Celer.ViewModels.OtimizacaoVM
 
             try
             {
-                if (!File.Exists(path)) return list;
+                if (!File.Exists(path))
+                    return list;
 
                 var doc = File.ReadAllText(path);
 
-                list.Add(new GpuInfo
-                {
-                    Name = XML.ExtractXmlValue(doc, "CardName"),
-                    DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
-                    WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
-                    IsWhqlLogoPresent = XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
-                    SupportsHDR = XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
-                    SupportsParavirtualization = XML.ExtractXmlValue(doc, "VirtualGPUSupport")?.Contains("Paravirtualization") ?? false
-                });
+                list.Add(
+                    new GpuInfo
+                    {
+                        Name = XML.ExtractXmlValue(doc, "CardName"),
+                        DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
+                        WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
+                        IsWhqlLogoPresent =
+                            XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
+                        SupportsHDR =
+                            XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
+                        SupportsParavirtualization =
+                            XML.ExtractXmlValue(doc, "VirtualGPUSupport")
+                                ?.Contains("Paravirtualization") ?? false,
+                    }
+                );
             }
-            catch
-            {
-            }
+            catch { }
 
             return list;
         }
 
         private void UpdateGpuSensors()
         {
-
             gpu.Accept(new GpuMonitor());
 
-            foreach (var hw in gpu.Hardware.Where(h => h.HardwareType == HardwareType.GpuNvidia ||
-                                                       h.HardwareType == HardwareType.GpuAmd ||
-                                                       h.HardwareType == HardwareType.GpuIntel))
+            foreach (
+                var hw in gpu.Hardware.Where(h =>
+                    h.HardwareType == HardwareType.GpuNvidia
+                    || h.HardwareType == HardwareType.GpuAmd
+                    || h.HardwareType == HardwareType.GpuIntel
+                )
+            )
             {
                 hw.Update();
 
                 var matchedGpu = Gpus.FirstOrDefault(g =>
-                    hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase) ||
-                    g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase));
+                    hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase)
+                    || g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase)
+                );
 
                 if (matchedGpu is null)
                     continue;
@@ -175,7 +198,10 @@ namespace Celer.ViewModels.OtimizacaoVM
                         matchedGpu.GpuUsage = sensor.Value ?? 0;
                     }
 
-                    if (sensor.SensorType == SensorType.SmallData && sensor.Name.Contains("GPU Memory Used"))
+                    if (
+                        sensor.SensorType == SensorType.SmallData
+                        && sensor.Name.Contains("GPU Memory Used")
+                    )
                     {
                         matchedGpu.MemoryUsedMb = (ulong)(sensor.Value ?? 0);
                     }
@@ -202,8 +228,11 @@ namespace Celer.ViewModels.OtimizacaoVM
 
         public partial class GpuInfo : ObservableObject
         {
-            [ObservableProperty] private float gpuUsage;
-            [ObservableProperty] private ulong memoryUsedMb;
+            [ObservableProperty]
+            private float gpuUsage;
+
+            [ObservableProperty]
+            private ulong memoryUsedMb;
             public string Name { get; set; } = "Desconhecido";
             public string Manufacturer { get; set; } = "Desconhecido";
             public string DriverVersion { get; set; } = "0.0.0";

@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 
-
 namespace Celer.Views.Windows.Utils
 {
     /// <summary>

@@ -1,16 +1,10 @@
 ﻿namespace Celer.Models.SystemInfo
 {
-    class SystemInternalModel
+    class SystemInternalModel(double postTime, float cpuUsage, string windowsVersion)
     {
-        public double BiosBootUpTime { get; set; }
-        public float ProcessorUsage { get; set; }
+        public double BiosBootUpTime { get; set; } = postTime;
+        public float ProcessorUsage { get; set; } = cpuUsage;
 
-        public string WindowsVersion { get; set; }
-        public SystemInternalModel(double postTime, float cpuUsage, string windowsVersion)
-        {
-            BiosBootUpTime = postTime;
-            ProcessorUsage = cpuUsage;
-            WindowsVersion = windowsVersion;
-        }
+        public string WindowsVersion { get; set; } = windowsVersion;
     }
 }

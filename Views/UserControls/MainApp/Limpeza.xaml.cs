@@ -1,5 +1,5 @@
-﻿using Celer.ViewModels;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using Celer.ViewModels;
 
 namespace Celer.Views.UserControls.MainApp
 {
@@ -9,13 +9,12 @@ namespace Celer.Views.UserControls.MainApp
     public partial class Limpeza : UserControl
     {
         private readonly CleanEngine _viewModel;
+
         public Limpeza(CleanEngine viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
-
         }
-
     }
 }

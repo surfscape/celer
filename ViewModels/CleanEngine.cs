@@ -1,23 +1,29 @@
-﻿using Celer.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
+using Celer.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Celer.ViewModels
 {
-public partial class CleanEngine : ObservableObject
+    public partial class CleanEngine : ObservableObject
     {
-        [ObservableProperty] private ObservableCollection<CleanupCategory> categories = [];
-        [ObservableProperty] private double totalFreedText = 0;
-        [ObservableProperty] private bool canClean = AppGlobals.EnableCleanEngine;
-        [ObservableProperty] private object? selectedItem;
+        [ObservableProperty]
+        private ObservableCollection<CleanupCategory> categories = [];
 
+        [ObservableProperty]
+        private double totalFreedText = 0;
+
+        [ObservableProperty]
+        private object? selectedItem;
+
+        [ObservableProperty]
+        private bool canClean;
 
         public class LogBook()
         {
@@ -29,34 +35,56 @@ public partial class CleanEngine : ObservableObject
 
         public CleanEngine()
         {
-            LoadJson();
+            AppGlobals.EnableCleanEngineChanged += AppGlobals_EnableCleanEngineChanged;
+        }
+
+        private void AppGlobals_EnableCleanEngineChanged(object? sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CanClean = AppGlobals.EnableCleanEngine;
+            });
+        }
+
+        partial void OnCanCleanChanged(bool oldValue, bool newValue)
+        {
+            if (oldValue != newValue)
+            {
+                LoadJson();
+            }
         }
 
         private void AddLog(string message, Color foreground)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                LogEntries.Add(new LogBook { LogEntry = message, LogColor = new SolidColorBrush(foreground) });
+                LogEntries.Add(
+                    new LogBook { LogEntry = message, LogColor = new SolidColorBrush(foreground) }
+                );
             });
         }
 
         private void LoadJson()
         {
+            Categories.Clear();
             const string path = "signatures.json";
-
             if (!File.Exists(path))
             {
-                AddLog("Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações", Colors.Red);
+                AddLog(
+                    "Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações",
+                    Colors.Red
+                );
                 AppGlobals.EnableCleanEngine = false;
                 return;
             }
-
             try
             {
-                AddLog("A carregar assinaturas...", Colors.Green);
+                AddLog(
+                    "A carregar assinaturas...",
+                    (Color)Application.Current.Resources["SteelError"]
+                );
                 var json = File.ReadAllText(path);
                 ParseJson(json);
-                AppGlobals.EnableCleanEngine = true;
                 AddLog("Assinaturas carregadas com sucesso!", Colors.YellowGreen);
             }
             catch (Exception e)
@@ -79,18 +107,24 @@ public partial class CleanEngine : ObservableObject
 
                     if (name != null && path != null)
                     {
-                        items.Add(new CleanupItem
-                        {
-                            Name = name,
-                            Path = path,
-                            RequiredProcesses = [.. item.GetProperty("requiredProcesses").EnumerateArray().Select(p => p.GetString()!)],
-                            IsChecked = false
-                        });
+                        items.Add(
+                            new CleanupItem
+                            {
+                                Name = name,
+                                Path = path,
+                                RequiredProcesses =
+                                [
+                                    .. item.GetProperty("requiredProcesses")
+                                        .EnumerateArray()
+                                        .Select(p => p.GetString()!),
+                                ],
+                                IsChecked = false,
+                            }
+                        );
                     }
                 }
                 Categories.Add(new CleanupCategory { Name = cat.Name, Items = items });
             }
-            CanClean = true;
         }
 
         [RelayCommand]
@@ -105,12 +139,16 @@ public partial class CleanEngine : ObservableObject
 
             if (selectedItems.Count == 0)
             {
-                AddLog("É necessário selecionar pelo menos um item para iniciar a limpeza.", Colors.Orange);
-                CanClean = true;
+                AddLog(
+                    "É necessário selecionar pelo menos um item para iniciar a limpeza.",
+                    Colors.Orange
+                );
+                AppGlobals.EnableCleanEngine = true;
                 return;
             }
 
-            var runningProcs = Process.GetProcesses()
+            var runningProcs = Process
+                .GetProcesses()
                 .Select(p => p.ProcessName.ToLower())
                 .ToHashSet();
 
@@ -127,7 +165,11 @@ public partial class CleanEngine : ObservableObject
 
             if (toClose.Count > 0)
             {
-                AddLog("É necessário fechar as seguintes aplicações para continuar:\n" + string.Join("\n", toClose), Colors.Red);
+                AddLog(
+                    "É necessário fechar as seguintes aplicações para continuar:\n"
+                        + string.Join("\n", toClose),
+                    Colors.Red
+                );
                 return;
             }
 
@@ -136,8 +178,11 @@ public partial class CleanEngine : ObservableObject
 
             await Task.Run(() =>
             {
-                CanClean = false;
-                AddLog("A iniciar Celer Cleaning Engine...", Colors.BlueViolet);
+                AppGlobals.EnableCleanEngine = false;
+                AddLog(
+                    "A iniciar Celer Cleaning Engine...",
+                    (Color)Application.Current.Resources["SteelError"]
+                );
 
                 foreach (var item in selectedItems)
                 {
@@ -156,11 +201,17 @@ public partial class CleanEngine : ObservableObject
                                     freed += file.Length;
                                     file.Attributes = FileAttributes.Normal;
                                     file.Delete();
-                                    log.AppendLine($"Removido o ficheiro: {file.FullName}");
+                                    AddLog(
+                                        $"Removido o ficheiro: {file.FullName}",
+                                        Colors.YellowGreen
+                                    );
                                 }
                                 catch (Exception ex)
                                 {
-                                    log.AppendLine($"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}");
+                                    AddLog(
+                                        $"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}",
+                                        (Color)Application.Current.Resources["SteelError"]
+                                    );
                                 }
                             }
                             try
@@ -169,25 +220,30 @@ public partial class CleanEngine : ObservableObject
                             }
                             catch (Exception ex)
                             {
-                                log.AppendLine($"Falha ao apagar pasta: {resolvedPath}: {ex.Message}");
+                                AddLog(
+                                    $"Falha ao apagar pasta: {resolvedPath}: {ex.Message}",
+                                    (Color)Application.Current.Resources["SteelError"]
+                                );
                             }
                         }
                         else if (File.Exists(resolvedPath))
                         {
                             var fileInfo = new FileInfo(resolvedPath)
                             {
-                                Attributes = FileAttributes.Normal
+                                Attributes = FileAttributes.Normal,
                             };
                             freed += fileInfo.Length;
                             fileInfo.Delete();
-                            log.AppendLine($"Removido o ficheiro: {fileInfo.FullName}");
+                            AddLog($"Removido o ficheiro: {fileInfo.FullName}", Colors.YellowGreen);
                         }
-
-                        log.AppendLine($"Removido {resolvedPath} ({freed / 1024} KB)");
+                        AddLog($"Removido {resolvedPath} ({freed / 1024} KB)", Colors.YellowGreen);
                     }
                     catch (Exception ex)
                     {
-                        log.AppendLine($"Falha ao apagar {resolvedPath}: {ex.Message}");
+                        AddLog(
+                            $"Falha ao apagar {resolvedPath}: {ex.Message}",
+                            (Color)Application.Current.Resources["SteelError"]
+                        );
                     }
 
                     Interlocked.Add(ref totalFreed, freed);
@@ -196,9 +252,18 @@ public partial class CleanEngine : ObservableObject
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (var line in log.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+                foreach (
+                    var line in log.ToString()
+                        .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                )
                 {
-                    LogEntries.Add(new LogBook { LogEntry = line, LogColor = new SolidColorBrush(Colors.Green) });
+                    LogEntries.Add(
+                        new LogBook
+                        {
+                            LogEntry = line,
+                            LogColor = new SolidColorBrush(Colors.Green),
+                        }
+                    );
                 }
             });
 

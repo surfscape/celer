@@ -1,9 +1,9 @@
-﻿using Celer.Models.Sensors;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LibreHardwareMonitor.Hardware;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
+using Celer.Models.Sensors;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LibreHardwareMonitor.Hardware;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {
@@ -13,19 +13,16 @@ namespace Celer.ViewModels.OtimizacaoVM
         private bool isLoading = true;
         public ObservableCollection<SensorCategoryModel> Categories { get; } = [];
 
-        private readonly Computer _computer = new Computer
+        private readonly Computer _computer = new()
         {
             IsCpuEnabled = true,
             IsGpuEnabled = true,
             IsMotherboardEnabled = true,
             IsStorageEnabled = true,
-            IsMemoryEnabled = true
+            IsMemoryEnabled = true,
         };
 
-        private DispatcherTimer _updateTimer = new()
-        {
-            Interval = TimeSpan.FromSeconds(1),
-        };
+        private DispatcherTimer _updateTimer = new() { Interval = TimeSpan.FromSeconds(1) };
 
         public SensorViewModel()
         {
@@ -44,7 +41,12 @@ namespace Celer.ViewModels.OtimizacaoVM
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error initializing sensors: {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Error initializing sensors: {e.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
             finally
             {
@@ -56,7 +58,7 @@ namespace Celer.ViewModels.OtimizacaoVM
         private void LoadSensors()
         {
             Application.Current.Dispatcher.Invoke(() => Categories.Clear());
-            
+
             foreach (var hardware in _computer.Hardware)
             {
                 hardware.Update();

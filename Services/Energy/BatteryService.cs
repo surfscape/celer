@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Management;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace Celer.Services.Energy
@@ -37,9 +36,10 @@ namespace Celer.Services.Energy
                 info.IsCharging = Convert.ToUInt16(battery["BatteryStatus"]) is 2 or 6;
 
                 var runtime = Convert.ToUInt32(battery["EstimatedRunTime"]);
-                if(!info.IsCharging)
+                if (!info.IsCharging)
                 {
-                    info.EstimatedTime = runtime > 0 ? TimeSpan.FromMinutes(runtime) : TimeSpan.Zero;
+                    info.EstimatedTime =
+                        runtime > 0 ? TimeSpan.FromMinutes(runtime) : TimeSpan.Zero;
                 }
 
                 var report = GenerateBatteryReport();
@@ -53,24 +53,21 @@ namespace Celer.Services.Energy
             return info;
         }
 
-
         public string GenerateBatteryReport()
         {
             var reportPath = "batteryreport.xml";
 
             if (!File.Exists(reportPath))
             {
-
                 var psi = new ProcessStartInfo
                 {
                     FileName = "powercfg",
                     Arguments = $"/BATTERYREPORT /OUTPUT \"batteryreport.xml\" /XML",
                     UseShellExecute = false,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
                 };
                 Process.Start(psi)?.WaitForExit();
             }
-
 
             return reportPath;
         }
@@ -84,10 +81,9 @@ namespace Celer.Services.Energy
             return element?.Value;
         }
 
-
         public static int GetBatteryHealthPercentageFromReport(string reportPath)
         {
-            if(!File.Exists(reportPath))
+            if (!File.Exists(reportPath))
             {
                 Trace.WriteLine(":(");
                 return -1;
@@ -95,23 +91,19 @@ namespace Celer.Services.Energy
 
             var xml = File.ReadAllText(reportPath);
 
-
             var designStr = ExtractXmlValue(xml, "DesignCapacity");
             var fullStr = ExtractXmlValue(xml, "FullChargeCapacity");
 
-
-            if (double.TryParse(designStr, out var design) &&
-                double.TryParse(fullStr, out var full) &&
-                design > 0)
+            if (
+                double.TryParse(designStr, out var design)
+                && double.TryParse(fullStr, out var full)
+                && design > 0
+            )
             {
-                
-                return (int)((full / design) * 100);   
+                return (int)((full / design) * 100);
             }
 
             return -1;
         }
-
-
     }
-
 }

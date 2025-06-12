@@ -1,6 +1,6 @@
-﻿using Celer.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Celer.ViewModels;
 
 namespace Celer.Views.UserControls.MainApp
 {
@@ -10,6 +10,7 @@ namespace Celer.Views.UserControls.MainApp
     public partial class Dashboard : UserControl
     {
         private readonly DashboardViewModel _viewModel;
+
         public Dashboard(DashboardViewModel viewModel)
         {
             InitializeComponent();

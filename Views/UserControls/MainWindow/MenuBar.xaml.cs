@@ -1,13 +1,13 @@
-﻿using Celer.Properties;
+﻿using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using Celer.Properties;
 using Celer.Services;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Dialogs;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainWindow
 {
@@ -17,6 +17,7 @@ namespace Celer.Views.UserControls.MainWindow
     public partial class MenuBar : UserControl
     {
         private readonly MenuBarNavigation _menuBarNavigation;
+
         public MenuBar(MenuBarNavigation menuBarNavigation)
         {
             InitializeComponent();
@@ -35,23 +36,18 @@ namespace Celer.Views.UserControls.MainWindow
                 {
                     try
                     {
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = url,
-                            UseShellExecute = true
-                        });
+                        Process.Start(
+                            new ProcessStartInfo { FileName = url, UseShellExecute = true }
+                        );
                     }
                     catch (Exception ex)
                     {
-                       Debug.WriteLine("Erro ao abrir link: " + ex.Message);
+                        Debug.WriteLine("Erro ao abrir link: " + ex.Message);
                     }
                 }
             }
 
-            public AboutDataContext()
-            {
-
-            }
+            public AboutDataContext() { }
         }
 
         public partial class SchoolDataContext : ObservableObject
@@ -74,14 +70,15 @@ namespace Celer.Views.UserControls.MainWindow
                     }
                     else
                     {
-                        var dialog = new SchoolKeyDialog
-                        {
-                            Owner = Application.Current.MainWindow
-                        };
+                        var dialog = new SchoolKeyDialog { Owner = Application.Current.MainWindow };
 
                         if (dialog.ShowDialog() == true)
                         {
-                            if (dialog.EnteredText == Secrets.Default.SchoolProvisionKey1 || dialog.EnteredText == Secrets.Default.SchoolProvisionKey2 || dialog.EnteredText == Secrets.Default.SchoolProvisionKey3)
+                            if (
+                                dialog.EnteredText == Secrets.Default.SchoolProvisionKey1
+                                || dialog.EnteredText == Secrets.Default.SchoolProvisionKey2
+                                || dialog.EnteredText == Secrets.Default.SchoolProvisionKey3
+                            )
                             {
                                 _isEnabled = true;
                                 MainConfiguration.Default.EnableSchoolFeatures = true;
@@ -90,8 +87,12 @@ namespace Celer.Views.UserControls.MainWindow
                             }
                             else
                             {
-                                MessageBox.Show("A chave não está correta ou o modelo do equipamento não é compatível.",
-                                    "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(
+                                    "A chave não está correta ou o modelo do equipamento não é compatível.",
+                                    "Erro",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error
+                                );
 
                                 // Rejeitar a mudança
                                 Application.Current.Dispatcher.InvokeAsync(() =>
@@ -111,10 +112,7 @@ namespace Celer.Views.UserControls.MainWindow
                 }
             }
 
-            public SchoolDataContext()
-            {
-            }
-
+            public SchoolDataContext() { }
         }
 
         private void OpenAmbientChecker_Click(object sender, RoutedEventArgs e)
@@ -136,15 +134,13 @@ namespace Celer.Views.UserControls.MainWindow
         /// Helper function that opens a specific window, prohibits opening another instance of it and has the ability to bring it to the foreground if already opened.
         /// </summary>
         /// <param name="window">Object of the desired window to open</param>
-        private static void OpenWindow<T>() where T : Window, new()
+        private static void OpenWindow<T>()
+            where T : Window, new()
         {
             Window? window = Application.Current.Windows.OfType<T>().FirstOrDefault();
             if (window == null || !window.IsVisible)
             {
-                window = new T
-                {
-                    Owner = Application.Current.MainWindow
-                };
+                window = new T { Owner = Application.Current.MainWindow };
                 window.ShowDialog();
                 window.Closed += (s, args) => window = null;
             }
@@ -157,7 +153,6 @@ namespace Celer.Views.UserControls.MainWindow
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Close();
-
         }
     }
 
@@ -165,7 +160,8 @@ namespace Celer.Views.UserControls.MainWindow
     {
         private readonly NavigationService _navigationService;
 
-        public MenuBarNavigation(NavigationService navigationService) => _navigationService = navigationService;
+        public MenuBarNavigation(NavigationService navigationService) =>
+            _navigationService = navigationService;
 
         [RelayCommand]
         private void NavigateToTab(string tab)
@@ -173,5 +169,4 @@ namespace Celer.Views.UserControls.MainWindow
             _navigationService.Navigate(tab);
         }
     }
-
 }

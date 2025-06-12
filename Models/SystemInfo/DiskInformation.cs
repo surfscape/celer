@@ -10,7 +10,5 @@
         public long AvailableSpace { get; set; }
         public long UsedSpace { get; set; }
         public string? SmartStatus { get; set; }
-
-
     }
 }

@@ -1,8 +1,7 @@
-﻿using Celer.Interfaces;
-using Celer.ViewModels.OtimizacaoVM;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
+using Celer.Interfaces;
+using Celer.ViewModels.OtimizacaoVM;
 
 namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {
@@ -32,11 +31,10 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 
         public async Task OnNavigatedTo()
         {
-            if(!_viewModel.IsLoading)
+            if (!_viewModel.IsLoading)
             {
                 await _viewModel.StartTimer();
             }
-
         }
 
         public async Task OnNavigatedFrom()

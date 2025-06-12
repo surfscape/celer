@@ -10,8 +10,12 @@ namespace Celer.Views.Components
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty LabelProperty =
-            DependencyProperty.Register(nameof(Label), typeof(string), typeof(HeadingHelp), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
+            nameof(Label),
+            typeof(string),
+            typeof(HeadingHelp),
+            new PropertyMetadata(string.Empty)
+        );
 
         public string Label
         {
@@ -19,8 +23,12 @@ namespace Celer.Views.Components
             set => SetValue(LabelProperty, value);
         }
 
-        public static readonly DependencyProperty HelpTextProperty =
-            DependencyProperty.Register(nameof(HelpText), typeof(string), typeof(HeadingHelp), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty HelpTextProperty = DependencyProperty.Register(
+            nameof(HelpText),
+            typeof(string),
+            typeof(HeadingHelp),
+            new PropertyMetadata(string.Empty)
+        );
 
         public string HelpText
         {
@@ -28,8 +36,12 @@ namespace Celer.Views.Components
             set => SetValue(HelpTextProperty, value);
         }
 
-        public static readonly DependencyProperty LabelStyleProperty =
-            DependencyProperty.Register(nameof(LabelStyle), typeof(Style), typeof(HeadingHelp), new PropertyMetadata(null));
+        public static readonly DependencyProperty LabelStyleProperty = DependencyProperty.Register(
+            nameof(LabelStyle),
+            typeof(Style),
+            typeof(HeadingHelp),
+            new PropertyMetadata(null)
+        );
 
         public Style LabelStyle
         {
@@ -38,8 +50,12 @@ namespace Celer.Views.Components
         }
 
         public static readonly DependencyProperty LabelStyleKeyProperty =
-            DependencyProperty.Register(nameof(LabelStyleKey), typeof(string), typeof(HeadingHelp),
-                new PropertyMetadata(null, OnLabelStyleKeyChanged));
+            DependencyProperty.Register(
+                nameof(LabelStyleKey),
+                typeof(string),
+                typeof(HeadingHelp),
+                new PropertyMetadata(null, OnLabelStyleKeyChanged)
+            );
 
         public string LabelStyleKey
         {
@@ -47,7 +63,10 @@ namespace Celer.Views.Components
             set => SetValue(LabelStyleKeyProperty, value);
         }
 
-        private static void OnLabelStyleKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnLabelStyleKeyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e
+        )
         {
             if (d is HeadingHelp control && e.NewValue is string key)
             {

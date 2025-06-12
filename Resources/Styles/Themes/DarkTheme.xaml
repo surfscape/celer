@@ -7,4 +7,8 @@
     <SolidColorBrush x:Key="ActiveContainer" Color="#132839"></SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryText" Color="{StaticResource StrongText}" />
     <SolidColorBrush x:Key="SecondaryText" Color="{StaticResource DefaultText}" />
+
+    <Color x:Key="SteelError">#ff4545</Color>
+    
+    <SolidColorBrush x:Key="ErrorCode" Color="#ff4545"></SolidColorBrush>
 </ResourceDictionary>

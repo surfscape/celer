@@ -102,21 +102,6 @@
                                     <TextBlock TextWrapping="Wrap">Visualize, limpe, e configure o comportamento da memória RAM</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="Startup">
-                                <StackPanel>
-                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                        <iconPacks:PackIconLucide
-                                            Width="20"
-                                            Height="20"
-                                            Margin="0,0,8,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource SecondaryText}"
-                                            Kind="ChartSpline" />
-                                        <TextBlock FontSize="18" Foreground="white">Gestor de Arranque</TextBlock>
-                                    </StackPanel>
-                                    <TextBlock TextWrapping="Wrap">Ligar/desligar aplicações no arranque, e trocar parâmetros de inicialização</TextBlock>
-                                </StackPanel>
-                            </Button>
                             <Button Command="{Binding NavigateCommand}" CommandParameter="Video">
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">

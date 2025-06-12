@@ -2,7 +2,6 @@
 
 namespace Celer.Models.Sensors
 {
-
     public partial class SensorItemModel : ObservableObject
     {
         public string Name { get; }
@@ -21,13 +20,14 @@ namespace Celer.Models.Sensors
 
         public void Update()
         {
-            Value = _sensor.Value.HasValue ? $"{_sensor.Value.Value:F1} {_sensor.SensorType switch
+            Value = _sensor.Value.HasValue
+                ? $"{_sensor.Value.Value:F1} {_sensor.SensorType switch
             {
                 LibreHardwareMonitor.Hardware.SensorType.Temperature => "°C",
                 LibreHardwareMonitor.Hardware.SensorType.Fan => "RPM",
                 _ => ""
-            }}" : "N/A";
+            }}"
+                : "N/A";
         }
     }
-
 }

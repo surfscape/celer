@@ -1,6 +1,4 @@
 ﻿namespace Celer.ViewModels
 {
-    class PrivacidadeViewModel
-    {
-    }
+    class PrivacidadeViewModel { }
 }

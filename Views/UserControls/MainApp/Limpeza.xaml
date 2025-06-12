@@ -99,7 +99,7 @@
                         <Button
                             Width="100"
                             Command="{Binding CleanCommand}"
-                            Content="Começar"
+                            Content="{Binding CanClean}"
                             IsEnabled="{Binding CanClean}" />
                     </StackPanel>
                 </DockPanel>

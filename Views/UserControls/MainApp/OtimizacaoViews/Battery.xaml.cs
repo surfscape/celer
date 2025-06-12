@@ -1,7 +1,6 @@
-﻿using Celer.ViewModels.OtimizacaoVM;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
+using Celer.ViewModels.OtimizacaoVM;
 
 namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {
@@ -10,8 +9,8 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
     /// </summary>
     public partial class Battery : UserControl
     {
-
         private readonly BatteryViewModel _viewModel;
+
         public Battery(BatteryViewModel viewModel)
         {
             InitializeComponent();

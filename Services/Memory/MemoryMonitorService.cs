@@ -1,9 +1,9 @@
-﻿using Celer.Models.SystemInfo;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Celer.Models.SystemInfo;
 
 namespace Celer.Services.Memory
 {
@@ -16,11 +16,11 @@ namespace Celer.Services.Memory
             return new MemoryInfo
             {
                 UsedMemoryMB = GetUsedMemoryMB(),
-                TotalMemoryMB =  Math.Round(GetTotalMemory()),
+                TotalMemoryMB = Math.Round(GetTotalMemory()),
                 SpeedMHz = GetMemorySpeed(),
                 VirtualUsedMB = virtualUsed,
                 VirtualTotalMB = virtualTotal,
-                Slots = GetRamSlotInfo()
+                Slots = GetRamSlotInfo(),
             };
         }
 
@@ -35,7 +35,9 @@ namespace Celer.Services.Memory
         {
             try
             {
-                using var searcher = new ManagementObjectSearcher("SELECT Speed FROM Win32_PhysicalMemory");
+                using var searcher = new ManagementObjectSearcher(
+                    "SELECT Speed FROM Win32_PhysicalMemory"
+                );
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     if (obj["Speed"] != null)
@@ -49,12 +51,13 @@ namespace Celer.Services.Memory
             return null;
         }
 
-
         private static double GetTotalMemory()
         {
             try
             {
-                using var searcher = new ManagementObjectSearcher("SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem");
+                using var searcher = new ManagementObjectSearcher(
+                    "SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem"
+                );
                 using var collection = searcher.Get();
                 foreach (var item in collection)
                 {
@@ -72,7 +75,7 @@ namespace Celer.Services.Memory
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private class MEMORYSTATUSEX
         {
-            public uint dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
+            public uint dwLength = (uint)Marshal.SizeOf<MEMORYSTATUSEX>();
             public uint dwMemoryLoad;
             public ulong ullTotalPhys;
             public ulong ullAvailPhys;
@@ -92,7 +95,8 @@ namespace Celer.Services.Memory
             if (GlobalMemoryStatusEx(memStatus))
             {
                 float totalMB = memStatus.ullTotalPageFile / (1024f * 1024f);
-                float usedMB = (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024f * 1024f);
+                float usedMB =
+                    (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024f * 1024f);
                 return (totalMB, usedMB);
             }
             return (0, 0);
@@ -105,7 +109,11 @@ namespace Celer.Services.Memory
             try
             {
                 int totalSlots = 0;
-                using (var arraySearcher = new ManagementObjectSearcher("SELECT MemoryDevices FROM Win32_PhysicalMemoryArray"))
+                using (
+                    var arraySearcher = new ManagementObjectSearcher(
+                        "SELECT MemoryDevices FROM Win32_PhysicalMemoryArray"
+                    )
+                )
                 {
                     foreach (ManagementObject array in arraySearcher.Get())
                     {
@@ -121,22 +129,37 @@ namespace Celer.Services.Memory
 
                 var occupiedSlotsByParsedLabel = new Dictionary<int, RamSlotInfo>();
 
-                using (var memSearcher = new ManagementObjectSearcher("SELECT BankLabel, Capacity, Manufacturer, PartNumber, MemoryType, FormFactor, SerialNumber, DeviceLocator, Tag FROM Win32_PhysicalMemory"))
+                using (
+                    var memSearcher = new ManagementObjectSearcher(
+                        "SELECT BankLabel, Capacity, Manufacturer, PartNumber, MemoryType, FormFactor, SerialNumber, DeviceLocator, Tag FROM Win32_PhysicalMemory"
+                    )
+                )
                 {
                     foreach (ManagementObject obj in memSearcher.Get())
                     {
-                        string bankLabel = obj["BankLabel"] != null ? Convert.ToString(obj["BankLabel"]) : "Unknown Bank";
-                        string deviceLocator = obj["DeviceLocator"] != null ? Convert.ToString(obj["DeviceLocator"]) : "Unknown Locator";
-                        
+                        string bankLabel =
+                            obj["BankLabel"] != null
+                                ? Convert.ToString(obj["BankLabel"])
+                                : "Unknown Bank";
+                        string deviceLocator =
+                            obj["DeviceLocator"] != null
+                                ? Convert.ToString(obj["DeviceLocator"])
+                                : "Unknown Locator";
+
                         int parsedSlotId = ParseSlotNumber(deviceLocator, bankLabel);
 
                         if (parsedSlotId == -1)
                         {
-                            Trace.WriteLine($"Não foi possível identificar o banklable e o RAM slot correto: '{deviceLocator}', BankLabel: '{bankLabel}'. A ignorar módulo...");
+                            Trace.WriteLine(
+                                $"Não foi possível identificar o banklable e o RAM slot correto: '{deviceLocator}', BankLabel: '{bankLabel}'. A ignorar módulo..."
+                            );
                             continue;
                         }
 
-                        var capacityMB = obj["Capacity"] != null ? Convert.ToUInt64(obj["Capacity"]) / (1024 * 1024) : 0;
+                        var capacityMB =
+                            obj["Capacity"] != null
+                                ? Convert.ToUInt64(obj["Capacity"]) / (1024 * 1024)
+                                : 0;
 
                         string memoryTypeStr = "Desconhecido";
                         var memoryTypeObj = obj["MemoryType"];
@@ -148,7 +171,9 @@ namespace Celer.Services.Memory
                         string memoryFormFactor = "Desconhecido";
                         if (obj["FormFactor"] != null)
                         {
-                            memoryFormFactor = GetFormFactorString(Convert.ToUInt16(obj["FormFactor"]));
+                            memoryFormFactor = GetFormFactorString(
+                                Convert.ToUInt16(obj["FormFactor"])
+                            );
                         }
 
                         occupiedSlotsByParsedLabel[parsedSlotId] = new RamSlotInfo
@@ -161,13 +186,13 @@ namespace Celer.Services.Memory
                             FormFactor = memoryFormFactor,
                             SerialNumber = obj["SerialNumber"]?.ToString().Trim() ?? "Desconhecido",
                             BankLabel = bankLabel,
-                            DeviceLocator = deviceLocator
+                            DeviceLocator = deviceLocator,
                         };
                     }
                 }
 
                 bool isLikelyOneBased = false;
-                if (occupiedSlotsByParsedLabel.Any())
+                if (occupiedSlotsByParsedLabel.Count != 0)
                 {
                     int minParsedKey = occupiedSlotsByParsedLabel.Keys.Min();
                     if (minParsedKey == 1 && !occupiedSlotsByParsedLabel.ContainsKey(0))
@@ -175,7 +200,6 @@ namespace Celer.Services.Memory
                         isLikelyOneBased = true;
                     }
                 }
-
 
                 for (int i = 0; i < totalSlots; i++)
                 {
@@ -192,25 +216,30 @@ namespace Celer.Services.Memory
                     }
                     else
                     {
-                        slots.Add(new RamSlotInfo
-                        {
-                            SlotNumber = "Slot " + i,
-                            IsOccupied = false,
-                            Manufacturer = "", 
-                            Model = "",
-                            SizeMB = 0,
-                            MemoryType = "",
-                            FormFactor = "",
-                            SerialNumber = "",
-                            BankLabel = $"Slot {i}{(isLikelyOneBased ? " (Expected Label " + (i + 1) + ")" : "")}",
-                            DeviceLocator = $"Physical Slot {i}" 
-                        });
+                        slots.Add(
+                            new RamSlotInfo
+                            {
+                                SlotNumber = "Slot " + i,
+                                IsOccupied = false,
+                                Manufacturer = "",
+                                Model = "",
+                                SizeMB = 0,
+                                MemoryType = "",
+                                FormFactor = "",
+                                SerialNumber = "",
+                                BankLabel =
+                                    $"Slot {i}{(isLikelyOneBased ? " (Expected Label " + (i + 1) + ")" : "")}",
+                                DeviceLocator = $"Physical Slot {i}",
+                            }
+                        );
                     }
                 }
             }
             catch (ManagementException mex)
             {
-                Debug.WriteLine($"WMI Error obtaining RAM slot info: {mex.Message} (Error Code: {mex.ErrorCode})");
+                Debug.WriteLine(
+                    $"WMI Error obtaining RAM slot info: {mex.Message} (Error Code: {mex.ErrorCode})"
+                );
             }
             catch (Exception ex)
             {
@@ -219,7 +248,6 @@ namespace Celer.Services.Memory
 
             return slots;
         }
-
 
         /// <summary>
         /// This function is used to make a relation between the RAM slot from WMI and the one from kernel32.ddl since both return different data
@@ -231,17 +259,18 @@ namespace Celer.Services.Memory
         {
             string S_SLOT_PATTERN = @"(\d+)";
 
-            string stringToParse = !string.IsNullOrWhiteSpace(deviceLocator) ? deviceLocator : bankLabel;
+            string stringToParse = !string.IsNullOrWhiteSpace(deviceLocator)
+                ? deviceLocator
+                : bankLabel;
 
             if (string.IsNullOrWhiteSpace(stringToParse))
             {
                 return -1;
             }
-            
+
             MatchCollection matches = Regex.Matches(stringToParse, S_SLOT_PATTERN);
             if (matches.Count > 0)
             {
-             
                 string numStr = matches[matches.Count - 1].Groups[1].Value;
                 if (int.TryParse(numStr, out int slotNum))
                 {
@@ -270,17 +299,17 @@ namespace Celer.Services.Memory
                 20 => "DDR",
                 21 => "DDR2",
                 22 => "DDR2 FB-DIMM",
-                24 => "DDR3",   
-                25 => "FBD2",   
-                26 => "DDR4",   
-                27 => "LPDDR",  
+                24 => "DDR3",
+                25 => "FBD2",
+                26 => "DDR4",
+                27 => "LPDDR",
                 28 => "LPDDR2",
                 29 => "LPDDR3",
                 30 => "LPDDR4",
                 31 => "DDR5",
                 32 => "LPDDR5",
                 34 => "DDR5",
-                _ => $"Desconhecido ({typeCode})"
+                _ => $"Desconhecido ({typeCode})",
             };
         }
 
@@ -317,9 +346,8 @@ namespace Celer.Services.Memory
                 21 => "BGA",
                 22 => "FPBGA",
                 23 => "LGA",
-                _ => $"Desconhecido ({id})"
+                _ => $"Desconhecido ({id})",
             };
         }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows</TargetFramework>
@@ -9,38 +8,37 @@
     <ApplicationIcon>celer_icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <UseWindowsForms>False</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Resources\Assets\celer_logo.png" />
     <None Remove="splash.png" />
   </ItemGroup>
-
   <ItemGroup>
     <Page Remove="Resources\Dictionary1.xaml" />
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="celer_icon.ico" />
     <Resource Include="Resources\Assets\celer_logo.png" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CSharpier.MsBuild" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="DynamicAero2" Version="1.2.1" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-    <PackageReference Include="System.Management" Version="9.0.4" />
+    <PackageReference Include="System.Management" Version="9.0.6" />
   </ItemGroup>
-
   <ItemGroup>
     <SplashScreen Include="splash.png" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\MainConfiguration.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -58,7 +56,6 @@
       <DependentUpon>Signatures.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Properties\MainConfiguration.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -73,9 +70,4 @@
       <LastGenOutput>Signatures.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\UserControls\MainApp\ManutencaoViews\" />
-  </ItemGroup>
-
 </Project>
