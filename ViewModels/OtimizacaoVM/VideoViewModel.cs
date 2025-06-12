@@ -2,6 +2,7 @@
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
+using Microsoft.VisualBasic.Devices;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -14,8 +15,13 @@ namespace Celer.ViewModels.OtimizacaoVM
     public partial class VideoViewModel : ObservableObject
     {
         [ObservableProperty] private bool isLoading = true;
-        [ObservableProperty] private ObservableCollection<GpuInfo> gpus = new();
+        [ObservableProperty] private ObservableCollection<GpuInfo> gpus = [];
         [ObservableProperty] private GpuInfo? selectedGpu;
+        
+        private readonly LibreHardwareMonitor.Hardware.Computer gpu = new LibreHardwareMonitor.Hardware.Computer
+        {
+            IsGpuEnabled = true
+        };
 
         private readonly DispatcherTimer _gpuUpdateTimer = new()
         {
@@ -32,7 +38,9 @@ namespace Celer.ViewModels.OtimizacaoVM
             Trace.WriteLine("ViewModel está a inicar");
             try
             {
+                gpu.Open();
                 await LoadGpusAsync();
+
             }
             catch (Exception e)
             {
@@ -144,12 +152,7 @@ namespace Celer.ViewModels.OtimizacaoVM
 
         private void UpdateGpuSensors()
         {
-            var gpu = new LibreHardwareMonitor.Hardware.Computer
-            {
-                IsGpuEnabled = true
-            };
 
-            gpu.Open();
             gpu.Accept(new GpuMonitor());
 
             foreach (var hw in gpu.Hardware.Where(h => h.HardwareType == HardwareType.GpuNvidia ||
@@ -180,6 +183,21 @@ namespace Celer.ViewModels.OtimizacaoVM
             }
 
             gpu.Close();
+        }
+
+        public async Task StartTimerAsync()
+        {
+            if (!_gpuUpdateTimer.IsEnabled)
+            {
+                await LoadGpusAsync();
+                _gpuUpdateTimer.Start();
+            }
+        }
+
+        public async Task StopTimerAsync()
+        {
+            _gpuUpdateTimer.Stop();
+            await Task.Run(() => gpu.Close());
         }
 
         public partial class GpuInfo : ObservableObject

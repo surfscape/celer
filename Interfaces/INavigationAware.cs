@@ -5,7 +5,7 @@
     /// </summary>
     public interface INavigationAware
     {
-        void OnNavigatedTo();
-        void OnNavigatedFrom();
+        Task OnNavigatedTo();
+        Task OnNavigatedFrom();
     }
 }

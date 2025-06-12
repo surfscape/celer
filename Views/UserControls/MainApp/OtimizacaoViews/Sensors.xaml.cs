@@ -30,18 +30,18 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
             }
         }
 
-        public void OnNavigatedTo()
+        public async Task OnNavigatedTo()
         {
             if(!_viewModel.IsLoading)
             {
-                _viewModel.StartTimer();
+                await _viewModel.StartTimer();
             }
 
         }
 
-        public void OnNavigatedFrom()
+        public async Task OnNavigatedFrom()
         {
-            _viewModel.StopTimer();
+            await _viewModel.StopTimer();
         }
     }
 }

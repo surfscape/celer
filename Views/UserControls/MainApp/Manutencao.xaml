@@ -17,91 +17,82 @@
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Border Padding="12,6">
+    <Border>
         <StackPanel>
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <StackPanel Orientation="Horizontal">
-                    <Button
-                        Style="{StaticResource TransparentButton}"
-                        Margin="0,0,0,0"
-                        HorizontalAlignment="Left"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Main">
-                        <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconLucide
-                                Margin="0,0,8,0"
+                <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,8,0"
+                            Padding="16,8"
+                            HorizontalAlignment="Center"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Main"
+                            Style="{StaticResource TransparentButton}">
+                            <iconPacks:PackIconLucide
+                                Margin="0"
                                 VerticalAlignment="Center"
                                 Foreground="{DynamicResource SecondaryText}"
                                 Kind="ArrowLeft" />
-                        <TextBlock Text="Voltar" />
-                        </StackPanel>
-                    </Button>
-
-                    <TextBlock Text="{Binding CurrentViewName}" />
-                </StackPanel>
-                <ContentControl Content="{Binding CurrentView}" />
-            </StackPanel>
-
-            <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Border
-                    Margin="0,0,0,6"
-                    Padding="0,0,0,6"
-                    BorderBrush="Gray"
-                    BorderThickness="0,0,0,1">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Heading1}">Manutenção &amp; Recuperação</TextBlock>
-                        <TextBlock Style="{StaticResource Subheading}">Ferramentas para realizar manutenção do sistema e também a sua recuperação</TextBlock>
+                        </Button>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Foreground="White"
+                            Text="{Binding CurrentViewName}" />
                     </StackPanel>
                 </Border>
-                <StackPanel Grid.Row="1">
-                    <UniformGrid Margin="-10,-5,0,0" Columns="2">
-                        <UniformGrid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-                                <Setter Property="Margin" Value="10,10,0,0" />
-                                <Setter Property="Padding" Value="12" />
-                                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                <Setter Property="VerticalContentAlignment" Value="Top" />
-                            </Style>
-                        </UniformGrid.Resources>
+                <Border Padding="12,8">
+                    <ContentControl Content="{Binding CurrentView}" />
+                </Border>
+            </StackPanel>
+            <Border Padding="16,8">
+                <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Margin="0,0,0,8"
+                        Padding="0,0,0,16"
+                        BorderBrush="{StaticResource Border}"
+                        BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Heading1}">Manutenção</TextBlock>
+                            <TextBlock Style="{StaticResource Subheading}">Ferramentas para verificar e resolver problemas do sistema</TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Grid.Row="1">
+                        <UniformGrid Margin="-10,-5,0,0" Columns="2">
+                            <UniformGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                                    <Setter Property="Margin" Value="10,10,0,0" />
+                                    <Setter Property="Padding" Value="12" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                    <Setter Property="VerticalContentAlignment" Value="Top" />
+                                </Style>
+                            </UniformGrid.Resources>
 
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="SystemRepair">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="Wrench" />
-                                    <TextBlock FontSize="18" Foreground="white">Diagnóstico e Reparação do Sistema</TextBlock>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="SystemRepair">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="Wrench" />
+                                        <TextBlock FontSize="18" Foreground="white">Diagnóstico e Reparação do Sistema</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Realiza diferentes checks para a reparação de diversos componentes do sistema operativo</TextBlock>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Realiza diferentes checks para a reparação de diversos componentes do sistema operativo</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button Command="{Binding NavigateCommand}" CommandParameter="GraphicsManager">
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide
-                                        Width="20"
-                                        Height="20"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
-                                        Kind="MonitorCheck" />
-                                    <TextBlock FontSize="18" Foreground="white">Gestor Gráfico</TextBlock>
-                                </StackPanel>
-                                <TextBlock TextWrapping="Wrap">Configurações do adaptador gráfico e do gestor de janelas do Windows</TextBlock>
-                            </StackPanel>
-                        </Button>
-
-                    </UniformGrid>
-                </StackPanel>
-            </Grid>
+                            </Button>
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </StackPanel>
     </Border>
 </UserControl>

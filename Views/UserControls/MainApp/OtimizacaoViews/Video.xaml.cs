@@ -1,4 +1,5 @@
-﻿using Celer.ViewModels.OtimizacaoVM;
+﻿using Celer.Interfaces;
+using Celer.ViewModels.OtimizacaoVM;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +8,7 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
     /// <summary>
     /// Interaction logic for Video.xaml
     /// </summary>
-    public partial class Video : UserControl
+    public partial class Video : UserControl, INavigationAware
     {
         private readonly VideoViewModel _viewModel;
         public Video(VideoViewModel viewModel)
@@ -25,6 +26,20 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
             {
                 await _viewModel.Initialize();
             }
+        }
+
+        public async Task OnNavigatedTo()
+        {
+            if (!_viewModel.IsLoading)
+            {
+                await _viewModel.StartTimerAsync();
+            }
+
+        }
+
+        public async Task  OnNavigatedFrom()
+        {
+            await _viewModel.StopTimerAsync();
         }
 
     }

@@ -82,20 +82,26 @@ namespace Celer.ViewModels.OtimizacaoVM
                 category.Update();
         }
 
-        public void StartTimer()
+        public async Task StartTimer()
         {
             if (!_updateTimer.IsEnabled)
             {
-                _computer.Open();
-                LoadSensors();
+                await Task.Run(() =>
+                {
+                    _computer.Open();
+                    LoadSensors();
+                });
                 _updateTimer.Start();
             }
         }
 
-        public void StopTimer()
+        public async Task StopTimer()
         {
             _updateTimer.Stop();
-            _computer.Close();
+            await Task.Run(() =>
+            {
+                _computer.Close();
+            });
         }
     }
 }
