@@ -2,7 +2,6 @@
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
-using Microsoft.VisualBasic.Devices;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -15,7 +14,7 @@ namespace Celer.ViewModels.OtimizacaoVM
     public partial class VideoViewModel : ObservableObject
     {
         [ObservableProperty] private bool isLoading = true;
-        [ObservableProperty] private ObservableCollection<GpuInfo> gpus = [];
+        [ObservableProperty] private ObservableCollection<GpuInfo> gpus = new();
         [ObservableProperty] private GpuInfo? selectedGpu;
 
         private readonly DispatcherTimer _gpuUpdateTimer = new()
@@ -24,24 +23,21 @@ namespace Celer.ViewModels.OtimizacaoVM
         };
 
         public VideoViewModel()
-        {            
+        {
             _gpuUpdateTimer.Tick += (s, e) => UpdateGpuSensors();
         }
 
-
         public async Task Initialize()
         {
+            Trace.WriteLine("ViewModel está a inicar");
             try
             {
-                await Task.Run(() =>
-                {
-                    _gpuUpdateTimer.Start();
-                    LoadGpus();
-                });
+                await LoadGpusAsync();
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error initializing Celer video engine: {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error initializing Celer video engine: {e.Message}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -50,14 +46,15 @@ namespace Celer.ViewModels.OtimizacaoVM
             }
         }
 
-        private void LoadGpus()
+        private async Task LoadGpusAsync()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 Gpus.Clear();
             });
-            var wmiGpus = GetGpusFromWmi();
-            var dxDiagGpus = ParseDxDiag();
+
+            var wmiGpus = await Task.Run(() => GetGpusFromWmi());
+            var dxDiagGpus = await Task.Run(() => ParseDxDiag());
 
             foreach (var gpu in wmiGpus)
             {
@@ -72,15 +69,16 @@ namespace Celer.ViewModels.OtimizacaoVM
                     gpu.SupportsHDR = dx.SupportsHDR;
                     gpu.SupportsParavirtualization = dx.SupportsParavirtualization;
                 }
-                Application.Current.Dispatcher.Invoke(() =>
+
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Gpus.Add(gpu);
                 });
-                
             }
             SelectedGpu = Gpus.FirstOrDefault();
         }
-        private List<GpuInfo> GetGpusFromWmi()
+
+        private static List<GpuInfo> GetGpusFromWmi()
         {
             var result = new List<GpuInfo>();
 
@@ -116,7 +114,6 @@ namespace Celer.ViewModels.OtimizacaoVM
             return result;
         }
 
-
         private static List<GpuInfo> ParseDxDiag()
         {
             var list = new List<GpuInfo>();
@@ -124,21 +121,19 @@ namespace Celer.ViewModels.OtimizacaoVM
 
             try
             {
-
                 if (!File.Exists(path)) return list;
 
                 var doc = File.ReadAllText(path);
 
-
-                    list.Add(new GpuInfo
-                    {
-                        Name = XML.ExtractXmlValue(doc, "CardName"),
-                        DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
-                        WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
-                        IsWhqlLogoPresent = XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
-                        SupportsHDR = XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
-                        SupportsParavirtualization = XML.ExtractXmlValue(doc, "VirtualGPUSupport")?.Contains("Paravirtualization") ?? false
-                    });
+                list.Add(new GpuInfo
+                {
+                    Name = XML.ExtractXmlValue(doc, "CardName"),
+                    DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
+                    WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
+                    IsWhqlLogoPresent = XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
+                    SupportsHDR = XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
+                    SupportsParavirtualization = XML.ExtractXmlValue(doc, "VirtualGPUSupport")?.Contains("Paravirtualization") ?? false
+                });
             }
             catch
             {
@@ -158,14 +153,14 @@ namespace Celer.ViewModels.OtimizacaoVM
             gpu.Accept(new GpuMonitor());
 
             foreach (var hw in gpu.Hardware.Where(h => h.HardwareType == HardwareType.GpuNvidia ||
-                                                                   h.HardwareType == HardwareType.GpuAmd ||
-                                                                   h.HardwareType == HardwareType.GpuIntel))
+                                                       h.HardwareType == HardwareType.GpuAmd ||
+                                                       h.HardwareType == HardwareType.GpuIntel))
             {
                 hw.Update();
 
                 var matchedGpu = Gpus.FirstOrDefault(g =>
-     hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase) ||
-     g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase));
+                    hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase) ||
+                    g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase));
 
                 if (matchedGpu is null)
                     continue;
@@ -190,7 +185,6 @@ namespace Celer.ViewModels.OtimizacaoVM
         public partial class GpuInfo : ObservableObject
         {
             [ObservableProperty] private float gpuUsage;
-
             [ObservableProperty] private ulong memoryUsedMb;
             public string Name { get; set; } = "Desconhecido";
             public string Manufacturer { get; set; } = "Desconhecido";
