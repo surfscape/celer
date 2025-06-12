@@ -13,7 +13,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BoolToGpuTypeConverter x:Key="BoolToGpuTypeConverter" />
-        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
