@@ -43,6 +43,9 @@ public partial class DashboardViewModel : ObservableObject
     private double usedMemory;
 
     [ObservableProperty]
+    private double memoryUsage;
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UsedMemory))]
     private double availableMemory;
 
@@ -145,6 +148,7 @@ public partial class DashboardViewModel : ObservableObject
                 {
                     AvailableMemory = _availableMemoryCounter.NextValue();
                     UsedMemory = TotalMemory - AvailableMemory;
+                    MemoryUsage = Math.Round((UsedMemory / TotalMemory) * 100, 2);
                 }
 
                 if (_cpuCounter != null)
