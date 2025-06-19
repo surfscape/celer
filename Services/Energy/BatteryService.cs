@@ -12,6 +12,8 @@ namespace Celer.Services.Energy
         public bool IsCharging { get; set; }
         public TimeSpan EstimatedTime { get; set; }
         public int Health { get; set; }
+
+        public string RemainingCapacity { get; set; }
     }
 
     public class BatteryService
@@ -41,9 +43,9 @@ namespace Celer.Services.Energy
                     info.EstimatedTime =
                         runtime > 0 ? TimeSpan.FromMinutes(runtime) : TimeSpan.Zero;
                 }
-
-                var report = GenerateBatteryReport();
-                info.Health = GetBatteryHealthPercentageFromReport(report);
+                var (health, capacity) = GetBatteryHealthPercentageFromReport("batteryreport.xml");
+                info.Health = health;
+                info.RemainingCapacity = capacity + "mAh";
             }
             catch
             {
@@ -51,25 +53,6 @@ namespace Celer.Services.Energy
             }
 
             return info;
-        }
-
-        public string GenerateBatteryReport()
-        {
-            var reportPath = "batteryreport.xml";
-
-            if (!File.Exists(reportPath))
-            {
-                var psi = new ProcessStartInfo
-                {
-                    FileName = "powercfg",
-                    Arguments = $"/BATTERYREPORT /OUTPUT \"batteryreport.xml\" /XML",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                };
-                Process.Start(psi)?.WaitForExit();
-            }
-
-            return reportPath;
         }
 
         public static string ExtractXmlValue(string xml, string elementName)
@@ -81,12 +64,13 @@ namespace Celer.Services.Energy
             return element?.Value;
         }
 
-        public static int GetBatteryHealthPercentageFromReport(string reportPath)
+        public static (int health, string currentCapacity) GetBatteryHealthPercentageFromReport(
+            string reportPath
+        )
         {
             if (!File.Exists(reportPath))
             {
-                Trace.WriteLine(":(");
-                return -1;
+                return (0, "0.0");
             }
 
             var xml = File.ReadAllText(reportPath);
@@ -100,10 +84,10 @@ namespace Celer.Services.Energy
                 && design > 0
             )
             {
-                return (int)((full / design) * 100);
+                return ((int)((full / design) * 100), fullStr);
             }
 
-            return -1;
+            return (0, "0.0");
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using Celer.Models;
 using Celer.Services;
+using Celer.Services.OpsecEngine;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -14,13 +16,28 @@ namespace Celer.Views.Windows.Utils
     public partial class SurfScapeGateway : Window
     {
         private readonly SurfScapeGatewayViewModel _viewModel;
+        bool? mainWindowTrigger = false;
 
-        public SurfScapeGateway()
+        private readonly MainWindow _mainWindow;
+
+        public bool? MainWindowTrigger { get; set; } = false;
+
+        public SurfScapeGateway(MainWindow mainWindow)
         {
             InitializeComponent();
-            _viewModel = new SurfScapeGatewayViewModel { IsDone = Close };
+            _mainWindow = mainWindow;
+            _viewModel = new SurfScapeGatewayViewModel { IsDone = InitializeApp };
             DataContext = _viewModel;
             Loaded += SurfScapeGateway_Loaded;
+        }
+
+        private void InitializeApp()
+        {
+            if (MainWindowTrigger == true)
+            {
+                _mainWindow.Show();
+            }
+            Close();
         }
 
         private async void SurfScapeGateway_Loaded(object sender, RoutedEventArgs e)
@@ -48,31 +65,39 @@ namespace Celer.Views.Windows.Utils
                 bool isOnline = UserLand.IsInternetAvailable();
 
                 await Task.Delay(500);
-                if (isOnline)
+                try
                 {
-                    CurrentTask = "A buscar assinaturas de limpeza...";
-                    bool success =
-                        await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
-                    if (success)
+                    if (isOnline)
                     {
-                        AppGlobals.EnableCleanEngine = true;
-                        CurrentTask = "Assinaturas atualizadas. A inicar Celer";
+                        CurrentTask = "A buscar assinaturas de limpeza...";
+                        bool success =
+                            await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
+                        if (success)
+                        {
+                            AppGlobals.EnableCleanEngine = true;
+                            CurrentTask = "Assinaturas atualizadas. A inicar Celer";
+                        }
+                        else
+                        {
+                            CurrentTask = "Servidor offline, a buscar assinaturas locais";
+                            SetOfflineDatabase();
+                        }
                     }
                     else
                     {
-                        CurrentTask = "Servidor offline, a buscar assinaturas locais";
+                        CurrentTask = "Sem internet, a buscar assinaturas locais";
                         SetOfflineDatabase();
+                        CurrentTask = hasOfflineDb
+                            ? "Assinatuas locais encontradas!"
+                            : "Clean Engine desligado: assinaturas não encontradas";
                     }
-                }
-                else
-                {
-                    CurrentTask = "Sem internet, a buscar assinaturas locais";
-                    SetOfflineDatabase();
-                    CurrentTask = hasOfflineDb
-                        ? "Assinatuas locais encontradas!"
-                        : "Clean Engine desligado: assinaturas não encontradas";
                     CurrentTask = "A inicializar serviços de hardware...";
                     await SetDxdiag();
+                    GenerateBatteryReport();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
                 }
                 IsDone?.Invoke();
             }
@@ -85,7 +110,7 @@ namespace Celer.Views.Windows.Utils
 
             private async Task SetDxdiag()
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     string dxdiagPath = "dxdiag.xml";
                     if (!File.Exists(dxdiagPath))
@@ -103,10 +128,10 @@ namespace Celer.Views.Windows.Utils
                                 },
                             };
                             proc.Start();
-                            do
+                            while (!File.Exists(dxdiagPath))
                             {
-                                continue;
-                            } while (!File.Exists(dxdiagPath) || !proc.HasExited);
+                                await Task.Delay(200);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -115,6 +140,18 @@ namespace Celer.Views.Windows.Utils
                         }
                     }
                 });
+            }
+
+            private void GenerateBatteryReport()
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "powercfg",
+                    Arguments = $"/BATTERYREPORT /OUTPUT \"batteryreport.xml\" /XML",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                };
+                Process.Start(psi)?.WaitForExit();
             }
         }
     }
