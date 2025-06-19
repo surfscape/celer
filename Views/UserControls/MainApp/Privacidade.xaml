@@ -6,6 +6,8 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Celer.Models"
+    xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp.OpsecViews"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -19,37 +21,32 @@
                 <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
             </Style>
         </TabControl.Resources>
-        <TabItem HorizontalContentAlignment="Left">
+        <TabItem HorizontalContentAlignment="Left" MinWidth="162">
             <TabItem.Header>
-                <DockPanel>
-                    <iconPacks:PackIconLucide Kind="Settings" />
-                    <TextBlock>Overview</TextBlock>
-                </DockPanel>
+                <model:TabHeaderData Title="Estado" Icon="ListCheck" />
             </TabItem.Header>
-            <Border Padding="12,6">
+            <Border Padding="12,8">
                 <StackPanel
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Orientation="Vertical">
                     <Border
-                        Margin="0,0,0,6"
-                        Padding="0,0,0,6"
-                        BorderBrush="Gray"
+                        Margin="0,0,0,12"
+                        Padding="0,0,0,12"
+                        BorderBrush="{DynamicResource Border}"
                         BorderThickness="0,0,0,1">
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading1}">Vista Geral</TextBlock>
                             <TextBlock Style="{StaticResource Subheading}">Informação geral de privacidade e segurança do sistema</TextBlock>
                         </StackPanel>
                     </Border>
+                    <uc:Overview />
                 </StackPanel>
             </Border>
         </TabItem>
         <TabItem>
             <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconLucide Kind="Settings" />
-                    <TextBlock>Configurações</TextBlock>
-                </StackPanel>
+                <model:TabHeaderData Title="Componentes" Icon="Box" />
             </TabItem.Header>
             <Border Padding="12,6">
                 <StackPanel
@@ -57,15 +54,16 @@
                     VerticalAlignment="Stretch"
                     Orientation="Vertical">
                     <Border
-                        Margin="0,0,0,6"
-                        Padding="0,0,0,6"
-                        BorderBrush="Gray"
+                        Margin="0,0,0,12"
+                        Padding="0,0,0,12"
+                        BorderBrush="{DynamicResource Border}"
                         BorderThickness="0,0,0,1">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}">Configurações</TextBlock>
-                            <TextBlock Style="{StaticResource Subheading}">Variedades de configurações do Windows relacionadas a segurança e privacidade</TextBlock>
+                            <TextBlock Style="{StaticResource Heading1}">Componentes</TextBlock>
+                            <TextBlock Style="{StaticResource Subheading}" TextWrapping="Wrap">Permite alterar (remover/instalar) diferentes componentes do Windows para melhorar privacidade e desempenho</TextBlock>
                         </StackPanel>
                     </Border>
+                    <uc:Components />
                 </StackPanel>
             </Border>
         </TabItem>
