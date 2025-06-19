@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:model="clr-namespace:Celer.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Celer.ViewModels"
     Title="Definições"
@@ -45,7 +46,7 @@
                 </TabControl.Resources>
                 <TabItem>
                     <TabItem.Header>
-                        <local:TabHeaderData Title="Geral" Icon="Settings" />
+                        <model:TabHeaderData Title="Geral" Icon="Settings" />
                     </TabItem.Header>
                     <StackPanel>
                         <Grid>
@@ -105,7 +106,7 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <local:TabHeaderData Title="Limpeza" Icon="Trash2" />
+                        <model:TabHeaderData Title="Limpeza" Icon="Trash2" />
                     </TabItem.Header>
                     <StackPanel>
                         <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
@@ -148,7 +149,7 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <local:TabHeaderData Title="Avançado" Icon="Settings" />
+                        <model:TabHeaderData Title="Limpeza" Icon="Trash2" />
                     </TabItem.Header>
                     <StackPanel>
                         <TextBlock>
@@ -158,7 +159,7 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <local:TabHeaderData Title="Experimentos" Icon="FlaskConical" />
+                        <model:TabHeaderData Title="Experimentos" Icon="FlaskConical" />
                     </TabItem.Header>
                     <StackPanel>
                         <TextBlock Style="{DynamicResource Heading1}">Funções experimentais</TextBlock>
@@ -186,7 +187,6 @@
                                     <TextBlock TextWrapping="Wrap">Ativa a funcionalidade de executar aplicações num espaço seguro. Se ativado a opção 'Sandbox' irá aparecer na secção 'Privacidade e Segurança'</TextBlock>
                                 </StackPanel>
                             </StackPanel>
-
                         </Border>
                     </StackPanel>
                 </TabItem>
