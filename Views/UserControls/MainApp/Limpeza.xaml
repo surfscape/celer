@@ -33,16 +33,20 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
-                    <Border BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,0" Padding="0,8,0,0">
+                    <Border
+                        Padding="0,0,0,0"
+                        BorderBrush="{StaticResource Border}"
+                        BorderThickness="0,0,1,0">
                         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Categories}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Expander
-                                            Margin="0,0,0,6"
-                                            IsExpanded="True">
+                                        <Expander Margin="0,8,0,0" IsExpanded="True">
                                             <Expander.Header>
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="15"/>
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="White"
+                                                    Text="{Binding Name}" />
                                             </Expander.Header>
                                             <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding Items}">
                                                 <ItemsControl.ItemTemplate>
@@ -51,7 +55,8 @@
                                                             <CheckBox
                                                                 VerticalAlignment="Center"
                                                                 Content="{Binding Name}"
-                                                                IsChecked="{Binding IsChecked}" />
+                                                                IsChecked="{Binding IsChecked}"
+                                                                ToolTip="{Binding Description}" />
                                                         </DockPanel>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
@@ -97,9 +102,9 @@
                             Foreground="{StaticResource PrimaryText}"
                             Text="{Binding TotalFreedText, Converter={StaticResource MemorySizeConverter}, StringFormat=Espaço libertado: {0}}" />
                         <Button
-                            Width="100"
+                            HorizontalAlignment="Center"
                             Command="{Binding CleanCommand}"
-                            Content="{Binding CanClean}"
+                            Content="Começar limpeza"
                             IsEnabled="{Binding CanClean}" />
                     </StackPanel>
                 </DockPanel>

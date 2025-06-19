@@ -1,0 +1,209 @@
+﻿<UserControl
+    x:Class="Celer.Views.UserControls.MainApp.OpsecViews.Components"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OpsecViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style x:Key="OptionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryText}" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer MaxHeight="424" VerticalScrollBarVisibility="Visible">
+        <StackPanel Margin="0,0,12,0">
+            <Border
+                Margin="0,0,0,12"
+                Padding="0,0,0,12"
+                BorderBrush="{DynamicResource Border}"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource OptionTitle}">Serviços de Telemetria</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,0,0,6"
+                                TextWrapping="Wrap">
+                                Responsável por capturar e enviar dados de utilização do sistema para a Microsoft. Em edições não enterprise do Windows 10/11 não é possível desligar por completo a captura de dados.
+                            </TextBlock>
+                        </Grid>
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="150"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center">
+                            Ligar
+                        </Button>
+                    </Grid>
+                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                        <TextBlock />
+                    </Expander>
+                </StackPanel>
+            </Border>
+            <Border
+                Margin="0,0,0,12"
+                Padding="0,0,0,12"
+                BorderBrush="{DynamicResource Border}"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource OptionTitle}">Componentes XBOX</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,0,0,6"
+                                TextWrapping="Wrap">
+                                Inclui os serviços e aplicações relacionadas à XBOX (Game Bar, Game DVR, Game Mode, etc.). Estes componentes em maioria são desnecessários para a maioria dos utilizadores e podem ser removidos para melhorar o tempo de resposta do sistema.
+                            </TextBlock>
+                        </Grid>
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="150"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center">
+                            Ligar
+                        </Button>
+                    </Grid>
+                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                        <TextBlock />
+                    </Expander>
+                </StackPanel>
+            </Border>
+
+            <Border
+                Margin="0,0,0,12"
+                Padding="0,0,0,12"
+                BorderBrush="{DynamicResource Border}"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource OptionTitle}">Serviços de Impressão</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,0,0,6"
+                                TextWrapping="Wrap">
+                                Permite a utilização de impressoras no sistema (isto inclui a linha de espera de impressão e utilização de impressoras em redes). Recomendado desligar se não utiliza nenhuma impressora.
+                            </TextBlock>
+                        </Grid>
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="150"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center">
+                            Ligar
+                        </Button>
+                    </Grid>
+                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                        <TextBlock />
+                    </Expander>
+                </StackPanel>
+            </Border>
+            <Border
+                Margin="0,0,0,12"
+                Padding="0,0,0,12"
+                BorderBrush="{DynamicResource Border}"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource OptionTitle}">Microsoft Edge</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,0,0,6"
+                                TextWrapping="Wrap">
+                                Inclui o navegador Microsoft Edge e os seus serviços (como o de instalação &amp; atualização, e inicialização rápida).
+                            </TextBlock>
+                        </Grid>
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="150"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center">
+                            Ligar
+                        </Button>
+                    </Grid>
+                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                        <TextBlock />
+                    </Expander>
+                </StackPanel>
+            </Border>
+            <Border
+                Padding="0,0,0,12"
+                BorderBrush="{DynamicResource Border}"
+                BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource OptionTitle}">Microsoft Store</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,0,0,6"
+                                TextWrapping="Wrap">
+                                Remove a Microsoft Store e outras aplicação UWP. No Windows Enterprise esta opção irá realizar a instalação do Winget e da Microsoft Store com o menor número de dependências possível.
+                            </TextBlock>
+                        </Grid>
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="150"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center">
+                            Ligar
+                        </Button>
+                    </Grid>
+                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                        <TextBlock />
+                    </Expander>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -73,7 +73,6 @@
                                     <Setter Property="VerticalContentAlignment" Value="Top" />
                                 </Style>
                             </UniformGrid.Resources>
-
                             <Button Command="{Binding NavigateCommand}" CommandParameter="Repair">
                                 <StackPanel>
                                     <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
@@ -87,6 +86,37 @@
                                         <TextBlock FontSize="18" Foreground="white">Diagnóstico e Reparação do Sistema</TextBlock>
                                     </StackPanel>
                                     <TextBlock TextWrapping="Wrap">Realiza diferentes checks para a reparação de diversos componentes do sistema operativo</TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Realtek">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="AudioLines" />
+                                        <TextBlock FontSize="18" Foreground="white">Realtek Audio Wizard</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Ferramenta que tenta reparar problemas de áudio com placas de aúdio da marca Realtek</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="Network">
+                                <StackPanel>
+                                    <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SecondaryText}"
+                                            Kind="Network" />
+                                        <TextBlock FontSize="18" Foreground="white">Testar Internet</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock TextWrapping="Wrap">Realiza diferentes checks para detetar e resolver problemas com rede e internet</TextBlock>
                                 </StackPanel>
                             </Button>
                         </UniformGrid>

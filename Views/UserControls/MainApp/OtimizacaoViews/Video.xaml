@@ -86,38 +86,37 @@
                         <TextBlock Text="{Binding IsWhqlLogoPresent}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="HDR Suportado: " />
+                        <TextBlock Style="{StaticResource Title}" Text="Suporte de HDR" />
                         <TextBlock Text="{Binding SupportsHDR}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Paravirtualização: " />
+                        <TextBlock Style="{StaticResource Title}" Text="Paravirtualização" />
                         <TextBlock Text="{Binding SupportsParavirtualization}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Title}" Text="Memória Total" />
+                        <TextBlock Text="{Binding MemoryTotalMb, StringFormat={}{0} MB}" />
                     </StackPanel>
                 </UniformGrid>
             </Border>
-            <StackPanel DataContext="{Binding SelectedGpu}">
-                <TextBlock
-                    Margin="0,10,0,0"
-                    FontWeight="Bold"
-                    Text="Memória Total: " />
-                <TextBlock Text="{Binding MemoryTotalMb, StringFormat={}{0} MB}" />
-
-                <TextBlock FontWeight="Bold" Text="Memória Usada: " />
-                <TextBlock Text="{Binding MemoryUsedMb, StringFormat={}{0} MB}" />
-
-
-
-                <TextBlock FontWeight="Bold" Text="Memória Dedicada: " />
-                <TextBlock Text="{Binding DedicatedMemoryMb, StringFormat={}{0} MB}" />
-
-                <TextBlock FontWeight="Bold" Text="Memória Partilhada: " />
-                <TextBlock Text="{Binding SharedMemoryMb, StringFormat={}{0} MB}" />
-
-
-
-
+            <TextBlock Style="{StaticResource Heading2}">Ações</TextBlock>
+            <StackPanel Margin="0,8,0,0">
+                <CheckBox Margin="0,0,0,8" VerticalContentAlignment="Top">
+                    <StackPanel Margin="8,0,0,0">
+                        <TextBlock Foreground="White">HAGS (Hardware Accelerated GPU Scheduling)</TextBlock>
+                        <TextBlock>Permite a GPU alocar tarefas com mais eficiência, reduzindo utilização de CPU e latência</TextBlock>
+                    </StackPanel>
+                </CheckBox>
+                <UniformGrid Margin="0,8,0,0" Columns="2">
+                    <UniformGrid.Resources>
+                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="0,0,8,0" />
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button>Aspeto e Desempenho</Button>
+                    <Button>Reiniciar driver gráfico</Button>
+                </UniformGrid>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </UserControl>

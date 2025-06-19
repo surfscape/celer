@@ -9,6 +9,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}" />
             <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
             <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
             <Setter Property="Padding" Value="12,5" />
@@ -20,6 +21,7 @@
                             <Border
                                 x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
                                 BorderThickness="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -70,7 +72,7 @@
                                 PopupAnimation="Fade">
                                 <Border
                                     Padding="0"
-                                    Background="#da1f1f1f"
+                                    Background="{DynamicResource AppBackground}"
                                     BorderBrush="#404040"
                                     BorderThickness="1"
                                     SnapsToDevicePixels="True">
@@ -108,7 +110,7 @@
         </Style>
     </UserControl.Resources>
     <Menu
-        Background="Transparent"
+        Background="#da1f1f1f"
         BorderThickness="0"
         FontSize="12">
         <MenuItem Header="_Celer">

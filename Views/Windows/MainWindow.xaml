@@ -4,15 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:model="clr-namespace:Celer.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     Title="Celer"
     Width="980"
-    Height="640"
-    MinWidth="940"
-    MinHeight="600"
+    Height="660"
+    ResizeMode="CanMinimize"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
     Style="{StaticResource {x:Type Window}}"
     UseLayoutRounding="True"
@@ -40,39 +39,39 @@
                     </TabControl.Resources>
                     <TabItem x:Name="Dashboard">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Estado" Icon="Settings" />
+                            <model:TabHeaderData Title="Estado" Icon="Settings" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding DashboardControl}" />
                     </TabItem>
                     <TabItem x:Name="Limpeza">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Limpeza" Icon="Trash2" />
+                            <model:TabHeaderData Title="Limpeza" Icon="Trash2" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding LimpezaControl}" />
                     </TabItem>
                     <TabItem x:Name="Otimizacao">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Otimização" Icon="Rocket" />
+                            <model:TabHeaderData Title="Otimização" Icon="Rocket" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding OtimizacaoControl}" />
                     </TabItem>
                     <TabItem x:Name="Manutencao">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Manutenção e Recuperação" Icon="Construction" />
+                            <model:TabHeaderData Title="Manutenção e Recuperação" Icon="Construction" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding ManutencaoControl}" />
                     </TabItem>
                     <TabItem x:Name="Privacidade">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Privacidade e Segurança" Icon="Shield" />
+                            <model:TabHeaderData Title="Privacidade e Segurança" Icon="Shield" />
                         </TabItem.Header>
                         <uc:Privacidade HorizontalAlignment="Stretch" />
                     </TabItem>
                     <TabItem x:Name="Avancado">
                         <TabItem.Header>
-                            <local:TabHeaderData Title="Avançado" Icon="PocketKnife" />
+                            <model:TabHeaderData Title="Avançado" Icon="PocketKnife" />
                         </TabItem.Header>
-                        <StackPanel />
+                        <uc:Advanced HorizontalAlignment="Stretch" />
                     </TabItem>
                 </TabControl>
             </Grid>

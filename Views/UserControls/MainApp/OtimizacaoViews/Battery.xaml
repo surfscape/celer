@@ -31,8 +31,7 @@
                     Text="A carregar dados" />
             </StackPanel>
         </Grid>
-        <StackPanel Orientation="Vertical"
-                    Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+        <StackPanel Orientation="Vertical" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel
                 Margin="0,0,0,16"
                 Orientation="Vertical"
@@ -92,6 +91,7 @@
                                     VerticalAlignment="Center"
                                     Maximum="100"
                                     Minimum="0"
+                                    ToolTip="{Binding RemainingCapacity}"
                                     Value="{Binding BatteryHealthPercentage}" />
                                 <TextBlock Grid.Column="1" Text="{Binding BatteryHealthPercentage, StringFormat='{}{0}%'}" />
                             </Grid>

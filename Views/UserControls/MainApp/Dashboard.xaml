@@ -133,12 +133,19 @@
                             <TextBlock Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Total: {0}}" />
                             <TextBlock Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Em utilização: {0}}" />
                             <TextBlock Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Disponível: {0}}" />
-                            <ProgressBar
-                                Height="16"
-                                Margin="0,8,0,10"
-                                Maximum="{Binding TotalMemory}"
-                                Minimum="0"
-                                Value="{Binding UsedMemory}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="48" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar
+                         Margin="0,8,8,10"
+                         Maximum="{Binding TotalMemory}"
+                         Minimum="0"
+                         Value="{Binding UsedMemory}" />
+                                <TextBlock Grid.Column="1" Text="{Binding MemoryUsage, StringFormat={}{0:F1}%}" VerticalAlignment="Center"/>
+                            </Grid>
+       
                             <Button
                                 Margin="0,0,0,0"
                                 Command="{Binding NavigateToOptimizationCommand}"

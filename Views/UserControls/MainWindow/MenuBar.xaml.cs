@@ -135,18 +135,45 @@ namespace Celer.Views.UserControls.MainWindow
         /// </summary>
         /// <param name="window">Object of the desired window to open</param>
         private static void OpenWindow<T>()
-            where T : Window, new()
+            where T : Window
         {
-            Window? window = Application.Current.Windows.OfType<T>().FirstOrDefault();
-            if (window == null || !window.IsVisible)
+            try
             {
-                window = new T { Owner = Application.Current.MainWindow };
-                window.ShowDialog();
+                var existingWindow = Application.Current.Windows.OfType<T>().FirstOrDefault();
+                if (existingWindow != null && existingWindow.IsVisible)
+                {
+                    existingWindow.Activate();
+                    return;
+                }
+                T? window = null;
+                if (App.AppHost?.Services.GetService(typeof(T)) is T resolvedWindow)
+                {
+                    window = resolvedWindow;
+                }
+                else
+                {
+                    window = Activator.CreateInstance<T>();
+                }
+
+                if (
+                    Application.Current.MainWindow != null
+                    && Application.Current.MainWindow != window
+                )
+                {
+                    window.Owner = Application.Current.MainWindow;
+                }
+
                 window.Closed += (s, args) => window = null;
+                window.ShowDialog();
             }
-            else
+            catch (Exception ex)
             {
-                window.Activate();
+                MessageBox.Show(
+                    $"Erro ao abrir a janela {typeof(T).Name}:\n\n{ex}",
+                    "Erro",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
 
