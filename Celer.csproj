@@ -11,6 +11,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="celer_hires.png" />
     <None Remove="Resources\Assets\celer_logo.png" />
     <None Remove="splash.png" />
   </ItemGroup>
@@ -18,6 +19,7 @@
     <Page Remove="Resources\Dictionary1.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="celer_hires.png" />
     <Resource Include="celer_icon.ico" />
     <Resource Include="Resources\Assets\celer_logo.png" />
   </ItemGroup>

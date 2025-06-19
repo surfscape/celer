@@ -12,7 +12,7 @@ namespace Celer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Signatures : global::System.Configuration.ApplicationSettingsBase {
         
         private static Signatures defaultInstance = ((Signatures)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Signatures())));
@@ -26,8 +26,7 @@ namespace Celer.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://codeberg.org/Celer/cleaning-signatures/raw/branch/main/basic-cleaning.jso" +
-            "n")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://surfscape.github.io/gateway/celer/signatures/cleaning.json")]
         public string CleaningEngineMainSource {
             get {
                 return ((string)(this["CleaningEngineMainSource"]));
