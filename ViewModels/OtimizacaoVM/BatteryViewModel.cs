@@ -44,6 +44,9 @@ namespace Celer.ViewModels.OtimizacaoVM
         [ObservableProperty]
         private bool isFastBootEnabled;
 
+        [ObservableProperty]
+        private string remainingCapacity;
+
         public BatteryViewModel()
         {
             _updateTimer.Tick += (_, _) => UpdateBatteryInfo();
@@ -93,6 +96,7 @@ namespace Celer.ViewModels.OtimizacaoVM
             BatteryPercentage = info.Percentage;
             IsCharging = info.IsCharging;
             BatteryHealthPercentage = info.Health;
+            RemainingCapacity = info.RemainingCapacity;
             BatteryTimeRemaining = info.EstimatedTime;
         }
 
