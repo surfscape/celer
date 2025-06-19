@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
 using Celer.Models;
+using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -25,6 +26,8 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private bool canClean;
 
+        private bool hasRan;
+
         public class LogBook()
         {
             public string? LogEntry { get; set; }
@@ -36,6 +39,7 @@ namespace Celer.ViewModels
         public CleanEngine()
         {
             AppGlobals.EnableCleanEngineChanged += AppGlobals_EnableCleanEngineChanged;
+            LoadJson();
         }
 
         private void AppGlobals_EnableCleanEngineChanged(object? sender, EventArgs e)
@@ -48,10 +52,8 @@ namespace Celer.ViewModels
 
         partial void OnCanCleanChanged(bool oldValue, bool newValue)
         {
-            if (oldValue != newValue)
-            {
+            if (!newValue || !hasRan)
                 LoadJson();
-            }
         }
 
         private void AddLog(string message, Color foreground)
@@ -103,25 +105,47 @@ namespace Celer.ViewModels
                 foreach (var item in cat.Value.EnumerateArray())
                 {
                     var name = item.GetProperty("name").GetString();
-                    var path = item.GetProperty("path").GetString();
+                    var action = item.GetProperty("action");
+                    var type = action.GetProperty("type").GetString();
+                    var path = action.GetProperty("path").GetString();
+                    var patterns = action.TryGetProperty("patterns", out var patArray)
+                        ? patArray.EnumerateArray().Select(p => p.GetString()!).ToList()
+                        : [];
 
-                    if (name != null && path != null)
+                    var requiredProcesses = new List<RequiredProcess>();
+                    if (item.TryGetProperty("requiredProcesses", out var reqProcArray))
                     {
-                        items.Add(
-                            new CleanupItem
-                            {
-                                Name = name,
-                                Path = path,
-                                RequiredProcesses =
-                                [
-                                    .. item.GetProperty("requiredProcesses")
-                                        .EnumerateArray()
-                                        .Select(p => p.GetString()!),
-                                ],
-                                IsChecked = false,
-                            }
-                        );
+                        foreach (var proc in reqProcArray.EnumerateArray())
+                        {
+                            requiredProcesses.Add(
+                                new RequiredProcess
+                                {
+                                    Name = proc.GetProperty("name").GetString()!,
+                                    CanTerminate = proc.TryGetProperty("canTerminate", out var ct)
+                                        ? ct.GetBoolean()
+                                        : null,
+                                }
+                            );
+                        }
                     }
+
+                    items.Add(
+                        new CleanupItem
+                        {
+                            Name = name!,
+                            Description = item.TryGetProperty("description", out var desc)
+                                ? desc.GetString()
+                                : null,
+                            Actions = new Action
+                            {
+                                Type = type!,
+                                Path = path,
+                                Patterns = patterns,
+                            },
+                            RequiredProcesses = requiredProcesses,
+                            IsChecked = false,
+                        }
+                    );
                 }
                 Categories.Add(new CleanupCategory { Name = cat.Name, Items = items });
             }
@@ -132,6 +156,7 @@ namespace Celer.ViewModels
         {
             TotalFreedText = 0;
 
+            /* add only the selected items in the categories for cleaning */
             var selectedItems = Categories
                 .SelectMany(c => c.Items)
                 .Where(i => i.IsChecked)
@@ -143,10 +168,10 @@ namespace Celer.ViewModels
                     "É necessário selecionar pelo menos um item para iniciar a limpeza.",
                     Colors.Orange
                 );
-                AppGlobals.EnableCleanEngine = true;
                 return;
             }
 
+            /* check if any of the required processes are running */
             var runningProcs = Process
                 .GetProcesses()
                 .Select(p => p.ProcessName.ToLower())
@@ -156,10 +181,18 @@ namespace Celer.ViewModels
 
             foreach (var item in selectedItems)
             {
-                foreach (var proc in item.RequiredProcesses)
+                if (item.RequiredProcesses != null && item.RequiredProcesses.Count > 0)
                 {
-                    if (runningProcs.Contains(Path.GetFileNameWithoutExtension(proc).ToLower()))
-                        toClose.Add(proc);
+                    foreach (var proc in item.RequiredProcesses)
+                    {
+                        if (proc.CanTerminate == false || proc.CanTerminate is null)
+                            if (
+                                runningProcs.Contains(
+                                    Path.GetFileNameWithoutExtension(proc.Name).ToLower()
+                                )
+                            )
+                                toClose.Add(proc.Name);
+                    }
                 }
             }
 
@@ -168,7 +201,7 @@ namespace Celer.ViewModels
                 AddLog(
                     "É necessário fechar as seguintes aplicações para continuar:\n"
                         + string.Join("\n", toClose),
-                    Colors.Red
+                    (Color)Application.Current.Resources["SteelError"]
                 );
                 return;
             }
@@ -186,66 +219,79 @@ namespace Celer.ViewModels
 
                 foreach (var item in selectedItems)
                 {
-                    string resolvedPath = Environment.ExpandEnvironmentVariables(item.Path);
                     long freed = 0;
-
-                    try
+                    if (item.Actions.Type == "folder-content")
                     {
-                        if (Directory.Exists(resolvedPath))
+                        string resolvedPath = Environment.ExpandEnvironmentVariables(
+                            item.Actions.Path!
+                        );
+                        try
                         {
-                            var dir = new DirectoryInfo(resolvedPath);
-                            foreach (var file in dir.GetFiles("*", SearchOption.AllDirectories))
+                            if (Directory.Exists(resolvedPath))
                             {
-                                try
-                                {
-                                    freed += file.Length;
-                                    file.Attributes = FileAttributes.Normal;
-                                    file.Delete();
-                                    AddLog(
-                                        $"Removido o ficheiro: {file.FullName}",
-                                        Colors.YellowGreen
-                                    );
-                                }
-                                catch (Exception ex)
-                                {
-                                    AddLog(
-                                        $"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}",
-                                        (Color)Application.Current.Resources["SteelError"]
-                                    );
-                                }
+                                DeleteFolderContent(resolvedPath, ref freed, item.Name);
+                                Interlocked.Add(ref totalFreed, freed);
                             }
-                            try
-                            {
-                                dir.Delete(true);
-                            }
-                            catch (Exception ex)
+                            else
                             {
                                 AddLog(
-                                    $"Falha ao apagar pasta: {resolvedPath}: {ex.Message}",
+                                    $"A pasta {resolvedPath} não existe ou não é válida.",
+                                    Colors.Red
+                                );
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            AddLog(
+                                $"Falha ao apagar pasta: {resolvedPath}: {ex.Message}",
+                                (Color)Application.Current.Resources["SteelError"]
+                            );
+                        }
+                        continue;
+                    }
+
+                    if (item.Actions.Type == "content-pattern")
+                    {
+                        string resolvedPath = Environment.ExpandEnvironmentVariables(
+                            item.Actions.Path!
+                        );
+                        try
+                        {
+                            if (Directory.Exists(resolvedPath))
+                            {
+                                foreach (var proc in item.RequiredProcesses ?? [])
+                                {
+                                    if (proc.CanTerminate == true && proc.Name == "explorer.exe")
+                                    {
+                                        Processes.KillExplorer();
+                                    }
+                                }
+                                DeleteFilesWithPatterns(
+                                    resolvedPath,
+                                    item.Actions.Patterns!,
+                                    ref freed,
+                                    item.Name
+                                );
+                                Interlocked.Add(ref totalFreed, freed);
+                            }
+                            else
+                            {
+                                AddLog(
+                                    $"A pasta {resolvedPath} não existe ou não é válida.",
                                     (Color)Application.Current.Resources["SteelError"]
                                 );
                             }
                         }
-                        else if (File.Exists(resolvedPath))
+                        catch (Exception ex)
                         {
-                            var fileInfo = new FileInfo(resolvedPath)
-                            {
-                                Attributes = FileAttributes.Normal,
-                            };
-                            freed += fileInfo.Length;
-                            fileInfo.Delete();
-                            AddLog($"Removido o ficheiro: {fileInfo.FullName}", Colors.YellowGreen);
+                            AddLog(
+                                $"Falha ao apagar ficheiros com padrões: {resolvedPath}: {ex.Message}",
+                                (Color)Application.Current.Resources["SteelError"]
+                            );
                         }
-                        AddLog($"Removido {resolvedPath} ({freed / 1024} KB)", Colors.YellowGreen);
+                        Processes.StartExplorer();
+                        continue;
                     }
-                    catch (Exception ex)
-                    {
-                        AddLog(
-                            $"Falha ao apagar {resolvedPath}: {ex.Message}",
-                            (Color)Application.Current.Resources["SteelError"]
-                        );
-                    }
-
                     Interlocked.Add(ref totalFreed, freed);
                 }
             });
@@ -268,23 +314,127 @@ namespace Celer.ViewModels
             });
 
             TotalFreedText = (long)(totalFreed / 1024f / 1024f);
+            hasRan = true;
             AppGlobals.EnableCleanEngine = true;
+        }
+
+        /// <summary>
+        /// Deletes all files and folders in a specified directory recursively.
+        /// </summary>
+        /// <param name="resolvedPath">The path of the directory that we want to delete it's content</param>
+        /// <param name="freed">To increment the total space saved</param>
+        /// <param name="task">The name of the current task we are executing</param>
+        public void DeleteFolderContent(string resolvedPath, ref long freed, string task)
+        {
+            var dir = new DirectoryInfo(resolvedPath);
+
+            foreach (var file in dir.GetFiles("*", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    freed += file.Length;
+                    file.Attributes = FileAttributes.Normal;
+                    file.Delete();
+                    AddLog($"Removido o ficheiro: {file.FullName}", Colors.YellowGreen);
+                }
+                catch (Exception ex)
+                {
+                    AddLog(
+                        $"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}",
+                        (Color)Application.Current.Resources["SteelError"]
+                    );
+                }
+            }
+
+            foreach (
+                var subDir in dir.GetDirectories("*", SearchOption.AllDirectories)
+                    .OrderByDescending(d => d.FullName.Length)
+            )
+            {
+                try
+                {
+                    subDir.Attributes = FileAttributes.Normal;
+                    subDir.Delete(true);
+                    AddLog($"Removida a pasta: {subDir.FullName}", Colors.Orange);
+                }
+                catch (Exception ex)
+                {
+                    AddLog(
+                        $"Falha ao apagar pasta: {subDir.FullName}: {ex.Message}",
+                        (Color)Application.Current.Resources["SteelError"]
+                    );
+                }
+            }
+
+            AddLog(
+                $"A tarefa: {task} foi finalizada com sucesso",
+                (Color)Application.Current.Resources["SteelSucess"]
+            );
+        }
+
+        public void DeleteFilesWithPatterns(
+            string resolvedPath,
+            List<string> patterns,
+            ref long freed,
+            string task
+        )
+        {
+            foreach (var pattern in patterns)
+            {
+                var files = Directory.GetFiles(resolvedPath, pattern, SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        var fileInfo = new FileInfo(file);
+                        freed += fileInfo.Length;
+                        fileInfo.Attributes = FileAttributes.Normal;
+                        fileInfo.Delete();
+                        AddLog($"Removido o ficheiro: {file}", Colors.YellowGreen);
+                    }
+                    catch (Exception ex)
+                    {
+                        AddLog(
+                            $"Falha ao apagar ficheiro: {file}: {ex.Message}",
+                            (Color)Application.Current.Resources["SteelError"]
+                        );
+                    }
+                }
+            }
+            AddLog(
+                $"A tarefa: {task} foi finalizada com sucesso",
+                (Color)Application.Current.Resources["SteelSucess"]
+            );
         }
 
         public partial class CleanupItem : ObservableObject
         {
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public List<string>? RequiredProcesses { get; set; }
+            public required string Name { get; set; }
+            public string? Description { get; set; }
+            public required Action Actions { get; set; }
+            public List<RequiredProcess>? RequiredProcesses { get; set; }
 
             [ObservableProperty]
             private bool isChecked;
         }
 
+        public class RequiredProcess
+        {
+            public required string Name { get; set; }
+            public bool? CanTerminate { get; set; }
+        }
+
+        public class Action
+        {
+            public required string Type { get; set; }
+            public string? Path { get; set; }
+            public List<string>? Patterns { get; set; }
+        }
+
         public class CleanupCategory
         {
-            public string Name { get; set; }
-            public ObservableCollection<CleanupItem> Items { get; set; }
+            public required string Name { get; set; }
+            public required ObservableCollection<CleanupItem> Items { get; set; }
         }
     }
 }
