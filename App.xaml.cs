@@ -27,10 +27,11 @@ public partial class App : Application
             .ConfigureServices(
                 (context, services) =>
                 {
-                    // register main services, these include services that are used across the application and also the main window
+                    // register main services, these include services that are used across the application and the main window
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<NavigationService>();
                     services.AddSingleton<MainWindowViewModel>();
+                    services.AddTransient<SurfScapeGateway>();
 
                     // viewmodels for windows, tabs, and viewmodel (incl. usercontrols)
                     services.AddTransient<MenuBarNavigation>();
@@ -59,7 +60,10 @@ public partial class App : Application
                     services.AddTransient<Sensors>();
                     services.AddTransient<Manutencao>();
                     services.AddTransient<Repair>();
+                    services.AddTransient<Realtek>();
+                    services.AddTransient<Network>();
                     services.AddTransient<Privacidade>();
+                    services.AddTransient<Advanced>();
                 }
             )
             .Build();
@@ -67,28 +71,38 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        Celer.Properties.MainConfiguration.Default.Reset();
-        bool onboarding = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
+        bool createdNew;
+        var mutex = new Mutex(true, "Celer", out createdNew);
+
+        if (!createdNew)
+        {
+            return;
+        }
 
         if (AppHost == null)
         {
             MessageBox.Show(
-                "Erro ao inicializar AppHost. Por favor, reinicie a aplicação ou tenta fazer a sua reinstalação",
+                "Erro ao inicializar AppHost. Por favor reinicie a aplicação ou tente fazer a sua reinstalação",
                 "Erro de infrastutura",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error
             );
             throw new InvalidOperationException("AppHost não foi inicializado");
         }
-        if (onboarding)
+
+        bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
+
+        if (hasUseDoneSetup)
         {
             var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
         }
-        var surfScapeGateway = new SurfScapeGateway();
-        var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
-        surfScapeGateway.ShowDialog();
-        mainWindow.Show();
+        else
+        {
+            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
+            surfScapeGateway.MainWindowTrigger = true;
+            surfScapeGateway.ShowDialog();
+        }
         base.OnStartup(e);
     }
 
