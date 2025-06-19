@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -115,20 +116,53 @@ namespace Celer.ViewModels.ManutencaoVM
                         CreateNoWindow = true,
                     };
 
-                    using var process = Process.Start(psi);
+                    using var process = new Process { StartInfo = psi };
 
-                    int fakeProgress = 0;
-                    while (!process.StandardOutput.EndOfStream)
+                    process.OutputDataReceived += (sender, args) =>
                     {
-                        string? line = process.StandardOutput.ReadLine();
-                        if (!string.IsNullOrWhiteSpace(line))
+                        if (args.Data != null)
                         {
-                            fakeProgress += 5;
-                            progress.Report(Math.Min(fakeProgress, 95));
-                        }
-                        Thread.Sleep(200);
-                    }
+                            status.Report(args.Data);
 
+                            var match = Regex.Match(
+                                args.Data,
+                                @"(\d{1,3})%\s+complete",
+                                RegexOptions.IgnoreCase
+                            );
+                            if (
+                                match.Success
+                                && int.TryParse(match.Groups[1].Value, out int percent)
+                            )
+                            {
+                                progress.Report(percent);
+                            }
+                        }
+                    };
+
+                    process.ErrorDataReceived += (sender, args) =>
+                    {
+                        if (args.Data != null)
+                        {
+                            status.Report(args.Data);
+
+                            var match = Regex.Match(
+                                args.Data,
+                                @"(\d{1,3})%\s+complete",
+                                RegexOptions.IgnoreCase
+                            );
+                            if (
+                                match.Success
+                                && int.TryParse(match.Groups[1].Value, out int percent)
+                            )
+                            {
+                                progress.Report(percent);
+                            }
+                        }
+                    };
+
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
                     process.WaitForExit();
                     progress.Report(100);
                     status.Report("Concluído.");
