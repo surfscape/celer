@@ -7,9 +7,7 @@ namespace Celer.Services
     public static class CleaningSignatureManager
     {
         private static readonly string LocalDbPath = "signatures.json";
-        private static readonly string DownloadUrl = MainConfiguration
-            .Default
-            .CLEANENGINE_DefaultSource;
+        private static readonly string DownloadUrl = Signatures.Default.CleaningEngineMainSource;
 
         public static bool HasLocalDatabase() => File.Exists(LocalDbPath);
 
