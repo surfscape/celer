@@ -1,12 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
-using Celer.Models;
+﻿using Celer.Models;
+using Celer.Properties;
 using Celer.Services;
-using Celer.Services.OpsecEngine;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace Celer.Views.Windows.Utils
 {
@@ -16,8 +16,6 @@ namespace Celer.Views.Windows.Utils
     public partial class SurfScapeGateway : Window
     {
         private readonly SurfScapeGatewayViewModel _viewModel;
-        bool? mainWindowTrigger = false;
-
         private readonly MainWindow _mainWindow;
 
         public bool? MainWindowTrigger { get; set; } = false;
@@ -61,35 +59,13 @@ namespace Celer.Views.Windows.Utils
 
             public async Task InitializeAsync()
             {
-                CurrentTask = "A verificar ligação com a internet...";
-                bool isOnline = UserLand.IsInternetAvailable();
-
-                await Task.Delay(500);
+  
                 try
                 {
-                    if (isOnline)
+                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway)
                     {
-                        CurrentTask = "A buscar assinaturas de limpeza...";
-                        bool success =
-                            await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
-                        if (success)
-                        {
-                            AppGlobals.EnableCleanEngine = true;
-                            CurrentTask = "Assinaturas atualizadas. A inicar Celer";
-                        }
-                        else
-                        {
-                            CurrentTask = "Servidor offline, a buscar assinaturas locais";
-                            SetOfflineDatabase();
-                        }
-                    }
-                    else
-                    {
-                        CurrentTask = "Sem internet, a buscar assinaturas locais";
-                        SetOfflineDatabase();
-                        CurrentTask = hasOfflineDb
-                            ? "Assinatuas locais encontradas!"
-                            : "Clean Engine desligado: assinaturas não encontradas";
+                        await Task.Delay(500);
+                        await SurfScapeWebServices();
                     }
                     CurrentTask = "A inicializar serviços de hardware...";
                     await SetDxdiag();
@@ -100,6 +76,35 @@ namespace Celer.Views.Windows.Utils
                     Debug.WriteLine(e);
                 }
                 IsDone?.Invoke();
+            }
+
+            public async Task SurfScapeWebServices()
+            {
+                CurrentTask = "A verificar ligação com a internet...";
+                bool isOnline = UserLand.IsInternetAvailable();
+                if (isOnline)
+                {
+                    CurrentTask = "A buscar assinaturas de limpeza...";
+                    bool success = await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
+                    if (success)
+                    {
+                        AppGlobals.EnableCleanEngine = true;
+                        CurrentTask = "Assinaturas atualizadas. A inicar Celer";
+                    }
+                    else
+                    {
+                        CurrentTask = "Servidor offline, a buscar assinaturas locais";
+                        SetOfflineDatabase();
+                    }
+                }
+                else
+                {
+                    CurrentTask = "Sem internet, a buscar assinaturas locais";
+                    SetOfflineDatabase();
+                    CurrentTask = hasOfflineDb
+                        ? "Assinatuas locais encontradas!"
+                        : "Clean Engine desligado: assinaturas não encontradas";
+                }
             }
 
             public void SetOfflineDatabase()
@@ -142,7 +147,7 @@ namespace Celer.Views.Windows.Utils
                 });
             }
 
-            private void GenerateBatteryReport()
+            private static void GenerateBatteryReport()
             {
                 var psi = new ProcessStartInfo
                 {

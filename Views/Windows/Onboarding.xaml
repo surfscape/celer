@@ -5,7 +5,7 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Primeira execução"
+    Title="Celer - Primeira execução"
     Width="800"
     Height="500"
     Icon="/celer_icon.ico"
@@ -90,37 +90,40 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
-                    <CheckBox x:Name="TermsCheckbox" Margin="0,0,0,4">
-                        <TextBlock>
-                            Li e aceito os Termos de Utilização e a&#160;<Hyperlink
-                                Foreground="{DynamicResource Primary}"
-                                NavigateUri="https://surfscape.neocities.org/celer/end-user/privacidade"
-                                RequestNavigate="Hyperlink_RequestNavigate">
-                                Política de Privacidade
-                            </Hyperlink></TextBlock>
-                    </CheckBox>
-                    <CheckBox>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock>Fazer download de assinaturas durante a inicialização</TextBlock>
-                            <StackPanel
-                                Grid.Column="1"
-                                Margin="8,0,0,0"
-                                Background="Transparent"
-                                ToolTip="Ao ativar esta opção o Celer ira ficar a executar no background quando ligar o Windows ou quando fechar o programa.">
-                                <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="CircleHelp" />
-                            </StackPanel>
-                        </Grid>
-                    </CheckBox>
-                    <Button
-                        MinWidth="150"
-                        HorizontalAlignment="Center"
-                        Click="Button_Click">
-                        Iniciar
-                    </Button>
+                    <StackPanel x:Name="OnboardingOptions">
+                        <CheckBox Margin="0,0,0,4" IsChecked="{Binding AcceptTerms}">
+                            <TextBlock>
+                                Li e aceito os Termos de Utilização e a&#160;<Hyperlink
+                                    Foreground="{DynamicResource Primary}"
+                                    NavigateUri="https://surfscape.neocities.org/celer/end-user/privacidade"
+                                    RequestNavigate="Hyperlink_RequestNavigate">
+                                    Política de Privacidade
+                                </Hyperlink></TextBlock>
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding AutoUpdates}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock>Fazer download de assinaturas durante a inicialização</TextBlock>
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Background="Transparent"
+                                    ToolTip="Ao ativar esta opção o Celer ira ficar a executar no background quando ligar o Windows ou quando fechar o programa.">
+                                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="CircleHelp" />
+                                </StackPanel>
+                            </Grid>
+                        </CheckBox>
+                        <Button
+                            MinWidth="150"
+                            HorizontalAlignment="Center"
+                            Command="{Binding StartCommand}"
+                            IsEnabled="{Binding AcceptTerms}">
+                            Iniciar
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>
