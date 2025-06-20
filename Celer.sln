@@ -5,16 +5,28 @@ VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celer", "Celer.csproj", "{648EA86E-31C0-43E2-A53C-AAA548E16B2B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x64.ActiveCfg = Debug|x64
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x64.Build.0 = Debug|x64
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x64.ActiveCfg = Release|x64
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x64.Build.0 = Release|x64
+		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Debug|Any CPU.ActiveCfg = Debug
+		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Debug|x64.ActiveCfg = Debug
+		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Release|Any CPU.ActiveCfg = Release
+		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
