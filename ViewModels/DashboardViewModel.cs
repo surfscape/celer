@@ -1,9 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Management;
-using System.Windows.Threading;
-using Celer.Models;
+﻿using Celer.Models;
 using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
@@ -11,6 +6,12 @@ using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Management;
+using System.Windows.Threading;
 
 namespace Celer.ViewModels;
 
@@ -55,6 +56,9 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<AlertModel> alerts = [];
 
+    [ObservableProperty]
+    private bool enableAlerts = false;
+
     /// <summary>
     /// CPU Data
     /// </summary>
@@ -69,6 +73,9 @@ public partial class DashboardViewModel : ObservableObject
 
     [ObservableProperty]
     private int threadCount;
+
+    [ObservableProperty]
+    private string cpuStatus;
 
     /// <summary>
     /// GPU Data
@@ -94,8 +101,43 @@ public partial class DashboardViewModel : ObservableObject
     public DashboardViewModel(NavigationService navigationService)
     {
         _navigationService = navigationService;
+        MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
         _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
     }
+
+    private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
+    {
+        var propertiesToWatch = new[]
+        {
+        nameof(MainConfiguration.Default.ALERTS_CPUTrackingEnable),
+        nameof(MainConfiguration.Default.ALERTS_MemoryTrackingEnable),
+        nameof(MainConfiguration.Default.ALERTS_EnableTrackProcess)
+    };
+
+        if (propertiesToWatch.Contains(e.PropertyName))
+        {
+            EnableAlertTracking();
+        }
+    }
+
+    private void EnableAlertTracking()
+    {
+        if (
+    MainConfiguration.Default.ALERTS_CPUTrackingEnable
+    || MainConfiguration.Default.ALERTS_MemoryTrackingEnable
+    || MainConfiguration.Default.ALERTS_EnableTrackProcess
+)
+        {
+            EnableAlerts = true;
+            var alertService = new AlertMonitoringService(Alerts);
+            alertService.StartMonitoring();
+        }
+        else
+        {
+            EnableAlerts = false;
+        }
+    }
+
 
     public async Task InitializeAsync()
     {
@@ -116,16 +158,7 @@ public partial class DashboardViewModel : ObservableObject
             });
 
             GetDriveInfo();
-
-            if (
-                MainConfiguration.Default.ALERTS_CPUTrackingEnable
-                || MainConfiguration.Default.ALERTS_MemoryTrackingEnable
-                || MainConfiguration.Default.ALERTS_EnableTrackProcess
-            )
-            {
-                var alertService = new AlertMonitoringService(this.Alerts);
-                alertService.StartMonitoring();
-            }
+            EnableAlertTracking();
         }
         catch (Exception ex)
         {
@@ -276,12 +309,13 @@ public partial class DashboardViewModel : ObservableObject
         try
         {
             using var searcher = new ManagementObjectSearcher(
-                "SELECT Name, MaxClockSpeed FROM Win32_Processor"
+                "SELECT Name, MaxClockSpeed, Status FROM Win32_Processor"
             );
             foreach (var item in searcher.Get())
             {
                 CpuName = item["Name"]?.ToString()?.Trim();
                 CpuClockSpeed = Convert.ToDouble(item["MaxClockSpeed"]);
+                CpuStatus = item["Status"]?.ToString() ?? "N/A";
                 break;
             }
         }

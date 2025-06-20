@@ -199,5 +199,17 @@ namespace Celer.Properties {
                 this["ALERTS_CPUTrackingLimit"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAutoSurfScapeGateway {
+            get {
+                return ((bool)(this["EnableAutoSurfScapeGateway"]));
+            }
+            set {
+                this["EnableAutoSurfScapeGateway"] = value;
+            }
+        }
     }
 }

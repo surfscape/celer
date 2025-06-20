@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}"
+    d:Width="900"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
@@ -122,9 +123,13 @@
                                         <TextBlock Text="{Binding ThreadCount}" />
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="Clock máximo (sem Turbo): " />
+                                <StackPanel Margin="0,2" Orientation="Horizontal">
+                                    <TextBlock FontWeight="SemiBold" Text="Clock máximo sem turbo: " />
                                     <TextBlock Text="{Binding CpuClockSpeed, StringFormat={}{0} MHz}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,2" Orientation="Horizontal">
+                                    <TextBlock FontWeight="SemiBold" Text="Estado: " />
+                                    <TextBlock Text="{Binding CpuStatus}" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -139,13 +144,16 @@
                                     <ColumnDefinition Width="48" />
                                 </Grid.ColumnDefinitions>
                                 <ProgressBar
-                         Margin="0,8,8,10"
-                         Maximum="{Binding TotalMemory}"
-                         Minimum="0"
-                         Value="{Binding UsedMemory}" />
-                                <TextBlock Grid.Column="1" Text="{Binding MemoryUsage, StringFormat={}{0:F1}%}" VerticalAlignment="Center"/>
+                                    Margin="0,8,8,10"
+                                    Maximum="{Binding TotalMemory}"
+                                    Minimum="0"
+                                    Value="{Binding UsedMemory}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding MemoryUsage, StringFormat={}{0:F1}%}" />
                             </Grid>
-       
+
                             <Button
                                 Margin="0,0,0,0"
                                 Command="{Binding NavigateToOptimizationCommand}"
@@ -237,12 +245,12 @@
                                 </StackPanel>
                             </Button>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="0,0,0,0">
+                        <StackPanel Grid.Column="1" Margin="0,0,0,0" IsEnabled="{Binding EnableAlerts}" Visibility="{Binding EnableAlerts, Converter={StaticResource BoolToVisConverter}}"  >
                             <local2:HeadingHelp
                                 HelpText="Notificações relacionadas ao estado do sistema, estas podem ser alterada nas definições"
                                 Label="Alertas"
                                 LabelStyleKey="Heading2" />
-                            <Grid>
+                            <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
