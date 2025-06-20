@@ -71,12 +71,13 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        bool createdNew;
-        var mutex = new Mutex(true, "Celer", out createdNew);
-
-        if (!createdNew)
+        // closes celer if another instance is already running
+        using (var mutex = new Mutex(true, "Celer", out bool createdNew))
         {
-            return;
+            if (!createdNew)
+            {
+                return;
+            }
         }
 
         if (AppHost == null)
@@ -92,7 +93,7 @@ public partial class App : Application
 
         bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
 
-        if (hasUseDoneSetup)
+        if (!hasUseDoneSetup)
         {
             var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
