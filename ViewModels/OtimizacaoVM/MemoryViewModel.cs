@@ -1,11 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows;
-using Celer.Models.SystemInfo;
+﻿using Celer.Models.SystemInfo;
 using Celer.Services.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Ookii.Dialogs.Wpf;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {
@@ -44,10 +46,10 @@ namespace Celer.ViewModels.OtimizacaoVM
         [RelayCommand]
         private void CleanCache()
         {
-            ShowTaskDialog();
+             ShowCleanCacheDialogAsync();
         }
 
-        private void ShowTaskDialog()
+        private void ShowCleanCacheDialogAsync()
         {
             if (TaskDialog.OSSupportsTaskDialogs)
             {
@@ -60,16 +62,18 @@ namespace Celer.ViewModels.OtimizacaoVM
                     "Esta mensagem é apresentada pelo serviço de memória do Celer. Para mais informações sobre o seu funcionamento, consulte: <a href=\"https://surfscape.github.io/blueprint/celer/services/memory\">surfscape.github.io/blueprint/celer/services/memory</a>.";
                 dialog.FooterIcon = TaskDialogIcon.Information;
                 dialog.EnableHyperlinks = true;
-                TaskDialogButton okButton = new(ButtonType.Ok);
-                TaskDialogButton cancelButton = new(ButtonType.Cancel);
+
+                var okButton = new TaskDialogButton(ButtonType.Ok);
+                var cancelButton = new TaskDialogButton(ButtonType.Cancel);
                 dialog.Buttons.Add(okButton);
                 dialog.Buttons.Add(cancelButton);
-                dialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(
-                    TaskDialog_HyperLinkClicked
-                );
-                TaskDialogButton button = dialog.ShowDialog();
-                if (button == okButton)
-                    MessageBox.Show("You clicked the OK button.", "Task Dialog Sample");
+
+                dialog.HyperlinkClicked += TaskDialog_HyperLinkClicked;
+
+                TaskDialogButton result = dialog.ShowDialog();
+
+                if (result == okButton)
+                    CleanCacheAction();
             }
             else
             {
@@ -78,6 +82,32 @@ namespace Celer.ViewModels.OtimizacaoVM
                     "TaskDialog Failure"
                 );
             }
+        }
+
+        private static void CleanCacheAction()
+        {
+            var proc = Process.Start(new ProcessStartInfo
+            {
+                FileName = "rundll32.exe",
+                Arguments = "advapi32.dll,ProcessIdleTasks",
+                CreateNoWindow = true,
+                UseShellExecute = false
+            });
+            if (proc is not null)
+            {
+                proc.Start();
+                proc.WaitForExit();
+                if (proc.HasExited)
+                {
+                    MessageBox.Show(
+                        "A limpeza do cache foi iniciada. O sistema pode demorar algum tempo a libertar memória adicional. Por favor, aguarde.",
+                        "Limpeza de Cache",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
+                }
+            }
+            MessageBox.Show("Erro ao inicar processo", "Limpeza de Cache");
         }
 
         private void TaskDialog_HyperLinkClicked(object? sender, HyperlinkClickedEventArgs e)
@@ -89,15 +119,9 @@ namespace Celer.ViewModels.OtimizacaoVM
         }
 
         [RelayCommand]
-        private void CompressMemory()
-        {
-            // Apenas possível em Windows 10+ com comandos internos
-        }
-
-        [RelayCommand]
         private void EditPagefile()
         {
-            // Abrir painel ou usar código WMI para editar pagefile
+            Process.Start("SystemPropertiesAdvanced.exe");
         }
     }
 }

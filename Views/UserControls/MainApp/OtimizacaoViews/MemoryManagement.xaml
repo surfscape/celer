@@ -89,7 +89,7 @@
             BorderBrush="{DynamicResource Border}"
             BorderThickness="0,1,0,0" />
         <TextBlock Margin="0,2,0,8" Style="{StaticResource Heading2}">Ações</TextBlock>
-        <UniformGrid Margin="0,0,0,8" Columns="3">
+        <UniformGrid Margin="0,0,0,8" Columns="2">
             <Button Margin="0,0,8,0" Command="{Binding CleanCacheCommand}">
                 <WrapPanel>
                     <iconPacks:PackIconLucide
@@ -100,19 +100,6 @@
                         Foreground="{DynamicResource SecondaryText}"
                         Kind="Trash" />
                     <TextBlock>Limpar Cache</TextBlock>
-                </WrapPanel>
-
-            </Button>
-            <Button Margin="0,0,8,0" Command="{Binding CompressMemoryCommand}">
-                <WrapPanel>
-                    <iconPacks:PackIconLucide
-                        Width="20"
-                        Height="20"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
-                        Kind="HardDriveDownload" />
-                    <TextBlock>Comprimir Memória</TextBlock>
                 </WrapPanel>
             </Button>
             <Button Command="{Binding EditPagefileCommand}">
