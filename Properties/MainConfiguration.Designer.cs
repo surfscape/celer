@@ -73,7 +73,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("explorer.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("explorer")]
         public string ALERTS_TrackProcess {
             get {
                 return ((string)(this["ALERTS_TrackProcess"]));
@@ -97,7 +97,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Steel WPF Dark")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Steel Dark")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));
@@ -120,7 +120,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ALERTS_EnableTrackProcess {
             get {
                 return ((bool)(this["ALERTS_EnableTrackProcess"]));

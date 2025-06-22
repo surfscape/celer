@@ -15,19 +15,19 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ALERTS_TrackProcess" Type="System.String" Scope="User">
-      <Value Profile="(Default)">explorer.exe</Value>
+      <Value Profile="(Default)">explorer</Value>
     </Setting>
     <Setting Name="EnableRounding" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Steel WPF Dark</Value>
+      <Value Profile="(Default)">Steel Dark</Value>
     </Setting>
     <Setting Name="CLEANENGINE_CustomPaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ALERTS_EnableTrackProcess" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DISKS_ShowHiddenDrives" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

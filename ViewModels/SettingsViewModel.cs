@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Windows;
 using Celer.Properties;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,7 +16,8 @@ namespace Celer.ViewModels
             MessageBoxButton,
             MessageBoxImage,
             Task<MessageBoxResult>
-        >? ShowDialogAsync { get; set; }
+        >? ShowDialogAsync
+        { get; set; }
         public Action? CloseWindowAction { get; set; }
 
         private bool _initialEnableAlertCPUTracking;
@@ -37,7 +39,6 @@ namespace Celer.ViewModels
             CheckForUnsavedChanges();
             if (!_isUpdatingChildrenFromMaster)
             {
-                //Debug.WriteLine($"CHILD: CPU Changed to {value}. Notifying master.");
                 OnPropertyChanged(nameof(EnableAlerts));
                 OnPropertyChanged(nameof(AreInnerAlertsEnabled));
                 OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
@@ -54,7 +55,6 @@ namespace Celer.ViewModels
             CheckForUnsavedChanges();
             if (!_isUpdatingChildrenFromMaster)
             {
-                //Debug.WriteLine($"CHILD: Memory Changed to {value}. Notifying master.");
                 OnPropertyChanged(nameof(EnableAlerts));
                 OnPropertyChanged(nameof(AreInnerAlertsEnabled));
                 OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
@@ -70,10 +70,8 @@ namespace Celer.ViewModels
             CheckForUnsavedChanges();
             if (!_isUpdatingChildrenFromMaster)
             {
-                //Debug.WriteLine($"CHILD: Process Changed to {value}. Notifying master.");
                 OnPropertyChanged(nameof(EnableAlerts));
                 OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-                // IsProcessTrackingTextBoxEnabled is also notified by its attribute
             }
         }
 
@@ -96,119 +94,67 @@ namespace Celer.ViewModels
         {
             get
             {
-                bool allTrue =
-                    this.EnableAlertCPUTracking
-                    && this.EnableAlertMemoryTracking
-                    && this.EnableAlertTrackProcess;
-                if (allTrue)
-                {
-                    //Debug.WriteLine("MASTER GET: All true -> true");
-                    return true;
-                }
+                bool allChecked = EnableAlertCPUTracking && EnableAlertMemoryTracking && EnableAlertTrackProcess;
+                if (allChecked) return true;
 
-                bool allFalse =
-                    !this.EnableAlertCPUTracking
-                    && !this.EnableAlertMemoryTracking
-                    && !this.EnableAlertTrackProcess;
-                if (allFalse)
-                {
-                    //Debug.WriteLine("MASTER GET: All false -> false");
-                    return false;
-                }
-                //Debug.WriteLine("MASTER GET: Mixed -> null");
+                bool noneChecked = !EnableAlertCPUTracking && !EnableAlertMemoryTracking && !EnableAlertTrackProcess;
+                if (noneChecked) return false;
+
                 return null;
             }
             set
             {
-                //Debug.WriteLine($"MASTER SET: Received value = {value?.ToString() ?? "null"}");
-                bool? currentState = GetCurrentAggregatedAlertsStateForSetter();
-                //Debug.WriteLine($"MASTER SET: Current aggregated state = {currentState?.ToString() ?? "null"}");
-
-                if (value == currentState)
+                if (EnableAlerts == true && value == false)
                 {
-                    //Debug.WriteLine("MASTER SET: New value is same as current state. No action.");
+                    OnPropertyChanged(nameof(EnableAlerts));
                     return;
                 }
 
-                // This is the key: when the master checkbox is clicked, 'value' should be the target state (true or false).
-                // If 'value' is null, it means the checkbox is trying to go to indeterminate,
-                // which usually happens if a child was changed.
-                // We only want to cascade from master if 'value' is explicitly true or false.
+                if (EnableAlertCPUTracking && EnableAlertMemoryTracking && EnableAlertTrackProcess)
+                {
+                    value = false;
+                    EnableAlertCPUTracking = false;
+                    EnableAlertMemoryTracking = false;
+                    EnableAlertTrackProcess = false;
+                    OnPropertyChanged(nameof(EnableAlerts));
+                    OnPropertyChanged(nameof(AreInnerAlertsEnabled));
+                    OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
+
+                }
+
                 if (value.HasValue)
                 {
-                    bool targetChildrenState = value.Value;
-                    //Debug.WriteLine($"MASTER SET: value.HasValue is true. Target for children: {targetChildrenState}");
-
+                    bool targetState = value.Value;
                     _isUpdatingChildrenFromMaster = true;
                     try
                     {
-                        //Debug.WriteLine($"MASTER SET: Updating children. Current CPU: {EnableAlertCPUTracking}, Memory: {EnableAlertMemoryTracking}, Process: {EnableAlertTrackProcess}");
-                        if (this.EnableAlertCPUTracking != targetChildrenState)
-                        {
-                            //Debug.WriteLine($"MASTER SET: Setting EnableAlertCPUTracking to {targetChildrenState}");
-                            this.EnableAlertCPUTracking = targetChildrenState;
-                        }
-                        if (this.EnableAlertMemoryTracking != targetChildrenState)
-                        {
-                            //Debug.WriteLine($"MASTER SET: Setting EnableAlertMemoryTracking to {targetChildrenState}");
-                            this.EnableAlertMemoryTracking = targetChildrenState;
-                        }
-                        if (this.EnableAlertTrackProcess != targetChildrenState)
-                        {
-                            //Debug.WriteLine($"MASTER SET: Setting EnableAlertTrackProcess to {targetChildrenState}");
-                            this.EnableAlertTrackProcess = targetChildrenState;
-                        }
+                        EnableAlertCPUTracking = targetState;
+                        EnableAlertMemoryTracking = targetState;
+                        EnableAlertTrackProcess = targetState;
                     }
                     finally
                     {
                         _isUpdatingChildrenFromMaster = false;
-                        //Debug.WriteLine("MASTER SET: Finished updating children.");
                     }
                 }
-                else
-                {
-                    //Debug.WriteLine("MASTER SET: value is null. No direct update to children from master.");
-                    // If value is null, it means the master is becoming indeterminate.
-                    // This typically happens because a child was changed, not because the user
-                    // clicked the master to specifically make it indeterminate.
-                    // So, we don't propagate 'null' to children.
-                }
 
-                // Crucially, notify after all potential changes.
-                //Debug.WriteLine("MASTER SET: Notifying property changes for EnableAlerts and dependents.");
                 OnPropertyChanged(nameof(EnableAlerts));
                 OnPropertyChanged(nameof(AreInnerAlertsEnabled));
                 OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
             }
         }
 
-        private bool? GetCurrentAggregatedAlertsStateForSetter()
-        {
-            bool allTrue =
-                this.EnableAlertCPUTracking
-                && this.EnableAlertMemoryTracking
-                && this.EnableAlertTrackProcess;
-            if (allTrue)
-                return true;
-            bool allFalse =
-                !this.EnableAlertCPUTracking
-                && !this.EnableAlertMemoryTracking
-                && !this.EnableAlertTrackProcess;
-            if (allFalse)
-                return false;
-            return null;
-        }
 
-        // ... (Rest of your ViewModel as before)
+
         [ObservableProperty]
         private bool enableRounding = MainConfiguration.Default.EnableRounding;
 
         partial void OnEnableRoundingChanged(bool value) => CheckForUnsavedChanges();
 
-        public ObservableCollection<string> ComboOptions { get; } = ["Steel WPF Dark"];
+        public ObservableCollection<string> ComboOptions { get; } = ["Steel Dark"];
 
         [ObservableProperty]
-        private string currentTheme = MainConfiguration.Default.Theme ?? "Steel WPF Dark";
+        private string currentTheme = MainConfiguration.Default.Theme ?? "Steel Dark";
 
         partial void OnCurrentThemeChanged(string value) => CheckForUnsavedChanges();
 
@@ -279,7 +225,7 @@ namespace Celer.ViewModels
 
         private void RevertChanges()
         {
-            _isUpdatingChildrenFromMaster = true; // Prevent notifications during revert
+            _isUpdatingChildrenFromMaster = true;
             try
             {
                 Paths.CollectionChanged -= OnPathsCollectionChanged;
@@ -303,7 +249,6 @@ namespace Celer.ViewModels
             {
                 _isUpdatingChildrenFromMaster = false;
             }
-            // After reverting, notify all relevant properties to update UI
             OnPropertyChanged(nameof(EnableAlertCPUTracking));
             OnPropertyChanged(nameof(EnableAlertMemoryTracking));
             OnPropertyChanged(nameof(EnableAlertTrackProcess));
@@ -311,13 +256,13 @@ namespace Celer.ViewModels
             OnPropertyChanged(nameof(EnableRounding));
             OnPropertyChanged(nameof(CurrentTheme));
             OnPropertyChanged(nameof(EnableExportCleaningLog));
-            OnPropertyChanged(nameof(Paths)); // May not be necessary if ListBox updates from ObservableCollection events
+            OnPropertyChanged(nameof(Paths));
 
             OnPropertyChanged(nameof(EnableAlerts));
             OnPropertyChanged(nameof(AreInnerAlertsEnabled));
             OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
 
-            CheckForUnsavedChanges(); // Should be false now
+            CheckForUnsavedChanges();
         }
 
         [RelayCommand]
@@ -331,7 +276,7 @@ namespace Celer.ViewModels
             MainConfiguration.Default.Theme = CurrentTheme;
             MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
 
-            var sc = new System.Collections.Specialized.StringCollection();
+            var sc = new StringCollection();
             foreach (var p in Paths)
                 sc.Add(p);
             MainConfiguration.Default.CLEANENGINE_CustomPaths = sc;
@@ -451,6 +396,30 @@ namespace Celer.ViewModels
             if (pathToRemove != null && Paths.Contains(pathToRemove))
             {
                 Paths.Remove(pathToRemove);
+            }
+        }
+
+        [RelayCommand]
+        private void ResetAppData()
+        {
+            if (ShowDialogAsync == null)
+            {
+                return;
+            }
+            var result = ShowDialogAsync(
+                "Celer",
+                "Desejas apagar todos os dados do Celer e fechar a aplicação?",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            ).Result;
+            if (result == MessageBoxResult.Yes)
+            {
+                MainConfiguration.Default.Reset();
+                MainConfiguration.Default.Save();
+                File.Delete("batteryreport.xml");
+                File.Delete("signatures.json");
+                File.Delete("dxdiag.xml");
+                Application.Current.Shutdown();
             }
         }
     }
