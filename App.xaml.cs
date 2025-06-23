@@ -33,7 +33,7 @@ public partial class App : Application
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddTransient<SurfScapeGateway>();
 
-                    // viewmodels for windows, tabs, and viewmodel (incl. usercontrols)
+                    // viewmodels for the user controls
                     services.AddTransient<MenuBarNavigation>();
                     services.AddTransient<DashboardViewModel>();
                     services.AddTransient<CleanEngine>();
@@ -43,11 +43,10 @@ public partial class App : Application
                     services.AddTransient<BatteryViewModel>();
                     services.AddTransient<VideoViewModel>();
                     services.AddTransient<SensorViewModel>();
-
                     services.AddTransient<ManutencaoViewModel>();
                     services.AddTransient<RepairViewModel>();
-
                     services.AddTransient<PrivacidadeViewModel>();
+                    services.AddSingleton<AdvancedViewModel>();
 
                     // usercontrols themselves (and other views that need access to the services)
                     services.AddTransient<MenuBar>();

@@ -94,7 +94,6 @@ namespace Celer.Views.UserControls.MainWindow
                                     MessageBoxImage.Error
                                 );
 
-                                // Rejeitar a mudança
                                 Application.Current.Dispatcher.InvokeAsync(() =>
                                 {
                                     OnPropertyChanged(nameof(IsEnabled));
