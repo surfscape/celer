@@ -59,13 +59,14 @@ namespace Celer.Views.Windows.Utils
 
             public async Task InitializeAsync()
             {
-  
+                
                 try
                 {
                     if (MainConfiguration.Default.EnableAutoSurfScapeGateway)
                     {
-                        await Task.Delay(500);
+                        await Task.Delay(200);
                         await SurfScapeWebServices();
+                        
                     }
                     CurrentTask = "A inicializar serviços de hardware...";
                     await SetDxdiag();
