@@ -87,12 +87,23 @@
                         Padding="0,0,0,12"
                         BorderBrush="{DynamicResource Border}"
                         BorderThickness="0,0,0,1">
+
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading1}">Ferramentas Escolares</TextBlock>
                             <TextBlock Style="{StaticResource Subheading}" TextWrapping="Wrap">Ferramentas e utilitários para sistemas do ministério da educação</TextBlock>
                         </StackPanel>
-                    </Border>
 
+                    </Border>
+                    <StackPanel Margin="0,0,0,12">
+                        <TextBlock Foreground="White" Style="{StaticResource Heading2}">Serviços CuCO</TextBlock>
+                        <TextBlock>Faz a instalção (ou atualização se já instalado) dos serviços do CuCO</TextBlock>
+                        <Button Margin="0,4,0,0" HorizontalAlignment="Left" Width="200">Realizar ação</Button>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Foreground="White" Style="{StaticResource Heading2}">Instalar Office 365</TextBlock>
+                        <TextBlock>Faz a instalação do Office 365 para Pequenas e Médias empresas em pt_PT</TextBlock>
+                        <Button Margin="0,4,0,0" HorizontalAlignment="Left" Width="200">Realizar ação</Button>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </TabItem>
