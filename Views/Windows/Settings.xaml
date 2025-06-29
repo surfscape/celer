@@ -68,7 +68,8 @@
                                             ItemsSource="{Binding ComboOptions}"
                                             SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding EnableRounding}">Arredondar valores</CheckBox>
+                                    <CheckBox IsChecked="{Binding EnableRounding}" Margin="0,0,0,8">Arredondar valores</CheckBox>
+                                    <CheckBox IsChecked="{Binding EnableRounding}">Procurar por atualização durante a inicialização do Celer</CheckBox>
                                     <TextBlock Margin="0,10,0,0" Style="{DynamicResource Heading2}">
                                         Alertas
                                     </TextBlock>
@@ -80,20 +81,20 @@
                                             IsThreeState="True" />
                                         <StackPanel Margin="20,4">
                                             <CheckBox
-                                                Content="Ativar monitorização de CPU"
+                                                Content="Ativar monitorização de CPU (limite de 80%)"
                                                 IsChecked="{Binding EnableAlertCPUTracking, Mode=TwoWay}"
                                                 IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
                                             <CheckBox
-                                                Content="Ativar monitorização de memória"
+                                                Content="Ativar monitorização de memória (limite de 80%)"
                                                 IsChecked="{Binding EnableAlertMemoryTracking, Mode=TwoWay}"
                                                 IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
                                             <CheckBox
-                                                Content="Ativar monitorização de processo"
+                                                Content="Ativar monitorização de processo (limite de 500MB)"
                                                 IsChecked="{Binding EnableAlertTrackProcess, Mode=TwoWay}"
                                                 IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
                                             <Label
                                                 Padding="0"
-                                                Content="Process to track:"
+                                                Content="Processo para monitorizar:"
                                                 IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}" />
                                             <TextBox
                                                 IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}"
@@ -168,13 +169,14 @@
                     <TabItem.Header>
                         <model:TabHeaderData Title="Avançado" Icon="FlaskConical" />
                     </TabItem.Header>
+                    <Border Padding="0,8">
                     <StackPanel>
                         <TextBlock Style="{DynamicResource Heading1}">Funções experimentais</TextBlock>
                         <TextBlock
                             Margin="0,8"
                             Foreground="#ff7070"
                             TextWrapping="Wrap">
-                            Esta secção contem configurações que não devem ser utilizadas no dia-a-dia já que as mesmas estão em fase de testes e podem deteriorar a experiência da aplicação!
+                            Esta secção contem configurações que não devem ser utilizadas no dia-a-dia, já que as mesmas estão em fase de testes e podem piorar a experiência da aplicação!
                         </TextBlock>
                         <Border
                             Padding="8"
@@ -194,7 +196,7 @@
                             Apagar preferências e dados
                         </Button>
                     </StackPanel>
-
+                    </Border>
                 </TabItem>
             </TabControl>
             <StackPanel
