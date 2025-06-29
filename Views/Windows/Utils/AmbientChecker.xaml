@@ -4,20 +4,66 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Celer.Views.Windows.Utils"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:converters="clr-namespace:Celer.Converters"
     Title="Verificação de Ambiente"
     Width="600"
-    Height="200"
+    SizeToContent="Height"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     Style="{StaticResource {x:Type Window}}"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <Border Padding="10">
+
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Border Padding="15">
         <StackPanel>
-            <TextBlock Style="{StaticResource Heading1}">Verificação de ambiente</TextBlock>
-            <TextBlock Margin="0,0,0,8" Style="{StaticResource Subheading}">Verique se o Celer consegue utilizar ferramentas do sistema operativo.</TextBlock>
-            <Button MaxWidth="250" HorizontalAlignment="Left">Começar verificação</Button>
+            <TextBlock Style="{StaticResource Heading2}">Verificação de ambiente</TextBlock>
+            <TextBlock Margin="0,0,0,15" Style="{StaticResource Subheading}" TextWrapping="Wrap">Faz uma verificação rápida das ferramentas e do estado do PC para a utilização do Celer.</TextBlock>
+
+
+            <ItemsControl x:Name="ChecksList" Margin="0,0,0,15">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="16" FontFamily="Segoe UI Symbol">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="❓"/>
+                                        <Setter Property="Foreground" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Success">
+                                                <Setter Property="Text" Value="✔️"/>
+                                                <Setter Property="Foreground" Value="Green"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Failure">
+                                                <Setter Property="Text" Value="❌"/>
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Message}" VerticalAlignment="Center" FontStyle="Italic" Foreground="Gray"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button 
+                x:Name="StartCheckButton"
+                MaxWidth="250" 
+                HorizontalAlignment="Center" 
+                Click="StartCheck_Click">Começar verificação</Button>
         </StackPanel>
     </Border>
 </Window>
