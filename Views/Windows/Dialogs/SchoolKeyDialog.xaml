@@ -18,7 +18,7 @@
                 BorderBrush="Gray"
                 BorderThickness="0,0,0,1">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Heading1}">Ativar funcionalidas escolares</TextBlock>
+                    <TextBlock Style="{StaticResource Heading1}">Ativar funcionalidades escolares</TextBlock>
                     <TextBlock
                         Margin="0,0,0,4"
                         Style="{StaticResource Subheading}"
