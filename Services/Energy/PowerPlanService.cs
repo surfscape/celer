@@ -13,18 +13,31 @@ namespace Celer.Services.Energy
         public List<PowerPlan> GetAllPowerPlans()
         {
             var plans = new List<PowerPlan>();
-
             var output = ExecuteCmd("powercfg /list");
             var lines = output.Split('\n');
 
             foreach (var line in lines)
             {
-                if (line.Contains(':'))
+                var trimmed = line.Trim();
+                if (trimmed.StartsWith("Power Scheme GUID") || trimmed.StartsWith("Esquema de Energia GUID"))
                 {
-                    var parts = line.Trim().Split(':');
-                    var guid = parts[0].Trim().Split(' ')[0];
-                    var name = parts[1].Trim().Trim('*').Trim();
-                    plans.Add(new PowerPlan { GUID = guid, Name = name });
+                    var parts = trimmed.Split(':');
+                    if (parts.Length < 2) continue;
+
+                    var afterGuid = parts[1].Trim();
+                    var guidPart = afterGuid.Split(' ')[0];
+                    var namePartStart = afterGuid.IndexOf('(');
+                    var namePartEnd = afterGuid.IndexOf(')');
+
+                    string name = (namePartStart >= 0 && namePartEnd > namePartStart)
+                        ? afterGuid.Substring(namePartStart + 1, namePartEnd - namePartStart - 1)
+                        : "Desconhecido";
+
+                    plans.Add(new PowerPlan
+                    {
+                        GUID = guidPart,
+                        Name = name
+                    });
                 }
             }
 
@@ -34,9 +47,29 @@ namespace Celer.Services.Energy
         public PowerPlan? GetActivePowerPlan()
         {
             var output = ExecuteCmd("powercfg /getactivescheme");
-            var guid = output.Split(':')[0].Trim().Split(' ')[0];
-            var name = output.Split(':')[1].Trim();
-            return new PowerPlan { GUID = guid, Name = name };
+            var line = output.Trim();
+            if (line.Contains(':'))
+            {
+                var parts = line.Split(':');
+                if (parts.Length < 2) return null;
+
+                var afterGuid = parts[1].Trim();
+                var guidPart = afterGuid.Split(' ')[0];
+                var namePartStart = afterGuid.IndexOf('(');
+                var namePartEnd = afterGuid.IndexOf(')');
+
+                string name = (namePartStart >= 0 && namePartEnd > namePartStart)
+                    ? afterGuid.Substring(namePartStart + 1, namePartEnd - namePartStart - 1)
+                    : "N/A";
+
+                return new PowerPlan
+                {
+                    GUID = guidPart,
+                    Name = name
+                };
+            }
+
+            return null;
         }
 
         public void SetActivePowerPlan(string guid)
@@ -51,9 +84,11 @@ namespace Celer.Services.Energy
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
+                StandardOutputEncoding = System.Text.Encoding.UTF8
             };
 
             using var process = Process.Start(startInfo);
+            process.WaitForExit();
             return process?.StandardOutput.ReadToEnd() ?? string.Empty;
         }
     }

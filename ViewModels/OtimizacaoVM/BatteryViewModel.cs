@@ -60,10 +60,10 @@ namespace Celer.ViewModels.OtimizacaoVM
                 {
                     batteryService = new BatteryService();
                     powerPlanService = new PowerPlanService();
-                    powerPlans = new ObservableCollection<PowerPlan>(
+                    PowerPlans = new ObservableCollection<PowerPlan>(
                         powerPlanService.GetAllPowerPlans()
                     );
-                    selectedPowerPlan = powerPlanService.GetActivePowerPlan();
+                    SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
                     UpdateBatteryInfo();
                     IsFastBootEnabled = IsFastStartupEnabled();
                 });
