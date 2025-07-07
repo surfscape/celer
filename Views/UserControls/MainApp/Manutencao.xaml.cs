@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Celer.ViewModels;
+﻿using Celer.ViewModels;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainApp
 {

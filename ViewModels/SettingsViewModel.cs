@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using Celer.Properties;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows;
-using Celer.Properties;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace Celer.ViewModels
 {

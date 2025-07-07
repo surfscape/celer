@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using Celer.Properties;
+using System.IO;
 using System.Net.Http;
-using Celer.Properties;
 
 namespace Celer.Services
 {

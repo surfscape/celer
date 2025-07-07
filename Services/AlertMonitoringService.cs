@@ -76,10 +76,11 @@ namespace Celer.Services
                     }
                     else
                     {
-  
+
                         _cpuCounter?.Dispose();
                         _cpuCounter = null;
-                        DispatchUpdateAlerts(() => {
+                        DispatchUpdateAlerts(() =>
+                        {
                             var existing = _alerts.FirstOrDefault(a => a.Type == AlertType.CPU);
                             if (existing != null) _alerts.Remove(existing);
                         });
@@ -94,7 +95,8 @@ namespace Celer.Services
                     IsMemoryTrackingEnabled = MainConfiguration.Default.ALERTS_MemoryTrackingEnable;
                     if (!IsMemoryTrackingEnabled)
                     {
-                        DispatchUpdateAlerts(() => {
+                        DispatchUpdateAlerts(() =>
+                        {
                             var existing = _alerts.FirstOrDefault(a => a.Type == AlertType.Memory);
                             if (existing != null) _alerts.Remove(existing);
                         });
@@ -105,7 +107,8 @@ namespace Celer.Services
                     IsProcessTrackingEnabled = MainConfiguration.Default.ALERTS_EnableTrackProcess;
                     if (!IsProcessTrackingEnabled)
                     {
-                        DispatchUpdateAlerts(() => {
+                        DispatchUpdateAlerts(() =>
+                        {
                             var existing = _alerts.FirstOrDefault(a => a.Type == AlertType.Process);
                             if (existing != null) _alerts.Remove(existing);
                         });

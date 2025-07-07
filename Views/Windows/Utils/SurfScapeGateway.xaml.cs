@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace Celer.Views.Windows.Utils
 {
@@ -45,8 +44,7 @@ namespace Celer.Views.Windows.Utils
 
         public partial class SurfScapeGatewayViewModel : ObservableObject
         {
-            public Action? IsDone { get; set; }
-
+            public required Action IsDone { get; set; }
             [ObservableProperty]
             private string currentTask;
 
@@ -56,17 +54,14 @@ namespace Celer.Views.Windows.Utils
             {
                 CurrentTask = "A iniciar Celer...";
             }
-
             public async Task InitializeAsync()
             {
-                
                 try
                 {
                     if (MainConfiguration.Default.EnableAutoSurfScapeGateway)
                     {
                         await Task.Delay(200);
                         await SurfScapeWebServices();
-                        
                     }
                     CurrentTask = "A inicializar serviços de hardware...";
                     await SetDxdiag();

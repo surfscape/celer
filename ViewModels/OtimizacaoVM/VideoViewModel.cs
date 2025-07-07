@@ -1,12 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using Celer.Services;
+using Celer.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LibreHardwareMonitor.Hardware;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Management;
 using System.Windows;
 using System.Windows.Threading;
-using Celer.Services;
-using Celer.Utilities;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LibreHardwareMonitor.Hardware;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {

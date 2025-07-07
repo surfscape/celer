@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Celer.ViewModels
 {
-     public partial class AdvancedViewModel : ObservableObject
+    public partial class AdvancedViewModel : ObservableObject
     {
         [ObservableProperty]
         private bool enableSchoolFeatures = MainConfiguration.Default.EnableSchoolFeatures;

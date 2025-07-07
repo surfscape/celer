@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
+﻿using Celer.Models.SystemInfo;
+using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Celer.Models.SystemInfo;
 
 namespace Celer.Services.Memory
 {

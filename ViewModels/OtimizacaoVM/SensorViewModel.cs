@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Threading;
-using Celer.Models.Sensors;
+﻿using Celer.Models.Sensors;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {

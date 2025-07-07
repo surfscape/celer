@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using Celer.ViewModels;
+﻿using Celer.ViewModels;
+using System.Windows;
 
 namespace Celer.Views.Windows;
 

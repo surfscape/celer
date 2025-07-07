@@ -4,9 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace Celer.ViewModels.OtimizacaoVM
@@ -46,7 +44,7 @@ namespace Celer.ViewModels.OtimizacaoVM
         [RelayCommand]
         private void CleanCache()
         {
-             ShowCleanCacheDialogAsync();
+            ShowCleanCacheDialogAsync();
         }
 
         private void ShowCleanCacheDialogAsync()

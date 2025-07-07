@@ -1,9 +1,9 @@
-﻿using System.Windows.Controls;
-using Celer.Interfaces;
+﻿using Celer.Interfaces;
 using Celer.Models;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Controls;
 
 namespace Celer.ViewModels
 {

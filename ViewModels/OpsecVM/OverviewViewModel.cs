@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Celer.Models.Protector;
+﻿using Celer.Models.Protector;
 using Celer.Services.OpsecEngine;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Celer.ViewModels.OpsecVM
 {

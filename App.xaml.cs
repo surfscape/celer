@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Celer.Services;
+﻿using Celer.Services;
 using Celer.ViewModels;
 using Celer.ViewModels.ManutencaoVM;
 using Celer.ViewModels.OtimizacaoVM;
@@ -11,6 +10,7 @@ using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Windows;
 
 namespace Celer;
 

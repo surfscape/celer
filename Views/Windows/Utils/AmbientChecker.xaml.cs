@@ -35,12 +35,12 @@ namespace Celer.Views.Windows.Utils
 
             Checks = new ObservableCollection<CheckItem>
             {
-                new CheckItem { Name = "Microsoft Edge" },
-                new CheckItem { Name = "DISM" },
-                new CheckItem { Name = "SFC" },
-                new CheckItem { Name = "CHKDSK" },
-                new CheckItem { Name = "Winget" },
-                new CheckItem { Name = "Microsoft Store" }
+                new() { Name = "Microsoft Edge" },
+                new() { Name = "DISM" },
+                new() { Name = "SFC" },
+                new() { Name = "CHKDSK" },
+                new() { Name = "Winget" },
+                new() { Name = "Microsoft Store" }
             };
 
             ChecksList.ItemsSource = Checks;
@@ -51,7 +51,7 @@ namespace Celer.Views.Windows.Utils
             StartCheckButton.IsEnabled = false;
 
 
-            
+
             await PerformCheck(Checks[0], CheckEdgeInstalledAsync);
             await PerformCheck(Checks[1], () => CheckCommandExistsAsync("dism.exe"));
             await PerformCheck(Checks[2], () => CheckCommandExistsAsync("sfc.exe"));

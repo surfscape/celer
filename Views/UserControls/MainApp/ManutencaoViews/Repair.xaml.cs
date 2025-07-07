@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Celer.ViewModels.ManutencaoVM;
+﻿using Celer.ViewModels.ManutencaoVM;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainApp.ManutencaoViews
 {

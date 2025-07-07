@@ -1,9 +1,9 @@
-﻿using System.Windows.Controls;
-using Celer.Services;
+﻿using Celer.Services;
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainWindow;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace Celer.ViewModels
 {

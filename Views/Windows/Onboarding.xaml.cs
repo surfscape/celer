@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Navigation;
-using Celer.Views.Windows.Utils;
+﻿using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace Celer.Views.Windows
 {
@@ -46,7 +46,8 @@ namespace Celer.Views.Windows
             [RelayCommand]
             private void Start(string url)
             {
-                if(AcceptTerms is not null && AutoUpdates is not null) { 
+                if (AcceptTerms is not null && AutoUpdates is not null)
+                {
 
                     Properties.MainConfiguration.Default.HasUserDoneSetup = (bool)AcceptTerms;
                     Properties.MainConfiguration.Default.EnableAutoSurfScapeGateway = (bool)AutoUpdates;
@@ -55,7 +56,8 @@ namespace Celer.Views.Windows
 
 
                 var gateway = App.AppHost?.Services.GetService<SurfScapeGateway>();
-                if(gateway is not null) { 
+                if (gateway is not null)
+                {
                     gateway.MainWindowTrigger = true;
                     IsDone?.Invoke();
                     gateway?.ShowDialog();

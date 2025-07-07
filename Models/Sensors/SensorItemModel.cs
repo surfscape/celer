@@ -22,11 +22,11 @@ namespace Celer.Models.Sensors
         {
             Value = _sensor.Value.HasValue
                 ? $"{_sensor.Value.Value:F1} {_sensor.SensorType switch
-            {
-                LibreHardwareMonitor.Hardware.SensorType.Temperature => "°C",
-                LibreHardwareMonitor.Hardware.SensorType.Fan => "RPM",
-                _ => ""
-            }}"
+                {
+                    LibreHardwareMonitor.Hardware.SensorType.Temperature => "°C",
+                    LibreHardwareMonitor.Hardware.SensorType.Fan => "RPM",
+                    _ => ""
+                }}"
                 : "N/A";
         }
     }

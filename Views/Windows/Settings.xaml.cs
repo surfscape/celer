@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Celer.ViewModels;
+using System.ComponentModel;
 using System.Windows;
-using Celer.ViewModels;
 
 namespace Celer.Views.Windows
 {

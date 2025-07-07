@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using Celer.Services.Energy;
+﻿using Celer.Services.Energy;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace Celer.ViewModels.OtimizacaoVM
 {

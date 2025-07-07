@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Celer.ViewModels.OtimizacaoVM;
+﻿using Celer.ViewModels.OtimizacaoVM;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {

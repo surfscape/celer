@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Celer.Interfaces;
+﻿using Celer.Interfaces;
 using Celer.ViewModels.OtimizacaoVM;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
 {

@@ -58,7 +58,7 @@ namespace Celer.Services
                 {
                     string name = ni.Name;
 
-                    
+
                     string command = $"Set-DnsClientServerAddress -InterfaceAlias \"{name}\" -ServerAddresses \"{dns}\"";
 
                     ProcessStartInfo psi = new()
