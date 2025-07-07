@@ -405,3 +405,4 @@ FodyWeavers.xsd
 *.sln.iml
 Properties/Secrets.settings
 Properties/Secrets.Designer.cs
+CelerSetup.exe
