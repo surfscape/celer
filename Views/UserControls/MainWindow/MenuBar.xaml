@@ -211,7 +211,7 @@
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://surfscape.github.io/services/status/"
                 Header="_Estado de Serviços" />
-            <MenuItem Command="{Binding OpenAboutWindow}" Header="_Sobre">
+            <MenuItem Command="{Binding OpenAboutWindowCommand}" Header="_Sobre">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Info" />
                 </MenuItem.Icon>

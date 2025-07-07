@@ -1,0 +1,31 @@
+﻿<Window
+    x:Class="Celer.Views.Windows.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Sobre"
+    MinWidth="480"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Style="{StaticResource {x:Type Window}}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Border Padding="16">
+        <StackPanel>
+            <TextBlock Style="{StaticResource Heading1}">Celer</TextBlock>
+            <TextBlock>v1.0.0</TextBlock>
+            <WrapPanel Margin="0,8,0,0">
+                <WrapPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="0,0,12,0" />
+                    </Style>
+                </WrapPanel.Resources>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/">Website da SurfScape</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/projects/celer">Página do Projeto</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/community/">Suporte</Hyperlink></TextBlock>
+            </WrapPanel>
+        </StackPanel>
+    </Border>
+</Window>

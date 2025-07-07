@@ -281,4 +281,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource Border}" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
+    <Style TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="{StaticResource Primary}" />
+    </Style>
 </ResourceDictionary>

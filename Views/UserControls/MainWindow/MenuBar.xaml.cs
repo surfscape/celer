@@ -1,13 +1,13 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using Celer.Properties;
+﻿using Celer.Properties;
 using Celer.Services;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Dialogs;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Celer.Views.UserControls.MainWindow
 {
@@ -46,6 +46,13 @@ namespace Celer.Views.UserControls.MainWindow
                     }
                 }
             }
+
+            [RelayCommand]
+            private static void OpenAboutWindow()
+            {
+                OpenWindow<AboutWindow>();
+            }
+
 
             public AboutDataContext() { }
         }
@@ -128,6 +135,7 @@ namespace Celer.Views.UserControls.MainWindow
         {
             OpenWindow<Settings>();
         }
+
 
         /// <summary>
         /// Helper function that opens a specific window, prohibits opening another instance of it and has the ability to bring it to the foreground if already opened.
