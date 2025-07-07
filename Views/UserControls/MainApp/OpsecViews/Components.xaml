@@ -188,7 +188,7 @@
                                 Grid.Row="1"
                                 Margin="0,0,0,6"
                                 TextWrapping="Wrap">
-                                Remove a Microsoft Store e outras aplicação UWP. No Windows Enterprise esta opção irá realizar a instalação do Winget e da Microsoft Store com o menor número de dependências possível.
+                                
                             </TextBlock>
                         </Grid>
                         <Button
