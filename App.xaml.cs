@@ -45,6 +45,7 @@ public partial class App : Application
                     services.AddTransient<SensorViewModel>();
                     services.AddTransient<ManutencaoViewModel>();
                     services.AddTransient<RepairViewModel>();
+                    services.AddTransient<NetworkViewModel>();
                     services.AddTransient<PrivacidadeViewModel>();
                     services.AddSingleton<AdvancedViewModel>();
 
