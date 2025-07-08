@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="10">
+        <StackPanel Grid.Row="0">
             <TextBlock Style="{StaticResource Heading1}">Rede e Internet</TextBlock>
             <UniformGrid Columns="3" Margin="0,12">
                 <StackPanel>
@@ -46,9 +46,9 @@
                 Content="Realizar Teste" />
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="10">
+        <StackPanel Grid.Row="1" Margin="0,12">
             <TextBlock Style="{StaticResource Heading2}">DNS</TextBlock>
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="0,12">
                 <ComboBox
                     Width="300"
                     Height="30"
