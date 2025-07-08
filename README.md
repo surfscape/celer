@@ -8,7 +8,8 @@
 > [!NOTE]
 > Celer is in active development and thus labeled as in beta. This means the app that although it's core and most features are stable, there are still things broken or missing. But the app should work normally in a daily usage.
 
-[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/surfscape/celer/build-testing)
+[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) https://img.shields.io/github/downloads/surfscape/celer/total
+ ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/surfscape/celer/build-testing)
 
 ## Table of Contents
 - [1. Introduction](#1-introduction)
