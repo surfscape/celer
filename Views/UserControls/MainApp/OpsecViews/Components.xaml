@@ -51,7 +51,7 @@
                             Ligar
                         </Button>
                     </Grid>
-                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                    <Expander Margin="0,8,0,0" Header="Alterações que irão ser feitas">
                         <TextBlock />
                     </Expander>
                 </StackPanel>
@@ -88,7 +88,7 @@
                             Ligar
                         </Button>
                     </Grid>
-                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                    <Expander Margin="0,8,0,0" Header="Alterações que irão ser feitas">
                         <TextBlock />
                     </Expander>
                 </StackPanel>
@@ -126,7 +126,7 @@
                             Ligar
                         </Button>
                     </Grid>
-                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                    <Expander Margin="0,8,0,0" Header="Alterações que irão ser feitas">
                         <TextBlock />
                     </Expander>
                 </StackPanel>
@@ -163,7 +163,7 @@
                             Ligar
                         </Button>
                     </Grid>
-                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                    <Expander Margin="0,8,0,0" Header="Alterações que irão ser feitas">
                         <TextBlock />
                     </Expander>
                 </StackPanel>
@@ -199,7 +199,7 @@
                             Ligar
                         </Button>
                     </Grid>
-                    <Expander Margin="0,8,0,0" Header="Alterações que iram ser feitas">
+                    <Expander Margin="0,8,0,0" Header="Alterações que irão ser feitas">
                         <TextBlock />
                     </Expander>
                 </StackPanel>
