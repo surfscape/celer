@@ -13,11 +13,7 @@ namespace Celer.ViewModels.ManutencaoVM
 
 
         [ObservableProperty]
-        private DnsServer selectedDnsServer;
-
-        public string SelectedDnsServerDescription => SelectedDnsServer != null
-            ? $"{SelectedDnsServer.Name} ({SelectedDnsServer.IP}) é um servidor DNS de elevada performance e privacidade."
-            : "Selecione um servidor DNS.";
+        private DnsServer? selectedDnsServer;
 
         public string NetworkAdaptersStatus { get; set; } = "Desconhecido";
         public string ConnectionStatus { get; set; } = "Desconhecido";
@@ -27,6 +23,7 @@ namespace Celer.ViewModels.ManutencaoVM
         public NetworkViewModel()
         {
             LoadDnsServers();
+            UpdatePing();
         }
 
         [RelayCommand]
