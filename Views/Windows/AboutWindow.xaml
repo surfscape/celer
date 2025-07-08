@@ -15,7 +15,7 @@
     <Border Padding="16">
         <StackPanel>
             <TextBlock Style="{StaticResource Heading1}">Celer</TextBlock>
-            <TextBlock>v1.0.0</TextBlock>
+            <TextBlock Name="Version">"</TextBlock>
             <WrapPanel Margin="0,8,0,0">
                 <WrapPanel.Resources>
                     <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">

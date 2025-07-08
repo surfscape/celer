@@ -10,6 +10,8 @@
     <UseWindowsForms>False</UseWindowsForms>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <Platforms>x64</Platforms>
+	<Version>1.0.0-beta.1</Version>
+	<InformationalVersion>1.0.0-beta.1 "Orion"</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="celer_hires.png" />
