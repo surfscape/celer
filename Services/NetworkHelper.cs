@@ -65,9 +65,8 @@ namespace Celer.Services
                     {
                         FileName = "powershell.exe",
                         Arguments = $"-Command \"{command}\"",
-                        Verb = "runas",
+                        UseShellExecute = false,
                         CreateNoWindow = true,
-                        UseShellExecute = true
                     };
 
                     using var process = Process.Start(psi);
