@@ -1,5 +1,6 @@
-Name "Celer"
+!include "MUI2.nsh"
 
+Name "Celer"
 Outfile "CelerSetup.exe"
 
 InstallDir "$PROGRAMFILES64\SurfScape\Celer"
@@ -7,8 +8,15 @@ InstallDirRegKey HKCU "Software\Celer" "Install_Dir"
 
 RequestExecutionLevel admin
 
-Page directory
-Page instfiles
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
+
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
+
+!insertmacro MUI_LANGUAGE "Portuguese"
 
 Section
 
@@ -21,11 +29,9 @@ Section
   CreateDirectory "$SMPROGRAMS\Celer"
 
   CreateShortCut "$SMPROGRAMS\Celer\Celer.lnk" "$INSTDIR\Celer.exe"
-
   CreateShortCut "$DESKTOP\Celer.lnk" "$INSTDIR\Celer.exe"
 
-  WriteUninstaller $INSTDIR\uninstaller.exe
-
+  WriteUninstaller "$INSTDIR\uninstaller.exe"
 
 SectionEnd
 
