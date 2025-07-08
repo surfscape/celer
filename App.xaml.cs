@@ -34,36 +34,35 @@ public partial class App : Application
                     services.AddTransient<SurfScapeGateway>();
 
                     // viewmodels for the user controls
-                    services.AddTransient<MenuBarNavigation>();
-                    services.AddTransient<DashboardViewModel>();
-                    services.AddTransient<CleanEngine>();
-
-                    services.AddTransient<OtimizacaoViewModel>();
+                    services.AddSingleton<MenuBarNavigation>();
+                    services.AddSingleton<DashboardViewModel>();
+                    services.AddSingleton<CleanEngine>();
+                    services.AddSingleton<OtimizacaoViewModel>();
                     services.AddTransient<MemoryViewModel>();
                     services.AddTransient<BatteryViewModel>();
                     services.AddTransient<VideoViewModel>();
                     services.AddTransient<SensorViewModel>();
-                    services.AddTransient<ManutencaoViewModel>();
-                    services.AddTransient<RepairViewModel>();
+                    services.AddSingleton<ManutencaoViewModel>();
+                    services.AddSingleton<RepairViewModel>();
                     services.AddTransient<NetworkViewModel>();
-                    services.AddTransient<PrivacidadeViewModel>();
+                    services.AddSingleton<PrivacidadeViewModel>();
                     services.AddSingleton<AdvancedViewModel>();
 
                     // usercontrols themselves (and other views that need access to the services)
-                    services.AddTransient<MenuBar>();
-                    services.AddTransient<Dashboard>();
-                    services.AddTransient<Limpeza>();
-                    services.AddTransient<Otimizacao>();
+                    services.AddSingleton<MenuBar>();
+                    services.AddSingleton<Dashboard>();
+                    services.AddSingleton<Limpeza>();
+                    services.AddSingleton<Otimizacao>();
                     services.AddTransient<MemoryManagement>();
                     services.AddTransient<Battery>();
                     services.AddTransient<Video>();
                     services.AddTransient<Sensors>();
-                    services.AddTransient<Manutencao>();
+                    services.AddSingleton<Manutencao>();
                     services.AddTransient<Repair>();
                     services.AddTransient<Realtek>();
                     services.AddTransient<Network>();
-                    services.AddTransient<Privacidade>();
-                    services.AddTransient<Advanced>();
+                    services.AddSingleton<Privacidade>();
+                    services.AddSingleton<Advanced>();
                 }
             )
             .Build();
