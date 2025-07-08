@@ -22,9 +22,9 @@
                         <Setter Property="Margin" Value="0,0,12,0" />
                     </Style>
                 </WrapPanel.Resources>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/">Website da SurfScape</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/projects/celer">Página do Projeto</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/community/">Suporte</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/" RequestNavigate="Hyperlink_RequestNavigate">Website da SurfScape</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/projects/celer" RequestNavigate="Hyperlink_RequestNavigate">Página do Projeto</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/community/" RequestNavigate="Hyperlink_RequestNavigate">Suporte</Hyperlink></TextBlock>
             </WrapPanel>
         </StackPanel>
     </Border>
