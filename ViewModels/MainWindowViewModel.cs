@@ -50,7 +50,7 @@ namespace Celer.ViewModels
             _serviceProvider = serviceProvider;
             MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
             DashboardControl = _serviceProvider.GetRequiredService<Dashboard>();
-            limpezaControl = _serviceProvider.GetRequiredService<Limpeza>();
+            LimpezaControl = _serviceProvider.GetRequiredService<Limpeza>();
             OtimizacaoControl = _serviceProvider.GetRequiredService<Otimizacao>();
             ManutencaoControl = _serviceProvider.GetRequiredService<Manutencao>();
         }

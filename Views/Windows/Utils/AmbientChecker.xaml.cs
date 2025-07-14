@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Celer.Resources.i18n;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace Celer.Views.Windows.Utils
         private string? name;
 
         [ObservableProperty]
-        private string message = "Em espera";
+        private string message = Strings.WaitMessage;
 
         [ObservableProperty]
         private CheckStatus status = CheckStatus.Pending;
