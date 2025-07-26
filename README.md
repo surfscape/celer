@@ -5,8 +5,8 @@
 # Celer [BETA]
 > The toolbox for Windows 10/11
 
-> [!NOTE]
-> Celer is in active development and thus labeled as in beta. This means the app that although it's core and most features are stable, there are still things broken or missing. But the app should work normally in a daily usage.
+> [!IMPORTANT]
+> Celer is currently being ported to WinUI 3. The goal is to provide deeper integration with Windows and to address architectural limitations in the current version. The existing codebase is unstable and difficult to maintain, which reduces the possibility of adding features and improvements. ([Technical debt](https://en.wikipedia.org/wiki/Technical_debt)).
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/surfscape/celer/build-testing)
 
