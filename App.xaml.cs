@@ -62,7 +62,6 @@ public partial class App : Application
                     services.AddTransient<Realtek>();
                     services.AddTransient<Network>();
                     services.AddSingleton<Privacidade>();
-                    services.AddSingleton<Advanced>();
                 }
             )
             .Build();

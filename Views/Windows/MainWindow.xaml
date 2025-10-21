@@ -9,12 +9,9 @@
     xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     Title="Celer"
-    Width="980"
-    Height="660"
+    MinWidth="980"
+    MinHeight="660"
     ResizeMode="CanMinimize"
-    d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
-    Style="{StaticResource {x:Type Window}}"
-    UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
@@ -22,9 +19,9 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1">
+
             <ContentControl Content="{Binding MenuBarControl}" />
-        </Border>
+        
         <Border Grid.Row="1">
             <Grid Margin="0,0,0,0">
                 <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTab}">
@@ -66,12 +63,6 @@
                             <model:TabHeaderData Title="Privacidade e Segurança" Icon="Shield" />
                         </TabItem.Header>
                         <uc:Privacidade HorizontalAlignment="Stretch" />
-                    </TabItem>
-                    <TabItem x:Name="Avancado">
-                        <TabItem.Header>
-                            <model:TabHeaderData Title="Avançado" Icon="PocketKnife" />
-                        </TabItem.Header>
-                        <uc:Advanced HorizontalAlignment="Stretch" />
                     </TabItem>
                 </TabControl>
             </Grid>
