@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:DynamicAero2="clr-namespace:DynamicAero2;assembly=DynamicAero2"
     xmlns:local="clr-namespace:Celer"
-    xmlns:local1="clr-namespace:Celer.Converters">
+    xmlns:local1="clr-namespace:Celer.Converters"
+    ThemeMode="System">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,6 +13,7 @@
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

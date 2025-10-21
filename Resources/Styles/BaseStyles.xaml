@@ -17,13 +17,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="{DynamicResource AppBackground}" />
-    </Style>
-    <Style BasedOn="{StaticResource {x:Type ProgressBar}}" TargetType="{x:Type ProgressBar}">
-        <Setter Property="Foreground" Value="{DynamicResource Primary}" />
-        <Setter Property="Height" Value="16" />
-    </Style>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
         <Setter Property="FontSize" Value="14" />
@@ -80,7 +73,7 @@
                             Grid.Row="1"
                             Margin="0"
                             Padding="0"
-                            Background="{DynamicResource AppBackground}"
+                            Background="Transparent"
                             BorderBrush="{DynamicResource Border}"
                             BorderThickness="0,1,0,0">
                             <ContentPresenter
