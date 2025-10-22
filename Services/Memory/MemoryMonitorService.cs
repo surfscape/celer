@@ -24,6 +24,7 @@ namespace Celer.Services.Memory
             };
         }
 
+        // TODO implement a try-catch block since this can throw an exception if the PerformanceCounter is broken on the machine
         private static float GetUsedMemoryMB()
         {
             float availableMB = new PerformanceCounter("Memory", "Available MBytes").NextValue();
