@@ -9,7 +9,8 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="{DynamicResource AppBackground}" />
+            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
             <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
             <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
             <Setter Property="Padding" Value="12,5" />
@@ -113,7 +114,7 @@
         Background="#da1f1f1f"
         BorderThickness="0"
         FontSize="12">
-        <MenuItem Header="_Celer">
+        <MenuItem Header="_App">
             <MenuItem
                 Click="OpenSettings_Click"
                 Header="_Definições"

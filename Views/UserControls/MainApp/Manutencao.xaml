@@ -71,6 +71,8 @@
                                     <Setter Property="Padding" Value="12" />
                                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                                     <Setter Property="VerticalContentAlignment" Value="Top" />
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalAlignment" Value="Stretch"/>
                                 </Style>
                             </UniformGrid.Resources>
                             <Button Command="{Binding NavigateCommand}" CommandParameter="Repair">

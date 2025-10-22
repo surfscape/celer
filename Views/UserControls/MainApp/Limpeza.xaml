@@ -41,7 +41,7 @@
                             <ItemsControl ItemsSource="{Binding Categories}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Expander Margin="0,8,0,0" IsExpanded="True">
+                                        <Expander Margin="0,8,16,0" IsExpanded="True">
                                             <Expander.Header>
                                                 <TextBlock
                                                     FontSize="15"
