@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Celer.Resources.i18n;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace Celer.Views.Windows.Utils
         private string? name;
 
         [ObservableProperty]
-        private string message = "Em espera";
+        private string message = Strings.WaitMessage;
 
         [ObservableProperty]
         private CheckStatus status = CheckStatus.Pending;
@@ -50,8 +51,6 @@ namespace Celer.Views.Windows.Utils
         {
             StartCheckButton.IsEnabled = false;
 
-
-
             await PerformCheck(Checks[0], CheckEdgeInstalledAsync);
             await PerformCheck(Checks[1], () => CheckCommandExistsAsync("dism.exe"));
             await PerformCheck(Checks[2], () => CheckCommandExistsAsync("sfc.exe"));
@@ -59,7 +58,7 @@ namespace Celer.Views.Windows.Utils
             await PerformCheck(Checks[4], () => CheckCommandExistsAsync("winget.exe"));
             await PerformCheck(Checks[5], CheckStoreInstalledAsync);
 
-            StartCheckButton.Content = "Verificação Concluída";
+            StartCheckButton.Content = Strings.AmbientChecker_DoneLabel;
         }
 
         private async Task PerformCheck(CheckItem item, Func<Task<(bool, string)>> checkFunction)
@@ -97,7 +96,7 @@ namespace Celer.Views.Windows.Utils
                         }
                     }
                 }
-                return (false, "Não encontrado");
+                return (false, Strings.NotFound);
             });
         }
 
@@ -121,9 +120,9 @@ namespace Celer.Views.Windows.Utils
 
                 if (process.ExitCode == 0 && !string.IsNullOrWhiteSpace(output))
                 {
-                    return (true, "Disponível");
+                    return (true, Strings.Available);
                 }
-                return (false, "Não encontrado no PATH");
+                return (false, Strings.NotFound);
             }
         }
         private async Task<(bool, string)> CheckStoreInstalledAsync()
@@ -146,9 +145,9 @@ namespace Celer.Views.Windows.Utils
 
                 if (!string.IsNullOrWhiteSpace(output))
                 {
-                    return (true, "Instalada");
+                    return (true, Strings.Installed);
                 }
-                return (false, "Não encontrada");
+                return (false, Strings.NotFound);
             }
         }
     }

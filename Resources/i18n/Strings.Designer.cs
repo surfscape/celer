@@ -61,6 +61,69 @@ namespace Celer.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run a small check to see what system tools are currently available for Celer..
+        /// </summary>
+        public static string AmbientChecker_Description {
+            get {
+                return ResourceManager.GetString("AmbientChecker_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Done!.
+        /// </summary>
+        public static string AmbientChecker_DoneLabel {
+            get {
+                return ResourceManager.GetString("AmbientChecker_DoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Verification.
+        /// </summary>
+        public static string AmbientChecker_StartLabel {
+            get {
+                return ResourceManager.GetString("AmbientChecker_StartLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ambient Checker.
+        /// </summary>
+        public static string AmbientChecker_Title {
+            get {
+                return ResourceManager.GetString("AmbientChecker_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available.
+        /// </summary>
+        public static string Available {
+            get {
+                return ResourceManager.GetString("Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        public static string Installed {
+            get {
+                return ResourceManager.GetString("Installed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do automatic updates when Celer initializes.
         /// </summary>
         public static string Onboarding_AutoDownloadsCheckboxLabel {
@@ -111,6 +174,15 @@ namespace Celer.Resources.i18n {
         public static string Onboarding_WindowTitle {
             get {
                 return ResourceManager.GetString("Onboarding_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting....
+        /// </summary>
+        public static string WaitMessage {
+            get {
+                return ResourceManager.GetString("WaitMessage", resourceCulture);
             }
         }
     }
