@@ -1,7 +1,5 @@
-﻿using Celer.Properties;
-using Celer.Services;
+﻿using Celer.Services;
 using Celer.Views.Windows;
-using Celer.Views.Windows.Dialogs;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,7 +21,6 @@ namespace Celer.Views.UserControls.MainWindow
             InitializeComponent();
             _menuBarNavigation = menuBarNavigation;
             NavigationMenu.DataContext = _menuBarNavigation;
-            EnableSchoolFeatureCheckbox.DataContext = new SchoolDataContext();
             AboutMenu.DataContext = new AboutDataContext();
         }
 
@@ -57,69 +54,7 @@ namespace Celer.Views.UserControls.MainWindow
             public AboutDataContext() { }
         }
 
-        public partial class SchoolDataContext : ObservableObject
-        {
-            private bool _isEnabled;
-            public bool IsEnabled
-            {
-                get => _isEnabled;
-                set
-                {
-                    if (_isEnabled == value)
-                        return;
-
-                    if (value == false)
-                    {
-                        _isEnabled = false;
-                        MainConfiguration.Default.EnableSchoolFeatures = false;
-                        MainConfiguration.Default.Save();
-                        OnPropertyChanged();
-                    }
-                    else
-                    {
-                        var dialog = new SchoolKeyDialog { Owner = Application.Current.MainWindow };
-
-                        if (dialog.ShowDialog() == true)
-                        {
-                            if (
-                                dialog.EnteredText == Secrets.Default.SchoolProvisionKey1
-                                || dialog.EnteredText == Secrets.Default.SchoolProvisionKey2
-                                || dialog.EnteredText == Secrets.Default.SchoolProvisionKey3
-                            )
-                            {
-                                _isEnabled = true;
-                                MainConfiguration.Default.EnableSchoolFeatures = true;
-                                MainConfiguration.Default.Save();
-                                OnPropertyChanged();
-                            }
-                            else
-                            {
-                                MessageBox.Show(
-                                    "A chave não está correta ou o modelo do equipamento não é compatível.",
-                                    "Erro",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Error
-                                );
-
-                                Application.Current.Dispatcher.InvokeAsync(() =>
-                                {
-                                    OnPropertyChanged(nameof(IsEnabled));
-                                });
-                            }
-                        }
-                        else
-                        {
-                            Application.Current.Dispatcher.InvokeAsync(() =>
-                            {
-                                OnPropertyChanged(nameof(IsEnabled));
-                            });
-                        }
-                    }
-                }
-            }
-
-            public SchoolDataContext() { }
-        }
+      
 
         private void OpenAmbientChecker_Click(object sender, RoutedEventArgs e)
         {
