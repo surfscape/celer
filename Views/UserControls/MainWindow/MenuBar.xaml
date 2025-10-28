@@ -160,18 +160,11 @@
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="MonitorCheck" />
                 </MenuItem.Icon>
             </MenuItem>
-
             <MenuItem Click="CheckUpdates_Click" Header="_Verificar Atualizações">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="RefreshCw" />
                 </MenuItem.Icon>
             </MenuItem>
-            <Separator />
-            <MenuItem
-                x:Name="EnableSchoolFeatureCheckbox"
-                Header="_Ativar Ferramentas Escolares"
-                IsCheckable="True"
-                IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
         </MenuItem>
         <MenuItem x:Name="AboutMenu" Header="_Ajuda">
             <MenuItem
