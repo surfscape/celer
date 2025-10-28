@@ -11,78 +11,80 @@
     Icon="/celer_icon.ico"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    Style="{StaticResource {x:Type Window}}"
+
     WindowStartupLocation="CenterScreen">
-    <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,1,0,0">
-        <Grid>
-            <Border Grid.Column="1" Padding="16">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                            <Setter Property="Margin" Value="0,0,0,12" />
-                        </Style>
-                    </StackPanel.Resources>
-                    <Grid Margin="0,0,0,12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Strings.Onboarding_WelcomeTitle}" />
-                            <TextBlock
-                                Margin="0,4,0,0"
+    <Grid>
+        <Border Grid.Column="1" Padding="16,8,16,16">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="0,0,0,8" />
+  
+                    </Style>
+                </StackPanel.Resources>
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Strings.Onboarding_WelcomeTitle}" />
+                        <TextBlock
+                                
+                                Margin="0,0,0,0"
                                 Style="{StaticResource Subheading}"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                 Text="{x:Static resx:Strings.Onboarding_WelcomeIntroduction}"
                                 TextWrapping="Wrap" />
-                        </StackPanel>
-                        <Image
+                    </StackPanel>
+                    <Image
                             Grid.Column="1"
                             Width="94"
                             Margin="16,0,0,0"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="/celer_hires.png" />
-                    </Grid>
-                    <TextBlock Style="{StaticResource Heading2}" Text="{x:Static resx:Strings.Onboarding_LegalTitle}" />
-                    <Border
-                        Margin="0,0,0,16"
-                        Background="Transparent"
-                        BorderBrush="{DynamicResource Border}"
-                        BorderThickness="1">
-                        <ScrollViewer MaxHeight="195" VerticalScrollBarVisibility="Auto">
-                            <StackPanel Margin="8">
-                                <StackPanel.Resources>
-                                    <Style
+                            Source="/celer_256.png" />
+                </Grid>
+                <TextBlock Style="{StaticResource Heading2}" Margin="0,0,0,10" Text="{x:Static resx:Strings.Onboarding_LegalTitle}" />
+                <Border
+                        Margin="0,0,0,8"
+                        CornerRadius="4"
+                        Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
+                        BorderThickness="0">
+                    <ScrollViewer MaxHeight="195" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="10,10,16,10">
+                            <StackPanel.Resources>
+                                <Style
                                         x:Key="Heading"
                                         BasedOn="{StaticResource {x:Type TextBlock}}"
                                         TargetType="TextBlock">
-                                        <Setter Property="FontWeight" Value="DemiBold" />
-                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryText}" />
-                                        <Setter Property="Margin" Value="0,4" />
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock FontStyle="Italic">Last revision from June 19, 2025</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">1. Acceptance of Terms</TextBlock>
-                                <TextBlock TextWrapping="Wrap">By installing, using, or accessing Celer, the user declares that they have read, understood, and accepted these Terms of Use. If you do not agree with these terms, you must uninstall and stop using Celer immediately.</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">2. License of Use</TextBlock>
-                                <TextBlock TextWrapping="Wrap">A free, non-exclusive, and revocable license is granted to the user to use Celer solely for personal and non-commercial purposes. Modification, redistribution, or incorporation of the software into other products must comply with the open-source license under which Celer is made available.</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">3. Disclaimer</TextBlock>
-                                <TextBlock TextWrapping="Wrap">
+                                    <Setter Property="FontWeight" Value="DemiBold" />
+                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryText}" />
+                                    <Setter Property="Margin" Value="0,4" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock FontStyle="Italic">Last revision from June 19, 2025</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">1. Acceptance of Terms</TextBlock>
+                            <TextBlock TextWrapping="Wrap">By installing, using, or accessing Celer, the user declares that they have read, understood, and accepted these Terms of Use. If you do not agree with these terms, you must uninstall and stop using Celer immediately.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">2. License of Use</TextBlock>
+                            <TextBlock TextWrapping="Wrap">A free, non-exclusive, and revocable license is granted to the user to use Celer solely for personal and non-commercial purposes. Modification, redistribution, or incorporation of the software into other products must comply with the open-source license under which Celer is made available.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">3. Disclaimer</TextBlock>
+                            <TextBlock TextWrapping="Wrap">
                                     Celer is provided "as is", without any kind of warranty, either express or implied.<LineBreak />
                                     SurfScape and its contributors assume no responsibility for direct, indirect, incidental, consequential, or other damages that may result from the use of Celer.<LineBreak />
                                     The use of the application is entirely at the user's own risk.</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">4. Updates and Connectivity</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Celer may, with the user's consent, download automatic updates, as well as updated signatures and configurations. This is only used for the cleaning functionality, with the rest of Celer still being fully functional.</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">5. Privacy and Data</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Celer does not collect or transmit personal data with or without the user's consent.</TextBlock>
-                                <TextBlock Style="{StaticResource Heading}">6. Changes to the Terms</TextBlock>
-                                <TextBlock TextWrapping="Wrap">SurfScape reserves the right to modify these Terms of Use at any time. Whenever this occurs, a new version will be made available within the application. Continued use after changes constitutes acceptance of the updated terms.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">4. Updates and Connectivity</TextBlock>
+                            <TextBlock TextWrapping="Wrap">Celer may, with the user's consent, download automatic updates, as well as updated signatures and configurations. This is only used for the cleaning functionality, with the rest of Celer still being fully functional.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">5. Privacy and Data</TextBlock>
+                            <TextBlock TextWrapping="Wrap">Celer does not collect or transmit personal data with or without the user's consent.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading}">6. Changes to the Terms</TextBlock>
+                            <TextBlock TextWrapping="Wrap">SurfScape reserves the right to modify these Terms of Use at any time. Whenever this occurs, a new version will be made available within the application. Continued use after changes constitutes acceptance of the updated terms.</TextBlock>
 
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Border>
-                    <StackPanel x:Name="OnboardingOptions">
-                        <CheckBox Margin="0,0,0,4" IsChecked="{Binding AcceptTerms}">
-                            <TextBlock>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <StackPanel x:Name="OnboardingOptions">
+                    <CheckBox Margin="0,0,0,4" IsChecked="{Binding AcceptTerms}" VerticalAlignment="Stretch">
+                        <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" >
                                 <Run Text="{x:Static resx:Strings.Onboarding_LegalCheckboxLabel}" />
                                 <Hyperlink
                                     Foreground="{DynamicResource Primary}"
@@ -90,31 +92,36 @@
                                     RequestNavigate="Hyperlink_RequestNavigate">
                                     Privacy Policy
                                 </Hyperlink></TextBlock>
-                        </CheckBox>
-                        <CheckBox IsChecked="{Binding AutoUpdates}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{x:Static resx:Strings.Onboarding_AutoDownloadsCheckboxLabel}" />
-                                <StackPanel
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding AutoUpdates}" VerticalContentAlignment="Center">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock                                
+                                Margin="0"
+                                Text="{x:Static resx:Strings.Onboarding_AutoDownloadsCheckboxLabel}" />
+                            <StackPanel
                                     Grid.Column="1"
                                     Margin="8,0,0,0"
                                     Background="Transparent"
+                                VerticalAlignment="Bottom"
                                     ToolTip="Ao ativar esta opção o Celer ira ficar a executar no background quando ligar o Windows ou quando fechar o programa.">
-                                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="CircleHelp" />
-                                </StackPanel>
-                            </Grid>
-                        </CheckBox>
-                        <Button
+                                <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" 
+Kind="CircleHelp"
+                                                          Width="14"
+                                                          />
+                            </StackPanel>
+                        </Grid>
+                    </CheckBox>
+                    <Button
                    MinWidth="150"
                    HorizontalAlignment="Right"
                    Command="{Binding StartCommand}"
                    IsEnabled="{Binding AcceptTerms}">Start</Button>
-                    </StackPanel>
                 </StackPanel>
-            </Border>
-        </Grid>
-    </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
 </Window>

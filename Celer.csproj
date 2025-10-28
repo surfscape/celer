@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.18362.0</TargetFramework>
@@ -11,10 +11,13 @@
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <Platforms>x64</Platforms>
 	<Version>1.0.0-beta.1</Version>
-	<InformationalVersion>1.0.0-beta.1 "Orion"</InformationalVersion>
+	<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Resource Include="celer_hires.png" />
+    <None Remove="celer_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="celer_256.png" />
     <Resource Include="celer_icon.ico" />
     <Resource Include="Resources\Assets\celer_logo.png" />
   </ItemGroup>
