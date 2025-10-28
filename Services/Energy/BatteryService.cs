@@ -12,7 +12,7 @@ namespace Celer.Services.Energy
         public TimeSpan EstimatedTime { get; set; }
         public int Health { get; set; }
 
-        public string RemainingCapacity { get; set; }
+        public int RemainingCapacity { get; set; }
     }
 
     public class BatteryService
@@ -44,7 +44,7 @@ namespace Celer.Services.Energy
                 }
                 var (health, capacity) = GetBatteryHealthPercentageFromReport("batteryreport.xml");
                 info.Health = health;
-                info.RemainingCapacity = capacity + "mAh";
+                info.RemainingCapacity = capacity;
             }
             catch
             {
@@ -63,13 +63,13 @@ namespace Celer.Services.Energy
             return element?.Value;
         }
 
-        public static (int health, string currentCapacity) GetBatteryHealthPercentageFromReport(
+        public static (int health, int currentCapacity) GetBatteryHealthPercentageFromReport(
             string reportPath
         )
         {
             if (!File.Exists(reportPath))
             {
-                return (0, "0.0");
+                return (0, 0);
             }
 
             var xml = File.ReadAllText(reportPath);
@@ -83,10 +83,10 @@ namespace Celer.Services.Energy
                 && design > 0
             )
             {
-                return ((int)((full / design) * 100), fullStr);
+                return ((int)((full / design) * 100), int.Parse(fullStr));
             }
 
-            return (0, "0.0");
+            return (0, 0);
         }
     }
 }

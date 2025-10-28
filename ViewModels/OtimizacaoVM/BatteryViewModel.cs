@@ -45,7 +45,7 @@ namespace Celer.ViewModels.OtimizacaoVM
         private bool isFastBootEnabled;
 
         [ObservableProperty]
-        private string remainingCapacity;
+        private int remainingCapacity;
 
         public BatteryViewModel()
         {
