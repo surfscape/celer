@@ -26,8 +26,9 @@
                     Text="A carregar dados" />
             </StackPanel>
         </Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
-            <ItemsControl ItemsSource="{Binding Categories}">
+        <DockPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+            <ItemsControl ItemsSource="{Binding Categories}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="2" />
@@ -35,7 +36,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Margin="8" IsExpanded="{Binding IsExpanded}">
+                        <Expander Margin="8" IsExpanded="{Binding IsExpanded}" VerticalAlignment="Top">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <iconPacks:PackIconLucide
@@ -63,6 +64,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+        </DockPanel>
     </Grid>
 
 

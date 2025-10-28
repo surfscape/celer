@@ -307,20 +307,20 @@
                 VerticalAlignment="Stretch"
                 BorderBrush="{DynamicResource Border}"
                 BorderThickness="0,1,0,0">
-                <DockPanel ToolTip="O tempo que a BIOS demora para inicar. Um valor muito alto (acima de 70 segundos) pode significar alguma falha/conflito de hardware.">
+                <DockPanel>
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
                         Foreground="{DynamicResource SecondaryText}"
-                        Kind="{x:Static iconPacks:PackIconIoniconsKind.LogoWindows}" />
+                        Kind="{x:Static iconPacks:PackIconRemixIconKind.MicrosoftFill}" />
                     <TextBlock Text="{Binding WindowsVersion}" />
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
                         <iconPacks:PackIconControl
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"
                             Foreground="{DynamicResource SecondaryText}"
                             Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
-                        <TextBlock Text="{Binding PostTime, StringFormat=Tempo de POST: {0:F2} segundos}" />
+                        <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}" />
                     </StackPanel>
                 </DockPanel>
             </Border>

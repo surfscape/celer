@@ -116,7 +116,7 @@
             </Button>
         </UniformGrid>
         <TextBlock Style="{StaticResource Heading2}">Slots de Memória</TextBlock>
-        <ItemsControl ItemsSource="{Binding Slots}">
+        <ItemsControl ItemsSource="{Binding Slots}" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="2" />
@@ -124,7 +124,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Expander Header="{Binding SlotNumber, StringFormat=Slot {0}}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Expander Header="{Binding SlotNumber, StringFormat=Slot {0}}" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
                         <StackPanel Margin="0,4,0,0">
                             <TextBlock Text="{Binding IsOccupied, Converter={StaticResource BoolToSlotTextConverter}}" Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
                             <StackPanel Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}}">
