@@ -7,7 +7,16 @@
     xmlns:local1="clr-namespace:Celer.Converters"
     ThemeMode="System">
     <Application.Resources>
+
         <ResourceDictionary>
+            <Style TargetType="Window">
+                <Setter Property="FontFamily"
+        Value="Calibri" />
+                <Setter Property="Background" Value="#00FFFFFF"></Setter>
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"></Setter>
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"></Setter>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <DynamicAero2:Theme Color="Dark" />
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
