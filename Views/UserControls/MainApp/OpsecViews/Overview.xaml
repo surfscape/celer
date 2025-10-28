@@ -25,19 +25,19 @@
             <Border
                 Margin="0,0,6,0"
                 Padding="12,8"
-                Background="#24272A"
-                BorderBrush="{DynamicResource Border}"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="4">
                 <StackPanel>
                     <TextBlock Style="{StaticResource Heading2}" Text="Privacidade" />
                     <WrapPanel>
                         <TextBlock
-                            FontSize="36"
-                            FontWeight="Light"
-                            Foreground="White"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Style="{DynamicResource TitleLargeTextBlockStyle}"
                             Text="{Binding PrivacyScore}" />
                         <TextBlock
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Margin="6,0,0,5"
                             VerticalAlignment="Bottom"
                             Text="/ 10" />
@@ -47,19 +47,19 @@
             <Border
                 Margin="6,0,0,0"
                 Padding="12,8"
-                Background="#24272A"
-                BorderBrush="{DynamicResource Border}"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="4">
                 <StackPanel>
                     <TextBlock Style="{StaticResource Heading2}" Text="Segurança" />
                     <WrapPanel>
                         <TextBlock
-                            FontSize="36"
-                            FontWeight="Light"
-                            Foreground="White"
+                                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Style="{DynamicResource TitleLargeTextBlockStyle}"
                             Text="{Binding SecurityScore}" />
                         <TextBlock
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Margin="6,0,0,5"
                             VerticalAlignment="Bottom"
                             Text="/ 10" />
@@ -70,6 +70,7 @@
         <UniformGrid
             Grid.Row="1"
             Margin="0,12,0,0"
+            HorizontalAlignment="Left"
             Columns="3">
             <UniformGrid.Resources>
                 <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">

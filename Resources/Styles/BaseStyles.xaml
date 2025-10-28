@@ -3,19 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
-    <Style x:Key="FocusVisual">
+    <!--<Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle
                         Margin="1"
                         SnapsToDevicePixels="true"
-                        Stroke="{StaticResource Primary}"
+                        Stroke="{DynamicResource AccentFillColorDefaultBrush}"
                         StrokeDashArray="1 2"
                         StrokeThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>-->
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}"></Setter>
     </Style>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
@@ -66,15 +69,15 @@
                         </Grid.RowDefinitions>
                         <TabPanel
                             Grid.Row="0"
-                            Margin="0"
+                            Margin="12,8,0,0"
                             Background="Transparent"
                             IsItemsHost="True" />
                         <Border
                             Grid.Row="1"
                             Margin="0"
                             Padding="0"
-                            Background="Transparent"
-                            BorderBrush="{DynamicResource Border}"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            Background="{DynamicResource LayerFillColorDefaultBrush}"                            
                             BorderThickness="0,1,0,0">
                             <ContentPresenter
                                 x:Name="TabContentPresenter"
@@ -103,16 +106,16 @@
                                 </StackPanel>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource Primary}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource Primary}" />
+                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </DataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsMouseOver}" Value="True" />
                                             <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="False" />
                                         </MultiDataTrigger.Conditions>
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource Primary}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource Primary}" />
+                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </MultiDataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
@@ -128,6 +131,8 @@
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="Transparent"
                                         BorderThickness="0,0,0,2"
+                                        Margin="0,0,12,0"
+                                        CornerRadius="6,6,0,0"
                                         Cursor="Hand">
                                         <ContentPresenter
                                             x:Name="Content"
@@ -138,16 +143,16 @@
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger SourceName="HeaderBorder" Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ActiveContainer}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource ActiveContainer}" />
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource AppBackground}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource AccentFillColorDefaultBrush}" />
+                                        <Setter TargetName="HeaderBorder" Property="CornerRadius" Value="4,4,0,0"></Setter>
                                     </Trigger>
-
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{DynamicResource ActiveContainer}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -263,7 +268,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style
         x:Key="CelerSmallStripTab"
         BasedOn="{StaticResource CelerStripTab}"
