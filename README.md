@@ -1,16 +1,18 @@
 <p align="center">
-<img src="banner.png" width="700">
+<img src="./banner.png" width="700">
 </p>
 
 # Celer [BETA]
-> The toolbox for Windows 10/11
+
+> The advanced, open source, friendly, and cutest toolbox for Windows 10/11!
 
 > [!IMPORTANT]
-> Celer is currently being ported to WinUI 3. The goal is to provide deeper integration with Windows and to address architectural limitations in the current version. The existing codebase is unstable and difficult to maintain, which reduces the possibility of adding features and improvements. ([Technical debt](https://en.wikipedia.org/wiki/Technical_debt)).
+> Celer is still a work in progress is and thus should only be used for testing. Please be patient for a stable release.
 
-[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/surfscape/celer/build-testing)
+[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total)
 
 ## Table of Contents
+
 - [1. Introduction](#1-introduction)
 - [2. Features](#3-features)
 - [3. Installation](#4-installation)
@@ -21,7 +23,7 @@
 
 ## Introduction
 
-Celer is an app for Windows with the purpose of giving control of the system back to it's users. The app is structured into modules (categories) that contain related features that help the user maintain the computer in order without much hassle.
+Celer is an app for Windows with the purpose of giving you back control of the system. The app is structured into modules that contain various features that help you maintain the computer in order without hassle.
 
 ## Features
 
@@ -32,7 +34,6 @@ Celer is an app for Windows with the purpose of giving control of the system bac
 - Optimization - contain sub-modules related to energy & battery, memory, sensors, and more
 - Maintenance - general repair tools for Windows, network testing utilities, and more
 - Privacy & Security - general information of the system's privacy and security levels
-- Advanced - more tools that are either complex or do not fit on any other module
 
 ## Installation
 
@@ -55,11 +56,12 @@ For feature compatibility and system requirements, read the section below.
 
 We are currently planning new features but also how to present them, as such for completion sake, below is a small list of features that are on the drawing board that we want to work on.
 
-- Support third-party repair tools (ex: AdWare Cleaner, TRON Script)
-- A small frontend to Winget with recommended software
-- Light theme
+- Support for third-party tools (ex: AdWare Cleaner, TRON Script, Snappy Driver Installer Origin)
+- A frontend for Winget with recommended software
+- Light theme (already available on beta 2 but without a setting to change it)
 - Multi-language support
-- More preferences
+- Run in the background
+- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restating services and checking system statys)
 
 ## Contributing
 
