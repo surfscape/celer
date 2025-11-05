@@ -52,7 +52,6 @@ namespace Celer.Views.Windows.Utils
 
             public SurfScapeGatewayViewModel()
             {
-                CurrentTask = "A iniciar Celer...";
                 CurrentTask = "Starting Celer...";
             }
             public async Task InitializeAsync()
@@ -132,7 +131,7 @@ namespace Celer.Views.Windows.Utils
                             proc.Start();
                             while (!File.Exists(dxdiagPath))
                             {
-                                await Task.Delay(200);
+                                await Task.Delay(500);
                             }
                         }
                         catch (Exception ex)
