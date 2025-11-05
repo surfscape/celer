@@ -35,31 +35,31 @@
                     </TabControl.Resources>
                     <TabItem x:Name="Dashboard">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Estado" Icon="Settings" />
+                            <model:TabHeaderData Title="Dashboard" Icon="Settings" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding DashboardControl}" />
                     </TabItem>
                     <TabItem x:Name="Limpeza">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Limpeza" Icon="Trash2" />
+                            <model:TabHeaderData Title="Cleaning" Icon="Trash2" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding LimpezaControl}" />
                     </TabItem>
                     <TabItem x:Name="Otimizacao">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Otimização" Icon="Rocket" />
+                            <model:TabHeaderData Title="Optmization" Icon="Rocket" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding OtimizacaoControl}" />
                     </TabItem>
                     <TabItem x:Name="Manutencao">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Manutenção e Recuperação" Icon="Construction" />
+                            <model:TabHeaderData Title="Maintenance" Icon="Construction" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding ManutencaoControl}" />
                     </TabItem>
                     <TabItem x:Name="Privacidade">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Privacidade e Segurança" Icon="Shield" />
+                            <model:TabHeaderData Title="Privacy &amp; Security" Icon="Shield" />
                         </TabItem.Header>
                         <uc:Privacidade HorizontalAlignment="Stretch" />
                     </TabItem>

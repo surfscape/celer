@@ -33,9 +33,9 @@
                             Text="{Binding Label}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,0,0" Text="{Binding Format, StringFormat=Formato: {0}}" />
                         <TextBlock Margin="5,0,0,0" Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço {0}}" />
                         <TextBlock Margin="5,0,0,0" Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço Utilizado: {0}}" />
+                        <TextBlock Margin="0,0,0,0" Text="{Binding Format, StringFormat=File System: {0}}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -53,7 +53,7 @@
                 <TextBlock
                     Margin="0,4,0,0"
                     HorizontalAlignment="Center"
-                    Text="A carregar dados" />
+                    Text="Loding, please wait..." />
             </StackPanel>
         </Grid>
         <Grid
@@ -74,8 +74,7 @@
                         Padding="0,0,0,16"
                         BorderThickness="0,0,0,1">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}">Estado do Sistema</TextBlock>
-                            <TextBlock Style="{StaticResource Subheading}">Verifique o estado e a saúde dos vários componentes do sistema.</TextBlock>
+                            <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                         </StackPanel>
                     </Border>
                     <Grid>
@@ -114,7 +113,7 @@
                             <StackPanel Margin="0,4,0,0">
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel Margin="0,2" Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Text="Processos: " />
+                                        <TextBlock FontWeight="SemiBold" Text="Processes: " />
                                         <TextBlock Text="{Binding ProcessCount}" />
                                     </StackPanel>
                                     <StackPanel Margin="8,2" Orientation="Horizontal">
@@ -123,20 +122,20 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Margin="0,2" Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="Clock máximo sem turbo: " />
+                                    <TextBlock FontWeight="SemiBold" Text="Max clock (no turbo): " />
                                     <TextBlock Text="{Binding CpuClockSpeed, StringFormat={}{0} MHz}" />
                                 </StackPanel>
                                 <StackPanel Margin="0,2" Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="Estado: " />
+                                    <TextBlock FontWeight="SemiBold" Text="System status: " />
                                     <TextBlock Text="{Binding CpuStatus}" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <TextBlock Style="{StaticResource Heading2}" Text="Memória" />
+                            <TextBlock Style="{StaticResource Heading2}" Text="Memory" />
                             <TextBlock Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Total: {0}}" />
-                            <TextBlock Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Em utilização: {0}}" />
-                            <TextBlock Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Disponível: {0}}" />
+                            <TextBlock Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=In use: {0}}" />
+                            <TextBlock Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Available: {0}}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -152,7 +151,6 @@
                                     VerticalAlignment="Center"
                                     Text="{Binding MemoryUsage, StringFormat={}{0:F1}%}" />
                             </Grid>
-
                             <Button
                                 Margin="0,0,0,0"
                                 Command="{Binding NavigateToOptimizationCommand}"
@@ -163,7 +161,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
                                         Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
-                                    <TextBlock>Gestor de memória</TextBlock>
+                                    <TextBlock>Memory Manager</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -208,7 +206,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
                                         Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
-                                    <TextBlock>Gestor gráfico</TextBlock>
+                                    <TextBlock>Graphics Manager</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -224,15 +222,17 @@
                             </Style>
                         </Grid.Resources>
                         <StackPanel>
-                            <TextBlock Style="{StaticResource Heading2}">Discos</TextBlock>
-                            <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="Focusable" Value="False" />
-                                        <Setter Property="IsHitTestVisible" Value="False" />
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                            </ListBox>
+                            <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
+                            <Border CornerRadius="8">
+                                <ListBox ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding DiskData}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="Focusable" Value="False" />
+                                            <Setter Property="IsHitTestVisible" Value="False" />
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </Border>
                             <Button Margin="0,8,0,0" Command="{Binding RefreshDisksCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <iconPacks:PackIconControl
@@ -240,14 +240,14 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
                                         Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
-                                    <TextBlock>Atualizar</TextBlock>
+                                    <TextBlock>Refresh</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="0,0,0,0" IsEnabled="{Binding EnableAlerts}" Visibility="{Binding EnableAlerts, Converter={StaticResource BoolToVisConverter}}"  >
                             <local2:HeadingHelp
-                                HelpText="Notificações relacionadas ao estado do sistema, estas podem ser alterada nas definições"
-                                Label="Alertas"
+                                HelpText="Notifications related to the system state. These can be modified in the settings."
+                                Label="Alerts"
                                 LabelStyleKey="Heading2" />
                             <Grid >
                                 <Grid.RowDefinitions>
@@ -294,7 +294,7 @@
                                         </Style>
                                     </ListBox.ItemContainerStyle>
                                 </ListBox>
-                                <TextBlock Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=True}">Não existem alertas ativos</TextBlock>
+                                <TextBlock Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=True}">No active alerts</TextBlock>
                             </Grid>
                         </StackPanel>
                     </Grid>

@@ -17,17 +17,17 @@ namespace Celer.Models.Sensors
         {
             if (name == "Cpu")
             {
-                Name = "Processador";
+                Name = "CPU";
                 Icon = MahApps.Metro.IconPacks.PackIconLucideKind.Cpu;
             }
             if (name == "Storage")
             {
-                Name = "Armazenamento";
+                Name = "Storage";
                 Icon = MahApps.Metro.IconPacks.PackIconLucideKind.Cylinder;
             }
             else
             {
-                Name = name;
+                Name = "CPU";
             }
         }
 

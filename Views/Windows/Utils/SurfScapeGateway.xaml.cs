@@ -53,6 +53,7 @@ namespace Celer.Views.Windows.Utils
             public SurfScapeGatewayViewModel()
             {
                 CurrentTask = "A iniciar Celer...";
+                CurrentTask = "Starting Celer...";
             }
             public async Task InitializeAsync()
             {

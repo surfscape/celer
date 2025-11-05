@@ -16,7 +16,7 @@ RequestExecutionLevel admin
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-!insertmacro MUI_LANGUAGE "Portuguese"
+!insertmacro MUI_LANGUAGE "English"
 
 Section
 

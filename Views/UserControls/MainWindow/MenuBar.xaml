@@ -128,7 +128,7 @@
         <MenuItem
             x:Name="NavigationMenu"
             d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
-            Header="_Vista">
+            Header="_View">
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Dashboard"
@@ -154,7 +154,7 @@
                 CommandParameter="Avancado"
                 Header="_Avançado" />
         </MenuItem>
-        <MenuItem Header="_Ferramentas">
+        <MenuItem Header="_Tools">
             <MenuItem Click="OpenAmbientChecker_Click" Header="_Análise de Ambiente">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="MonitorCheck" />
@@ -166,7 +166,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem x:Name="AboutMenu" Header="_Ajuda">
+        <MenuItem x:Name="AboutMenu" Header="_Help">
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://surfscape.neocities.org/support"

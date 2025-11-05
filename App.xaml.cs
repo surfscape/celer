@@ -46,7 +46,6 @@ public partial class App : Application
                     services.AddSingleton<RepairViewModel>();
                     services.AddTransient<NetworkViewModel>();
                     services.AddSingleton<PrivacidadeViewModel>();
-                    services.AddSingleton<AdvancedViewModel>();
 
                     // usercontrols themselves (and other views that need access to the services)
                     services.AddSingleton<MenuBar>();
@@ -81,12 +80,12 @@ public partial class App : Application
         if (AppHost == null)
         {
             MessageBox.Show(
-                "Erro ao inicializar AppHost. Por favor reinicie a aplicação ou tente fazer a sua reinstalação",
-                "Erro de infrastutura",
+                "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
+                "Infrastructure Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error
             );
-            throw new InvalidOperationException("AppHost não foi inicializado");
+            throw new InvalidOperationException("AppHost not initialized");
         }
 
         bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
