@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="CleaningEngineMainSource" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://surfscape.github.io/gateway/celer/signatures/cleaning.json</Value>
+      <Value Profile="(Default)">https://gateway.surfscape.eu/celer/signatures/cleaning.json</Value>
     </Setting>
   </Settings>
 </SettingsFile>

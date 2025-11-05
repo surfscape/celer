@@ -26,7 +26,7 @@ namespace Celer.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://surfscape.github.io/gateway/celer/signatures/cleaning.json")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://gateway.surfscape.eu/celer/signatures/cleaning.json")]
         public string CleaningEngineMainSource {
             get {
                 return ((string)(this["CleaningEngineMainSource"]));
