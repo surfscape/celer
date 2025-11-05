@@ -18,7 +18,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
         <DataTemplate x:Key="ItemTemplate">
-            <Border Padding="4,4">
+            <Border Padding="4,4" CornerRadius="8">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -33,9 +33,9 @@
                             Text="{Binding Label}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5,0,0,0" Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço {0}}" />
-                        <TextBlock Margin="5,0,0,0" Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Espaço Utilizado: {0}}" />
                         <TextBlock Margin="0,0,0,0" Text="{Binding Format, StringFormat=File System: {0}}" />
+                        <TextBlock Margin="16,0,0,0" Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Size {0}}" />
+                        <TextBlock Margin="16,0,0,0" Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Used: {0}}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -64,15 +64,13 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <Border Padding="16,8">
+            <Border Padding="16,16">
                 <StackPanel
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Orientation="Vertical">
                     <Border
-                        Margin="0,0,0,8"
-                        Padding="0,0,0,16"
-                        BorderThickness="0,0,0,1">
+                        Padding="0,0,0,16">
                         <StackPanel>
                             <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                         </StackPanel>

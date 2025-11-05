@@ -12,16 +12,14 @@
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
     </UserControl.Resources>
-    <Border Padding="16,8">
+    <Border Padding="16,16">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Border
-                Padding="0,0,0,16"
-                BorderBrush="{StaticResource Border}"
-                BorderThickness="0,0,0,1">
+                Padding="0,0,0,16">
                 <StackPanel>
                     <TextBlock Style="{StaticResource Heading1}">Limpeza</TextBlock>
                     <TextBlock Style="{StaticResource Subheading}">Limpe ficheiros desnecessários, lixo, e otimize base de dados de aplicações</TextBlock>

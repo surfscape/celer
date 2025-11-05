@@ -111,7 +111,6 @@
         </Style>
     </UserControl.Resources>
     <Menu
-        Background="#da1f1f1f"
         BorderThickness="0"
         FontSize="12">
         <MenuItem Header="_App">
