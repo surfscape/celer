@@ -40,11 +40,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MainConfiguration.settings</DependentUpon>
     </Compile>
-    <Compile Update="Properties\Secrets.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Secrets.settings</DependentUpon>
-    </Compile>
     <Compile Update="Properties\Signatures.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -66,10 +61,6 @@
     <None Update="Properties\MainConfiguration.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>MainConfiguration.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="Properties\Secrets.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Secrets.Designer.cs</LastGenOutput>
     </None>
     <None Update="Properties\Signatures.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
