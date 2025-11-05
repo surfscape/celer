@@ -9,7 +9,7 @@ namespace Celer.Utilities
             try
             {
                 using Ping ping = new();
-                PingReply reply = ping.Send("9.9.9.9", 2000); // TODO: add a configuration option for the ping server if the default one is censored in some countries
+                PingReply reply = ping.Send("9.9.9.9", 2000); // TODO: add a preference to choose a different ping server if the default one is blocked in other countries
                 return reply.Status == IPStatus.Success;
             }
             catch
