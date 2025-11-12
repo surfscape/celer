@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace Celer.Views.Windows.Utils
 {
@@ -28,6 +30,9 @@ namespace Celer.Views.Windows.Utils
 
     public partial class AmbientChecker : Window
     {
+
+
+
         public ObservableCollection<CheckItem> Checks { get; set; }
 
         public AmbientChecker()
@@ -46,6 +51,8 @@ namespace Celer.Views.Windows.Utils
 
             ChecksList.ItemsSource = Checks;
         }
+
+
 
         private async void StartCheck_Click(object sender, RoutedEventArgs e)
         {

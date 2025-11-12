@@ -9,9 +9,9 @@
     xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     Title="Celer"
-    MinWidth="920"
-    MinHeight="640"
-    MaxWidth="920"
+    MinWidth="940"
+    MinHeight="620"
+    MaxWidth="940"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -20,12 +20,12 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Padding="4,0,0,0">
+        <Border Padding="4,0,0,4">
         <ContentControl Content="{Binding MenuBarControl}" Focusable="False" />
         </Border>
         <Border Grid.Row="1" >
             <Grid Margin="0,0,0,0">
-                <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTab}" Margin="0,0,0,0">
+                <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTabLeft}" Margin="0,0,0,0">
                     <TabControl.Resources>
                         <Style TargetType="{x:Type iconPacks:PackIconLucide}">
                             <Setter Property="Margin" Value="0,0,8,0" />
@@ -37,7 +37,7 @@
                     </TabControl.Resources>
                     <TabItem x:Name="Dashboard">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Dashboard" Icon="Settings" />
+                            <model:TabHeaderData Title="Dashboard" Icon="Activity" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding DashboardControl}" />
                     </TabItem>

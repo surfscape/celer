@@ -5,7 +5,9 @@ using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace Celer.Views.Windows.Utils
 {
@@ -14,6 +16,18 @@ namespace Celer.Views.Windows.Utils
     /// </summary>
     public partial class SurfScapeGateway : Window
     {
+
+        // Source - https://stackoverflow.com/a
+        // Posted by Joe White, modified by community. See post 'Timeline' for change history
+        // Retrieved 2025-11-12, License - CC BY-SA 4.0
+
+        private const int GWL_STYLE = -16;
+        private const int WS_SYSMENU = 0x80000;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
         private readonly SurfScapeGatewayViewModel _viewModel;
         private readonly MainWindow _mainWindow;
 
@@ -39,6 +53,13 @@ namespace Celer.Views.Windows.Utils
 
         private async void SurfScapeGateway_Loaded(object sender, RoutedEventArgs e)
         {
+            // Source - https://stackoverflow.com/a
+            // Posted by Joe White, modified by community. See post 'Timeline' for change history
+            // Retrieved 2025-11-12, License - CC BY-SA 4.0
+
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+
             await _viewModel.InitializeAsync();
         }
 
