@@ -19,10 +19,11 @@
             </Style>
             <ResourceDictionary.MergedDictionaries>
                 <DynamicAero2:Theme Color="Dark" />
+                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

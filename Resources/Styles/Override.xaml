@@ -176,4 +176,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="MinHeight" Value="16"></Setter>
+    </Style>
 </ResourceDictionary>
