@@ -23,6 +23,8 @@
                                 x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Margin="0,0,0,0"
                                 BorderThickness="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -72,22 +74,22 @@
                                 IsOpen="{TemplateBinding IsSubmenuOpen}"
                                 PopupAnimation="Fade">
                                 <Border
-                                    Padding="0"
-                                    Background="{DynamicResource AppBackground}"
-                                    BorderBrush="#404040"
+                                    Padding="4"
+                                    CornerRadius="4"
                                     BorderThickness="1"
-                                    SnapsToDevicePixels="True">
+                                    Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
                                     <StackPanel IsItemsHost="True" />
                                 </Border>
                             </Popup>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource ActiveContainer}" />
-                                <Setter Property="Foreground" Value="{DynamicResource Primary}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
                             </Trigger>
                             <Trigger Property="IsSubmenuOpen" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#252525" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
                                 <Setter Property="Foreground" Value="#eeeeee" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
