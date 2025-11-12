@@ -20,7 +20,9 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Border Padding="4,0,0,0">
         <ContentControl Content="{Binding MenuBarControl}" Focusable="False" />
+        </Border>
         <Border Grid.Row="1" >
             <Grid Margin="0,0,0,0">
                 <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTab}" Margin="0,0,0,0">
