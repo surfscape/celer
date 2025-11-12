@@ -19,7 +19,7 @@
     </Style>-->
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="15" />
     </Style>
     <Style
         x:Key="Heading1"
@@ -173,15 +173,16 @@
                         </Grid.ColumnDefinitions>
                         <TabPanel
                             Grid.Column="0"
-                            Margin="0"
+                            Margin="4,6,4,4"
                             Background="Transparent"
                             IsItemsHost="True" />
                         <Border
                             Grid.Column="1"
                             Padding="{TemplateBinding Padding}"
-                            Background="{DynamicResource AppBackground}"
-                            BorderBrush="{DynamicResource Border}"
-                            BorderThickness="1,0,0,0">
+                               BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            Background="{DynamicResource LayerFillColorDefaultBrush}" 
+                            BorderThickness="1,1,0,0"
+                            CornerRadius="8,0,0,0">
                             <ContentPresenter
                                 x:Name="TabContentPresenter"
                                 Margin="0"
@@ -196,9 +197,8 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="TabItem">
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
-                    <Setter Property="Padding" Value="16,8" />
-                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinWidth" Value="175"></Setter>
+                    <Setter Property="Padding" Value="14,8,16,8" />
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="HeaderTemplate">
@@ -208,18 +208,19 @@
                                     <iconPacks:PackIconLucide x:Name="Icon" Kind="{Binding Icon}" />
                                     <TextBlock x:Name="Text" Text="{Binding Title}" />
                                 </StackPanel>
+                                
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource Primary}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource Primary}" />
+                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
                                     </DataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsMouseOver}" Value="True" />
                                             <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="False" />
                                         </MultiDataTrigger.Conditions>
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource Primary}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource Primary}" />
+                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
                                     </MultiDataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
@@ -229,13 +230,15 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Grid>
+                                    <Border x:Name="HeaderActive" HorizontalAlignment="Left" Background="Transparent" Width="3" Height="16" CornerRadius="2"></Border>
                                     <Border
                                         x:Name="HeaderBorder"
                                         Padding="{TemplateBinding Padding}"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="Transparent"
-                                        BorderThickness="0,0,2,0"
-                                        Cursor="Hand">
+                                        BorderThickness="0,0,0,0"
+                                        CornerRadius="6"
+                                        Margin="0,2,0,2">
                                         <ContentPresenter
                                             x:Name="Content"
                                             HorizontalAlignment="Left"
@@ -246,15 +249,13 @@
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger SourceName="HeaderBorder" Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ActiveContainer}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource ActiveContainer}" />
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource CardBackgroundFillColorDefaultBrush}" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource CardBackgroundFillColorDefaultBrush}" />
                                         <Setter TargetName="Content" Property="TextBlock.Foreground" Value="White" />
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource AppBackground}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{DynamicResource Primary}" />
+                                        <Setter TargetName="HeaderActive" Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </Trigger>
-
                                     <Trigger Property="IsEnabled" Value="False">
                                         <Setter Property="Foreground" Value="Gray" />
                                     </Trigger>
