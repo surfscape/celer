@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Celer.Models"
     xmlns:vm="clr-namespace:Celer.ViewModels"
-    Title="Definições"
+    Title="Settings"
     Width="860"
     Height="550"
     d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
@@ -22,20 +22,19 @@
     <Window.Resources>
         <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
     </Window.Resources>
-    <Border Padding="16">
+    <Border Padding="0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource Heading1}">
-                Definições
-            </TextBlock>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <TabControl
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="0"
-                Style="{StaticResource CelerStripTab}">
+                Style="{StaticResource CelerStripTabLeft}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type iconPacks:PackIconLucide}">
                         <Setter Property="Margin" Value="0,0,8,0" />
@@ -47,7 +46,7 @@
                 </TabControl.Resources>
                 <TabItem>
                     <TabItem.Header>
-                        <model:TabHeaderData Title="Geral" Icon="Settings" />
+                        <model:TabHeaderData Title="General" Icon="Settings" />
                     </TabItem.Header>
                     <StackPanel>
                         <Grid>
@@ -55,7 +54,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border Padding="0,8,0,0">
+                            <Border Padding="16">
                                 <StackPanel Grid.Column="0">
                                     <TextBlock Style="{DynamicResource Heading2}">
                                         Visualização e Aparência
@@ -108,9 +107,9 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <model:TabHeaderData Title="Limpeza" Icon="Trash2" />
+                        <model:TabHeaderData Title="Cleaning" Icon="Trash2" />
                     </TabItem.Header>
-                    <Border Padding="0,8">
+                    <Border Padding="16">
                         <StackPanel>
 
                             <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
@@ -166,9 +165,9 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <model:TabHeaderData Title="Avançado" Icon="FlaskConical" />
+                        <model:TabHeaderData Title="Advanced" Icon="FlaskConical" />
                     </TabItem.Header>
-                    <Border Padding="0,8">
+                    <Border Padding="16">
                     <StackPanel>
                         <TextBlock Style="{DynamicResource Heading1}">Funções experimentais</TextBlock>
                         <TextBlock
@@ -198,12 +197,23 @@
                     </Border>
                 </TabItem>
             </TabControl>
-            <StackPanel
+            <Border
+                BorderThickness="1,0,0,0"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                Background="{DynamicResource LayerFillColorDefaultBrush}"
                 Grid.Row="2"
-                Margin="0,10,0,0"
-                HorizontalAlignment="Right"
+                Padding="8"
+                HorizontalAlignment="Stretch"
+                Margin="183,0,0,0"
+                >
+                
+                
+  
+            <StackPanel
+HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
+                    HorizontalAlignment="Right"
                     Width="85"
                     Margin="0,0,5,0"
                     Padding="5"
@@ -221,6 +231,7 @@
                     Command="{Binding ApplyCommand}"
                     Content="Aplicar" />
             </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </Window>
