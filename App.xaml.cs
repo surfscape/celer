@@ -10,6 +10,7 @@ using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Celer;
@@ -90,16 +91,30 @@ public partial class App : Application
 
         bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
 
-        if (!hasUseDoneSetup)
+        if (!e.Args.Contains("-silent"))
         {
-            var onboardingWindow = new Onboarding();
-            onboardingWindow.Show();
+
+            if (!hasUseDoneSetup)
+            {
+                var onboardingWindow = new Onboarding();
+                onboardingWindow.Show();
+            }
+            else
+            {
+                var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
+                surfScapeGateway.MainWindowTrigger = true;
+                surfScapeGateway.ShowDialog();
+            }
         }
         else
         {
-            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
-            surfScapeGateway.MainWindowTrigger = true;
-            surfScapeGateway.ShowDialog();
+            /* TODO: Implement silent mode logic, maybe with NotifyIcon to provide a lightweight system tray interface for Celer */
+            MessageBox.Show("Celer is running in silent mode.");
+            Process[] processes = Process.GetProcessesByName("Celer");
+            foreach (Process process in processes)
+            {
+                process.Kill();
+            }
         }
         base.OnStartup(e);
     }
