@@ -72,6 +72,7 @@
                     <Border
                         Padding="0,0,0,16">
                         <StackPanel>
+                            <TextBlock FontWeight="Medium" Foreground="{DynamicResource TextFillColorTertiaryBrush}">Welcome to Celer</TextBlock>
                             <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                         </StackPanel>
                     </Border>
@@ -303,8 +304,9 @@
                 Padding="12,8"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                BorderBrush="{DynamicResource Border}"
-                BorderThickness="0,1,0,0">
+                BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
                 <DockPanel>
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"

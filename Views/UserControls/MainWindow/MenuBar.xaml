@@ -14,7 +14,7 @@
             <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
             <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
             <Setter Property="Padding" Value="12,5" />
-            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontSize" Value="14" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="MenuItem">
@@ -23,6 +23,7 @@
                                 x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
+                                
                                 CornerRadius="4"
                                 Margin="0,0,0,0"
                                 BorderThickness="0">
@@ -78,7 +79,7 @@
                                     CornerRadius="4"
                                     BorderThickness="1"
                                     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}">
                                     <StackPanel IsItemsHost="True" />
                                 </Border>
                             </Popup>
@@ -118,13 +119,13 @@
         <MenuItem Header="_App">
             <MenuItem
                 Click="OpenSettings_Click"
-                Header="_Definições"
+                Header="_Preferences"
                 InputGestureText="Ctrl+F">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Settings" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Click="CloseApp_Click" Header="_Sair" />
+            <MenuItem Click="CloseApp_Click" Header="_Exit" />
         </MenuItem>
         <MenuItem
             x:Name="NavigationMenu"
@@ -133,35 +134,31 @@
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Dashboard"
-                Header="_Estado" />
+                Header="_Dashboard" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Limpeza"
-                Header="_Limpeza" />
+                Header="_Cleaning" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Otimizacao"
-                Header="_Otimização" />
+                Header="_Optimization" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Manutencao"
-                Header="_Manutenção" />
+                Header="_Maintenance" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
                 CommandParameter="Privacidade"
-                Header="_Privacidade &amp; Segurança" />
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Avancado"
-                Header="_Avançado" />
+                Header="_Privacy &amp; Security" />
         </MenuItem>
         <MenuItem Header="_Tools">
-            <MenuItem Click="OpenAmbientChecker_Click" Header="_Análise de Ambiente">
+            <MenuItem Click="OpenAmbientChecker_Click" Header="_Ambient Checker">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="MonitorCheck" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Click="CheckUpdates_Click" Header="_Verificar Atualizações">
+            <MenuItem Click="CheckUpdates_Click" Header="_Check Updates">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="RefreshCw" />
                 </MenuItem.Icon>
@@ -171,28 +168,16 @@
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://surfscape.neocities.org/support"
-                Header="_Suporte">
+                Header="_Support">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="LifeBuoy" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem
-                Command="{Binding OpenLinkCommand}"
-                CommandParameter="https://surfscape.github.io/tidepool/projects/celer/"
-                Header="_Guia de Utilizador" />
-            <MenuItem
-                Command="{Binding OpenLinkCommand}"
-                CommandParameter="https://discord.gg/dY4GSudRxv"
-                Header="_Discord">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconBootstrapIcons Foreground="{DynamicResource SecondaryText}" Kind="Discord" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/jryIYOly60yYlx1sMiUFvgfa5JML2QV4aLDfPNDeags/"
-                Header="_Formulário de Feedback">
+                Header="_Feedback Form">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="HandHelping" />
                 </MenuItem.Icon>
@@ -200,12 +185,12 @@
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/C1r1yBjeghM5pg1Nzc4s050GsWA18ZKGQ83FNlAQ0zo/"
-                Header="_Relatar Erros" />
+                Header="_Report Errors" />
             <Separator />
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
                 CommandParameter="https://surfscape.github.io/services/status/"
-                Header="_Estado de Serviços" />
+                Header="_Service Status" />
             <MenuItem Command="{Binding OpenAboutWindowCommand}" Header="_Sobre">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Info" />
