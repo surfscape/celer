@@ -19,7 +19,7 @@
     </Style>-->
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="14" />
     </Style>
     <Style
         x:Key="Heading1"
@@ -54,111 +54,6 @@
                 <Setter Property="Height" Value="20" />
             </DataTrigger>
         </Style.Triggers>
-    </Style>
-    <Style x:Key="CelerStripTab" TargetType="TabControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TabControl">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <TabPanel
-                            Grid.Row="0"
-                            Margin="12,8,0,0"
-                            Background="Transparent"
-                            IsItemsHost="True" />
-                        <Border
-                            Grid.Row="1"
-                            Margin="0"
-                            Padding="0"
-                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                            Background="{DynamicResource LayerFillColorDefaultBrush}"                  
-                            CornerRadius="7,7,0,0"
-                            BorderThickness="1">
-                            <ContentPresenter
-                                x:Name="TabContentPresenter"
-                                Margin="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Content="{TemplateBinding SelectedContent}" />
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="TabItem">
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
-                    <Setter Property="Padding" Value="16,8" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="SnapsToDevicePixels" Value="True" />
-                    <Setter Property="HeaderTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide x:Name="Icon" Kind="{Binding Icon}" />
-                                    <TextBlock x:Name="Text" Text="{Binding Title}" />
-                                </StackPanel>
-                                <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                    </DataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsMouseOver}" Value="True" />
-                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="False" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                    </MultiDataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Grid>
-                                    <Border
-                                        x:Name="HeaderBorder"
-                                        Padding="{TemplateBinding Padding}"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="Transparent"
-                                        BorderThickness="0,0,0,2"
-                                        Margin="0,0,12,0"
-                                        CornerRadius="4,4,0,0"
-                                        Cursor="Hand">
-                                        <ContentPresenter
-                                            x:Name="Content"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            ContentSource="Header" />
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger SourceName="HeaderBorder" Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
-                                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource AccentFillColorDefaultBrush}" />
-                                        <Setter TargetName="HeaderBorder" Property="CornerRadius" Value="4,4,0,0"></Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
     </Style>
     <Style x:Key="CelerStripTabLeft" TargetType="TabControl">
         <Setter Property="TabStripPlacement" Value="Left" />
@@ -208,7 +103,6 @@
                                     <iconPacks:PackIconLucide x:Name="Icon" Kind="{Binding Icon}" />
                                     <TextBlock x:Name="Text" Text="{Binding Title}" />
                                 </StackPanel>
-                                
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
                                         <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
@@ -230,7 +124,7 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Grid>
-                                    <Border x:Name="HeaderActive" HorizontalAlignment="Left" Background="Transparent" Width="3" Height="16" CornerRadius="2"></Border>
+                                    <Border x:Name="HeaderActive" HorizontalAlignment="Left" Width="3" Height="16" CornerRadius="2"></Border>
                                     <Border
                                         x:Name="HeaderBorder"
                                         Padding="{TemplateBinding Padding}"
@@ -249,10 +143,10 @@
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger SourceName="HeaderBorder" Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource CardBackgroundFillColorDefaultBrush}" />
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource CardBackgroundFillColorDefaultBrush}" />
+                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
                                         <Setter TargetName="Content" Property="TextBlock.Foreground" Value="White" />
                                         <Setter TargetName="HeaderActive" Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </Trigger>
@@ -266,12 +160,6 @@
                 </Style>
             </Setter.Value>
         </Setter>
-    </Style>
-    <Style
-        x:Key="CelerSmallStripTab"
-        BasedOn="{StaticResource CelerStripTab}"
-        TargetType="TabControl">
-        <Setter Property="Padding" Value="12,6" />
     </Style>
     <Style BasedOn="{StaticResource {x:Type ListBox}}" TargetType="{x:Type ListBox}">
         <Setter Property="BorderBrush" Value="{StaticResource Border}" />
