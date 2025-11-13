@@ -11,7 +11,7 @@
         <ResourceDictionary>
             <Style TargetType="Window">
                 <Setter Property="FontFamily"
-        Value="Calibri" />
+        Value="Segoe UI" />
                 <Setter Property="Background" Value="#00FFFFFF"></Setter>
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"></Setter>
@@ -23,7 +23,6 @@
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
-                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
