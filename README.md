@@ -56,8 +56,8 @@ We are currently planning new features some of these include:
 - A frontend for Winget with recommended software
 - Light theme (already available on beta 2 but without a setting to change it)
 - Multi-language support
-- Run in the background
-- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status)
+- Run in the background (planned on beta 2)
+- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status) (planned on beta 2)
 
 ## Contributing
 
