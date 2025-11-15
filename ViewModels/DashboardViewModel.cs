@@ -186,7 +186,14 @@ public partial class DashboardViewModel : ObservableObject
 
                 if (_cpuCounter != null)
                 {
-                    CpuUsage = (float)Math.Round(_cpuCounter.NextValue(), 1);
+                    if(MainConfiguration.Default.EnableRounding)
+                    {
+                        CpuUsage = (int)_cpuCounter.NextValue();
+                    } else
+                    {
+                        CpuUsage = (float)Math.Round(_cpuCounter.NextValue(), 1);
+                    }
+                        
                 }
 
                 ProcessCount = Process.GetProcesses().Length;
