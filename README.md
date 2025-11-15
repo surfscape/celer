@@ -4,7 +4,7 @@
 
 # Celer [BETA]
 
-> The advanced, open source, friendly, and cutest toolbox for Windows 10/11!
+> The advanced, open source, friendly, and cutest toolbox for Windows 10 & 11!
 
 > [!IMPORTANT]
 > Celer is still a work in progress and thus should only be used for testing. Please be patient for a stable release.
@@ -23,7 +23,7 @@
 
 ## Introduction
 
-Celer is an app for Windows with the purpose of giving you back control of your system. The app is structured into modules that contain various features that help you maintain your machine optimized.
+Celer is an app for Windows 10 & 11 with the purpose of giving you back control of your system. The app is structured into modules that contain various features that help you maintain your machine optimized.
 
 ## Features
 
