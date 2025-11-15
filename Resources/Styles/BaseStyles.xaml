@@ -1,25 +1,10 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
-    <!--<Style x:Key="FocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="1"
-                        SnapsToDevicePixels="true"
-                        Stroke="{DynamicResource AccentFillColorDefaultBrush}"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="15" />
     </Style>
     <Style
         x:Key="Heading1"
@@ -27,7 +12,7 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Control.FontSize" Value="30" />
         <Setter Property="Control.FontWeight" Value="Light" />
-        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="Margin" Value="0,0,0,8" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
     </Style>
     <Style
@@ -93,9 +78,9 @@
             <Setter.Value>
                 <Style TargetType="TabItem">
                     <Setter Property="MinWidth" Value="175"></Setter>
-                    <Setter Property="Padding" Value="14,8,16,8" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="Padding" Value="12,9,16,9" />
+                    <Setter Property="Background"
+                            Value="Transparent" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
@@ -129,9 +114,8 @@
                                         x:Name="HeaderBorder"
                                         Padding="{TemplateBinding Padding}"
                                         Background="{TemplateBinding Background}"
-                                        BorderBrush="Transparent"
-                                        BorderThickness="0,0,0,0"
-                                        CornerRadius="6"
+                                        
+                                        CornerRadius="4"
                                         Margin="0,2,0,2">
                                         <ContentPresenter
                                             x:Name="Content"
