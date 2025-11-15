@@ -59,7 +59,6 @@ public partial class App : Application
                     services.AddTransient<Sensors>();
                     services.AddSingleton<Manutencao>();
                     services.AddTransient<Repair>();
-                    services.AddTransient<Realtek>();
                     services.AddTransient<Network>();
                     services.AddSingleton<Privacidade>();
                 }

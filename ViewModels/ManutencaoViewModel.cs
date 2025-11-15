@@ -13,7 +13,6 @@ namespace Celer.ViewModels
         public ManutencaoViewModel(
             NavigationService navigationService,
             Repair repairView,
-            Realtek realtekView,
             Network networkView
         )
             : base(navigationService, "Manutencao")
@@ -21,7 +20,6 @@ namespace Celer.ViewModels
             _views = new Dictionary<string, NavigationSubView>
             {
                 { "Repair", new NavigationSubView("Recuperação", repairView) },
-                { "Realtek", new NavigationSubView("Realtek Audio Wizard", realtekView) },
                 { "Network", new NavigationSubView("Teste de Internet", networkView) },
             };
         }
