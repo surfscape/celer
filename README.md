@@ -61,7 +61,14 @@ We are currently planning new features some of these include:
 
 ## Contributing
 
-To be written...
+### Commit Convention
+
+- **feat:** commit that adds a new feature
+- **fix:** commit that fixes an existing feature
+- **refactor:** commit that rewrites code without adding or fixing a behaviour
+  - **refactor(perf):** commit that rewrites code with the objective of improving performance
+- **docs:** commit related to documentation
+- **chore:** commit that doesn't fit the types above
 
 ## License
 
