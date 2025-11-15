@@ -401,8 +401,5 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# JetBrains Rider
-*.sln.iml
-Properties/Secrets.settings
-Properties/Secrets.Designer.cs
+# NSIS output
 CelerSetup.exe
