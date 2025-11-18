@@ -6,11 +6,11 @@ namespace Celer.Views.UserControls.MainApp
     /// <summary>
     /// Interaction logic for Otimização.xaml
     /// </summary>
-    public partial class Otimizacao : UserControl
+    public partial class Optimization : UserControl
     {
-        private readonly OtimizacaoViewModel _viewModel;
+        private readonly OptimizationViewModel _viewModel;
 
-        public Otimizacao(OtimizacaoViewModel viewModel)
+        public Optimization(OptimizationViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;

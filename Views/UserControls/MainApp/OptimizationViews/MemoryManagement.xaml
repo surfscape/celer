@@ -1,13 +1,13 @@
 ﻿<UserControl
-    x:Class="Celer.Views.UserControls.MainApp.OtimizacaoViews.MemoryManagement"
+    x:Class="Celer.Views.UserControls.MainApp.OptimizationViews.MemoryManagement"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Celer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:otimizacaovm="clr-namespace:Celer.ViewModels.OtimizacaoVM"
-    d:DataContext="{d:DesignInstance Type=otimizacaovm:MemoryViewModel}"
+    xmlns:Optimizationvm="clr-namespace:Celer.ViewModels.OptimizationVM"
+    d:DataContext="{d:DesignInstance Type=Optimizationvm:MemoryViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -64,7 +64,7 @@
                             Width="17"
                             Height="17"
                             Foreground="{DynamicResource SecondaryText}"
-                            Kind="CircleHelp" />
+                            Kind="BadgeQuestionMark" />
                     </StackPanel>
                 </StackPanel>
 

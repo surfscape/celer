@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Threading;
 
-namespace Celer.ViewModels.OtimizacaoVM
+namespace Celer.ViewModels.OptimizationVM
 {
     public partial class BatteryViewModel : ObservableObject
     {

@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Celer.ViewModels.OtimizacaoVM
+namespace Celer.ViewModels.OptimizationVM
 {
     public partial class MemoryViewModel : ObservableObject
     {

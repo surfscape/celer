@@ -1,26 +1,26 @@
 ﻿using Celer.Interfaces;
-using Celer.ViewModels.OtimizacaoVM;
+using Celer.ViewModels.OptimizationVM;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
+namespace Celer.Views.UserControls.MainApp.OptimizationViews
 {
     /// <summary>
-    /// Interaction logic for Sensors.xaml
+    /// Interaction logic for Video.xaml
     /// </summary>
-    public partial class Sensors : UserControl, INavigationAware
+    public partial class Video : UserControl, INavigationAware
     {
-        private readonly SensorViewModel _viewModel;
+        private readonly VideoViewModel _viewModel;
 
-        public Sensors(SensorViewModel viewModel)
+        public Video(VideoViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
-            Loaded += Sensors_Loaded;
+            Loaded += Video_Loaded;
         }
 
-        private async void Sensors_Loaded(object sender, RoutedEventArgs e)
+        private async void Video_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Yield();
             if (_viewModel.IsLoading)
@@ -33,13 +33,13 @@ namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
         {
             if (!_viewModel.IsLoading)
             {
-                await _viewModel.StartTimer();
+                await _viewModel.StartTimerAsync();
             }
         }
 
         public async Task OnNavigatedFrom()
         {
-            await _viewModel.StopTimer();
+            await _viewModel.StopTimerAsync();
         }
     }
 }

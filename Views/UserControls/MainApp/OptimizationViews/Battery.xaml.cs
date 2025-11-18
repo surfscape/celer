@@ -1,8 +1,8 @@
-﻿using Celer.ViewModels.OtimizacaoVM;
+﻿using Celer.ViewModels.OptimizationVM;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.OtimizacaoViews
+namespace Celer.Views.UserControls.MainApp.OptimizationViews
 {
     /// <summary>
     /// Interaction logic for Battery.xaml

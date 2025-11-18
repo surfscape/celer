@@ -8,7 +8,7 @@ using System.Management;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Celer.ViewModels.OtimizacaoVM
+namespace Celer.ViewModels.OptimizationVM
 {
     public partial class VideoViewModel : ObservableObject
     {
