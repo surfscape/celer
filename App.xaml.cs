@@ -1,10 +1,10 @@
 ﻿using Celer.Services;
 using Celer.ViewModels;
 using Celer.ViewModels.ManutencaoVM;
-using Celer.ViewModels.OtimizacaoVM;
+using Celer.ViewModels.OptimizationVM;
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainApp.ManutencaoViews;
-using Celer.Views.UserControls.MainApp.OtimizacaoViews;
+using Celer.Views.UserControls.MainApp.OptimizationViews;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
@@ -29,16 +29,17 @@ public partial class App : Application
                 (context, services) =>
                 {
                     // register main services, these include services that are used across the application and the main window
+                    services.AddTransient<SurfScapeGateway>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<NavigationService>();
                     services.AddSingleton<MainWindowViewModel>();
-                    services.AddTransient<SurfScapeGateway>();
+
 
                     // viewmodels for the user controls
                     services.AddSingleton<MenuBarNavigation>();
                     services.AddSingleton<DashboardViewModel>();
                     services.AddSingleton<CleanEngine>();
-                    services.AddSingleton<OtimizacaoViewModel>();
+                    services.AddSingleton<OptimizationViewModel>();
                     services.AddTransient<MemoryViewModel>();
                     services.AddTransient<BatteryViewModel>();
                     services.AddTransient<VideoViewModel>();
@@ -52,7 +53,7 @@ public partial class App : Application
                     services.AddSingleton<MenuBar>();
                     services.AddSingleton<Dashboard>();
                     services.AddSingleton<Limpeza>();
-                    services.AddSingleton<Otimizacao>();
+                    services.AddSingleton<Optimization>();
                     services.AddTransient<MemoryManagement>();
                     services.AddTransient<Battery>();
                     services.AddTransient<Video>();
@@ -89,7 +90,7 @@ public partial class App : Application
         }
 
         bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
-
+        var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
         if (!e.Args.Contains("-silent"))
         {
 
@@ -100,7 +101,6 @@ public partial class App : Application
             }
             else
             {
-                var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
             }

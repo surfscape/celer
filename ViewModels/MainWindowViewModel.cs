@@ -22,7 +22,7 @@ namespace Celer.ViewModels
         private UserControl limpezaControl;
 
         [ObservableProperty]
-        private UserControl otimizacaoControl;
+        private UserControl optimizationControl;
 
         [ObservableProperty]
         private UserControl manutencaoControl;
@@ -31,7 +31,7 @@ namespace Celer.ViewModels
         {
             { "Dashboard", 0 },
             { "Limpeza", 1 },
-            { "Otimizacao", 2 },
+            { "Optimization", 2 },
             { "Manutencao", 3 },
             { "Privacidade", 4 },
             { "Avancado", 5 },
@@ -51,7 +51,7 @@ namespace Celer.ViewModels
             MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
             DashboardControl = _serviceProvider.GetRequiredService<Dashboard>();
             LimpezaControl = _serviceProvider.GetRequiredService<Limpeza>();
-            OtimizacaoControl = _serviceProvider.GetRequiredService<Otimizacao>();
+            OptimizationControl = _serviceProvider.GetRequiredService<Optimization>();
             ManutencaoControl = _serviceProvider.GetRequiredService<Manutencao>();
         }
 
