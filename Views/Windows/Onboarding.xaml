@@ -108,10 +108,9 @@
                                     Background="Transparent"
                                 VerticalAlignment="Bottom"
                                     ToolTip="Ao ativar esta opção o Celer ira ficar a executar no background quando ligar o Windows ou quando fechar o programa.">
-                                <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" 
-Kind="CircleHelp"
-                                                          Width="14"
-                                                          />
+                                <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                          Kind="BadgeQuestionMark"
+                                                          Width="14" />
                             </StackPanel>
                         </Grid>
                     </CheckBox>

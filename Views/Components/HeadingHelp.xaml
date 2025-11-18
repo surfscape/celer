@@ -21,7 +21,7 @@
             <TextBlock Background="Transparent">
     <iconPacks:PackIconLucide
         Foreground="{DynamicResource SecondaryText}"
-        Kind="CircleHelp"
+        Kind="BadgeQuestionMark"
         Style="{StaticResource HeadingIcon}" />
             </TextBlock>
 

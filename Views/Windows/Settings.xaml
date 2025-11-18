@@ -150,7 +150,7 @@
                                         Height="15"
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource SecondaryText}"
-                                        Kind="CircleHelp"
+                                        Kind="BadgeQuestionMark"
                                         ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
                                 </StackPanel>
                                 <TextBox
