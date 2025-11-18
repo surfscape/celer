@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows10.0.18362.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.18362.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -14,25 +14,17 @@
 	<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="celer_256.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="celer_256.png" />
     <Resource Include="celer_icon.ico" />
-    <Resource Include="Resources\Assets\celer_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="DynamicAero2" Version="1.2.1" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
-	<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="6.2.1" />
+	<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-    <PackageReference Include="System.Management" Version="9.0.7" />
-  </ItemGroup>
-  <ItemGroup>
-    <SplashScreen Include="splash.png" />
+    <PackageReference Include="System.Management" Version="10.0.0" />
+    <PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\MainConfiguration.Designer.cs">
