@@ -141,7 +141,7 @@
                 Header="_Cleaning" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Otimizacao"
+                CommandParameter="Optimization"
                 Header="_Optimization" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
