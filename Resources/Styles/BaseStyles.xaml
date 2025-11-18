@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+                    >
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
         <Setter Property="FontSize" Value="15" />
@@ -29,7 +30,8 @@
         BasedOn="{StaticResource {x:Type TextBlock}}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Control.FontSize" Value="17" />
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextFillColorSecondaryBrush}" />
     </Style>
     <Style x:Key="HeadingIcon" TargetType="{x:Type iconPacks:PackIconLucide}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -109,12 +111,16 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Grid>
-                                    <Border x:Name="HeaderActive" HorizontalAlignment="Left" Width="3" Height="16" CornerRadius="2"></Border>
+                                    <Border x:Name="HeaderActive"
+                                            HorizontalAlignment="Left"
+                                            Width="3"
+                                            Height="16"
+                                            Panel.ZIndex="10"
+                                            CornerRadius="2"></Border>
                                     <Border
                                         x:Name="HeaderBorder"
                                         Padding="{TemplateBinding Padding}"
                                         Background="{TemplateBinding Background}"
-                                        
                                         CornerRadius="4"
                                         Margin="0,2,0,2">
                                         <ContentPresenter
@@ -132,7 +138,9 @@
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
                                         <Setter TargetName="Content" Property="TextBlock.Foreground" Value="White" />
-                                        <Setter TargetName="HeaderActive" Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                                        <Setter TargetName="HeaderActive"
+                                                Property="Background"
+                                                Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                     </Trigger>
                                     <Trigger Property="IsEnabled" Value="False">
                                         <Setter Property="Foreground" Value="Gray" />
@@ -150,6 +158,7 @@
         <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style TargetType="Hyperlink">
-        <Setter Property="Foreground" Value="{StaticResource Primary}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
     </Style>
 </ResourceDictionary>
