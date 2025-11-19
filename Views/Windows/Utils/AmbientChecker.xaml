@@ -60,9 +60,16 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Message}" VerticalAlignment="Center" FontStyle="Italic" Foreground="Gray"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding Name}"
+                                       VerticalAlignment="Center"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding Message}"
+                                       VerticalAlignment="Center"
+                                       FontStyle="Italic"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
