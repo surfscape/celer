@@ -26,24 +26,35 @@
                     <DataTemplate>
                         <Grid Margin="0,4">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="16" FontFamily="Segoe UI Symbol">
+                            <TextBlock Grid.Column="0"
+                                       Margin="0,0,10,0"
+                                       VerticalAlignment="Center"
+                                       FontSize="16"
+                                       FontFamily="Segoe UI Symbol">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Text" Value="❓"/>
-                                        <Setter Property="Foreground" Value="Gray"/>
+                                        <Setter Property="Text"
+                                                Value="❓" />
+                                        <Setter Property="Foreground"
+                                                Value="Gray" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Status}" Value="Success">
-                                                <Setter Property="Text" Value="✔️"/>
-                                                <Setter Property="Foreground" Value="Green"/>
+                                            <DataTrigger Binding="{Binding Status}"
+                                                         Value="Success">
+                                                <Setter Property="Text"
+                                                        Value="✔️" />
+                                                <Setter Property="Foreground"
+                                                        Value="Green" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Status}" Value="Failure">
-                                                <Setter Property="Text" Value="❌"/>
-                                                <Setter Property="Foreground" Value="Red"/>
+                                            <DataTrigger Binding="{Binding Status}"
+                                                         Value="Failure">
+                                                <Setter Property="Text"
+                                                        Value="❌" />
+                                                <Setter Property="Foreground"
+                                                        Value="Red" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
