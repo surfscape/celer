@@ -70,16 +70,17 @@ namespace Celer.Views.Windows.Utils
         {
             public required Action IsDone { get; set; }
             [ObservableProperty]
-            private string currentTask;
+            private string currentTask = string.Empty;
 
             private bool hasOfflineDb = false;
 
-            private bool? windowTriggered = false;
+            private bool windowTriggered = false;
 
-            public SurfScapeGatewayViewModel(bool? windowTrigger)
+            public SurfScapeGatewayViewModel(bool windowTrigger)
             {
-                CurrentTask = "Starting Celer...";
                 windowTriggered = windowTrigger;
+                if (windowTriggered)
+                    CurrentTask = "Starting Celer...";
             }
             public async Task InitializeAsync()
             {
@@ -90,7 +91,7 @@ namespace Celer.Views.Windows.Utils
                         await Task.Delay(200);
                         await SurfScapeWebServices();
                     }
-                    CurrentTask = "A inicializar serviços de hardware...";
+                    CurrentTask = "Starting hardware services...";
                     await SetDxdiag();
                     GenerateBatteryReport();
                 }
@@ -103,30 +104,30 @@ namespace Celer.Views.Windows.Utils
 
             public async Task SurfScapeWebServices()
             {
-                CurrentTask = "A verificar ligação com a internet...";
+                CurrentTask = "Checking for an internet connection...";
                 bool isOnline = UserLand.IsInternetAvailable();
                 if (isOnline)
                 {
-                    CurrentTask = "A buscar assinaturas de limpeza...";
+                    CurrentTask = "Downloading cleaning signatures...";
                     bool success = await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
                     if (success)
                     {
                         AppGlobals.EnableCleanEngine = true;
-                        CurrentTask = "Assinaturas atualizadas. A inicar Celer";
+                        CurrentTask = "Signatures updated!";
                     }
                     else
                     {
-                        CurrentTask = "Servidor offline, a buscar assinaturas locais";
+                        CurrentTask = "Service down. Trying to get local signatures.";
                         SetOfflineDatabase();
                     }
                 }
                 else
                 {
-                    CurrentTask = "Sem internet, a buscar assinaturas locais";
+                    CurrentTask = "No internet. Trying to get local signatures.";
                     SetOfflineDatabase();
                     CurrentTask = hasOfflineDb
-                        ? "Assinatuas locais encontradas!"
-                        : "Clean Engine desligado: assinaturas não encontradas";
+                        ? "Found local signatures!"
+                        : "No local signatures found, cleaning has been disabled";
                 }
             }
 
@@ -163,14 +164,14 @@ namespace Celer.Views.Windows.Utils
                         }
                         catch (Exception ex)
                         {
-                            CurrentTask = "Erro ao iniciar dxdiag: " + ex.Message;
+                            CurrentTask = "Error when running dxdiag! " + ex.Message;
                             Debug.WriteLine("dxdiag failed: " + ex.Message);
                         }
                     }
                 });
             }
 
-            private static void GenerateBatteryReport()
+            private void GenerateBatteryReport()
             {
                 var psi = new ProcessStartInfo
                 {
@@ -179,6 +180,7 @@ namespace Celer.Views.Windows.Utils
                     UseShellExecute = false,
                     CreateNoWindow = true,
                 };
+                CurrentTask = "Getting battery information...";
                 Process.Start(psi)?.WaitForExit();
             }
         }
