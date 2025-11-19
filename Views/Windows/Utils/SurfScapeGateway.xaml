@@ -20,6 +20,7 @@
             <TextBlock
                 Margin="0,0,0,10"
                 Text="{Binding CurrentTask}"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 TextAlignment="Center" />
             <ProgressBar
                 Height="8"
