@@ -10,8 +10,8 @@
         x:Key="Heading1"
         BasedOn="{StaticResource {x:Type TextBlock}}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Control.FontSize" Value="30" />
-        <Setter Property="Control.FontWeight" Value="Light" />
+        <Setter Property="Control.FontSize" Value="28" />
+        <Setter Property="Control.FontWeight" Value="DemiBold" />
         <Setter Property="Margin" Value="0,0,0,8" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
     </Style>
@@ -19,8 +19,8 @@
         x:Key="Heading2"
         BasedOn="{StaticResource {x:Type TextBlock}}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Control.FontSize" Value="23" />
-        <Setter Property="Control.FontWeight" Value="Light" />
+        <Setter Property="Control.FontSize" Value="20" />
+        <Setter Property="Control.FontWeight" Value="DemiBold" />
         <Setter Property="Margin" Value="0,0,0,6" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
     </Style>
@@ -28,7 +28,7 @@
         x:Key="Subheading"
         BasedOn="{StaticResource {x:Type TextBlock}}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Control.FontSize" Value="17" />
+        <Setter Property="Control.FontSize" Value="16" />
         <Setter Property="Foreground"
                 Value="{DynamicResource TextFillColorSecondaryBrush}" />
     </Style>
