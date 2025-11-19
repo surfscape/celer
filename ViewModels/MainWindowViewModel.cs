@@ -25,14 +25,14 @@ namespace Celer.ViewModels
         private UserControl optimizationControl;
 
         [ObservableProperty]
-        private UserControl manutencaoControl;
+        private UserControl maintenanceControl;
 
         private readonly Dictionary<string, int> _tabIndexes = new()
         {
             { "Dashboard", 0 },
             { "Limpeza", 1 },
             { "Optimization", 2 },
-            { "Manutencao", 3 },
+            { "Maintenance", 3 },
             { "Privacidade", 4 },
             { "Avancado", 5 },
         };
@@ -52,7 +52,7 @@ namespace Celer.ViewModels
             DashboardControl = _serviceProvider.GetRequiredService<Dashboard>();
             LimpezaControl = _serviceProvider.GetRequiredService<Limpeza>();
             OptimizationControl = _serviceProvider.GetRequiredService<Optimization>();
-            ManutencaoControl = _serviceProvider.GetRequiredService<Manutencao>();
+            MaintenanceControl = _serviceProvider.GetRequiredService<Maintenance>();
         }
 
         private void NavigateTo(string tabName, string subview)

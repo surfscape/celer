@@ -47,17 +47,17 @@
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding LimpezaControl}" />
                     </TabItem>
-                    <TabItem x:Name="Otimizacao">
+                    <TabItem x:Name="Optimization">
                         <TabItem.Header>
-                            <model:TabHeaderData Title="Optmization" Icon="Rocket" />
+                            <model:TabHeaderData Title="Optimization" Icon="Rocket" />
                         </TabItem.Header>
-                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding OtimizacaoControl}" />
+                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding OptimizationControl}" />
                     </TabItem>
-                    <TabItem x:Name="Manutencao">
+                    <TabItem x:Name="Maintenance">
                         <TabItem.Header>
                             <model:TabHeaderData Title="Maintenance" Icon="Construction" />
                         </TabItem.Header>
-                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding ManutencaoControl}" />
+                        <ContentControl HorizontalAlignment="Stretch" Content="{Binding MaintenanceControl}" />
                     </TabItem>
                     <TabItem x:Name="Privacidade">
                         <TabItem.Header>

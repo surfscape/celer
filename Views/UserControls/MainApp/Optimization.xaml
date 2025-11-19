@@ -19,8 +19,8 @@
     <Border>
         <StackPanel>
             <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Border CornerRadius="6,0,0,0" ClipToBounds="True">
-                    <StackPanel Orientation="Horizontal" ClipToBounds="True">
+                <Border CornerRadius="6,0,0,0">
+                    <StackPanel Orientation="Horizontal" >
                         <Button    
                             Margin="0,0,8,0"
                             Padding="16,10"
@@ -31,7 +31,7 @@
                             <iconPacks:PackIconLucide
                                 Margin="0"
                                 VerticalAlignment="Center"
-                                Foreground="{DynamicResource SecondaryText}"
+                                                      Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                 Kind="ArrowLeft" />
                         </Button>
                         <TextBlock
@@ -60,11 +60,11 @@
                         </StackPanel>
                     </Border>
                     <StackPanel Grid.Row="1">
-                        <UniformGrid Margin="-10,-5,0,0" Columns="2">
+                        <UniformGrid Margin="-10,-5,0,0" Columns="1">
                             <UniformGrid.Resources>
                                 <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
                                     <Setter Property="Margin" Value="10,10,0,0" />
-                                    <Setter Property="Padding" Value="12" />
+                                    <Setter Property="Padding" Value="16" />
                                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                     <Setter Property="VerticalContentAlignment" Value="Top"/>
                                     <Setter Property="HorizontalAlignment" Value="Stretch"/>

@@ -3,8 +3,7 @@
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
                     >
-    <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="15" />
     </Style>
     <Style
@@ -42,7 +41,8 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="CelerStripTabLeft" TargetType="TabControl">
+    <Style x:Key="CelerStripTabLeft"
+           TargetType="TabControl">
         <Setter Property="TabStripPlacement" Value="Left" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
@@ -79,16 +79,21 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="TabItem">
-                    <Setter Property="MinWidth" Value="175"></Setter>
-                    <Setter Property="Padding" Value="12,9,16,9" />
+                    <Setter Property="MinWidth" Value="180"></Setter>
+                    <Setter Property="Padding" Value="13,9,16,9" />
                     <Setter Property="Background"
                             Value="Transparent" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <iconPacks:PackIconLucide x:Name="Icon" Kind="{Binding Icon}" />
-                                    <TextBlock x:Name="Text" Text="{Binding Title}" />
+                                    <iconPacks:PackIconLucide x:Name="Icon"
+                                                              Kind="{Binding Icon}"
+                                                              Margin="0,0,13,0"
+                                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                    <TextBlock x:Name="Text"
+                                               Text="{Binding Title}"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
                                 </StackPanel>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
@@ -115,8 +120,8 @@
                                             HorizontalAlignment="Left"
                                             Width="3"
                                             Height="16"
-                                            Panel.ZIndex="10"
-                                            CornerRadius="2"></Border>
+                                            Panel.ZIndex="2"
+                                            CornerRadius="3"></Border>
                                     <Border
                                         x:Name="HeaderBorder"
                                         Padding="{TemplateBinding Padding}"
@@ -132,18 +137,21 @@
                                     </Border>
                                 </Grid>
                                 <ControlTemplate.Triggers>
-                                    <Trigger SourceName="HeaderBorder" Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                                    <Trigger SourceName="HeaderBorder"
+                                             Property="IsMouseOver"
+                                             Value="True">
+                                        <Setter TargetName="HeaderBorder"
+                                                Property="Background"
+                                                Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
                                     </Trigger>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-                                        <Setter TargetName="Content" Property="TextBlock.Foreground" Value="White" />
+                                    <Trigger Property="IsSelected"
+                                             Value="True">
+                                        <Setter TargetName="HeaderBorder"
+                                                Property="Background"
+                                                Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
                                         <Setter TargetName="HeaderActive"
                                                 Property="Background"
                                                 Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="Gray" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

@@ -44,7 +44,7 @@
                                         Height="17"
                                         Margin="0,0,8,0"
                                         VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                         Kind="{Binding Icon}" />
                                     <TextBlock FontSize="17" Text="{Binding Name}" />
                                 </StackPanel>

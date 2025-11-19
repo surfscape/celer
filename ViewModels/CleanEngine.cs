@@ -165,7 +165,7 @@ namespace Celer.ViewModels
             if (selectedItems.Count == 0)
             {
                 AddLog(
-                    "É necessário selecionar pelo menos um item para iniciar a limpeza.",
+                    "At least one item has to be checked to start cleaning",
                     Colors.Orange
                 );
                 return;
@@ -213,7 +213,7 @@ namespace Celer.ViewModels
             {
                 AppGlobals.EnableCleanEngine = false;
                 AddLog(
-                    "A iniciar Celer Cleaning Engine...",
+                    "Starting Celer Cleaning Engine...",
                     (Color)Application.Current.Resources["SteelError"]
                 );
 

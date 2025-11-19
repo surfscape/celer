@@ -18,7 +18,7 @@ namespace Celer.Views.Windows.Utils
     {
 
         // Source - https://stackoverflow.com/a
-        // Posted by Joe White, modified by community. See post 'Timeline' for change history
+        // Posted by Joe White, modified by community.
         // Retrieved 2025-11-12, License - CC BY-SA 4.0
 
         private const int GWL_STYLE = -16;
@@ -31,13 +31,16 @@ namespace Celer.Views.Windows.Utils
         private readonly SurfScapeGatewayViewModel _viewModel;
         private readonly MainWindow _mainWindow;
 
+        /// <summary>
+        /// Used to determine whether the window was triggered on startup or not. This to make sure that if the user has disabled auto updates, it can still open if triggered manually.
+        /// </summary>
         public bool? MainWindowTrigger { get; set; } = false;
 
         public SurfScapeGateway(MainWindow mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;
-            _viewModel = new SurfScapeGatewayViewModel { IsDone = InitializeApp };
+            _viewModel = new SurfScapeGatewayViewModel(MainWindowTrigger) { IsDone = InitializeApp };
             DataContext = _viewModel;
             Loaded += SurfScapeGateway_Loaded;
         }
@@ -71,15 +74,18 @@ namespace Celer.Views.Windows.Utils
 
             private bool hasOfflineDb = false;
 
-            public SurfScapeGatewayViewModel()
+            private bool? windowTriggered = false;
+
+            public SurfScapeGatewayViewModel(bool? windowTrigger)
             {
                 CurrentTask = "Starting Celer...";
+                windowTriggered = windowTrigger;
             }
             public async Task InitializeAsync()
             {
                 try
                 {
-                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway)
+                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway || windowTriggered == false)
                     {
                         await Task.Delay(200);
                         await SurfScapeWebServices();

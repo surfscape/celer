@@ -1,26 +1,27 @@
 ﻿using Celer.Models;
 using Celer.Services;
-using Celer.Views.UserControls.MainApp.ManutencaoViews;
+using Celer.Views.UserControls.MainApp.MaintenanceViews;
 
 namespace Celer.ViewModels
 {
-    public partial class ManutencaoViewModel : BaseNavigationViewModel
+    public partial class MaintenanceViewModel : BaseNavigationViewModel
     {
         private readonly Dictionary<string, NavigationSubView> _views;
 
         protected override Dictionary<string, NavigationSubView> SubViews => _views;
 
-        public ManutencaoViewModel(
+        public MaintenanceViewModel(
+
             NavigationService navigationService,
             Repair repairView,
             Network networkView
         )
-            : base(navigationService, "Manutencao")
+            : base(navigationService, "Maintenance")
         {
             _views = new Dictionary<string, NavigationSubView>
             {
-                { "Repair", new NavigationSubView("Recuperação", repairView) },
-                { "Network", new NavigationSubView("Teste de Internet", networkView) },
+                { "Repair", new NavigationSubView("System Repair", repairView) },
+                { "Network", new NavigationSubView("Network Test", networkView) },
             };
         }
     }

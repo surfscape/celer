@@ -41,6 +41,9 @@ public partial class DashboardViewModel : ObservableObject
     private double totalMemory;
 
     [ObservableProperty]
+    private double usedMemoryGraph;
+
+    [ObservableProperty]
     private double usedMemory;
 
     [ObservableProperty]
@@ -179,21 +182,36 @@ public partial class DashboardViewModel : ObservableObject
             {
                 if (_availableMemoryCounter != null)
                 {
-                    AvailableMemory = _availableMemoryCounter.NextValue();
-                    UsedMemory = TotalMemory - AvailableMemory;
-                    MemoryUsage = Math.Round((UsedMemory / TotalMemory) * 100, 2);
+
+                    if (MainConfiguration.Default.EnableRounding)
+                    {
+                        AvailableMemory = (int)_availableMemoryCounter.NextValue();
+                        UsedMemory = (int)TotalMemory - AvailableMemory;
+                        UsedMemoryGraph = (int)ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
+                        MemoryUsage = (int)Math.Round((UsedMemory / TotalMemory) * 100, 2);
+                    }
+                    else
+                    {
+                        AvailableMemory = _availableMemoryCounter.NextValue();
+                        UsedMemory = TotalMemory - AvailableMemory;
+                        UsedMemoryGraph = ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
+                        MemoryUsage = Math.Round((UsedMemory / TotalMemory) * 100, 2);
+                    }
+
+
                 }
 
                 if (_cpuCounter != null)
                 {
-                    if(MainConfiguration.Default.EnableRounding)
+                    if (MainConfiguration.Default.EnableRounding)
                     {
                         CpuUsage = (int)_cpuCounter.NextValue();
-                    } else
+                    }
+                    else
                     {
                         CpuUsage = (float)Math.Round(_cpuCounter.NextValue(), 1);
                     }
-                        
+
                 }
 
                 ProcessCount = Process.GetProcesses().Length;
@@ -416,8 +434,7 @@ public partial class DashboardViewModel : ObservableObject
         {
             counter.Dispose();
         }
-
-        return usage;
+        return MainConfiguration.Default.EnableRounding ? (int)usage : (float)Math.Round(usage, 1);
     }
 
     [RelayCommand]
@@ -431,6 +448,6 @@ public partial class DashboardViewModel : ObservableObject
     [RelayCommand]
     private void NavigateToOptimization(string view)
     {
-        _navigationService.Navigate("Otimizacao", view);
+        _navigationService.Navigate("Optimization", view);
     }
 }

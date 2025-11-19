@@ -63,7 +63,7 @@
                         <iconPacks:PackIconLucide
                             Width="17"
                             Height="17"
-                            Foreground="{DynamicResource SecondaryText}"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Kind="BadgeQuestionMark" />
                     </StackPanel>
                 </StackPanel>
@@ -97,7 +97,7 @@
                         Height="20"
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                         Kind="Trash" />
                     <TextBlock>Limpar Cache</TextBlock>
                 </WrapPanel>
@@ -109,7 +109,7 @@
                         Height="20"
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                         Kind="Microchip" />
                     <TextBlock>Editar memória virtual</TextBlock>
                 </WrapPanel>

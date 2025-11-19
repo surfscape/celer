@@ -21,35 +21,31 @@
             <Border
                 Padding="0,0,0,16">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Heading1}">Limpeza</TextBlock>
-                    <TextBlock Style="{StaticResource Subheading}">Limpe ficheiros desnecessários, lixo, e otimize base de dados de aplicações</TextBlock>
+                    <TextBlock Style="{StaticResource Heading1}">Cleaning</TextBlock>
+                    <TextBlock Style="{StaticResource Subheading}">Delete temporary files, third party app cache, and other unnecessary files.</TextBlock>
                 </StackPanel>
             </Border>
             <Grid Grid.Row="1" Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1.25*" />
+                    <ColumnDefinition Width="1.5*" />
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
-                    <Border
-                        Padding="0,0,0,0"
-                        BorderBrush="{StaticResource Border}"
-                        BorderThickness="0,0,1,0">
+                    <Border>
                         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Categories}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Expander Margin="0,8,16,0" IsExpanded="True">
+                                        <Expander Margin="0,0,12,2" IsExpanded="True">
                                             <Expander.Header>
                                                 <TextBlock
-                                                    FontSize="15"
-                                                    Foreground="White"
+                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                     Text="{Binding Name}" />
                                             </Expander.Header>
-                                            <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding Items}">
+                                            <ItemsControl ItemsSource="{Binding Items}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <DockPanel Margin="5">
+                                                        <DockPanel Margin="4">
                                                             <CheckBox
                                                                 VerticalAlignment="Center"
                                                                 Content="{Binding Name}"
@@ -66,46 +62,55 @@
                         </ScrollViewer>
                     </Border>
                 </DockPanel>
-                <DockPanel Grid.Column="1" Margin="8,2,0,0">
-                    <StackPanel Orientation="Vertical">
+                <Border Grid.Column="1" Margin="8,0,0,0" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
+                <Grid Margin="0,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
                         <TextBlock
                             Margin="0,0,0,8"
                             Style="{DynamicResource Heading2}"
-                            Text="Registo" />
-                        <ListBox
+                            Text="Log" />
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ListBox
                             Name="LogListBox"
-                            Height="300"
                             ItemsSource="{Binding LogEntries}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            VirtualizingStackPanel.IsVirtualizing="True"
-                            VirtualizingStackPanel.VirtualizationMode="Standard">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListBoxItem}">
-                                    <Setter Property="Focusable" Value="False" />
-                                    <Setter Property="IsHitTestVisible" Value="False" />
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Focusable" Value="False" />
+                                        <Setter Property="IsHitTestVisible" Value="False" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
                                         Foreground="{Binding LogColor}"
                                         Text="{Binding LogEntry}"
                                         TextWrapping="Wrap" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <TextBlock
-                            Margin="0,8"
-                            FontWeight="DemiBold"
-                            Foreground="{StaticResource PrimaryText}"
-                            Text="{Binding TotalFreedText, Converter={StaticResource MemorySizeConverter}, StringFormat=Espaço libertado: {0}}" />
-                        <Button
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="1">
+                                <TextBlock
+                            Margin="0,0,0,8"
+                            Style="{DynamicResource CaptionTextBlockStyle}"        
+                            Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                            Text="{Binding TotalFreedText, Converter={StaticResource MemorySizeConverter}, StringFormat=Space freed: {0}}" />
+                                <Button
                             HorizontalAlignment="Center"
                             Command="{Binding CleanCommand}"
-                            Content="Começar limpeza"
+                            Content="Start Cleaning"
                             IsEnabled="{Binding CanClean}" />
-                    </StackPanel>
-                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
     </Border>

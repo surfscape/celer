@@ -1,7 +1,7 @@
-﻿using Celer.ViewModels.ManutencaoVM;
+﻿using Celer.ViewModels.MaintenanceVM;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.ManutencaoViews
+namespace Celer.Views.UserControls.MainApp.MaintenanceViews
 {
     /// <summary>
     /// Interaction logic for Repair.xaml

@@ -10,7 +10,8 @@
 
     <Color x:Key="SteelError">#ff4545</Color>
     <Color x:Key="SteelSucess">#4ff7a8</Color>
-    
+    <Color x:Key="SteelOrange">#4ff7a8</Color>
+
     <SolidColorBrush x:Key="ErrorCode" Color="#ff4545"></SolidColorBrush>
     <SolidColorBrush x:Key="SucessCode" Color="#4ff7a8"></SolidColorBrush>
 </ResourceDictionary>

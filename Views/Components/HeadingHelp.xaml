@@ -20,7 +20,7 @@
             ToolTip="{Binding HelpText, ElementName=Root}">
             <TextBlock Background="Transparent">
     <iconPacks:PackIconLucide
-        Foreground="{DynamicResource SecondaryText}"
+        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
         Kind="BadgeQuestionMark"
         Style="{StaticResource HeadingIcon}" />
             </TextBlock>

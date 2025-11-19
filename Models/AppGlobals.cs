@@ -18,5 +18,21 @@
                 }
             }
         }
+
+        private static bool _workInProgress = false;
+        public static event EventHandler? WorkInProgressChanged;
+
+        public static bool WorkInProgress
+        {
+            get => _workInProgress;
+            set
+            {
+                if (_workInProgress != value)
+                {
+                    _workInProgress = value;
+                    WorkInProgressChanged?.Invoke(null, EventArgs.Empty);
+                }
+            }
+        }
     }
 }

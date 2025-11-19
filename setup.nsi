@@ -24,7 +24,18 @@ Section
 
   SetOutPath "$INSTDIR"
 
-  File /r "bin\x64\Debug\net9.0-windows10.0.18362.0\*.*"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
+                 "DisplayName" "Celer"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
+                 "DisplayVersion" "1.0.0-beta.2"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
+                 "DisplayIcon" "$\"$INSTDIR\celer.exe$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
+                 "Publisher" "SurfScape"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
+                 "UninstallString" "$\"$INSTDIR\uninstaller.exe$\""
+
+  File /r "bin\x64\Debug\net10.0-windows10.0.18362.0\*.*"
 
   CreateDirectory "$SMPROGRAMS\Celer"
 
@@ -44,5 +55,6 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\Celer"
 
   DeleteRegKey HKCU "Software\Celer"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer"
 
 SectionEnd

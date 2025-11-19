@@ -4,13 +4,12 @@ using System.Windows.Controls;
 namespace Celer.Views.UserControls.MainApp
 {
     /// <summary>
-    /// Interaction logic for Manutenção.xaml
+    /// Interaction logic for Maintenance.xaml
     /// </summary>
-    public partial class Manutencao : UserControl
+    public partial class Maintenance : UserControl
     {
-        private readonly ManutencaoViewModel _viewModel;
-
-        public Manutencao(ManutencaoViewModel viewModel)
+        private readonly MaintenanceViewModel _viewModel;
+        public Maintenance(MaintenanceViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;

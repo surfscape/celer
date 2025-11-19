@@ -26,7 +26,6 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -111,7 +110,6 @@
                     </TabItem.Header>
                     <Border Padding="16">
                         <StackPanel>
-
                             <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
                                 <CheckBox Content="Ativar exportação do log de limpeza" IsChecked="{Binding EnableExportCleaningLog}" />
                             </StackPanel>
@@ -149,7 +147,7 @@
                                         Width="15"
                                         Height="15"
                                         VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SecondaryText}"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                         Kind="BadgeQuestionMark"
                                         ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
                                 </StackPanel>
@@ -197,40 +195,31 @@
                     </Border>
                 </TabItem>
             </TabControl>
-            <Border
-                BorderThickness="1,0,0,0"
-                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                Background="{DynamicResource LayerFillColorDefaultBrush}"
-                Grid.Row="2"
-                Padding="8"
-                HorizontalAlignment="Stretch"
-                Margin="183,0,0,0"
-                >
-                
-                
-  
-            <StackPanel
+            <Border HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    BorderThickness="1,0,0,0"
+                    Grid.Row="2"
+                    Padding="8">
+                <StackPanel
 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
                     HorizontalAlignment="Right"
-                    Width="85"
-                    Margin="0,0,5,0"
-                    Padding="5"
+                   MinWidth="90"
+                    Margin="0,0,10,0"
+                    
                     Command="{Binding OkCommand}"
                     Content="OK" />
-                <Button
-                    Width="85"
-                    Margin="0,0,5,0"
-                    Padding="5"
+                    <Button MinWidth="90"
+                            Margin="0,0,10,0"
+                    
                     Command="{Binding CancelCommand}"
                     Content="Cancelar" />
-                <Button
-                    Width="85"
-                    Padding="5"
-                    Command="{Binding ApplyCommand}"
-                    Content="Aplicar" />
-            </StackPanel>
+                    <Button MinWidth="90"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Command="{Binding ApplyCommand}"
+                            Content="Aplicar" />
+                </StackPanel>
             </Border>
         </Grid>
     </Border>

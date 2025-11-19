@@ -1,9 +1,9 @@
 ﻿using Celer.Services;
 using Celer.ViewModels;
-using Celer.ViewModels.ManutencaoVM;
+using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
 using Celer.Views.UserControls.MainApp;
-using Celer.Views.UserControls.MainApp.ManutencaoViews;
+using Celer.Views.UserControls.MainApp.MaintenanceViews;
 using Celer.Views.UserControls.MainApp.OptimizationViews;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
@@ -44,7 +44,7 @@ public partial class App : Application
                     services.AddTransient<BatteryViewModel>();
                     services.AddTransient<VideoViewModel>();
                     services.AddTransient<SensorViewModel>();
-                    services.AddSingleton<ManutencaoViewModel>();
+                    services.AddSingleton<MaintenanceViewModel>();
                     services.AddSingleton<RepairViewModel>();
                     services.AddTransient<NetworkViewModel>();
                     services.AddSingleton<PrivacidadeViewModel>();
@@ -58,7 +58,7 @@ public partial class App : Application
                     services.AddTransient<Battery>();
                     services.AddTransient<Video>();
                     services.AddTransient<Sensors>();
-                    services.AddSingleton<Manutencao>();
+                    services.AddSingleton<Maintenance>();
                     services.AddTransient<Repair>();
                     services.AddTransient<Network>();
                     services.AddSingleton<Privacidade>();

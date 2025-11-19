@@ -1,7 +1,5 @@
 ﻿using Celer.ViewModels;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Interop;
 
 namespace Celer.Views.Windows;
 
@@ -16,6 +14,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = viewModel;
-        
+
     }
 }

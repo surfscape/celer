@@ -30,7 +30,7 @@
                 BorderThickness="1"
                 CornerRadius="4">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Heading2}" Text="Privacidade" />
+                    <TextBlock Style="{StaticResource Heading2}" Text="Privacy" />
                     <WrapPanel>
                         <TextBlock
                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -52,10 +52,10 @@
                 BorderThickness="1"
                 CornerRadius="4">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Heading2}" Text="Segurança" />
+                    <TextBlock Style="{StaticResource Heading2}" Text="Security" />
                     <WrapPanel>
                         <TextBlock
-                                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             Style="{DynamicResource TitleLargeTextBlockStyle}"
                             Text="{Binding SecurityScore}" />
                         <TextBlock
@@ -67,24 +67,24 @@
                 </StackPanel>
             </Border>
         </UniformGrid>
-        <UniformGrid
+        <StackPanel
+            Orientation="Horizontal"
             Grid.Row="1"
-            Margin="0,12,0,0"
-            HorizontalAlignment="Left"
-            Columns="3">
-            <UniformGrid.Resources>
-                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="0,0,8,0" />
+            Margin="0,12,0,0">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource {x:Type Button}}"
+                       TargetType="{x:Type Button}">
+                    <Setter Property="Margin"
+                            Value="0,0,16,0"></Setter>
                 </Style>
-            </UniformGrid.Resources>
+            </StackPanel.Resources>
             <Button Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
                         Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
-                    <TextBlock>Atualizar</TextBlock>
+                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Refresh</TextBlock>
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenPrivacySettingsCommand}">
@@ -92,9 +92,8 @@
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
                         Kind="{x:Static iconPacks:PackIconLucideKind.EarthLock}" />
-                    <TextBlock>Definições de Privacidade</TextBlock>
+                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Privacy Settings</TextBlock>
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenDefenderCommand}">
@@ -102,13 +101,12 @@
                     <iconPacks:PackIconControl
                         Margin="0,0,8,0"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource SecondaryText}"
                         Kind="{x:Static iconPacks:PackIconLucideKind.Shield}" />
-                    <TextBlock>Windows Defender</TextBlock>
+                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Windows Defender</TextBlock>
                 </StackPanel>
             </Button>
-        </UniformGrid>
-        <Grid Grid.Row="2" Margin="0,8,0,0">
+        </StackPanel>
+        <Grid Grid.Row="2" Margin="0,16,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -120,8 +118,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock
                     Margin="0,0,0,10"
-                    Style="{StaticResource Subheading}"
-                    Text="Estado de Privacidade" />
+                           Style="{DynamicResource SubtitleTextBlockStyle}"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                    Text="Privacy Results" />
                 <ItemsControl
                     Grid.Row="1"
                     ItemsSource="{Binding PrivacyItems}"
@@ -138,7 +137,7 @@
                                     <TextBlock
                                         FontSize="16"
                                         FontWeight="DemiBold"
-                                        Foreground="{DynamicResource PrimaryText}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Text="{Binding Title}" />
                                     <TextBlock Text="{Binding Description}" />
                                 </StackPanel>
@@ -155,8 +154,9 @@
                 <TextBlock
                     Grid.Row="0"
                     Margin="0,0,0,10"
-                    Style="{StaticResource Subheading}"
-                    Text="Estado de Segurança" />
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                           Text="Security Results" />
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ItemsControl
                         ItemsSource="{Binding SecurityItems}">
@@ -172,7 +172,7 @@
                                         <TextBlock
                                             FontSize="16"
                                             FontWeight="DemiBold"
-                                            Foreground="{DynamicResource PrimaryText}"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="{Binding Title}" />
                                         <TextBlock Text="{Binding Description}" />
                                     </StackPanel>

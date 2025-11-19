@@ -5,19 +5,19 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Celer.ViewModels.ManutencaoVM
+namespace Celer.ViewModels.MaintenanceVM
 {
     public partial class NetworkViewModel : ObservableObject
     {
-        public ObservableCollection<DnsServer> DnsServers { get; } = new();
+        public ObservableCollection<DnsServer> DnsServers { get; } = [];
 
 
         [ObservableProperty]
         private DnsServer? selectedDnsServer;
 
-        public string NetworkAdaptersStatus { get; set; } = "Desconhecido";
-        public string ConnectionStatus { get; set; } = "Desconhecido";
-        public string InternetStatus { get; set; } = "Desconhecido";
+        public string NetworkAdaptersStatus { get; set; } = "N/A";
+        public string ConnectionStatus { get; set; } = "N/A";
+        public string InternetStatus { get; set; } = "N/A";
 
 
         public NetworkViewModel()
@@ -40,9 +40,9 @@ namespace Celer.ViewModels.ManutencaoVM
         [RelayCommand]
         private async void TestNetwork()
         {
-            NetworkAdaptersStatus = await NetworkHelper.HasNetworkAdapters() ? "Encontrado(s)" : "Nenhum";
-            ConnectionStatus = await NetworkHelper.IsConnected() ? "Ativa" : "Sem Conexão";
-            InternetStatus = await NetworkHelper.HasInternetAccess() ? "Com Acesso" : "Sem Internet";
+            NetworkAdaptersStatus = await NetworkHelper.HasNetworkAdapters() ? "Found" : "None";
+            ConnectionStatus = await NetworkHelper.IsConnected() ? "Active" : "No active connection";
+            InternetStatus = await NetworkHelper.HasInternetAccess() ? "With access" : "No access";
             OnPropertyChanged(nameof(NetworkAdaptersStatus));
             OnPropertyChanged(nameof(ConnectionStatus));
             OnPropertyChanged(nameof(InternetStatus));

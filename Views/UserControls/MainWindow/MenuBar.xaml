@@ -10,9 +10,10 @@
     <UserControl.Resources>
         <Style TargetType="MenuItem">
             <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-            <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}" />
-            <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Stretch"></Setter>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource TextFillColorSecondaryBrush}" />
             <Setter Property="Padding" Value="12,5" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Template">
@@ -89,12 +90,13 @@
                                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
                                 <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
                             </Trigger>
-                            <Trigger Property="IsSubmenuOpen" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
-                                <Setter Property="Foreground" Value="#eeeeee" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="Gray" />
+                            <Trigger Property="IsSubmenuOpen"
+                                     Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource TextFillColorSecondaryBrush}" />
                             </Trigger>
                             <Trigger Property="IsCheckable" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
@@ -120,9 +122,9 @@
             <MenuItem
                 Click="OpenSettings_Click"
                 Header="_Preferences"
-                InputGestureText="Ctrl+F">
+                InputGestureText="Ctrl+S">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Settings" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="Settings" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Click="CloseApp_Click" Header="_Exit" />
@@ -145,7 +147,7 @@
                 Header="_Optimization" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Manutencao"
+                CommandParameter="Maintenance"
                 Header="_Maintenance" />
             <MenuItem
                 Command="{Binding NavigateToTabCommand}"
@@ -155,22 +157,22 @@
         <MenuItem Header="_Tools">
             <MenuItem Click="OpenAmbientChecker_Click" Header="_Ambient Checker">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="MonitorCheck" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="MonitorCheck" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Click="CheckUpdates_Click" Header="_Check Updates">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="RefreshCw" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="RefreshCw" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
         <MenuItem x:Name="AboutMenu" Header="_Help">
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
-                CommandParameter="https://surfscape.neocities.org/support"
+                CommandParameter="https://surfscape.eu/support"
                 Header="_Support">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="LifeBuoy" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="LifeBuoy" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
@@ -179,7 +181,7 @@
                 CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/jryIYOly60yYlx1sMiUFvgfa5JML2QV4aLDfPNDeags/"
                 Header="_Feedback Form">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="HandHelping" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="HandHelping" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem
@@ -189,11 +191,11 @@
             <Separator />
             <MenuItem
                 Command="{Binding OpenLinkCommand}"
-                CommandParameter="https://surfscape.github.io/services/status/"
+                CommandParameter="https://status.surfscape.eu"
                 Header="_Service Status" />
-            <MenuItem Command="{Binding OpenAboutWindowCommand}" Header="_Sobre">
+            <MenuItem Command="{Binding OpenAboutWindowCommand}" Header="_About">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource SecondaryText}" Kind="Info" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="Info" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>

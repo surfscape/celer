@@ -54,7 +54,7 @@ namespace Celer.Views.UserControls.MainWindow
             public AboutDataContext() { }
         }
 
-      
+
 
         private void OpenAmbientChecker_Click(object sender, RoutedEventArgs e)
         {

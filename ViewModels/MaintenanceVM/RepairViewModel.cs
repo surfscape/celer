@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 
-namespace Celer.ViewModels.ManutencaoVM
+namespace Celer.ViewModels.MaintenanceVM
 {
     public partial class RepairViewModel : ObservableObject
     {
