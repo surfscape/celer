@@ -12,20 +12,17 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private int selectedTabIndex;
 
-        [ObservableProperty]
-        private UserControl menuBarControl;
+        private readonly Lazy<UserControl> _menuBarControl;
+        private readonly Lazy<UserControl> _dashboardControl;
+        private readonly Lazy<UserControl> _limpezaControl;
+        private readonly Lazy<UserControl> _optimizationControl;
+        private readonly Lazy<UserControl> _maintenanceControl;
 
-        [ObservableProperty]
-        private UserControl dashboardControl;
-
-        [ObservableProperty]
-        private UserControl limpezaControl;
-
-        [ObservableProperty]
-        private UserControl optimizationControl;
-
-        [ObservableProperty]
-        private UserControl maintenanceControl;
+        public UserControl MenuBarControl => _menuBarControl.Value;
+        public UserControl DashboardControl => _dashboardControl.Value;
+        public UserControl LimpezaControl => _limpezaControl.Value;
+        public UserControl OptimizationControl => _optimizationControl.Value;
+        public UserControl MaintenanceControl => _maintenanceControl.Value;
 
         private readonly Dictionary<string, int> _tabIndexes = new()
         {
@@ -48,11 +45,11 @@ namespace Celer.ViewModels
             _navigationService = navigationService;
             _navigationService.NavigateTo = NavigateTo;
             _serviceProvider = serviceProvider;
-            MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
-            DashboardControl = _serviceProvider.GetRequiredService<Dashboard>();
-            LimpezaControl = _serviceProvider.GetRequiredService<Limpeza>();
-            OptimizationControl = _serviceProvider.GetRequiredService<Optimization>();
-            MaintenanceControl = _serviceProvider.GetRequiredService<Maintenance>();
+ _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
+            _dashboardControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Dashboard>());
+            _limpezaControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Limpeza>());
+            _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
+            _maintenanceControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Maintenance>());
         }
 
         private void NavigateTo(string tabName, string subview)
