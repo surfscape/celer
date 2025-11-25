@@ -67,20 +67,26 @@
                             </StackPanel.Resources>
                             <TextBlock FontStyle="Italic">Last revision from June 19, 2025</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">1. Acceptance of Terms</TextBlock>
-                            <TextBlock TextWrapping="Wrap">By installing, using, or accessing Celer, the user declares that they have read, understood, and accepted these Terms of Use. If you do not agree with these terms, you must uninstall and stop using Celer immediately.</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">By installing, using, or accessing Celer, the user declares that they have read, understood, and accepted these Terms of Use. If you do not agree with these terms, you must uninstall and stop using Celer immediately.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">2. License of Use</TextBlock>
-                            <TextBlock TextWrapping="Wrap">A free, non-exclusive, and revocable license is granted to the user to use Celer solely for personal and non-commercial purposes. Modification, redistribution, or incorporation of the software into other products must comply with the open-source license under which Celer is made available.</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">A free, non-exclusive, and revocable license is granted to the user to use Celer solely for personal and non-commercial purposes. Modification, redistribution, or incorporation of the software into other products must comply with the open-source license under which Celer is made available.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">3. Disclaimer</TextBlock>
-                            <TextBlock TextWrapping="Wrap">
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">
                                     Celer is provided "as is", without any kind of warranty, either express or implied.<LineBreak />
                                     SurfScape and its contributors assume no responsibility for direct, indirect, incidental, consequential, or other damages that may result from the use of Celer.<LineBreak />
                                     The use of the application is entirely at the user's own risk.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">4. Updates and Connectivity</TextBlock>
-                            <TextBlock TextWrapping="Wrap">Celer may, with the user's consent, download automatic updates, as well as updated signatures and configurations. This is only used for the cleaning functionality, with the rest of Celer still being fully functional.</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">Celer may, with the user's consent, download automatic updates, as well as updated signatures and configurations. This is only used for the cleaning functionality, with the rest of Celer still being fully functional.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">5. Privacy and Data</TextBlock>
-                            <TextBlock TextWrapping="Wrap">Celer does not collect or transmit personal data with or without the user's consent.</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">Celer does not collect or transmit personal data with or without the user's consent.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">6. Changes to the Terms</TextBlock>
-                            <TextBlock TextWrapping="Wrap">SurfScape reserves the right to modify these Terms of Use at any time. Whenever this occurs, a new version will be made available within the application. Continued use after changes constitutes acceptance of the updated terms.</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">SurfScape reserves the right to modify these Terms of Use at any time. Whenever this occurs, a new version will be made available within the application. Continued use after changes constitutes acceptance of the updated terms.</TextBlock>
 
                         </StackPanel>
                     </ScrollViewer>
