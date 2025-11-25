@@ -99,7 +99,7 @@
                                    VerticalAlignment="Bottom">
                                 <Run Text="{x:Static resx:Strings.Onboarding_LegalCheckboxLabel}" />
                                 <Hyperlink Foreground="{DynamicResource AccentFillColorDefaultBrush}"
-                                           NavigateUri="https://surfscape.neocities.org/projects/celer/user/privacy"
+                                           NavigateUri="https://surfscape.eu/projects/celer/legal/privacy/"
                                            RequestNavigate="Hyperlink_RequestNavigate">Privacy Policy</Hyperlink></TextBlock>
                     </CheckBox>
                     <CheckBox IsChecked="{Binding AutoUpdates}">
