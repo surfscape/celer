@@ -139,7 +139,7 @@
     <value>Not found</value>
   </data>
   <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
-    <value>Do automatic updates when Celer initializes</value>
+    <value>Automatically update signatures when starting Celer</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
     <value>I've read and accept the Terms of Usage and</value>
