@@ -27,9 +27,11 @@
                         <TextBlock Margin="0,0,0,0"
                                    FontSize="17"
                                    FontWeight="DemiBold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                    Text="{Binding Name}" />
                         <TextBlock Margin="8,0,0,0"
                                    FontSize="17"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                    FontWeight="DemiBold"
                                    Text="{Binding Label}" />
                     </StackPanel>
@@ -279,13 +281,16 @@
                                            Text="{Binding GpuVendor}" />
                                 <StackPanel Margin="0,0,0,4"
                                             Orientation="Horizontal">
-                                    <TextBlock Text="Driver: "
+                                    <TextBlock Text="Driver "
                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                                    <TextBlock Text="{Binding GpuDriverVersion}" />
+                                    <TextBlock Text="{Binding GpuDriverVersion}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="DirectX: " />
-                                    <TextBlock Text="{Binding GpuDirectXVersion}" />
+                                    <TextBlock Text="DirectX "
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding GpuDirectXVersion}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                                 </StackPanel>
 
                             </StackPanel>
@@ -474,7 +479,8 @@
                                                VerticalAlignment="Center"
                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                Kind="{x:Static iconPacks:PackIconRemixIconKind.MicrosoftFill}" />
-                    <TextBlock Text="{Binding WindowsVersion}" />
+                    <TextBlock Text="{Binding WindowsVersion}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
                     <StackPanel HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
@@ -482,7 +488,8 @@
                                                    VerticalAlignment="Center"
                                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                    Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
-                        <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}" />
+                        <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </DockPanel>
             </Border>
