@@ -32,7 +32,7 @@
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
                     <Border>
-                        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" >
                             <ItemsControl ItemsSource="{Binding Categories}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -80,7 +80,8 @@
                             <ListBox
                             Name="LogListBox"
                             ItemsSource="{Binding LogEntries}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                     ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">
                                         <Setter Property="Focusable" Value="False" />

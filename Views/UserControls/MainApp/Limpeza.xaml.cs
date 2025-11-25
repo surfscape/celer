@@ -15,6 +15,18 @@ namespace Celer.Views.UserControls.MainApp
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
+            LogListBox.Items.MoveCurrentToLast();
+            LogListBox.ScrollIntoView(LogListBox.Items.CurrentItem);
         }
+
+        private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.OriginalSource is ScrollViewer scrollViewer &&
+                Math.Abs(e.ExtentHeightChange) > 0.0)
+            {
+                scrollViewer.ScrollToBottom();
+            }
+        }
+
     }
 }
