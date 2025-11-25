@@ -155,7 +155,7 @@ public partial class DashboardViewModel : ObservableObject
                 WindowsVersion = GetWindowsVersion();
                 PostTime = GetPostTime();
                 TotalMemory = GetTotalMemory();
-
+                
                 LoadCpuInfo();
                 LoadGpuInfo();
             });
@@ -275,7 +275,7 @@ public partial class DashboardViewModel : ObservableObject
             foreach (var item in collection)
             {
                 var result = (ulong)item["TotalVisibleMemorySize"];
-                return result / 1024.0;
+                return  MainConfiguration.Default.EnableRounding ? (int) Math.Floor((result / 1024.0)) : result / 1024.0;
             }
         }
         catch (Exception ex)
