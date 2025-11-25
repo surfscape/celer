@@ -14,9 +14,6 @@
 	<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\Assets\celer_256.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="celer_icon.ico" />
     <Resource Include="Resources\Assets\celer_256.png" />
   </ItemGroup>
