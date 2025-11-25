@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
              xmlns:converters="clr-namespace:Celer.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local1="clr-namespace:Celer.Views.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -13,31 +14,9 @@
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Border CornerRadius="6,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Margin="0,0,8,0"
-                                Padding="16,10"
-                                HorizontalAlignment="Center"
-                                Command="{Binding NavigateCommand}"
-                                CommandParameter="Main"
-                                Style="{StaticResource TransparentButton}">
-                            <iconPacks:PackIconLucide Margin="0"
-                                                      VerticalAlignment="Center"
-                                                      Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                      Kind="ArrowLeft" />
-                        </Button>
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="17"
-                                   FontWeight="DemiBold"
-                                   Foreground="White"
-                                   Text="{Binding CurrentViewName}" />
-                    </StackPanel>
-                </Border>
-                <Border Padding="12">
-                    <ContentControl Content="{Binding CurrentView}" />
-                </Border>
-            </StackPanel>
+            <local1:ModuleHeader NavigateCommand="{Binding NavigateCommand}"
+                                 CurrentView="{Binding CurrentView}"
+                                 ViewLabel="{Binding CurrentViewName}" />
             <Border Padding="16">
                 <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
                     <Grid.RowDefinitions>
@@ -59,7 +38,7 @@
                                     <Setter Property="Margin"
                                             Value="10,10,0,0" />
                                     <Setter Property="Padding"
-                                            Value="12" />
+                                            Value="16" />
                                     <Setter Property="HorizontalContentAlignment"
                                             Value="Left" />
                                     <Setter Property="VerticalContentAlignment"
@@ -70,40 +49,16 @@
                                             Value="Stretch" />
                                 </Style>
                             </UniformGrid.Resources>
-                            <Button Command="{Binding NavigateCommand}"
-                                    CommandParameter="Repair">
-                                <StackPanel>
-                                    <StackPanel Margin="0,0,0,4"
-                                                Orientation="Horizontal">
-                                        <iconPacks:PackIconLucide Width="20"
-                                                                  Height="20"
-                                                                  Margin="0,0,8,0"
-                                                                  VerticalAlignment="Center"
-                                                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                                  Kind="Wrench" />
-                                        <TextBlock FontSize="18"
-                                                   Foreground="white">Diagnóstico e Reparação do Sistema</TextBlock>
-                                    </StackPanel>
-                                    <TextBlock TextWrapping="Wrap">Realiza diferentes checks para a reparação de diversos componentes do sistema operativo</TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <Button Command="{Binding NavigateCommand}"
-                                    CommandParameter="Network">
-                                <StackPanel>
-                                    <StackPanel Margin="0,0,0,4"
-                                                Orientation="Horizontal">
-                                        <iconPacks:PackIconLucide Width="20"
-                                                                  Height="20"
-                                                                  Margin="0,0,8,0"
-                                                                  VerticalAlignment="Center"
-                                                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                                  Kind="Network" />
-                                        <TextBlock FontSize="18"
-                                                   Foreground="white">Testar Internet</TextBlock>
-                                    </StackPanel>
-                                    <TextBlock TextWrapping="Wrap">Realiza diferentes checks para detetar e resolver problemas com rede e internet</TextBlock>
-                                </StackPanel>
-                            </Button>
+                            <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
+                                                 NavigateTo="Repair"
+                                                 Label="Repair System"
+                                                 Description="Run the official system repair utilities to repair erros in the disk/image"
+                                                 Icon="Wrench" />
+                            <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
+                                                 NavigateTo="Network"
+                                                 Label="Network Manager"
+                                                 Description="Check your network connection and change it's DNS"
+                                                 Icon="Network" />
                         </UniformGrid>
                     </StackPanel>
                 </Grid>

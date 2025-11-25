@@ -18,34 +18,9 @@
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <StackPanel Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
-                <Border CornerRadius="6,0,0,0">
-                    <StackPanel Orientation="Horizontal" >
-                        <Button    
-                            Margin="0,0,8,0"
-                            Padding="16,10"
-                            HorizontalAlignment="Center"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Main"
-                            Style="{StaticResource TransparentButton}">
-                            <iconPacks:PackIconLucide
-                                Margin="0"
-                                VerticalAlignment="Center"
-                                                      Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                Kind="ArrowLeft" />
-                        </Button>
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="17"
-                            FontWeight="DemiBold"
-                            Foreground="White"
-                            Text="{Binding CurrentViewName}" />
-                    </StackPanel>
-                </Border>
-                <Border Padding="12,8">
-                    <ContentControl Content="{Binding CurrentView}" />
-                </Border>
-            </StackPanel>
+            <local1:ModuleHeader NavigateCommand="{Binding NavigateCommand}"
+                                 CurrentView="{Binding CurrentView}"
+                                 ViewLabel="{Binding CurrentViewName}" />
             <Border Padding="16">
                 <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
                     <Grid.RowDefinitions>
