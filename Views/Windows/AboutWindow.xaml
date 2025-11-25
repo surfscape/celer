@@ -1,31 +1,61 @@
-﻿<Window
-    x:Class="Celer.Views.Windows.AboutWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Celer.Views.Windows"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Sobre"
-    MinWidth="480"
-    ResizeMode="NoResize"
-    SizeToContent="WidthAndHeight"
-    Style="{StaticResource {x:Type Window}}"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+﻿<Window x:Class="Celer.Views.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Celer.Views.Windows"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="About"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Style="{StaticResource {x:Type Window}}"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
     <Border Padding="16">
         <StackPanel>
-            <TextBlock Style="{StaticResource Heading1}">Celer</TextBlock>
-            <TextBlock Name="Version">"</TextBlock>
-            <WrapPanel Margin="0,8,0,0">
+            <Image Width="156"
+                   Height="156"
+                   Source="/Resources/Assets/celer_256.png">
+            </Image>
+            <TextBlock Style="{StaticResource TitleLargeTextBlockStyle}"
+                       TextAlignment="Center"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}">Celer</TextBlock>
+            <StackPanel HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <TextBlock   
+                               Margin="0,0,4,0"
+                               FontSize="14"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}">Version:</TextBlock>
+                <TextBlock Name="Version"
+                          FontSize="14"
+                           TextAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"></TextBlock>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="0,16,0,0">
+                <TextBlock Margin="0,0,0,4"
+                           TextAlignment="Center"
+                           FontSize="14"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}">Special thanks to:</TextBlock>
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           FontSize="14"><Hyperlink NavigateUri="https://surfscape.eu/"
+                                                    RequestNavigate="Hyperlink_RequestNavigate">Flixin</Hyperlink> for feedback and testing</TextBlock>
+            </StackPanel>
+            <WrapPanel Margin="0,12,0,0">
                 <WrapPanel.Resources>
-                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Margin" Value="0,0,12,0" />
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+                           TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin"
+                                Value="0,0,16,0" />
                     </Style>
                 </WrapPanel.Resources>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/" RequestNavigate="Hyperlink_RequestNavigate">Website da SurfScape</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/projects/celer" RequestNavigate="Hyperlink_RequestNavigate">Página do Projeto</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.neocities.org/community/" RequestNavigate="Hyperlink_RequestNavigate">Suporte</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.eu/"
+                                      RequestNavigate="Hyperlink_RequestNavigate">SurfScape Website</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink NavigateUri="https://surfscape.eu/projects/celer"
+                                      RequestNavigate="Hyperlink_RequestNavigate">Celer Homepage</Hyperlink></TextBlock>
+                <TextBlock Margin="0"><Hyperlink NavigateUri="https://surfscape.eu/community/"
+                                                 RequestNavigate="Hyperlink_RequestNavigate">Support</Hyperlink></TextBlock>
             </WrapPanel>
+            <TextBlock FontSize="13" TextAlignment="Center" Margin="0,16,0,0" Foreground="{DynamicResource TextFillColorTertiaryBrush}">©️ 2025 SurfScape and contributors</TextBlock>
         </StackPanel>
     </Border>
 </Window>
