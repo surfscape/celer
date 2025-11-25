@@ -36,14 +36,19 @@
                                    Text="{Binding Label}" />
                     </StackPanel>
                     
-                    <WrapPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,0,0"
-                                   Text="{Binding Format, StringFormat=File System: {0}}" />
-                        <TextBlock Margin="12,0,0,0"
-                                   Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Size {0}}" />
-                        <TextBlock Margin="12,0,0,0"
+                    <StackPanel>
+                        <TextBlock
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="{Binding Format, StringFormat=File System: {0}}"
+                                    />
+                        <TextBlock 
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="{Binding Size, Converter={StaticResource DiskSizeConverter}, StringFormat=Size {0}}"
+                                    />
+                        <TextBlock 
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                    Text="{Binding UsedSpace, Converter={StaticResource DiskSizeConverter}, StringFormat=Used: {0}}" />
-                    </WrapPanel>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -71,17 +76,20 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Border Padding="16,16">
-                <StackPanel HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Orientation="Vertical">
-                    <Border Padding="0,0,0,8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                <Border Padding="0,0,0,8">
                         <StackPanel>
                             <TextBlock FontWeight="Medium"
                                        Foreground="{DynamicResource TextFillColorTertiaryBrush}">Welcome to Celer</TextBlock>
                             <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                         </StackPanel>
                     </Border>
-                    <Grid>
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -134,7 +142,6 @@
                                                        Text="{Binding CpuUsage, StringFormat={}{0}%}"
                                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                                         </StackPanel>
-
                                     </Grid>
                                 </Grid>
                                 <TextBlock Margin="0,0,0,0"
@@ -143,33 +150,29 @@
                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                            Text="{Binding CpuName}"
                                            TextWrapping="Wrap" />
-                                <StackPanel Margin="0,4,0,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel Margin="0,2"
-                                                    Orientation="Horizontal">
-                                            <TextBlock FontWeight="SemiBold"
-                                                       Text="Processes: "
-                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                                            <TextBlock Text="{Binding ProcessCount}" 
-                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                                        </StackPanel>
-                                        <StackPanel Margin="8,2"
-                                                    Orientation="Horizontal">
-                                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontWeight="SemiBold"
-                                                       Text="Threads: " />
-                                            <TextBlock Text="{Binding ThreadCount}"
-                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                                        </StackPanel>
+                                <UniformGrid Columns="2"
+                                             Margin="0,8,0,0">
+                                    <StackPanel>
+                                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Text="Processes "
+                                                   Style="{StaticResource BodyTextBlockStyle}" />
+                                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Margin="0,2,0,0"
+                                                   Text="{Binding ProcessCount}"
+                                                   FontSize="17"
+                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
                                     </StackPanel>
-                                    <StackPanel Margin="0,2"
-                                                Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold"
-                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                   Text="System status: " />
-                                        <TextBlock Text="{Binding CpuStatus}"
-                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Text="Threads "
+                                                   Style="{StaticResource BodyTextBlockStyle}" />
+                                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Margin="0,2,0,0"
+                                                   Text="{Binding ThreadCount}"
+                                                   FontSize="17"
+                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
                                     </StackPanel>
-                                </StackPanel>
+                                </UniformGrid>
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1"
@@ -179,8 +182,15 @@
                                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                                 Padding="8">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource Heading2}"
-                                           Text="Memory" />
+                                <UniformGrid Columns="2">
+                                    <TextBlock Style="{StaticResource Heading2}"
+                                               Text="Memory" />
+                                    <TextBlock FontSize="16"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               HorizontalAlignment="Right"
+                                               Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, ConverterParameter=true, StringFormat={}}" />
+                                </UniformGrid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -217,14 +227,29 @@
 
                                     </Grid>
                                 </Grid>
-                                <TextBlock Margin="0,0,0,4"
-                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                           Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Total: {0}}" />
-                                <TextBlock Margin="0,0,0,4"
-                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                           Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=In use: {0}}" />
-                                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                           Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}, StringFormat=Available: {0}}" />
+                                <UniformGrid Columns="2"
+                                             Margin="0,8,0,0">
+                                    <StackPanel>
+                                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Text="In Use "
+                                                   Style="{StaticResource BodyTextBlockStyle}" />
+                                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Margin="0,2,0,0"
+                                                   Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}}"
+                                                   FontSize="17"
+                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Text="Available "
+                                                   Style="{StaticResource BodyTextBlockStyle}" />
+                                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Margin="0,2,0,0"
+                                                   Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}}"
+                                                   FontSize="17"
+                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                    </StackPanel>
+                                </UniformGrid>
                             </StackPanel>
                         </Border>
                         <Border Margin="0"
@@ -296,27 +321,51 @@
                             </StackPanel>
                         </Border>
                     </Grid>
-                    <Border>
-                        <Grid Margin="0,8,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.Resources>
-                                <Style TargetType="StackPanel">
-                                    <Setter Property="Margin"
-                                            Value="0,0,16,0" />
-                                </Style>
-                            </Grid.Resources>
-                            <Border Margin="0,0,8,0"
-                                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                                    CornerRadius="6"
-                                    BorderThickness="1"
-                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                    Padding="8">
-                                <StackPanel Margin="0">
+                    <Grid Margin="0,8,0,0" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto">
+                            </RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Margin"
+                                        Value="0,0,16,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <Border Margin="0,0,8,0"
+                                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="6"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                Padding="8"
+                                >
+                            <Grid Margin="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Margin="0,0,0,4" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
                                     <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
-                                    <ListBox ItemTemplate="{StaticResource ItemTemplate}"
+                                    <Button Grid.Column="1"
+                                            Command="{Binding RefreshDisksCommand}">
+                                        <iconPacks:PackIconControl 
+                                            Width="14"
+                                            Height="14"
+                                                                   Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
+                                    </Button>
+                                </Grid>
+                                <DockPanel Grid.Row="1">
+                                    <ListBox
+                                        Height="161"
+                                             ItemTemplate="{StaticResource ItemTemplate}"
                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                              ItemsSource="{Binding DiskData}">
                                         <ListBox.ItemContainerStyle>
@@ -333,82 +382,76 @@
                                             </Style>
                                         </ListBox.ItemContainerStyle>
                                     </ListBox>
-                                    <Button Margin="0,8,0,0"
-                                            Command="{Binding RefreshDisksCommand}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <iconPacks:PackIconControl Margin="0,0,8,0"
-                                                                       VerticalAlignment="Center"
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="1"
+                                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="6"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                Padding="8">
+                            <StackPanel Margin="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
+                                    <ToggleButton Name="PCheckBox"
+                                                  Grid.Column="1"
+                                                  HorizontalAlignment="Right">
+                                        <iconPacks:PackIconControl Width="14"
+                                                                   Height="14"
+                                                                   Kind="{x:Static iconPacks:PackIconLucideKind.Pencil}" />
+                                    </ToggleButton>
+                                </Grid>
+                                <Popup StaysOpen="False"
+                                       IsOpen="{Binding ElementName=PCheckBox,Path=IsChecked}"
+                                       PlacementTarget="{Binding ElementName=PCheckBox}"
+                                       AllowsTransparency="True"
+                                       PopupAnimation="Fade"
+                                       Placement="Left">
+                                    <Border Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                                            CornerRadius="6"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                            Padding="8">
+                                        <StackPanel>
+                                            <TextBlock>Customize the quick center</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </Popup>
+                                <UniformGrid Columns="2"
+                                             Margin="0,4,0,0">
+                                    <Button HorizontalAlignment="Stretch"
+                                            Margin="0,0,4,0"
+                                            Command="{Binding NavigateToOptimizationCommand}"
+                                            CommandParameter="Video">
+                                        <StackPanel Margin="0   ">
+                                            <iconPacks:PackIconControl HorizontalAlignment="Center"
+                                                                       Margin="0,0,0,4"
                                                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                                       Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
-                                            <TextBlock>Refresh</TextBlock>
+                                                                       Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
+                                            <TextBlock HorizontalAlignment="Center">Graphics Manager</TextBlock>
                                         </StackPanel>
                                     </Button>
-                                </StackPanel>
-                            </Border>
-                            <Border Grid.Column="1"
-                                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                                    CornerRadius="6"
-                                    BorderThickness="1"
-                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                    Padding="8">
-                                <StackPanel Margin="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
-                                        <ToggleButton Name="PCheckBox"
-                                                      Content="Customize"
-                                                      Grid.Column="1"
-                                                      HorizontalAlignment="Right" />
-                                    </Grid>
-                                    <Popup StaysOpen="False"
-                                           IsOpen="{Binding ElementName=PCheckBox,Path=IsChecked}"
-                                           PlacementTarget="{Binding ElementName=PCheckBox}"
-                                           AllowsTransparency="True"
-                                           PopupAnimation="Fade"
-                                           Placement="Left">
-                                        <Border Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-                                                CornerRadius="6"
-                                                BorderThickness="1"
-                                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                                Padding="8">
-                                            <StackPanel>
-                                                <TextBlock>Customize the quick center</TextBlock>
-                                            </StackPanel>
-                                        </Border>
-                                    </Popup>
-                                    <UniformGrid Columns="2"
-                                                 Margin="0,4,0,0">
-                                        <Button HorizontalAlignment="Stretch"
-                                                Margin="0,0,4,0"
-                                                Command="{Binding NavigateToOptimizationCommand}"
-                                                CommandParameter="Video">
-                                            <StackPanel Margin="0   ">
-                                                <iconPacks:PackIconControl HorizontalAlignment="Center"
-                                                                           Margin="0,0,0,4"
-                                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                                           Kind="{x:Static iconPacks:PackIconBootstrapIconsKind.GpuCard}" />
-                                                <TextBlock HorizontalAlignment="Center">Graphics Manager</TextBlock>
-                                            </StackPanel>
-                                        </Button>
-                                        <Button HorizontalAlignment="Stretch"
-                                                Margin="4,0,0,0"
-                                                Command="{Binding NavigateToOptimizationCommand}"
-                                                CommandParameter="Memory">
-                                            <StackPanel Margin="0   ">
-                                                <iconPacks:PackIconControl HorizontalAlignment="Center"
-                                                                           Margin="0,0,0,4"
-                                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                                           Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
-                                                <TextBlock          HorizontalAlignment="Center">Memory Manager</TextBlock>
-                                            </StackPanel>
-                                        </Button>
-                                    </UniformGrid>
-                                </StackPanel>
-                            </Border>
-                            <!-- <Border IsEnabled="{Binding EnableAlerts}" Visibility="{Binding EnableAlerts, Converter={StaticResource BoolToVisConverter}}" Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
+                                    <Button HorizontalAlignment="Stretch"
+                                            Margin="4,0,0,0"
+                                            Command="{Binding NavigateToOptimizationCommand}"
+                                            CommandParameter="Memory">
+                                        <StackPanel Margin="0   ">
+                                            <iconPacks:PackIconControl HorizontalAlignment="Center"
+                                                                       Margin="0,0,0,4"
+                                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                                       Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
+                                            <TextBlock          HorizontalAlignment="Center">Memory Manager</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Border>
+                        <!-- <Border IsEnabled="{Binding EnableAlerts}" Visibility="{Binding EnableAlerts, Converter={StaticResource BoolToVisConverter}}" Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
                                 <StackPanel Margin="0,0,0,0"   >
                                     <local2:HeadingHelp
                                 HelpText="Notifications related to the system state. These can be modified in the settings."
@@ -463,9 +506,8 @@
                                     </Grid>
                                 </StackPanel>
                             </Border> -->
-                        </Grid>
-                    </Border>
-                </StackPanel>
+                    </Grid>
+                </Grid>
             </Border>
             <Border Grid.Row="1"
                     Padding="12,8"

@@ -66,6 +66,7 @@
                                 </Style>
                             </StackPanel.Resources>
                             <TextBlock FontStyle="Italic"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">Last revision from June 19, 2025</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">1. Acceptance of Terms</TextBlock>
                             <TextBlock TextWrapping="Wrap"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}">By installing, using, or accessing Celer, the user declares that they have read, understood, and accepted these Terms of Use. If you do not agree with these terms, you must uninstall and stop using Celer immediately.</TextBlock>
