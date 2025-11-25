@@ -7,17 +7,22 @@ namespace Celer.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            bool rounding = false;
+            if (parameter == null)
+                parameter = false;
+            
             if (value is double mb)
             {
-                if (mb >= 1024)
+                if (mb >= 1024 && bool.TryParse(parameter.ToString(), out rounding))
                 {
                     double gb = mb / 1024;
-                    return $"{gb:F2} GB";
+                    return rounding ? $"{gb:F0} GB" : $"{gb:F2} GB";
                 }
                 else
                 {
-                    return $"{mb:F0} MB";
+                    return rounding ? $"{mb:F0} GB" : $"{mb:F2} GB";
                 }
+          ;
             }
 
             return value;
