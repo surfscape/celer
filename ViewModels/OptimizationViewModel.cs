@@ -21,10 +21,10 @@ namespace Celer.ViewModels
         {
             _views = new Dictionary<string, NavigationSubView>
             {
-                { "Memory", new NavigationSubView("Memory Manager", memoryView) },
-                { "Battery", new NavigationSubView("Battery Manager", batteryView) },
-                { "Video", new NavigationSubView("Video Manager", videoView) },
-                { "Sensors", new NavigationSubView("Sensors", sensorsView) },
+                { "Battery", new NavigationSubView("Power Manager", "Check the state of your computer battery, and change system power plans", batteryView) },
+                { "Memory", new NavigationSubView("Memory Manager", "Check, clean, and configure memory behaviour",memoryView) },
+                { "Video", new NavigationSubView("Video Manager", "GPU and DWM settings", videoView) },
+                { "Sensors", new NavigationSubView("Sensors", "View your system sensors in real-time",sensorsView) },
             };
         }
     }

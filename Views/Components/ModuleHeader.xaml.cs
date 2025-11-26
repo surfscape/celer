@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Celer.Views.Components
 {
@@ -37,20 +28,6 @@ namespace Celer.Views.Components
             set => SetValue(CurrentViewProperty, value);
         }
 
-        public static readonly DependencyProperty NavigateCommandProperty =
-           DependencyProperty.Register(
-               nameof(NavigateCommand),
-               typeof(ICommand),
-               typeof(ModuleHeader),
-               new PropertyMetadata(null)
-           );
-
-        public ICommand NavigateCommand
-        {
-            get => (ICommand)GetValue(NavigateCommandProperty);
-            set => SetValue(NavigateCommandProperty, value);
-        }
-
 
         public static readonly DependencyProperty ViewLabelProperty = DependencyProperty.Register(
     nameof(ViewLabel),
@@ -64,5 +41,18 @@ namespace Celer.Views.Components
             get => (string)GetValue(ViewLabelProperty);
             set => SetValue(ViewLabelProperty, value);
         }
-}
+
+        public static readonly DependencyProperty ViewDescriptionProperty = DependencyProperty.Register(
+nameof(ViewDescription),
+typeof(string),
+typeof(ModuleHeader),
+new PropertyMetadata(string.Empty)
+);
+
+        public string ViewDescription
+        {
+            get => (string)GetValue(ViewDescriptionProperty);
+            set => SetValue(ViewDescriptionProperty, value);
+        }
+    }
 }

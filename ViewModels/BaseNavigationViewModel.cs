@@ -20,6 +20,8 @@ namespace Celer.ViewModels
         public UserControl? CurrentView => CurrentSubView?.Control;
         public string? CurrentViewName => CurrentSubView?.Name;
 
+        public string? CurrentViewDescription => CurrentSubView?.Description;
+
         protected BaseNavigationViewModel(NavigationService navigationService, string navigationKey)
         {
             _navigationService = navigationService;
@@ -28,10 +30,10 @@ namespace Celer.ViewModels
         }
 
         [RelayCommand]
-        public void Navigate(string viewKey) => NavigateTo(viewKey);
+        public void Navigate(string viewKey) => _navigationService.Navigate(_navigationKey, viewKey);
 
         [RelayCommand]
-        public void BackToMain() => NavigateTo("Main");
+        public void BackToMain() => _navigationService.Navigate(_navigationKey, "Main");
 
         public void NavigateTo(string viewKey)
         {
@@ -56,6 +58,7 @@ namespace Celer.ViewModels
         {
             OnPropertyChanged(nameof(CurrentView));
             OnPropertyChanged(nameof(CurrentViewName));
+            OnPropertyChanged(nameof(CurrentViewDescription));
         }
     }
 }

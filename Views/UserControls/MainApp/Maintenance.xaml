@@ -14,9 +14,10 @@
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <local1:ModuleHeader NavigateCommand="{Binding NavigateCommand}"
+            <local1:ModuleHeader 
                                  CurrentView="{Binding CurrentView}"
-                                 ViewLabel="{Binding CurrentViewName}" />
+                                 ViewLabel="{Binding CurrentViewName}"
+                                 ViewDescription="{Binding CurrentViewDescription}" />
             <Border Padding="16">
                 <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
                     <Grid.RowDefinitions>

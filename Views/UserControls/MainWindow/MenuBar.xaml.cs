@@ -1,4 +1,7 @@
-﻿using Celer.Services;
+﻿using Celer.Models;
+using Celer.Services;
+using Celer.ViewModels;
+using Celer.Views.UserControls.MainApp.MaintenanceViews;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -53,8 +56,6 @@ namespace Celer.Views.UserControls.MainWindow
 
             public AboutDataContext() { }
         }
-
-
 
         private void OpenAmbientChecker_Click(object sender, RoutedEventArgs e)
         {
@@ -129,13 +130,30 @@ namespace Celer.Views.UserControls.MainWindow
     {
         private readonly NavigationService _navigationService;
 
-        public MenuBarNavigation(NavigationService navigationService) =>
+        public MenuBarNavigation(NavigationService navigationService)
+        {
             _navigationService = navigationService;
+            _navigationService.NavigationChanged += OnNavigationChanged;
+        }
+
+        [ObservableProperty]
+        private bool canGoBack;
 
         [RelayCommand]
         private void NavigateToTab(string tab)
         {
             _navigationService.Navigate(tab);
+        }
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            _navigationService.BackToParent();
+        }
+
+        private void OnNavigationChanged(string? tab, string? innerView)
+        {
+            CanGoBack = !string.IsNullOrEmpty(innerView) && !string.Equals(innerView, "Main", StringComparison.Ordinal);
         }
     }
 }

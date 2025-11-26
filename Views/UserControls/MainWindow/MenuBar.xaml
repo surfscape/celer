@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainWindow"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Celer.Converters"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="MenuItem">
@@ -114,45 +115,56 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Menu
         BorderThickness="0"
         FontSize="12">
+        <MenuItem 
+            DataContext="{Binding DataContext, ElementName=NavigationMenu}"
+                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
+                  Command="{Binding GoBackCommand}"
+            IsEnabled="{Binding CanGoBack}"
+            Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
+                  >
+            <MenuItem.Header >
+                <iconPacks:PackIconLucide Width="12"
+                                          Height="12"
+                                          Margin="0,2,0,0"
+                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                          Kind="ArrowLeft" />
+            </MenuItem.Header>
+        </MenuItem>
         <MenuItem Header="_App">
-            <MenuItem
-                Click="OpenSettings_Click"
-                Header="_Preferences"
-                InputGestureText="Ctrl+S">
+            <MenuItem Click="OpenSettings_Click"
+                      Header="_Preferences"
+                      InputGestureText="Ctrl+S">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="Settings" />
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                              Kind="Settings" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Click="CloseApp_Click" Header="_Exit" />
+            <MenuItem Click="CloseApp_Click"
+                      Header="_Exit" />
         </MenuItem>
-        <MenuItem
-            x:Name="NavigationMenu"
-            d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
-            Header="_View">
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Dashboard"
-                Header="_Dashboard" />
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Limpeza"
-                Header="_Cleaning" />
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Optimization"
-                Header="_Optimization" />
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Maintenance"
-                Header="_Maintenance" />
-            <MenuItem
-                Command="{Binding NavigateToTabCommand}"
-                CommandParameter="Privacidade"
-                Header="_Privacy &amp; Security" />
+        <MenuItem x:Name="NavigationMenu"
+                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
+                  Header="_View">
+            <MenuItem Command="{Binding NavigateToTabCommand}"
+                      CommandParameter="Dashboard"
+                      Header="_Dashboard" />
+            <MenuItem Command="{Binding NavigateToTabCommand}"
+                      CommandParameter="Limpeza"
+                      Header="_Cleaning" />
+            <MenuItem Command="{Binding NavigateToTabCommand}"
+                      CommandParameter="Optimization"
+                      Header="_Optimization" />
+            <MenuItem Command="{Binding NavigateToTabCommand}"
+                      CommandParameter="Maintenance"
+                      Header="_Maintenance" />
+            <MenuItem Command="{Binding NavigateToTabCommand}"
+                      CommandParameter="Privacidade"
+                      Header="_Privacy &amp; Security" />
         </MenuItem>
         <MenuItem Header="_Tools">
             <MenuItem Click="OpenAmbientChecker_Click" Header="_Ambient Checker">
