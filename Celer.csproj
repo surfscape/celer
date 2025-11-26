@@ -28,6 +28,9 @@
     <PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <SplashScreen Include="Resources\Assets\splashscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Properties\MainConfiguration.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
