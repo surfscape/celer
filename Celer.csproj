@@ -1,66 +1,82 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows10.0.18362.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>celer_icon.ico</ApplicationIcon>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <UseWindowsForms>False</UseWindowsForms>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <Platforms>x64</Platforms>
-	<Version>1.0.0-beta.1</Version>
-	<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <Resource Include="celer_icon.ico" />
-    <Resource Include="Resources\Assets\celer_256.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="6.2.1" />
-	<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
-    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-    <PackageReference Include="System.Management" Version="10.0.0" />
-    <PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <SplashScreen Include="Resources\Assets\splashscreen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\MainConfiguration.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainConfiguration.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Signatures.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Signatures.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\i18n\Strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\i18n\Strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\MainConfiguration.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>MainConfiguration.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="Properties\Signatures.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Signatures.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows10.0.18362.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>celer_icon.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<UseWindowsForms>False</UseWindowsForms>
+		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+		<Platforms>x64;x86</Platforms>
+		<Version>1.0.0-beta.2</Version>
+		<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
+		<PublisherName>SurfScape</PublisherName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<SelfContained>false</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<ItemGroup>
+		<Resource Include="celer_icon.ico" />
+		<Resource Include="Resources\Assets\celer_256.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="6.2.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="System.Management" Version="10.0.0" />
+		<PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<SplashScreen Include="Resources\Assets\splashscreen.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\MainConfiguration.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MainConfiguration.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Signatures.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Signatures.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\i18n\Strings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Strings.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\i18n\Strings.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\MainConfiguration.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>MainConfiguration.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Properties\Signatures.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Signatures.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 </Project>
