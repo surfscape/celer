@@ -1,4 +1,5 @@
-﻿using Celer.Services;
+﻿using Celer.Properties;
+using Celer.Services;
 using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
@@ -12,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace Celer;
 
@@ -89,7 +92,7 @@ public partial class App : Application
             throw new InvalidOperationException("AppHost not initialized");
         }
 
-        bool hasUseDoneSetup = Celer.Properties.MainConfiguration.Default.HasUserDoneSetup;
+        bool hasUseDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
         if (!e.Args.Contains("-silent"))
         {
@@ -104,6 +107,10 @@ public partial class App : Application
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
             }
+            if(MainConfiguration.Default.GraphicRenderingMode == 1)
+                RenderOptions.ProcessRenderMode = RenderMode.Default;
+            else if (MainConfiguration.Default.GraphicRenderingMode == 2)
+                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly; 
         }
         else
         {
@@ -124,7 +131,6 @@ public partial class App : Application
         {
             await AppHost.StopAsync();
             AppHost.Dispose();
-            AppHost = null;
             base.OnExit(e);
         }
         base.OnExit(e);
