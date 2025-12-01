@@ -31,7 +31,7 @@ namespace Celer.ViewModels
         public class LogBook()
         {
             public string? LogEntry { get; set; }
-            public SolidColorBrush LogColor { get; set; } = new SolidColorBrush(Colors.Gray);
+            public Brush LogColor { get; set; } = (Brush)Application.Current.FindResource("TextFillColorPrimaryBrush");
         }
 
         public ObservableCollection<LogBook> LogEntries { get; } = [];
@@ -56,12 +56,12 @@ namespace Celer.ViewModels
                 LoadJson();
         }
 
-        private void AddLog(string message, Color foreground)
+        private void AddLog(string message, Brush foreground)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogEntries.Add(
-                    new LogBook { LogEntry = message, LogColor = new SolidColorBrush(foreground) }
+                    new LogBook { LogEntry = message, LogColor = foreground }
                 );
             });
         }
@@ -73,8 +73,8 @@ namespace Celer.ViewModels
             if (!File.Exists(path))
             {
                 AddLog(
-                    "Ficheiro de assinaturas de limpeza não encontrado, tenta atualizar as assinaturas através do menu > Ferramentas > Verificar Atualizações",
-                    Colors.Red
+                    "Signatures not found. Update them through the Tools menu and click Check Updates",
+                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
                 AppGlobals.EnableCleanEngine = false;
                 return;
@@ -82,16 +82,16 @@ namespace Celer.ViewModels
             try
             {
                 AddLog(
-                    "A carregar assinaturas...",
-                    (Color)Application.Current.Resources["SteelError"]
+                    "Loading signatures...",
+                    (Brush)Application.Current.FindResource("SystemFillColorAttentionBrush")
                 );
                 var json = File.ReadAllText(path);
                 ParseJson(json);
-                AddLog("Assinaturas carregadas com sucesso!", Colors.YellowGreen);
+                AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
             }
             catch (Exception e)
             {
-                AddLog($"Ocorreu um erro a carregar as assinaturas: {e.Message}", Colors.Red);
+                AddLog($"An error occurred when loading the signaturs: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                 AppGlobals.EnableCleanEngine = false;
             }
         }
@@ -166,7 +166,7 @@ namespace Celer.ViewModels
             {
                 AddLog(
                     "At least one item has to be checked to start cleaning",
-                    Colors.Orange
+                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
                 return;
             }
@@ -199,9 +199,9 @@ namespace Celer.ViewModels
             if (toClose.Count > 0)
             {
                 AddLog(
-                    "É necessário fechar as seguintes aplicações para continuar:\n"
+                    "The following application have to be closed to proceed with the cleaning process:\n"
                         + string.Join("\n", toClose),
-                    (Color)Application.Current.Resources["SteelError"]
+                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
                 return;
             }
@@ -214,7 +214,7 @@ namespace Celer.ViewModels
                 AppGlobals.EnableCleanEngine = false;
                 AddLog(
                     "Starting Celer Cleaning Engine...",
-                    (Color)Application.Current.Resources["SteelError"]
+                    (Brush)Application.Current.FindResource("SystemFillColorCautionBrush")
                 );
 
                 foreach (var item in selectedItems)
@@ -235,16 +235,16 @@ namespace Celer.ViewModels
                             else
                             {
                                 AddLog(
-                                    $"A pasta {resolvedPath} não existe ou não é válida.",
-                                    Colors.Red
+                                    $"The folder {resolvedPath} does not exist or is invalid",
+                                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                 );
                             }
                         }
                         catch (Exception ex)
                         {
                             AddLog(
-                                $"Falha ao apagar pasta: {resolvedPath}: {ex.Message}",
-                                (Color)Application.Current.Resources["SteelError"]
+                                $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}",
+                                (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                             );
                         }
                         continue;
@@ -277,16 +277,16 @@ namespace Celer.ViewModels
                             else
                             {
                                 AddLog(
-                                    $"A pasta {resolvedPath} não existe ou não é válida.",
-                                    (Color)Application.Current.Resources["SteelError"]
-                                );
+                                   $"The folder {resolvedPath} does not exist or is invalid",
+                                   (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+                               );
                             }
                         }
                         catch (Exception ex)
                         {
                             AddLog(
-                                $"Falha ao apagar ficheiros com padrões: {resolvedPath}: {ex.Message}",
-                                (Color)Application.Current.Resources["SteelError"]
+                                $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}",
+                                (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                             );
                         }
                         Processes.StartExplorer();
@@ -335,13 +335,13 @@ namespace Celer.ViewModels
                     freed += file.Length;
                     file.Attributes = FileAttributes.Normal;
                     file.Delete();
-                    AddLog($"Removido o ficheiro: {file.FullName}", Colors.YellowGreen);
+                    AddLog($"Deleted the file: {file.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                 }
                 catch (Exception ex)
                 {
                     AddLog(
-                        $"Falha ao apagar ficheiro: {file.FullName}: {ex.Message}",
-                        (Color)Application.Current.Resources["SteelError"]
+                        $"Exception when deleting file {file.FullName}: {ex.Message}",
+                        (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                     );
                 }
             }
@@ -355,20 +355,19 @@ namespace Celer.ViewModels
                 {
                     subDir.Attributes = FileAttributes.Normal;
                     subDir.Delete(true);
-                    AddLog($"Removida a pasta: {subDir.FullName}", Colors.Orange);
+                    AddLog($"Deleted folder {subDir.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                 }
                 catch (Exception ex)
                 {
                     AddLog(
-                        $"Falha ao apagar pasta: {subDir.FullName}: {ex.Message}",
-                        (Color)Application.Current.Resources["SteelError"]
+                        $"Exception when deleting folder {subDir.FullName}: {ex.Message}",
+                        (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                     );
                 }
             }
-
             AddLog(
-                $"A tarefa: {task} foi finalizada com sucesso",
-                (Color)Application.Current.Resources["SteelSucess"]
+                $"The task: {task} was terminated successfully",
+                (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush")
             );
         }
 
@@ -390,20 +389,20 @@ namespace Celer.ViewModels
                         freed += fileInfo.Length;
                         fileInfo.Attributes = FileAttributes.Normal;
                         fileInfo.Delete();
-                        AddLog($"Removido o ficheiro: {file}", Colors.YellowGreen);
+                        AddLog($"Deleted the file {file}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                     }
                     catch (Exception ex)
                     {
                         AddLog(
-                            $"Falha ao apagar ficheiro: {file}: {ex.Message}",
-                            (Color)Application.Current.Resources["SteelError"]
+                            $"Exception when deleting file {file}: {ex.Message}",
+                            (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                         );
                     }
                 }
             }
             AddLog(
-                $"A tarefa: {task} foi finalizada com sucesso",
-                (Color)Application.Current.Resources["SteelSucess"]
+                $"The task: {task} was terminated successfully",
+                (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush")
             );
         }
 
