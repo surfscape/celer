@@ -27,96 +27,103 @@
                 <TextBlock
                     Margin="0,4,0,0"
                     HorizontalAlignment="Center"
-                    Text="A carregar dados" />
+                    Text="Loading..." />
             </StackPanel>
         </Grid>
         <StackPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
             <DockPanel>
-                <TextBlock Style="{StaticResource Heading1}">GPU</TextBlock>
-                <StackPanel
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <TextBlock Margin="0,0,12,0" VerticalAlignment="Center">GPU ativa:</TextBlock>
-                    <ComboBox
-                        Width="300"
-                        DisplayMemberPath="Name"
-                        ItemsSource="{Binding Gpus}"
-                        SelectedItem="{Binding SelectedGpu}" />
-                </StackPanel>
+                <TextBlock Style="{StaticResource Heading1}">GPU Information</TextBlock>
+                <ComboBox HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Width="300"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Gpus}"
+                          SelectedItem="{Binding SelectedGpu}" />
             </DockPanel>
             <Border Padding="0,0,0,8">
-                <UniformGrid Columns="5" DataContext="{Binding SelectedGpu}">
+                <UniformGrid Columns="3"
+                             DataContext="{Binding SelectedGpu}">
                     <UniformGrid.Resources>
                         <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Margin" Value="0,12,0,0" />
+                            <Setter Property="Margin"
+                                    Value="0,12,0,0" />
                         </Style>
-                        <Style x:Key="Title" TargetType="TextBlock">
-                            <Setter Property="FontSize" Value="17" />
-                            <Setter Property="FontWeight" Value="DemiBold" />
-                            <Setter Property="Foreground" Value="White" />
+                        <Style x:Key="Title"
+                               TargetType="TextBlock">
+                            <Setter Property="FontSize"
+                                    Value="17" />
+                            <Setter Property="FontWeight"
+                                    Value="DemiBold" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                        </Style>
+                        <Style x:Key="Description" TargetType="TextBlock">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource TextFillColorSecondaryBrush}"></Setter>
                         </Style>
                     </UniformGrid.Resources>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Marca" />
-                        <TextBlock Text="{Binding Manufacturer}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="Manufacturer" />
+                        <TextBlock Text="{Binding Manufacturer}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Modelo" />
-                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="Model" />
+                        <TextBlock Text="{Binding Name}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Driver" />
-                        <TextBlock Text="{Binding DriverVersion}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="Driver Version" />
+                        <TextBlock Text="{Binding DriverVersion}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Tipo" />
-                        <TextBlock Text="{Binding IsInternal, Converter={StaticResource BoolToGpuTypeConverter}}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="GPU Type" />
+                        <TextBlock Text="{Binding IsInternal, Converter={StaticResource BoolToGpuTypeConverter}}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Versão do DirectX" />
-                        <TextBlock Text="{Binding DirectXVersion}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="DirectX Version" />
+                        <TextBlock Text="{Binding DirectXVersion}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Versão do WDDM" />
-                        <TextBlock Text="{Binding WddmVersion}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="WDDM Version" />
+                        <TextBlock Text="{Binding WddmVersion}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="WHQL" />
-                        <TextBlock Text="{Binding IsWhqlLogoPresent}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="WHQL" />
+                        <TextBlock Text="{Binding IsWhqlLogoPresent}"
+                                   Style="{StaticResource Description}" ToolTip="The driver passed the manufacturer tests &amp; the Windows Hardware Lab Kit. If false it either means the driver is a modified/unnoficial version or it's from a beta branch. "/>
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Suporte de HDR" />
-                        <TextBlock Text="{Binding SupportsHDR}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="HDR Support" />
+                        <TextBlock Text="{Binding SupportsHDR}"
+                                   Style="{StaticResource Description}" ToolTip="Even if your GPU supports HDR, the feature depends on if the display also supports it." />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Paravirtualização" />
-                        <TextBlock Text="{Binding SupportsParavirtualization}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="Paravirtualization" />
+                        <TextBlock Text="{Binding SupportsParavirtualization}"
+                                   Style="{StaticResource Description}" ToolTip="Let's you do a passthrough of the GPU to a virtual machine." />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Title}" Text="Memória Total" />
-                        <TextBlock Text="{Binding MemoryTotalMb, StringFormat={}{0} MB}" />
+                        <TextBlock Style="{StaticResource Title}"
+                                   Text="Total Memory" />
+                        <TextBlock Text="{Binding MemoryTotalMb, StringFormat={}{0} MB}"
+                                   Style="{StaticResource Description}" />
                     </StackPanel>
                 </UniformGrid>
             </Border>
-            <TextBlock Style="{StaticResource Heading2}">Ações</TextBlock>
-            <StackPanel Margin="0,8,0,0">
-                <CheckBox Margin="0,0,0,8" VerticalContentAlignment="Top">
-                    <StackPanel Margin="8,0,0,0">
-                        <TextBlock Foreground="White">HAGS (Hardware Accelerated GPU Scheduling)</TextBlock>
-                        <TextBlock>Permite a GPU alocar tarefas com mais eficiência, reduzindo utilização de CPU e latência</TextBlock>
-                    </StackPanel>
-                </CheckBox>
-                <UniformGrid Margin="0,8,0,0" Columns="2">
-                    <UniformGrid.Resources>
-                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="0,0,8,0" />
-                        </Style>
-                    </UniformGrid.Resources>
-                    <Button>Aspeto e Desempenho</Button>
-                    <Button>Reiniciar driver gráfico</Button>
-                </UniformGrid>
-            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>
