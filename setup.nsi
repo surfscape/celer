@@ -35,7 +35,7 @@ Section
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Celer" \
                  "UninstallString" "$\"$INSTDIR\uninstaller.exe$\""
 
-  File /r "bin\x64\Debug\net10.0-windows10.0.18362.0\*.*"
+  File /r "bin\x64\Release\net10.0-windows10.0.18362.0\win-x64\*.*"
 
   CreateDirectory "$SMPROGRAMS\Celer"
 
