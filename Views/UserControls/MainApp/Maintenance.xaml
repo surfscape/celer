@@ -1,21 +1,21 @@
 ﻿<UserControl x:Class="Celer.Views.UserControls.MainApp.Maintenance"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp"
              xmlns:converters="clr-namespace:Celer.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local1="clr-namespace:Celer.Views.Components"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <local1:ModuleHeader 
-                                 CurrentView="{Binding CurrentView}"
+            <local1:ModuleHeader CurrentView="{Binding CurrentView}"
                                  ViewLabel="{Binding CurrentViewName}"
                                  ViewDescription="{Binding CurrentViewDescription}" />
             <Border Padding="16">
@@ -24,12 +24,21 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Border Padding="0,0,0,16">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}">Maintenance</TextBlock>
-                            <TextBlock Style="{StaticResource Subheading}">Tools to verify and fix the system</TextBlock>
-                        </StackPanel>
-                    </Border>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource Heading1}"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="Maintenance" />
+                        <TextBlock FontSize="15"
+                                   Grid.Row="1"
+                                   Margin="0,-4,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   Text="Tools to verify and fix the system" />
+                    </Grid>
                     <StackPanel Grid.Row="1">
                         <UniformGrid Margin="-10,-5,0,0"
                                      Columns="1">

@@ -18,8 +18,7 @@
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <local1:ModuleHeader 
-                                 CurrentView="{Binding CurrentView}"
+            <local1:ModuleHeader CurrentView="{Binding CurrentView}"
                                  ViewLabel="{Binding CurrentViewName}"
                                  ViewDescription="{Binding CurrentViewDescription}" />
             <Border Padding="16">
@@ -28,13 +27,21 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Border
-                       Padding="0,0,0,16">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}">Optimization</TextBlock>
-                            <TextBlock Style="{StaticResource Subheading}">Tools to help optimize your system</TextBlock>
-                        </StackPanel>
-                    </Border>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource Heading1}"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="Optimization" />
+                        <TextBlock FontSize="15"
+                                   Grid.Row="1"
+                                   Margin="0,-4,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   Text="Tools to help optimize your system" />
+                    </Grid>
                     <StackPanel Grid.Row="1">
                         <UniformGrid Margin="-10,-5,0,0" Columns="1">
                             <UniformGrid.Resources>
@@ -49,7 +56,7 @@
                             </UniformGrid.Resources>
                             <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
                                                  NavigateTo="Battery"
-                                                 Label="Battery Manager"
+                                                 Label="Power Manager"
                                                  Description="Check the state of your computer battery, and change system power plans"
                                                  Icon="Battery" />
                             <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
