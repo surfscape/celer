@@ -5,8 +5,8 @@ namespace Celer.Converters.Battery
 {
     public class ChargingConverter : IValueConverter
     {
-        public string ChargingText { get; set; } = "Charging";
-        public string DischargingText { get; set; } = "Discharging";
+        public string ChargingText { get; set; } = "Plugged in";
+        public string DischargingText { get; set; } = "On battery";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
