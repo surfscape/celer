@@ -10,19 +10,19 @@ namespace Celer.Services.OpsecEngine
             var items = new List<StatusItem>();
 
             bool defenderActive = await DefenderHelper.IsDefenderEnabledAsync();
-            items.Add(new StatusItem("Windows Defender", "Antivírus ativo", defenderActive));
+            items.Add(new StatusItem("Windows Defender", "Protection enabled", defenderActive));
 
             bool realTime = await DefenderHelper.IsRealTimeProtectionEnabledAsync();
-            items.Add(new StatusItem("Proteção em tempo real", "Monitorização contínua", realTime));
+            items.Add(new StatusItem("Real time protection", "Allow Windows Defender to scan the system in real time", realTime));
 
             bool cloud = await DefenderHelper.IsCloudProtectionEnabledAsync();
-            items.Add(new StatusItem("Proteção na cloud", "Reforço baseado na nuvem", cloud));
+            items.Add(new StatusItem("Cloud-based Protection", "Use a lightweight cloud-based scanner", cloud));
 
             bool ransomware = await DefenderHelper.IsRansomwareProtectionEnabledAsync();
             items.Add(
                 new StatusItem(
-                    "Proteção contra ransomware",
-                    "Controla alterações a ficheiros",
+                    "Protection against ransomware",
+                    "Block suspicious programs that can lock and ransom files",
                     ransomware
                 )
             );
@@ -30,13 +30,13 @@ namespace Celer.Services.OpsecEngine
             bool sandboxed = await DefenderHelper.IsSandboxingEnabledAsync();
             items.Add(
                 new StatusItem(
-                    "Sandbox do Defender",
-                    "Executa o antivírus de forma isolada",
+                    "Defender Sandbox",
+                    "Allow Windows Defender to run in a seperate environment for self protection",
                     sandboxed
                 )
             );
 
-            int score = CalculateScore(items, new[] { 3, 2, 1, 2, 2 });
+            int score = CalculateScore(items, new[] { 3, 3, 1, 2, 2 });
             return (items, score);
         }
 
