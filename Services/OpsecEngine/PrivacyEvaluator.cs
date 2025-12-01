@@ -12,36 +12,36 @@ namespace Celer.Services.OpsecEngine
             bool isTelemetryDisabled = await RegistryHelper.IsTelemetryDisabledAsync();
             items.Add(
                 new StatusItem(
-                    "Telemetria",
-                    "Envio de dados para a Microsoft",
-                    !isTelemetryDisabled
+                    "Telemetry",
+                    "Send diagnostic data to Microsoft",
+                    isTelemetryDisabled
                 )
             );
 
             bool areAppsBlocked = await RegistryHelper.AreBackgroundAppsDisabledAsync();
             items.Add(
                 new StatusItem(
-                    "Apps em segundo plano",
-                    "Evita execução não autorizada",
+                    "Background applicaions",
+                    "Disable the executation of apps in the background",
                     areAppsBlocked
                 )
             );
 
             bool adsDisabled = await RegistryHelper.IsAdvertisingIdDisabledAsync();
             items.Add(
-                new StatusItem("Publicidade personalizada", "Controla rastreio por ID", adsDisabled)
+                new StatusItem("Targeted Ads", "Show targeted ads by using an ID", adsDisabled)
             );
 
             bool locationDisabled = await RegistryHelper.IsLocationDisabledAsync();
             items.Add(
                 new StatusItem(
-                    "Serviços de localização",
-                    "Impede rastreio de localização",
+                    "Location Services",
+                    "Block location tracking",
                     locationDisabled
                 )
             );
 
-            int score = CalculateScore(items, new[] { 3, 2, 1, 2 });
+            int score = CalculateScore(items, [3, 1, 2, 2]);
             return (items, score);
         }
 
