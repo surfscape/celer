@@ -10,7 +10,7 @@ namespace Celer.Converters
             Type targetType,
             object parameter,
             CultureInfo culture
-        ) => (bool)value ? "Interna" : "Externa";
+        ) => (bool)value ? "Integrated" : "External";
 
         public object ConvertBack(
             object value,
