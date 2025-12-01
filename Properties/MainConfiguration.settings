@@ -5,23 +5,20 @@
     <Setting Name="HasUserDoneSetup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="EnableSchoolFeatures" Type="System.Boolean" Scope="User">
+    <Setting Name="ALERTS_CPUTrackingEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ALERTS_CPUTrackingEnable" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="ALERTS_MemoryTrackingEnable" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ALERTS_TrackProcess" Type="System.String" Scope="User">
       <Value Profile="(Default)">explorer</Value>
     </Setting>
     <Setting Name="EnableRounding" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Steel Dark</Value>
+      <Value Profile="(Default)">System</Value>
     </Setting>
     <Setting Name="CLEANENGINE_CustomPaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
@@ -46,6 +43,9 @@
     </Setting>
     <Setting Name="EnableAutoSurfScapeGateway" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GraphicRenderingMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

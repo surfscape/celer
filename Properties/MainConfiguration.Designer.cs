@@ -38,18 +38,6 @@ namespace Celer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableSchoolFeatures {
-            get {
-                return ((bool)(this["EnableSchoolFeatures"]));
-            }
-            set {
-                this["EnableSchoolFeatures"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ALERTS_CPUTrackingEnable {
             get {
                 return ((bool)(this["ALERTS_CPUTrackingEnable"]));
@@ -61,7 +49,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ALERTS_MemoryTrackingEnable {
             get {
                 return ((bool)(this["ALERTS_MemoryTrackingEnable"]));
@@ -85,7 +73,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnableRounding {
             get {
                 return ((bool)(this["EnableRounding"]));
@@ -97,7 +85,7 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Steel Dark")]
+        [global::System.Configuration.DefaultSettingValueAttribute("System")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));
@@ -199,6 +187,18 @@ namespace Celer.Properties {
             }
             set {
                 this["EnableAutoSurfScapeGateway"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int GraphicRenderingMode {
+            get {
+                return ((int)(this["GraphicRenderingMode"]));
+            }
+            set {
+                this["GraphicRenderingMode"] = value;
             }
         }
     }
