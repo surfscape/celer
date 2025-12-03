@@ -156,6 +156,13 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private string currentTheme = MainConfiguration.Default.Theme ?? "Steel Dark";
 
+        public ObservableCollection<string> RenderingModes { get; } = ["Auto", "Hardware (default)", "Software only"];
+
+        [ObservableProperty] 
+        public string graphicRenderingMode = MainConfiguration.Default.GraphicRenderingMode == 0 ? "Auto" : MainConfiguration.Default.GraphicRenderingMode == 1 ? "Hardware (default)" : "Software only";
+
+        partial void OnGraphicRenderingModeChanged(string value) => CheckForUnsavedChanges();
+
         partial void OnCurrentThemeChanged(string value) => CheckForUnsavedChanges();
 
         public ObservableCollection<string> Paths { get; } =
