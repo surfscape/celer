@@ -96,6 +96,13 @@ public partial class App : Application
         var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
         if (!e.Args.Contains("-silent"))
         {
+            if(MainConfiguration.Default.Theme == 1)
+            {
+                Application.Current.ThemeMode = ThemeMode.Light;
+            } else if (MainConfiguration.Default.Theme == 2)
+            {
+                Application.Current.ThemeMode = ThemeMode.Dark;
+            }
 
             if (!hasUseDoneSetup)
             {

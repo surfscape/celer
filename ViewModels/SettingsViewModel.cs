@@ -26,6 +26,7 @@ namespace Celer.ViewModels
         private string _initialTrackProcess = string.Empty;
         private bool _initialEnableRounding;
         private string _initialCurrentTheme = string.Empty;
+        private string _initialGraphicRenderingMode = string.Empty;
         private List<string> _initialPaths = [];
         private bool _initialEnableExportCleaningLog;
 
@@ -144,17 +145,15 @@ namespace Celer.ViewModels
             }
         }
 
-
-
         [ObservableProperty]
         private bool enableRounding = MainConfiguration.Default.EnableRounding;
 
         partial void OnEnableRoundingChanged(bool value) => CheckForUnsavedChanges();
 
-        public ObservableCollection<string> ComboOptions { get; } = ["Steel Dark"];
+        public ObservableCollection<string> Themes { get; } = ["System","Light", "Dark"];
 
         [ObservableProperty]
-        private string currentTheme = MainConfiguration.Default.Theme ?? "Steel Dark";
+        private string currentTheme = MainConfiguration.Default.Theme == 0 ? "System" : MainConfiguration.Default.Theme == 1 ? "Light" : "Dark";
 
         public ObservableCollection<string> RenderingModes { get; } = ["Auto", "Hardware (default)", "Software only"];
 
@@ -194,6 +193,7 @@ namespace Celer.ViewModels
             _initialCurrentTheme = CurrentTheme;
             _initialPaths = new List<string>(Paths);
             _initialEnableExportCleaningLog = EnableExportCleaningLog;
+            _initialGraphicRenderingMode = GraphicRenderingMode;
         }
 
         private void OnPathsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -218,7 +218,12 @@ namespace Celer.ViewModels
                     _initialCurrentTheme,
                     System.StringComparison.Ordinal
                 )
-                || EnableExportCleaningLog != _initialEnableExportCleaningLog;
+                || EnableExportCleaningLog != _initialEnableExportCleaningLog
+            || !string.Equals(
+                    GraphicRenderingMode,
+                    _initialGraphicRenderingMode,
+                    System.StringComparison.Ordinal
+                );
 
             if (!changed)
             {
@@ -244,6 +249,7 @@ namespace Celer.ViewModels
                 EnableRounding = _initialEnableRounding;
                 CurrentTheme = _initialCurrentTheme;
                 EnableExportCleaningLog = _initialEnableExportCleaningLog;
+                GraphicRenderingMode = _initialGraphicRenderingMode;
 
                 Paths.Clear();
                 foreach (var p in _initialPaths)
@@ -269,6 +275,8 @@ namespace Celer.ViewModels
             OnPropertyChanged(nameof(AreInnerAlertsEnabled));
             OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
 
+            OnPropertyChanged(nameof(GraphicRenderingMode));
+
             CheckForUnsavedChanges();
         }
 
@@ -280,9 +288,9 @@ namespace Celer.ViewModels
             MainConfiguration.Default.ALERTS_EnableTrackProcess = EnableAlertTrackProcess;
             MainConfiguration.Default.ALERTS_TrackProcess = TrackProcess;
             MainConfiguration.Default.EnableRounding = EnableRounding;
-            MainConfiguration.Default.Theme = CurrentTheme;
+            MainConfiguration.Default.Theme = CurrentTheme == "System" ? 0 : CurrentTheme == "Light" ? 1 : 2;
             MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
-
+            MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? 0 : GraphicRenderingMode == "Hardware (default)" ? 1 : 2;
             var sc = new StringCollection();
             foreach (var p in Paths)
                 sc.Add(p);
@@ -325,7 +333,7 @@ namespace Celer.ViewModels
 
                 var result = await ShowDialogAsync(
                     "Unsaved Changes",
-                    "You have unsaved changes. Would you like to save them?",
+                    "You have unsaved changes. Would you like to save them before closing?",
                     MessageBoxButton.YesNoCancel,
                     MessageBoxImage.Warning
                 );
@@ -386,7 +394,7 @@ namespace Celer.ViewModels
         {
             var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog
             {
-                Description = "Escolha uma pasta para adicionar.",
+                Description = "Choose a path to add",
                 UseDescriptionForTitle = true,
                 ShowNewFolderButton = true,
             };
@@ -414,8 +422,8 @@ namespace Celer.ViewModels
                 return;
             }
             var result = ShowDialogAsync(
-                "Celer",
-                "Desejas apagar todos os dados do Celer e fechar a aplicação?",
+                "Celer System",
+                "Would you like to close Celer and reset it's settings and data?",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning
             ).Result;
