@@ -201,5 +201,17 @@ namespace Celer.Properties {
                 this["GraphicRenderingMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoStartup {
+            get {
+                return ((bool)(this["AutoStartup"]));
+            }
+            set {
+                this["AutoStartup"] = value;
+            }
+        }
     }
 }
