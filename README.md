@@ -4,7 +4,7 @@
 
 # Celer [BETA]
 
-> The advanced, open source, friendly, and cutest toolbox for Windows 10 & 11!
+> The open source, advanced, friendly and cutest toolbox for Windows 10 & 11.
 
 > [!IMPORTANT]
 > Celer is still a work in progress and thus should only be used for testing. Please be patient for a stable release.
@@ -42,11 +42,11 @@ The setup is hosted on GitHub and can be downloaded either through [GitHub Relea
 ### Requirements
 
 - Windows 10 or 11 (64-bit only)
-- Minimum 1 GB of available RAM \*
-- Minimum 100 MB of free disk space
-- [.NET Runtime 9 (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.5-windows-x64-installer) must be installed
+- Minimum of 1 GB of available RAM \*
+- Minimum of 150 MB of free disk space
+- [.NET Runtime 10 (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-10.0.0-windows-x64-installer) must be installed
 
-<small>\* The actual minimum is 512MB, however this comes at a huge cost in performance and user experience</small>
+<small>\* This metric depends on the RAM available to .NET which might reduce/increase Celer memory usage</small>
 
 ## Roadmap
 
