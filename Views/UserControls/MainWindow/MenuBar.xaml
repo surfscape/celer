@@ -14,8 +14,8 @@
             <Setter Property="VerticalContentAlignment"
                     Value="Stretch"></Setter>
             <Setter Property="Foreground"
-                    Value="{DynamicResource TextFillColorSecondaryBrush}" />
-            <Setter Property="Padding" Value="12,5" />
+                    Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="Padding" Value="8,4" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -25,7 +25,6 @@
                                 x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
-                                
                                 CornerRadius="4"
                                 Margin="0,0,0,0"
                                 BorderThickness="0">
@@ -88,17 +87,11 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-                                <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsSubmenuOpen"
-                                     Value="True">
                                 <Setter TargetName="Border"
                                         Property="Background"
-                                        Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
-                                <Setter Property="Foreground"
-                                        Value="{DynamicResource TextFillColorSecondaryBrush}" />
+                                        Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
                             </Trigger>
+
                             <Trigger Property="IsCheckable" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                             </Trigger>
