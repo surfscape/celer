@@ -96,10 +96,11 @@ public partial class App : Application
         var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
         if (!e.Args.Contains("-silent"))
         {
-            if(MainConfiguration.Default.Theme == 1)
+            if (MainConfiguration.Default.Theme == 1)
             {
                 Application.Current.ThemeMode = ThemeMode.Light;
-            } else if (MainConfiguration.Default.Theme == 2)
+            }
+            else if (MainConfiguration.Default.Theme == 2)
             {
                 Application.Current.ThemeMode = ThemeMode.Dark;
             }
@@ -114,10 +115,10 @@ public partial class App : Application
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
             }
-            if(MainConfiguration.Default.GraphicRenderingMode == 1)
+            if (MainConfiguration.Default.GraphicRenderingMode == 1)
                 RenderOptions.ProcessRenderMode = RenderMode.Default;
             else if (MainConfiguration.Default.GraphicRenderingMode == 2)
-                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly; 
+                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
         }
         else
         {
