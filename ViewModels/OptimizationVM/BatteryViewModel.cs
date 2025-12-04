@@ -1,4 +1,5 @@
-﻿using Celer.Services.Energy;
+﻿using Celer.Properties;
+using Celer.Services.Energy;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -13,11 +14,11 @@ namespace Celer.ViewModels.OptimizationVM
         [ObservableProperty]
         private bool isLoading = true;
 
-        private BatteryService batteryService;
-        private PowerPlanService powerPlanService;
+        private BatteryService? batteryService;
+        private PowerPlanService? powerPlanService;
         private readonly DispatcherTimer _updateTimer = new()
         {
-            Interval = TimeSpan.FromSeconds(1),
+            Interval = TimeSpan.FromSeconds(2),
         };
 
         [ObservableProperty]
@@ -36,7 +37,10 @@ namespace Celer.ViewModels.OptimizationVM
         private int batteryHealthPercentage;
 
         [ObservableProperty]
-        private ObservableCollection<PowerPlan> powerPlans;
+        private int batteryChargedPercentageHealth;
+
+        [ObservableProperty]
+        private ObservableCollection<PowerPlan>? powerPlans;
 
         [ObservableProperty]
         private PowerPlan? selectedPowerPlan;
@@ -47,6 +51,18 @@ namespace Celer.ViewModels.OptimizationVM
         [ObservableProperty]
         private int remainingCapacity;
 
+        [ObservableProperty]
+        private int factoryCapacity;
+
+        [ObservableProperty]
+        private int chargedCapacity;
+
+        [ObservableProperty]
+        private int chargedCapacityPercentage;
+
+        [ObservableProperty]
+        private bool isLegacyPowerPlansEnabled = MainConfiguration.Default.EnableLegacyPowerPlans;
+
         public BatteryViewModel()
         {
             _updateTimer.Tick += (_, _) => UpdateBatteryInfo();
@@ -54,23 +70,30 @@ namespace Celer.ViewModels.OptimizationVM
 
         public async Task Initialize()
         {
+            bool fastBootDetected = false;
             try
             {
                 await Task.Run(() =>
                 {
                     batteryService = new BatteryService();
-                    powerPlanService = new PowerPlanService();
-                    PowerPlans = new ObservableCollection<PowerPlan>(
-                        powerPlanService.GetAllPowerPlans()
-                    );
-                    SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
-                    UpdateBatteryInfo();
-                    IsFastBootEnabled = IsFastStartupEnabled();
+                    if (MainConfiguration.Default.EnableLegacyPowerPlans)
+                    {
+                        powerPlanService = new PowerPlanService();
+                    }
+
+                    fastBootDetected = IsFastStartupEnabled();
                 });
+                if (powerPlanService != null)
+                {
+                    PowerPlans = new ObservableCollection<PowerPlan>(powerPlanService.GetAllPowerPlans());
+                    SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
+                }
+                UpdateBatteryInfo();
+                IsFastBootEnabled = fastBootDetected;
             }
             catch (Exception e)
             {
-                Trace.WriteLine("Erro ao inicializar BatteryViewModel: " + e.Message);
+                Trace.WriteLine("Exception while trying to load BatteryViewModel: " + e.Message);
             }
             finally
             {
@@ -82,27 +105,35 @@ namespace Celer.ViewModels.OptimizationVM
         [RelayCommand]
         private void ApplyPowerPlan()
         {
-            if (SelectedPowerPlan != null)
+            if (SelectedPowerPlan != null && powerPlanService != null)
                 powerPlanService.SetActivePowerPlan(SelectedPowerPlan.GUID);
         }
 
         private void UpdateBatteryInfo()
         {
-            var info = batteryService.GetBatteryInfo();
-            HasBattery = info.HasBattery;
-            if (!HasBattery)
-                return;
+        var info = batteryService?.GetBatteryInfo();
+        if (info == null) { 
+            HasBattery = false;
+            return;
+        }
+        HasBattery = info.HasBattery;
+        if (!HasBattery)
+            return;
 
-            BatteryPercentage = info.Percentage;
-            IsCharging = info.IsCharging;
-            BatteryHealthPercentage = info.Health;
-            RemainingCapacity = info.RemainingCapacity;
-            BatteryTimeRemaining = info.EstimatedTime;
+        BatteryPercentage = info.Percentage;
+        IsCharging = info.IsCharging;
+        BatteryHealthPercentage = info.Health;
+        RemainingCapacity = info.RemainingCapacity;
+        BatteryTimeRemaining = info.EstimatedTime;
+        BatteryChargedPercentageHealth = info.ChargedCapacity;
+        FactoryCapacity = info.FactoryCapacity;
+        ChargedCapacity = info.ChargedCapacity;
+        ChargedCapacityPercentage = info.ChargedCapacityPercentage;
         }
 
         partial void OnIsFastBootEnabledChanged(bool value)
         {
-            SetFastStartup(value);
+            Task.Run(() => SetFastStartup(value));
         }
 
         private const string RegistryPath =

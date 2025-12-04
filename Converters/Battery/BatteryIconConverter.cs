@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+﻿using System.Globalization;
 using System.Windows.Data;
 
 namespace Celer.Converters.Battery
@@ -10,12 +7,13 @@ namespace Celer.Converters.Battery
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is int batteryLevel) { 
-                if(batteryLevel >= 70)
+            if (value is int batteryLevel)
+            {
+                if (batteryLevel >= 65)
                     return MahApps.Metro.IconPacks.PackIconLucideKind.BatteryFull;
-                if(batteryLevel >= 50)
+                if (batteryLevel >= 45)
                     return MahApps.Metro.IconPacks.PackIconLucideKind.BatteryMedium;
-                if(batteryLevel <= 30)
+                if (batteryLevel < 45)
                     return MahApps.Metro.IconPacks.PackIconLucideKind.BatteryLow;
             }
             return MahApps.Metro.IconPacks.PackIconLucideKind.BatteryWarning;

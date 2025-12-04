@@ -1,62 +1,78 @@
-﻿<UserControl
-    x:Class="Celer.Views.UserControls.MainApp.OptimizationViews.Battery"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Celer.Converters"
-    xmlns:converters1="clr-namespace:Celer.Converters.Battery"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OptimizationViews"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Optimization="clr-namespace:Celer.ViewModels.OptimizationVM"
-    d:DataContext="{d:DesignInstance Type=Optimization:BatteryViewModel}"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    mc:Ignorable="d">
+﻿<UserControl x:Class="Celer.Views.UserControls.MainApp.OptimizationViews.Battery"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Celer.Converters"
+             xmlns:converters1="clr-namespace:Celer.Converters.Battery"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OptimizationViews"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Optimization="clr-namespace:Celer.ViewModels.OptimizationVM"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             d:DataContext="{d:DesignInstance Type=Optimization:BatteryViewModel}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters1:ChargingConverter x:Key="ChargingConverter" />
+        <converters1:BatteryIconConverter x:Key="BatteryIconConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ProgressBar
-                    Width="200"
-                    Height="12"
-                    Margin="0,0,0,4"
-                    HorizontalAlignment="Center"
-                    IsIndeterminate="True" />
-                <TextBlock
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Center"
-                    Text="A carregar dados" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid x:Name="LoadingView"
+              Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <ProgressBar Width="200"
+                             Height="12"
+                             Margin="0,0,0,4"
+                             HorizontalAlignment="Center"
+                             IsIndeterminate="True" />
+                <TextBlock Margin="0,4,0,0"
+                           HorizontalAlignment="Center"
+                           Text="Loading..." />
             </StackPanel>
         </Grid>
-        <StackPanel Orientation="Vertical" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
-            <StackPanel
-                Margin="0,0,0,16"
-                Orientation="Vertical"
-                Visibility="{Binding HasBattery, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock Style="{StaticResource Heading1}" Text="Estado da Bateria" />
+        <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0,0,0,16"
+                        Visibility="{Binding HasBattery, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <StackPanel>
                     <StackPanel.Resources>
-                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                            <Setter Property="Margin" Value="0,0,0,8" />
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+                               TargetType="{x:Type TextBlock}">
+                            <Setter Property="Margin"
+                                    Value="0,0,0,8" />
                         </Style>
                     </StackPanel.Resources>
-                    <TextBlock
-                        FontSize="24"
-                        Foreground="white"
-                        Text="{Binding BatteryPercentage, StringFormat={}{0}%}" />
-                    <ProgressBar
-                        Height="16"
-                        Margin="0,0,0,8"
-                        Maximum="100"
-                        Minimum="0"
-                        Value="{Binding BatteryPercentage}" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,0,0,8">
+                        <iconPacks:PackIconControl Width="42"
+                                                   Height="42"
+                                                   Margin="0,0,16,0"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Kind="{Binding BatteryPercentage, Converter={StaticResource BatteryIconConverter}}" />
+                        <TextBlock Style="{StaticResource TitleLargeTextBlockStyle}"
+                                   Margin="0"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="{Binding BatteryPercentage, StringFormat={}{0}%}" />
+                    </StackPanel>
+
                     <Grid Margin="0,8">
                         <Grid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="0,0,16,0" />
+                            <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+                                   TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin"
+                                        Value="0,0,16,0" />
                             </Style>
                         </Grid.Resources>
 
@@ -66,99 +82,271 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding IsCharging, StringFormat='Estado: {0}', Converter={StaticResource ChargingConverter}}" />
-                            <TextBlock Text="{Binding BatteryTimeRemaining, StringFormat='Tempo Restante: {0:g}'}" Visibility="{Binding IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
+                            <TextBlock   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         Text="{Binding IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
+                            <TextBlock   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         Text="{Binding BatteryTimeRemaining, StringFormat='Remaining Time: {0:g}'}"
+                                         Visibility="{Binding IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
                         </StackPanel>
-
-                        <Grid Grid.Column="1" Margin="0,0,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="0,0,0,4"
-                                Text="Saúde da Bateria" />
+                        <Border CornerRadius="8"
+                                Grid.Column="1">
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ProgressBar
-                                    Grid.Column="0"
-                                    Height="16"
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Maximum="100"
-                                    Minimum="0"
-                                    Value="{Binding BatteryHealthPercentage}">
-                                    <ProgressBar.ToolTip>
-                                        <ToolTip
-                                            Content="{Binding RemainingCapacity}"
-                                            ContentStringFormat="{}{0}mWh"
-                                            >
-                                        </ToolTip>
+
+                                <Grid>
+                                    <ProgressBar Height="16"
+                                                 Margin="0,0,8,0"
+                                                 VerticalAlignment="Center"
+                                                 Maximum="100"
+                                                 Minimum="0"
+                                                 Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
+                                                 Value="0">
+                                        <ProgressBar.ToolTip>
+                                            <ToolTip Content="{Binding RemainingCapacity}"
+                                                     ContentStringFormat="{}{0}WH">
+                                            </ToolTip>
+                                        </ProgressBar.ToolTip>
+                                    </ProgressBar>
+                                    <ProgressBar Height="16"
+                                                 Margin="0,0,8,0"
+                                                 VerticalAlignment="Center"
+                                                 Maximum="100"
+                                                 Minimum="0"
+                                                 Background="Transparent"
+                                                 Foreground="{DynamicResource SystemFillColorSuccessBrush}"
+                                                 Panel.ZIndex="2"
+                                                 Value="{Binding BatteryHealthPercentage}">
+                                        <ProgressBar.ToolTip>
+                                            <ToolTip Content="{Binding RemainingCapacity}"
+                                                     ContentStringFormat="{}{0}mWh">
+                                            </ToolTip>
+                                        </ProgressBar.ToolTip>
+                                    </ProgressBar>
+                                    <ProgressBar Height="16"
+                                                 Margin="0,0,8,0"
+                                                 VerticalAlignment="Center"
+                                                 Maximum="100"
+                                                 Minimum="0"
+                                                 Background="Transparent"
+                                                 Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
+                                                 Panel.ZIndex="3"
+                                                 Value="{Binding ChargedCapacityPercentage}">
+                                        <ProgressBar.ToolTip>
+                                            <ToolTip Content="{Binding RemainingCapacity}"
+                                                     ContentStringFormat="{}{0}mWh">
+                                            </ToolTip>
+                                        </ProgressBar.ToolTip>
+                                    </ProgressBar>
+                                </Grid>
 
 
-                                    </ProgressBar.ToolTip>
-
-                                </ProgressBar>
-                                <TextBlock Grid.Column="1" Text="{Binding BatteryHealthPercentage, StringFormat='{}{0}%'}" />
                             </Grid>
-                        </Grid>
+                        </Border>
                     </Grid>
 
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,0,24,0">
+
+                            <iconPacks:PackIconControl Width="20"
+                                                       Margin="0,0,8,0"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                       Kind="{x:Static iconPacks:PackIconLucideKind.BatteryPlus}" />
+                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       ToolTip="Battery Health"
+                                       Margin="0,0,0,2"
+                                       Text="{Binding BatteryHealthPercentage, StringFormat='{}{0}%'}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,0,12,0">
+                            <Border Background="{DynamicResource SystemFillColorSuccessBrush}"
+                                    Margin="0,0,6,0"
+                                    Width="15"
+                                    Height="15"
+                                    CornerRadius="10">
+                                <Border Background="{DynamicResource SmokeFillColorDefaultBrush}"
+                                        Width="15"
+                                        Height="15"
+                                        CornerRadius="10"></Border>
+                            </Border>
+                            <TextBlock Margin="0"
+                                       Text="{Binding ChargedCapacity}"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       ToolTip="Current charged capacity"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,0,12,0">
+                            <Border Background="{DynamicResource SystemFillColorSuccessBrush}"
+                                    Margin="0,0,6,0"
+                                    Width="15"
+                                    Height="15"
+                                    CornerRadius="10"></Border>
+                            <TextBlock  Margin="0"
+                                        Text="{Binding RemainingCapacity}"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                        ToolTip="Full charge capacity"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
+                                    Margin="0,0,6,0"
+                                    Width="15"
+                                    Height="15"
+                                    CornerRadius="10"></Border>
+                            <TextBlock Text="{Binding FactoryCapacity}"
+                                       Margin="0"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       ToolTip="Original charged capacity"></TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="Margin" Value="0,0,16,0" />
-                    </Style>
-                </Grid.Resources>
-                <Border Grid.Column="0">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource Heading1}" Text="Plano de Energia" />
-                        <ComboBox
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding PowerPlans}"
-                            SelectedItem="{Binding SelectedPowerPlan, Mode=TwoWay}" />
-                        <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
-                            <Button
-                                Margin="0,0,8,0"
-    Command="{Binding InstallPlansCommand}"
-    Content="Instalar planos adicionais" />
-                            <Button                            
-                            HorizontalAlignment="Right"
-                            Command="{Binding ApplyPowerPlanCommand}"
-                            Content="Aplicar" />
+            <ScrollViewer Margin="0,0,-16,0"
+                          Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="0,0,16,16">
+                    <Expander>
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
 
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="1" Margin="0">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Heading1}" Text="Ações" />
-                        <StackPanel Margin="0,0,0,8">
-                            <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
-                                <CheckBox.Content>
+                                <iconPacks:PackIconControl Width="24"
+                                                           Height="24"
+                                                           Margin="4,0,16,0"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                           Kind="{x:Static iconPacks:PackIconLucideKind.Gauge}" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               Margin="0,0,0,4">Power Modes</TextBlock>
+                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               MaxWidth="620">Optimize the system based on it's current workflow to balance performance and energy consumption</TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Grid Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
                                     <StackPanel>
-                                        <TextBlock Foreground="White">Ativar arranque rápido (Fast Startup)</TextBlock>
-                                        <TextBlock TextWrapping="Wrap">Ignora a verifição de componentes do computador para acelarar a sua inicialização.</TextBlock>
+                                        <TextBlock Text="Legacy Power Plans"
+                                                   Style="{StaticResource BodyTextBlockStyle}"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Text="Change the active power plan, provided by powercfg"
+                                                   Margin="0,4,30,0"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   VerticalAlignment="Center" />
                                     </StackPanel>
+                                    <ComboBox DisplayMemberPath="Name"
+                                              Grid.Column="1"
+                                              MinWidth="190"
+                                              ItemsSource="{Binding PowerPlans}"
+                                              SelectedValuePath="Name"
+                                              SelectedValue="{Binding SelectedPowerPlan.Name, Mode=TwoWay}"/>
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal">
+                                        <Button Margin="8,0,8,0"
+                                                Style="{DynamicResource AccentButtonStyle}"
+                                                Command="{Binding ApplyPowerPlanCommand}"
+                                                Content="Apply" />
+                                        <Button Command="{Binding InstallPlansCommand}"
+                                                Content="Install More Plans" />
+                                    </StackPanel>
+                                </Grid>
+                                <Border BorderThickness="0,1,0,0"
+                                        BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+                                        Margin="0,12"
+                                        Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"></Border>
+                                <Grid   Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="New Power Modes"
+                                                   Style="{StaticResource BodyTextBlockStyle}"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Text="Switch to the different power modes"
+                                                   Margin="0,4,30,0"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <ComboBox DisplayMemberPath="Name"
+                                              Grid.Column="1"
+                                              MinWidth="190"
+ />
 
-                                </CheckBox.Content>
-                            </CheckBox>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-            </Grid>
+                                    <Button Margin="8,0,8,0"
+                                            Grid.Column="2"
+                                            Style="{DynamicResource AccentButtonStyle}"
+                                            Command="{Binding ApplyPowerPlanCommand}"
+                                            Content="Apply" />
+                                </Grid>
+                            </StackPanel>
 
-
-        </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+                    <Expander Margin="0,2,0,0">
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <iconPacks:PackIconControl Width="24"
+                                                           Height="24"
+                                                           Margin="4,0,16,0"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                           Kind="{x:Static iconPacks:PackIconLucideKind.Wrench}" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               Margin="0,0,0,4">Advanced Settings</TextBlock>
+                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               MaxWidth="620">Change advanced energy parameters like fast startup, hibernation, and more</TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <StackPanel Margin="0,0,0,8">
+                                    <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
+                                        <CheckBox.Content>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Fast Startup</TextBlock>
+                                                <TextBlock TextWrapping="Wrap"
+                                                           Style="{StaticResource BodyTextBlockStyle}"
+                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}">Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a system with dual boot it's recommended to disable this feature.</TextBlock>
+                                            </StackPanel>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

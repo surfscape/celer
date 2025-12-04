@@ -31,7 +31,7 @@ namespace Celer.Services.Energy
 
                     string name = (namePartStart >= 0 && namePartEnd > namePartStart)
                         ? afterGuid.Substring(namePartStart + 1, namePartEnd - namePartStart - 1)
-                        : "Desconhecido";
+                        : "Unknown";
 
                     plans.Add(new PowerPlan
                     {
@@ -40,7 +40,6 @@ namespace Celer.Services.Energy
                     });
                 }
             }
-
             return plans;
         }
 
@@ -68,7 +67,6 @@ namespace Celer.Services.Energy
                     Name = name
                 };
             }
-
             return null;
         }
 
@@ -77,7 +75,7 @@ namespace Celer.Services.Energy
             ExecuteCmd($"powercfg /setactive {guid}");
         }
 
-        private string ExecuteCmd(string cmd)
+        private static string ExecuteCmd(string cmd)
         {
             var startInfo = new ProcessStartInfo("cmd", $"/c {cmd}")
             {
@@ -86,9 +84,8 @@ namespace Celer.Services.Energy
                 CreateNoWindow = true,
                 StandardOutputEncoding = System.Text.Encoding.UTF8
             };
-
             using var process = Process.Start(startInfo);
-            process.WaitForExit();
+            process?.WaitForExit();
             return process?.StandardOutput.ReadToEnd() ?? string.Empty;
         }
     }
