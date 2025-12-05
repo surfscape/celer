@@ -17,6 +17,7 @@
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
+	<PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
