@@ -213,5 +213,17 @@ namespace Celer.Properties {
                 this["AutoStartup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLegacyPowerPlans {
+            get {
+                return ((bool)(this["EnableLegacyPowerPlans"]));
+            }
+            set {
+                this["EnableLegacyPowerPlans"] = value;
+            }
+        }
     }
 }
