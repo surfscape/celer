@@ -2,38 +2,62 @@
 {
     public class NavigationService
     {
-        private readonly Dictionary<string, Action<string?>> _handlers = new();
+        private readonly Dictionary<string, Action<string?>> _handlers = [];
+        private readonly Dictionary<string, string?> _tabInnerViews = [];
 
         public void Register(string tabName, Action<string?> handler)
         {
             _handlers[tabName] = handler;
+            _tabInnerViews[tabName] = null;
         }
 
         public Action<string, string?>? NavigateTo { get; set; }
 
         public string? CurrentTab { get; private set; }
-        public string? CurrentInnerView { get; private set; }
+
+        public string? CurrentInnerView
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CurrentTab))
+                    return null;
+
+                return _tabInnerViews.TryGetValue(CurrentTab, out var v) ? v : null;
+            }
+        }
+
         public event Action<string?, string?>? NavigationChanged;
 
-        public bool CanGoBack =>
-            !string.IsNullOrEmpty(CurrentInnerView) && !string.Equals(CurrentInnerView, "Main", StringComparison.Ordinal);
+        public bool CanGoBack
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CurrentTab))
+                    return false;
+
+                if (!_tabInnerViews.TryGetValue(CurrentTab, out var inner))
+                    return false;
+
+                return !string.IsNullOrEmpty(inner) && !string.Equals(inner, "Main", StringComparison.Ordinal);
+            }
+        }
 
         public void Navigate(string tabName, string? innerViewName = null)
         {
-
             NavigateTo?.Invoke(tabName, innerViewName);
         }
 
         public void NavigateInternal(string tabName, string? innerViewName = null)
         {
-
+            _tabInnerViews[tabName] = innerViewName;
             CurrentTab = tabName;
-            CurrentInnerView = innerViewName;
-            NavigationChanged?.Invoke(CurrentTab, CurrentInnerView);
+
+            var currentInner = _tabInnerViews.TryGetValue(tabName, out var v) ? v : null;
+            NavigationChanged?.Invoke(CurrentTab, currentInner);
 
             if (_handlers.TryGetValue(tabName, out var handler))
             {
-                handler?.Invoke(innerViewName);
+                handler?.Invoke(currentInner);
             }
         }
 
@@ -46,6 +70,11 @@
                 return;
 
             Navigate(CurrentTab, "Main");
+        }
+
+        public string? GetInnerViewForTab(string tabName)
+        {
+            return _tabInnerViews.TryGetValue(tabName, out var v) ? v : null;
         }
     }
 }

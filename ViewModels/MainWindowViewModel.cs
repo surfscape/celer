@@ -60,5 +60,14 @@ namespace Celer.ViewModels
                 _navigationService.NavigateInternal(tabName, subview);
             }
         }
+        partial void OnSelectedTabIndexChanged(int value)
+        {
+            var tabName = _tabIndexes.FirstOrDefault(kv => kv.Value == value).Key;
+            if (string.IsNullOrEmpty(tabName))
+                return;
+
+            var innerView = _navigationService.GetInnerViewForTab(tabName);
+            _navigationService.NavigateInternal(tabName, innerView);
+        }
     }
 }
