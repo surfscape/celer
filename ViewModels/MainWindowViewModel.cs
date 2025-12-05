@@ -27,11 +27,10 @@ namespace Celer.ViewModels
         private readonly Dictionary<string, int> _tabIndexes = new()
         {
             { "Dashboard", 0 },
-            { "Limpeza", 1 },
+            { "Cleaning", 1 },
             { "Optimization", 2 },
             { "Maintenance", 3 },
-            { "Privacidade", 4 },
-            { "Avancado", 5 },
+            { "Opsec", 4 },
         };
 
         private readonly NavigationService _navigationService;
@@ -45,7 +44,7 @@ namespace Celer.ViewModels
             _navigationService = navigationService;
             _navigationService.NavigateTo = NavigateTo;
             _serviceProvider = serviceProvider;
- _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
+            _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
             _dashboardControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Dashboard>());
             _limpezaControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Limpeza>());
             _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
