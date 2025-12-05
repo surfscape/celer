@@ -1,7 +1,4 @@
-﻿using Celer.Models;
-using Celer.Services;
-using Celer.ViewModels;
-using Celer.Views.UserControls.MainApp.MaintenanceViews;
+﻿using Celer.Services;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;

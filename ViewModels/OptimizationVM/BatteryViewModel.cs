@@ -111,24 +111,25 @@ namespace Celer.ViewModels.OptimizationVM
 
         private void UpdateBatteryInfo()
         {
-        var info = batteryService?.GetBatteryInfo();
-        if (info == null) { 
-            HasBattery = false;
-            return;
-        }
-        HasBattery = info.HasBattery;
-        if (!HasBattery)
-            return;
+            var info = batteryService?.GetBatteryInfo();
+            if (info == null)
+            {
+                HasBattery = false;
+                return;
+            }
+            HasBattery = info.HasBattery;
+            if (!HasBattery)
+                return;
 
-        BatteryPercentage = info.Percentage;
-        IsCharging = info.IsCharging;
-        BatteryHealthPercentage = info.Health;
-        RemainingCapacity = info.RemainingCapacity;
-        BatteryTimeRemaining = info.EstimatedTime;
-        BatteryChargedPercentageHealth = info.ChargedCapacity;
-        FactoryCapacity = info.FactoryCapacity;
-        ChargedCapacity = info.ChargedCapacity;
-        ChargedCapacityPercentage = info.ChargedCapacityPercentage;
+            BatteryPercentage = info.Percentage;
+            IsCharging = info.IsCharging;
+            BatteryHealthPercentage = info.Health;
+            RemainingCapacity = info.RemainingCapacity;
+            BatteryTimeRemaining = info.EstimatedTime;
+            BatteryChargedPercentageHealth = info.ChargedCapacity;
+            FactoryCapacity = info.FactoryCapacity;
+            ChargedCapacity = info.ChargedCapacity;
+            ChargedCapacityPercentage = info.ChargedCapacityPercentage;
         }
 
         partial void OnIsFastBootEnabledChanged(bool value)
