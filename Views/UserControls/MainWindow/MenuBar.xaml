@@ -159,7 +159,7 @@
                       CommandParameter="Dashboard"
                       Header="_Dashboard" />
             <MenuItem Command="{Binding NavigateToTabCommand}"
-                      CommandParameter="Limpeza"
+                      CommandParameter="Cleaning"
                       Header="_Cleaning" />
             <MenuItem Command="{Binding NavigateToTabCommand}"
                       CommandParameter="Optimization"
@@ -168,7 +168,7 @@
                       CommandParameter="Maintenance"
                       Header="_Maintenance" />
             <MenuItem Command="{Binding NavigateToTabCommand}"
-                      CommandParameter="Privacidade"
+                      CommandParameter="Opsec"
                       Header="_Privacy &amp; Security" />
         </MenuItem>
         <MenuItem Header="_Tools">
