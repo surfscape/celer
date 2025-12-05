@@ -50,7 +50,6 @@ public partial class App : Application
                     services.AddSingleton<MaintenanceViewModel>();
                     services.AddSingleton<RepairViewModel>();
                     services.AddTransient<NetworkViewModel>();
-                    services.AddSingleton<PrivacidadeViewModel>();
 
                     // usercontrols themselves (and other views that need access to the services)
                     services.AddSingleton<MenuBar>();
