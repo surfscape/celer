@@ -62,7 +62,7 @@
                         </ScrollViewer>
                     </Border>
                 </DockPanel>
-                <Border Grid.Column="1" Margin="8,0,0,0" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
+                <Border Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
                 <Grid Margin="0,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
