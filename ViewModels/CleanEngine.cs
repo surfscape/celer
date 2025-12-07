@@ -24,13 +24,13 @@ namespace Celer.ViewModels
         private object? selectedItem;
 
         [ObservableProperty]
-        private bool canClean;
+        private bool canClean = AppGlobals.EnableCleanEngine;
 
         private bool hasRan;
 
         public class LogBook()
         {
-            public string? LogEntry { get; set; }
+            public string LogEntry { get; set; } = string.Empty;
             public Brush LogColor { get; set; } = (Brush)Application.Current.FindResource("TextFillColorPrimaryBrush");
         }
 
@@ -39,7 +39,6 @@ namespace Celer.ViewModels
         public CleanEngine()
         {
             AppGlobals.EnableCleanEngineChanged += AppGlobals_EnableCleanEngineChanged;
-            LoadJson();
         }
 
         private void AppGlobals_EnableCleanEngineChanged(object? sender, EventArgs e)
@@ -52,7 +51,7 @@ namespace Celer.ViewModels
 
         partial void OnCanCleanChanged(bool oldValue, bool newValue)
         {
-            if (!newValue || !hasRan)
+            if (newValue != oldValue)
                 LoadJson();
         }
 

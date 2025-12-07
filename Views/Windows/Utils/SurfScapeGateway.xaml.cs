@@ -32,7 +32,7 @@ namespace Celer.Views.Windows.Utils
         private readonly MainWindow _mainWindow;
 
         /// <summary>
-        /// Used to determine whether the window was triggered on startup or not. This to make sure that if the user has disabled auto updates, it can still open if triggered manually.
+        /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, it can still open if triggered manually.
         /// </summary>
         public bool MainWindowTrigger { get; set; } = false;
 
@@ -74,7 +74,7 @@ namespace Celer.Views.Windows.Utils
 
             private bool hasOfflineDb = false;
 
-            private bool windowTriggered = false;
+            private readonly bool windowTriggered = false;
 
             public SurfScapeGatewayViewModel(bool windowTrigger)
             {
