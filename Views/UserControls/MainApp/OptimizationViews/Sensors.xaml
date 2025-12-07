@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid Focusable="False">
         <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ProgressBar
@@ -26,17 +26,17 @@
                     Text="A carregar dados" />
             </StackPanel>
         </Grid>
-        <DockPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" >
-            <ItemsControl ItemsSource="{Binding Categories}" >
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
+        <DockPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}" Focusable="False">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,-16,0" >
+                <ItemsControl ItemsSource="{Binding Categories}" Margin="-8,-8,8,8" Focusable="False">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" Margin="8" Focusable="False" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Margin="8" IsExpanded="{Binding IsExpanded}" VerticalAlignment="Top">
+                        <Expander Margin="0,0,8,0" IsExpanded="{Binding IsExpanded}" VerticalAlignment="Top">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <iconPacks:PackIconLucide
@@ -49,10 +49,10 @@
                                     <TextBlock FontSize="17" Text="{Binding Name}" />
                                 </StackPanel>
                             </Expander.Header>
-                            <ItemsControl ItemsSource="{Binding Sensors}">
+                            <ItemsControl ItemsSource="{Binding Sensors}" Focusable="False">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <DockPanel Margin="5">
+                                    <DataTemplate >
+                                        <DockPanel Margin="5" Focusable="False">
                                             <TextBlock Width="200" Text="{Binding Name}" />
                                             <TextBlock FontWeight="Bold" Text="{Binding Value}" />
                                         </DockPanel>
