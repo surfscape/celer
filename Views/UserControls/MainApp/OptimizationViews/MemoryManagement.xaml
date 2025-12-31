@@ -19,12 +19,13 @@
     <StackPanel>
         <StackPanel.Resources>
             <Style x:Key="Title" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="17" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontWeight" Value="DemiBold" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource TextFillColorPrimaryBrush}" />
             </Style>
         </StackPanel.Resources>
-        <TextBlock Style="{StaticResource Heading1}">Estado de memória</TextBlock>
+        
         <UniformGrid Columns="3">
             <UniformGrid.Resources>
                 <Style TargetType="{x:Type WrapPanel}">
@@ -32,90 +33,51 @@
                 </Style>
             </UniformGrid.Resources>
             <StackPanel>
-                <TextBlock Style="{StaticResource Title}" Text="Memória Total" />
-                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.TotalMemoryMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
+                <TextBlock Style="{StaticResource Title}" Text="Total Memory" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" Text="{Binding Memory.TotalMemoryMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Style="{StaticResource Title}" Text="Em Utilização" />
-                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.UsedMemoryMB, StringFormat='{}{0:F0} MB'}" />
+                <TextBlock Style="{StaticResource Title}" Text="In Use" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" Text="{Binding Memory.UsedMemoryMB, StringFormat='{}{0:F0} MB'}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Style="{StaticResource Title}" Text="Velocidade" />
-                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.SpeedMHz, StringFormat='{}{0:F0} MHz'}" />
+                <TextBlock Style="{StaticResource Title}" Text="Speed" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" Text="{Binding Memory.SpeedMHz, StringFormat='{}{0:F0} MHz'}" />
             </StackPanel>
         </UniformGrid>
-        <TextBlock
-            Margin="0,12,0,8"
-            FontSize="20"
-            FontWeight="Light"
-            Foreground="White">
-            Memória Virtual
+        <TextBlock Margin="0,16,0,12"
+                   Style="{StaticResource Heading2}"
+                   Text="Virtual memory (paging file)">
         </TextBlock>
-        <UniformGrid Columns="3">
+        <UniformGrid Columns="3" Margin="0,0,0,16">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource Title}" Text="Total " />
-                    <StackPanel
-                        Margin="4,0,0,0"
-                        VerticalAlignment="Center"
-                        Background="Transparent"
-                        ToolTip="O total de memória virtual nunca é exato já que altera consoante a utilização do sistema">
-                        <iconPacks:PackIconLucide
-                            Width="17"
-                            Height="17"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Kind="BadgeQuestionMark" />
+                    <TextBlock Style="{StaticResource Title}"
+                               Text="Total" />
+                    <StackPanel Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                ToolTip="The total amount of virtual memory can change depending on the current usage of the system.">
+                        <iconPacks:PackIconLucide Width="16"
+                                                  Height="16"
+                                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                  Kind="BadgeQuestionMark" />
                     </StackPanel>
                 </StackPanel>
 
-                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.VirtualTotalMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           Text="{Binding Memory.VirtualTotalMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Style="{StaticResource Title}" Text="Em Utilização " />
-                <TextBlock VerticalAlignment="Center" Text="{Binding Memory.VirtualUsedMB, StringFormat='{}{0:F1} MB'}" />
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Style="{StaticResource Title}" Text="Utilização" />
-                <ProgressBar
-                    Height="16"
-                    Margin="0,4,0,0"
-                    VerticalAlignment="Center"
-                    Maximum="100"
-                    Value="{Binding Memory.VirtualUsagePercentage, Mode=OneWay}" />
+                <TextBlock Style="{StaticResource Title}"
+                           Text="In Use" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           Text="{Binding Memory.VirtualUsedMB, StringFormat='{}{0:F1} MB'}" />
             </StackPanel>
         </UniformGrid>
-        <Border
-            Margin="0,12,0,6"
-            BorderBrush="{DynamicResource Border}"
-            BorderThickness="0,1,0,0" />
-        <TextBlock Margin="0,2,0,8" Style="{StaticResource Heading2}">Ações</TextBlock>
-        <UniformGrid Margin="0,0,0,8" Columns="2">
-            <Button Margin="0,0,8,0" Command="{Binding CleanCacheCommand}">
-                <WrapPanel>
-                    <iconPacks:PackIconLucide
-                        Width="20"
-                        Height="20"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Kind="Trash" />
-                    <TextBlock>Limpar Cache</TextBlock>
-                </WrapPanel>
-            </Button>
-            <Button Command="{Binding EditPagefileCommand}">
-                <WrapPanel>
-                    <iconPacks:PackIconLucide
-                        Width="20"
-                        Height="20"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Kind="Microchip" />
-                    <TextBlock>Editar memória virtual</TextBlock>
-                </WrapPanel>
-            </Button>
-        </UniformGrid>
-        <TextBlock Style="{StaticResource Heading2}">Slots de Memória</TextBlock>
+        <TextBlock Style="{StaticResource Heading2}">Memory Slots</TextBlock>
         <ItemsControl ItemsSource="{Binding Slots}" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -128,12 +90,12 @@
                         <StackPanel Margin="0,4,0,0">
                             <TextBlock Text="{Binding IsOccupied, Converter={StaticResource BoolToSlotTextConverter}}" Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
                             <StackPanel Visibility="{Binding IsOccupied, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <TextBlock Text="{Binding Manufacturer, StringFormat='Marca: {0}'}" />
-                                <TextBlock Text="{Binding Model, StringFormat='Modelo: {0}'}" />
-                                <TextBlock Text="{Binding SizeMB, StringFormat='Tamanho: {0} MB'}" />
-                                <TextBlock Text="{Binding FormFactor, StringFormat='Formato: {0}'}" />
-                                <TextBlock Text="{Binding MemoryType, StringFormat='Tipo: {0}'}" />
-                                <TextBlock Text="{Binding SerialNumber, StringFormat='Série: {0}'}" />
+                                <TextBlock Text="{Binding Manufacturer, StringFormat='Brand: {0}'}" />
+                                <TextBlock Text="{Binding Model, StringFormat='Model: {0}'}" />
+                                <TextBlock Text="{Binding SizeMB, StringFormat='Size: {0} MB'}" />
+                                <TextBlock Text="{Binding FormFactor, StringFormat='Format: {0}'}" />
+                                <TextBlock Text="{Binding MemoryType, StringFormat='Type: {0}'}" />
+                                <TextBlock Text="{Binding SerialNumber, StringFormat='Serie: {0}'}" />
                             </StackPanel>
                         </StackPanel>
                     </Expander>
