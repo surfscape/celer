@@ -12,7 +12,7 @@ namespace Celer.ViewModels.OptimizationVM
         private readonly MemoryMonitorService _monitorService = new();
         private readonly DispatcherTimer _updateTimer = new()
         {
-            Interval = TimeSpan.FromSeconds(2),
+            Interval = TimeSpan.FromSeconds(1),
         };
 
         [ObservableProperty]
@@ -21,9 +21,10 @@ namespace Celer.ViewModels.OptimizationVM
         public ObservableCollection<RamSlotInfo> Slots { get; } = [];
 
         public MemoryViewModel()
-        {
+        { 
             UpdateMemoryInfo(false);
             _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);
+            _updateTimer.Start();
         }
 
         private void UpdateMemoryInfo(bool continous)

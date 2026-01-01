@@ -67,14 +67,14 @@
 
                 <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            VerticalAlignment="Center"
-                           Text="{Binding Memory.VirtualTotalMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}{0}'}" />
+                           Text="{Binding Memory.VirtualTotalMB, Converter={StaticResource MemorySizeConverter}, StringFormat='{}'}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock Style="{StaticResource Title}"
                            Text="In Use" />
                 <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            VerticalAlignment="Center"
-                           Text="{Binding Memory.VirtualUsedMB, StringFormat='{}{0:F1} MB'}" />
+                           Text="{Binding Memory.VirtualUsedMB, StringFormat='{}{0} MB'}" />
             </StackPanel>
         </UniformGrid>
         <TextBlock Style="{StaticResource Heading2}">Memory Slots</TextBlock>
@@ -95,7 +95,6 @@
                                 <TextBlock Text="{Binding SizeMB, StringFormat='Size: {0} MB'}" />
                                 <TextBlock Text="{Binding FormFactor, StringFormat='Format: {0}'}" />
                                 <TextBlock Text="{Binding MemoryType, StringFormat='Type: {0}'}" />
-                                <TextBlock Text="{Binding SerialNumber, StringFormat='Serie: {0}'}" />
                             </StackPanel>
                         </StackPanel>
                     </Expander>

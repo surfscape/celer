@@ -1,4 +1,5 @@
 ﻿using Celer.Models.SystemInfo;
+using Celer.Properties;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
@@ -18,7 +19,7 @@ namespace Celer.Services.Memory
                 UsedMemoryMB = GetUsedMemoryMB(),
                 TotalMemoryMB = Math.Round(GetTotalMemory()),
                 SpeedMHz = GetMemorySpeed(),
-                VirtualUsedMB = virtualUsed,
+                VirtualUsedMB = MainConfiguration.Default.EnableRounding ? (int)virtualUsed : Math.Round(virtualUsed,3),
                 VirtualTotalMB = virtualTotal,
                 Slots = GetRamSlotInfo(),
             };
@@ -39,7 +40,7 @@ namespace Celer.Services.Memory
                 using var searcher = new ManagementObjectSearcher(
                     "SELECT Speed FROM Win32_PhysicalMemory"
                 );
-                foreach (ManagementObject obj in searcher.Get())
+                foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>())
                 {
                     if (obj["Speed"] != null)
                         return Convert.ToInt32(obj["Speed"]);
@@ -47,7 +48,7 @@ namespace Celer.Services.Memory
             }
             catch
             {
-                Debug.WriteLine("Erro ao obter a velocidade da memória.");
+                MessageBox.Show("Failed to retrieve memory speed");
             }
             return null;
         }
@@ -68,7 +69,7 @@ namespace Celer.Services.Memory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Erro ao obter a memória total: {ex.Message}");
+                Debug.WriteLine($"Failed to obtain total memory: {ex.Message}");
             }
             return 0;
         }
@@ -90,15 +91,15 @@ namespace Celer.Services.Memory
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
 
-        private static (float TotalMB, float UsedMB) GetVirtualMemory()
+        private static (double TotalMB, double UsedMB) GetVirtualMemory()
         {
             var memStatus = new MEMORYSTATUSEX();
             if (GlobalMemoryStatusEx(memStatus))
             {
-                float totalMB = memStatus.ullTotalPageFile / (1024f * 1024f);
-                float usedMB =
-                    (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024f * 1024f);
-                return (totalMB, usedMB);
+                double totalMB = memStatus.ullTotalPageFile / (1024.00 * 1024.00);
+                double usedMB =
+                    (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024.00 * 1024.00);
+                    return (totalMB, usedMB);
             }
             return (0, 0);
         }
@@ -138,21 +139,16 @@ namespace Celer.Services.Memory
                 {
                     foreach (ManagementObject obj in memSearcher.Get())
                     {
-                        string bankLabel =
-                            obj["BankLabel"] != null
-                                ? Convert.ToString(obj["BankLabel"])
-                                : "Unknown Bank";
-                        string deviceLocator =
-                            obj["DeviceLocator"] != null
-                                ? Convert.ToString(obj["DeviceLocator"])
-                                : "Unknown Locator";
+                        var bankLabel = obj["BankLabel"] != null ? Convert.ToString(obj["BankLabel"]) : "Undefined";
+                        var deviceLocator = obj["DeviceLocator"] != null ? Convert.ToString(obj["DeviceLocator"]) : "Undefined";
 
                         int parsedSlotId = ParseSlotNumber(deviceLocator, bankLabel);
+                        
 
                         if (parsedSlotId == -1)
                         {
                             Trace.WriteLine(
-                                $"Não foi possível identificar o banklable e o RAM slot correto: '{deviceLocator}', BankLabel: '{bankLabel}'. A ignorar módulo..."
+                                $"Failed to identify correct banklable and RAM slot: '{deviceLocator}', BankLabel: '{bankLabel}'. Ignoring module..."
                             );
                             continue;
                         }
@@ -162,14 +158,15 @@ namespace Celer.Services.Memory
                                 ? Convert.ToUInt64(obj["Capacity"]) / (1024 * 1024)
                                 : 0;
 
-                        string memoryTypeStr = "Desconhecido";
+                        // Currently does not work for modern memory types like DDR4, DDR5, and laptops. I should move to using SMBIOS or a third party library like AIDA64 or CPUZ to get memory type and form factor
+                        string memoryTypeStr = "Unknown";
                         var memoryTypeObj = obj["MemoryType"];
                         if (memoryTypeObj != null)
                         {
                             memoryTypeStr = GetMemoryTypeString(Convert.ToInt32(memoryTypeObj));
                         }
 
-                        string memoryFormFactor = "Desconhecido";
+                        string memoryFormFactor = "Unknown";
                         if (obj["FormFactor"] != null)
                         {
                             memoryFormFactor = GetFormFactorString(
@@ -180,12 +177,11 @@ namespace Celer.Services.Memory
                         occupiedSlotsByParsedLabel[parsedSlotId] = new RamSlotInfo
                         {
                             IsOccupied = true,
-                            Manufacturer = obj["Manufacturer"]?.ToString().Trim() ?? "Desconhecido",
-                            Model = obj["PartNumber"]?.ToString().Trim() ?? "Desconhecido",
+                            Manufacturer = obj["Manufacturer"]?.ToString().Trim() ?? "Unknown",
+                            Model = obj["PartNumber"]?.ToString().Trim() ?? "Unknown",
                             SizeMB = (int)capacityMB,
                             MemoryType = memoryTypeStr,
                             FormFactor = memoryFormFactor,
-                            SerialNumber = obj["SerialNumber"]?.ToString().Trim() ?? "Desconhecido",
                             BankLabel = bankLabel,
                             DeviceLocator = deviceLocator,
                         };
@@ -227,7 +223,6 @@ namespace Celer.Services.Memory
                                 SizeMB = 0,
                                 MemoryType = "",
                                 FormFactor = "",
-                                SerialNumber = "",
                                 BankLabel =
                                     $"Slot {i}{(isLikelyOneBased ? " (Expected Label " + (i + 1) + ")" : "")}",
                                 DeviceLocator = $"Physical Slot {i}",
@@ -251,7 +246,7 @@ namespace Celer.Services.Memory
         }
 
         /// <summary>
-        /// This function is used to make a relation between the RAM slot from WMI and the one from kernel32.ddl since both return different data
+        /// This function is used to make a relationship between the RAM slot from WMI and the one from kernel32.dll
         /// </summary>
         /// <param name="deviceLocator">ID of the RAM stick</param>
         /// <param name="bankLabel">Bank where the RAM stick is in</param>
@@ -291,7 +286,7 @@ namespace Celer.Services.Memory
         {
             return typeCode switch
             {
-                0 => "Desconhecido",
+                0 => "Not Supported",
                 1 => "Other",
                 2 => "DRAM",
                 17 => "SDRAM",
@@ -310,7 +305,7 @@ namespace Celer.Services.Memory
                 31 => "DDR5",
                 32 => "LPDDR5",
                 34 => "DDR5",
-                _ => $"Desconhecido ({typeCode})",
+                _ => $"Uknown ({typeCode})",
             };
         }
 
@@ -323,13 +318,13 @@ namespace Celer.Services.Memory
         {
             return id switch
             {
-                0 => "Desconhecido",
+                0 => "Not Supported",
                 1 => "Outro",
                 2 => "SIP",
                 3 => "DIP",
                 4 => "ZIP",
                 5 => "SOJ",
-                6 => "Proprietário",
+                6 => "Proprietary",
                 7 => "SIMM",
                 8 => "DIMM",
                 9 => "TSOP",
@@ -347,7 +342,7 @@ namespace Celer.Services.Memory
                 21 => "BGA",
                 22 => "FPBGA",
                 23 => "LGA",
-                _ => $"Desconhecido ({id})",
+                _ => $"Uknown ({id})",
             };
         }
     }
