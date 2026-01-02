@@ -133,7 +133,7 @@ namespace Celer.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I&apos;ve read and accept the Terms of Usage and.
+        ///   Looks up a localized string similar to I&apos;ve read and accept the Terms of Use and.
         /// </summary>
         public static string Onboarding_LegalCheckboxLabel {
             get {
