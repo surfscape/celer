@@ -12,14 +12,9 @@ namespace Celer.Services.Energy
         public bool IsCharging { get; set; }
         public TimeSpan EstimatedTime { get; set; }
         public int Health { get; set; }
-
         public int RemainingCapacity { get; set; }
-
         public int ChargedCapacity { get; set; }
-
         public int FactoryCapacity { get; set; }
-
-
         public int FactoryCapacityPercentage
         {
             get
@@ -59,7 +54,7 @@ namespace Celer.Services.Energy
                 info.HasBattery = true;
                 info.Percentage = Convert.ToInt32(battery["EstimatedChargeRemaining"]);
                 info.IsCharging = Convert.ToUInt16(battery["BatteryStatus"]) is 2 or 6;
-
+                // TODO: Add a delay, since WMI returns the wrong run time right after unplugging the charger
                 var runtime = Convert.ToUInt32(battery["EstimatedRunTime"]);
                 if (!info.IsCharging)
                 {
@@ -77,11 +72,10 @@ namespace Celer.Services.Energy
                 Debug.WriteLine(ex);
                 info.HasBattery = false;
             }
-
             return info;
         }
 
-        public static string ExtractXmlValue(string xml, string elementName)
+        public static string? ExtractXmlValue(string xml, string elementName)
         {
             var doc = XDocument.Parse(xml);
             XNamespace ns = "http://schemas.microsoft.com/battery/2012";
@@ -109,7 +103,7 @@ namespace Celer.Services.Energy
                 && design > 0
             )
             {
-                return ((int)((full / design) * 100), int.Parse(fullStr), int.Parse(designStr), ((int.Parse(fullStr) * percentage) / 100));
+                return ((int)((full / design) * 100), int.Parse(fullStr), int.Parse(designStr), (int.Parse(fullStr) * percentage) / 100);
             }
 
             return (0, 0, 0, 0);
