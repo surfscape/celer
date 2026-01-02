@@ -61,13 +61,13 @@
                             </UniformGrid.Resources>
                             <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
                                                  NavigateTo="Repair"
-                                                 Label="Repair System"
-                                                 Description="Run the official system repair utilities to repair erros in the disk/image"
+                                                 Label="System Repair"
+                                                 Description="Run the official system repair utilities to check &amp; repair erros in the disk/image"
                                                  Icon="Wrench" />
                             <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
                                                  NavigateTo="Network"
                                                  Label="Network Manager"
-                                                 Description="Check your network connection and change it's DNS"
+                                                 Description="Check your network connection and change DNS system-wide"
                                                  Icon="Network" />
                         </UniformGrid>
                     </StackPanel>

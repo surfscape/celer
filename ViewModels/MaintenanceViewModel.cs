@@ -20,8 +20,8 @@ namespace Celer.ViewModels
         {
             _views = new Dictionary<string, NavigationSubView>
             {
-                { "Repair", new NavigationSubView("System Repair", "Run the official system repair utilities to repair erros in the disk/image",repairView) },
-                { "Network", new NavigationSubView("Network Test", "Check your network connection and change it's DNS", networkView) },
+                { "Repair", new NavigationSubView("System Repair", "Run the official system repair utilities to check & repair erros in the disk/image",repairView) },
+                { "Network", new NavigationSubView("Network Manager", "Check your network connection and change DNS system-wide", networkView) },
             };
         }
     }

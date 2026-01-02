@@ -20,31 +20,37 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Style="{StaticResource Heading1}">Rede e Internet</TextBlock>
+            <TextBlock Style="{StaticResource Heading2}">Network and Internet</TextBlock>
             <UniformGrid Columns="3" Margin="0,12">
                 <StackPanel>
-                    <TextBlock FontWeight="Bold" Text="Adaptadores de Rede" />
-                    <TextBlock Text="{Binding NetworkAdaptersStatus}" />
+                    <TextBlock FontSize="17"
+                               FontWeight="DemiBold"
+                               Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="Network Adapters" />
+                    <TextBlock Text="{Binding NetworkAdaptersStatus}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
                 <StackPanel>
                     <TextBlock
-                        FontWeight="Bold"
-                        Text="Ligação ativa" />
-                    <TextBlock Text="{Binding ConnectionStatus}" />
+                        
+                               FontSize="17"
+                               FontWeight="DemiBold"
+                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                               Text="Connection" />
+                    <TextBlock Text="{Binding ConnectionStatus}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock
-                        FontWeight="Bold"
-                        Text="Acesso à Internet" />
-                    <TextBlock Text="{Binding InternetStatus}" />
+                    <TextBlock FontSize="17"
+                               FontWeight="DemiBold"
+                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                               Text="Internet Access" />
+                    <TextBlock Text="{Binding InternetStatus}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
             </UniformGrid>
-            <Button
-                Width="150"
-                HorizontalAlignment="Center"
-                Command="{Binding TestNetworkCommand}"
-                Content="Realizar Teste" />
-
+            <Button Width="125"
+                    Command="{Binding TestNetworkCommand}"
+                    Content="Check" />
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="0,12">
             <TextBlock Style="{StaticResource Heading2}">DNS</TextBlock>
@@ -70,11 +76,11 @@
                 <Button
                     Margin="10,0,0,0"
                     Command="{Binding UpdatePingCommand}"
-                    Content="Atualizar Ping" />
+                    Content="Refresh Ping" />
                 <StackPanel Margin="8,0,0,0" Orientation="Horizontal">
                     <Button
                         Command="{Binding SetDnsCommand}"
-                        Content="Definir como DNS do Sistema"
+                        Content="Define as system-wide DNS"
                         IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}" />
                 </StackPanel>
             </StackPanel>
