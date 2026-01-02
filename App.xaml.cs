@@ -11,7 +11,7 @@ using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -27,46 +27,22 @@ public partial class App : Application
 
     public App()
     {
-        AppHost = Host.CreateDefaultBuilder()
-            .ConfigureServices(
-                (context, services) =>
-                {
-                    // register main services, these include services that are used across the application and the main window
-                    services.AddTransient<SurfScapeGateway>();
-                    services.AddSingleton<MainWindow>();
-                    services.AddSingleton<NavigationService>();
-                    services.AddSingleton<MainWindowViewModel>();
+        MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
+    }
 
-
-                    // viewmodels for the user controls
-                    services.AddSingleton<MenuBarNavigation>();
-                    services.AddSingleton<DashboardViewModel>();
-                    services.AddSingleton<CleanEngine>();
-                    services.AddSingleton<OptimizationViewModel>();
-                    services.AddTransient<MemoryViewModel>();
-                    services.AddTransient<BatteryViewModel>();
-                    services.AddTransient<VideoViewModel>();
-                    services.AddTransient<SensorViewModel>();
-                    services.AddSingleton<MaintenanceViewModel>();
-                    services.AddSingleton<RepairViewModel>();
-                    services.AddTransient<NetworkViewModel>();
-
-                    // usercontrols themselves (and other views that need access to the services)
-                    services.AddSingleton<MenuBar>();
-                    services.AddSingleton<Dashboard>();
-                    services.AddSingleton<Limpeza>();
-                    services.AddSingleton<Optimization>();
-                    services.AddTransient<MemoryManagement>();
-                    services.AddTransient<Battery>();
-                    services.AddTransient<Video>();
-                    services.AddTransient<Sensors>();
-                    services.AddSingleton<Maintenance>();
-                    services.AddTransient<Repair>();
-                    services.AddTransient<Network>();
-                    services.AddSingleton<Privacidade>();
-                }
-            )
-            .Build();
+    private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (MainConfiguration.Default.Theme == 1)
+        {
+            Current.ThemeMode = ThemeMode.Light;
+        }
+        else if (MainConfiguration.Default.Theme == 2)
+        {
+            Current.ThemeMode = ThemeMode.Dark;
+        } else
+        {
+            Current.ThemeMode = ThemeMode.System;
+        }
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -80,30 +56,68 @@ public partial class App : Application
             }
         }
 
-        if (AppHost == null)
-        {
-            MessageBox.Show(
-                "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
-                "Infrastructure Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
-            throw new InvalidOperationException("AppHost not initialized");
-        }
-
-        bool hasUseDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
-        var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
         if (!e.Args.Contains("-silent"))
         {
+            AppHost = Host.CreateDefaultBuilder()
+    .ConfigureServices(
+        (context, services) =>
+        {
+            // register main services, these include services that are used across the application and the main window
+            services.AddTransient<SurfScapeGateway>();
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<NavigationService>();
+            services.AddSingleton<MainWindowViewModel>();
+
+
+            // viewmodels for the user controls
+            services.AddSingleton<MenuBarNavigation>();
+            services.AddSingleton<DashboardViewModel>();
+            services.AddSingleton<CleanEngine>();
+            services.AddSingleton<OptimizationViewModel>();
+            services.AddTransient<MemoryViewModel>();
+            services.AddTransient<BatteryViewModel>();
+            services.AddTransient<VideoViewModel>();
+            services.AddTransient<SensorViewModel>();
+            services.AddSingleton<MaintenanceViewModel>();
+            services.AddSingleton<RepairViewModel>();
+            services.AddTransient<NetworkViewModel>();
+
+            // usercontrols themselves (and other views that need access to the services)
+            services.AddSingleton<MenuBar>();
+            services.AddSingleton<Dashboard>();
+            services.AddSingleton<Limpeza>();
+            services.AddSingleton<Optimization>();
+            services.AddTransient<MemoryManagement>();
+            services.AddTransient<Battery>();
+            services.AddTransient<Video>();
+            services.AddTransient<Sensors>();
+            services.AddSingleton<Maintenance>();
+            services.AddTransient<Repair>();
+            services.AddTransient<Network>();
+            services.AddSingleton<Privacidade>();
+        }
+    )
+    .Build();
+            if (AppHost == null)
+            {
+                MessageBox.Show(
+                    "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
+                    "Infrastructure Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                throw new InvalidOperationException("AppHost not initialized");
+            }
+            bool hasUseDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
+            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
             if (MainConfiguration.Default.Theme == 1)
             {
-                Application.Current.ThemeMode = ThemeMode.Light;
+                Current.ThemeMode = ThemeMode.Light;
             }
             else if (MainConfiguration.Default.Theme == 2)
             {
-                Application.Current.ThemeMode = ThemeMode.Dark;
+                Current.ThemeMode = ThemeMode.Dark;
             }
-
             if (!hasUseDoneSetup)
             {
                 var onboardingWindow = new Onboarding();
@@ -118,16 +132,11 @@ public partial class App : Application
                 RenderOptions.ProcessRenderMode = RenderMode.Default;
             else if (MainConfiguration.Default.GraphicRenderingMode == 2)
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
-        }
-        else
+        } else
         {
-            /* TODO: Implement silent mode logic, maybe with NotifyIcon to provide a lightweight system tray interface for Celer */
             MessageBox.Show("Celer is running in silent mode.");
-            Process[] processes = Process.GetProcessesByName("Celer");
-            foreach (Process process in processes)
-            {
-                process.Kill();
-            }
+            AboutWindow window = new AboutWindow();
+            window.Show();
         }
         base.OnStartup(e);
     }
