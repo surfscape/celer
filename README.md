@@ -54,10 +54,10 @@ We are currently planning new features some of these include:
 
 - Support for third-party tools (ex: AdWare Cleaner, TRON Script, Snappy Driver Installer Origin)
 - A frontend for Winget with recommended software
-- Light theme (already available on beta 2 but without a setting to change it)
+- ~~Light theme (already available on beta 2 but without a setting to change it)~~ Fully implemented with [commit `f70dd49´](https://github.com/surfscape/celer/commit/f70dd49088783e92f89f3728ccd6fe2eb2620edb)
 - Multi-language support
-- Run in the background (planned on beta 2)
-- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status) (planned on beta 2)
+- Run in the background (wip in beta 2)
+- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status) (wip in beta 2)
 
 ## Contributing
 
