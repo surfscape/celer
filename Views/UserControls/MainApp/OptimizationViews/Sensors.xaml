@@ -7,25 +7,13 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Optimizationvm="clr-namespace:Celer.ViewModels.OptimizationVM"
-    mc:Ignorable="d">
+             xmlns:components="clr-namespace:Celer.Views.Components"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
     <Grid Focusable="False">
-        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ProgressBar
-                    Width="200"
-                    Height="12"
-                    Margin="0,0,0,4"
-                    HorizontalAlignment="Center"
-                    IsIndeterminate="True" />
-                <TextBlock
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Center"
-                    Text="A carregar dados" />
-            </StackPanel>
-        </Grid>
+        <components:ModuleLoadingStatus Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"></components:ModuleLoadingStatus>
         <DockPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}" Focusable="False">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,-16,0" >
                 <ItemsControl ItemsSource="{Binding Categories}" Margin="-8,-8,8,8" Focusable="False">

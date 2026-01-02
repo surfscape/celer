@@ -9,6 +9,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
              xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+             xmlns:components="clr-namespace:Celer.Views.Components"
              d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}"
              d:Width="900"
              mc:Ignorable="d">
@@ -54,20 +55,7 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <Grid x:Name="LoadingView"
-              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
-            <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <ProgressBar Width="200"
-                             Height="12"
-                             Margin="0,0,0,4"
-                             HorizontalAlignment="Center"
-                             IsIndeterminate="True" />
-                <TextBlock Margin="0,4,0,0"
-                           HorizontalAlignment="Center"
-                           Text="Loding, please wait..." />
-            </StackPanel>
-        </Grid>
+        <components:ModuleLoadingStatus Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"></components:ModuleLoadingStatus>
         <Grid xmlns:local2="clr-namespace:Celer.Views.Components"
               x:Name="MainContent"
               Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">

@@ -7,7 +7,8 @@
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OptimizationViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Optimizationvm="clr-namespace:Celer.ViewModels.OptimizationVM"
-    d:DataContext="{d:DesignInstance Type=Optimizationvm:VideoViewModel}"
+             xmlns:components="clr-namespace:Celer.Views.Components"
+             d:DataContext="{d:DesignInstance Type=Optimizationvm:VideoViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -16,20 +17,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid x:Name="LoadingView" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ProgressBar
-                    Width="200"
-                    Height="12"
-                    Margin="0,0,0,4"
-                    HorizontalAlignment="Center"
-                    IsIndeterminate="True" />
-                <TextBlock
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Center"
-                    Text="Loading..." />
-            </StackPanel>
-        </Grid>
+        <components:ModuleLoadingStatus Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"></components:ModuleLoadingStatus>
         <StackPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
             <DockPanel>
                 <TextBlock Style="{StaticResource Heading1}">GPU Information</TextBlock>
