@@ -1,4 +1,6 @@
-﻿namespace Celer.Services
+﻿using Celer.Properties;
+
+namespace Celer.Services
 {
     public class NavigationService
     {
@@ -27,6 +29,27 @@
         }
 
         public event Action<string?, string?>? NavigationChanged;
+
+        private bool _compactMode = MainConfiguration.Default.SaveSidebarCompactMode && MainConfiguration.Default.SidebarCompactMode;
+        public bool CompactMode
+        {
+            get => _compactMode;
+            set
+            {
+                if (_compactMode != value)
+                {
+                    _compactMode = value;
+                    CompactModeChanged?.Invoke(this, _compactMode);
+                    if (MainConfiguration.Default.SaveSidebarCompactMode)
+                    {
+                        MainConfiguration.Default.SidebarCompactMode = value;
+                        MainConfiguration.Default.Save();
+                    }
+                }
+            }
+        }
+
+        public event EventHandler<bool>? CompactModeChanged;
 
         public bool CanGoBack
         {
