@@ -77,9 +77,6 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private int threadCount;
 
-    [ObservableProperty]
-    private string cpuStatus;
-
     /// <summary>
     /// GPU Data
     /// </summary>
@@ -334,13 +331,12 @@ public partial class DashboardViewModel : ObservableObject
         try
         {
             using var searcher = new ManagementObjectSearcher(
-                "SELECT Name, MaxClockSpeed, Status FROM Win32_Processor"
+                "SELECT Name, MaxClockSpeed FROM Win32_Processor"
             );
             foreach (var item in searcher.Get())
             {
                 CpuName = item["Name"]?.ToString()?.Trim();
                 CpuClockSpeed = Convert.ToDouble(item["MaxClockSpeed"]);
-                CpuStatus = item["Status"]?.ToString() ?? "N/A";
                 break;
             }
         }
