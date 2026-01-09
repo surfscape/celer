@@ -225,5 +225,29 @@ namespace Celer.Properties {
                 this["EnableLegacyPowerPlans"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SaveSidebarCompactMode {
+            get {
+                return ((bool)(this["SaveSidebarCompactMode"]));
+            }
+            set {
+                this["SaveSidebarCompactMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SidebarCompactMode {
+            get {
+                return ((bool)(this["SidebarCompactMode"]));
+            }
+            set {
+                this["SidebarCompactMode"] = value;
+            }
+        }
     }
 }

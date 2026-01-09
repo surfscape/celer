@@ -2,7 +2,9 @@
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainWindow;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Celer.ViewModels
@@ -11,6 +13,9 @@ namespace Celer.ViewModels
     {
         [ObservableProperty]
         private int selectedTabIndex;
+
+        [ObservableProperty]
+        private bool tabControlCompactMode;
 
         private readonly Lazy<UserControl> _menuBarControl;
         private readonly Lazy<UserControl> _dashboardControl;
@@ -43,12 +48,19 @@ namespace Celer.ViewModels
         {
             _navigationService = navigationService;
             _navigationService.NavigateTo = NavigateTo;
+            _navigationService.CompactModeChanged += OnCompactModeChanged;
             _serviceProvider = serviceProvider;
             _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
             _dashboardControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Dashboard>());
             _limpezaControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Limpeza>());
             _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
             _maintenanceControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Maintenance>());
+            tabControlCompactMode = _navigationService.CompactMode;
+        }
+
+        private void OnCompactModeChanged(object sender, bool isCompact)
+        {
+            TabControlCompactMode = isCompact;
         }
 
         private void NavigateTo(string tabName, string subview)

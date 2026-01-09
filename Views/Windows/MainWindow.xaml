@@ -14,6 +14,9 @@
     MaxWidth="940"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:Celer.Utilities"
+        xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
     mc:Ignorable="d">
     <Window.Resources>
         <Style TargetType="ContentControl">
@@ -31,47 +34,55 @@
         </Border>
         <Border Grid.Row="1" >
             <Grid Margin="0,0,0,0">
-                <TabControl SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource CelerStripTabLeft}" Margin="0,0,0,0">
-                    <TabControl.Resources>
+                <local:CompactTabControl  SelectedIndex="{Binding SelectedTabIndex}"
+                                          CompactMode="{Binding TabControlCompactMode, Mode=TwoWay}"
+                            Style="{StaticResource CelerStripTabLeft}"
+                            Margin="0,0,0,0">
+                    <local:CompactTabControl.Resources>
                         <Style TargetType="{x:Type iconPacks:PackIconLucide}">
-                            <Setter Property="Margin" Value="0,0,8,0" />
-                            <Setter Property="Width" Value="14" />
-                            <Setter Property="Height" Value="14" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
+                            <Setter Property="Margin"
+                                    Value="0,0,8,0" />
+                            <Setter Property="Width"
+                                    Value="14" />
+                            <Setter Property="Height"
+                                    Value="14" />
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource SecondaryText}" />
                         </Style>
-                    </TabControl.Resources>
-                    <TabItem x:Name="Dashboard">
+                    </local:CompactTabControl.Resources>
+                    <TabItem>
                         <TabItem.Header>
                             <model:TabHeaderData Title="Dashboard" Icon="Activity" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding DashboardControl}" />
                     </TabItem>
-                    <TabItem x:Name="Limpeza">
+                    <TabItem  ToolTip="Cleaning">
                         <TabItem.Header>
                             <model:TabHeaderData Title="Cleaning" Icon="Trash2" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding LimpezaControl}" />
                     </TabItem>
-                    <TabItem x:Name="Optimization">
+                    <TabItem  ToolTip="Optimization">
                         <TabItem.Header>
                             <model:TabHeaderData Title="Optimization" Icon="Rocket" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding OptimizationControl}" />
                     </TabItem>
-                    <TabItem x:Name="Maintenance">
+                    <TabItem  ToolTip="Maintenance">
                         <TabItem.Header>
                             <model:TabHeaderData Title="Maintenance" Icon="Construction" />
                         </TabItem.Header>
                         <ContentControl HorizontalAlignment="Stretch" Content="{Binding MaintenanceControl}" />
                     </TabItem>
-                    <TabItem x:Name="Privacidade">
+                    <TabItem  ToolTip="Privacy">
                         <TabItem.Header>
                             <model:TabHeaderData Title="Privacy &amp; Security" Icon="Shield" />
                         </TabItem.Header>
                         <uc:Privacidade HorizontalAlignment="Stretch" />
                     </TabItem>
-                </TabControl>
+                </local:CompactTabControl>
             </Grid>
         </Border>
     </Grid>

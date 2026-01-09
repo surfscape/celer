@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+                    xmlns:local="clr-namespace:Celer.Utilities"
                     >
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="15" />
@@ -43,8 +44,10 @@
     </Style>
     <Style x:Key="CelerStripTabLeft"
            TargetType="TabControl">
-        <Setter Property="TabStripPlacement" Value="Left" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="TabStripPlacement"
+                Value="Left" />
+        <Setter Property="Padding"
+                Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabControl">
@@ -53,24 +56,21 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TabPanel
-                            Grid.Column="0"
-                            Margin="4,6,4,4"
-                            Background="Transparent"
-                            IsItemsHost="True" />
-                        <Border
-                            Grid.Column="1"
-                            Padding="{TemplateBinding Padding}"
-                               BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                            Background="{DynamicResource LayerFillColorDefaultBrush}" 
-                            BorderThickness="1,1,0,0"
-                            CornerRadius="8,0,0,0">
-                            <ContentPresenter
-                                x:Name="TabContentPresenter"
-                                Margin="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Content="{TemplateBinding SelectedContent}" />
+                        <TabPanel Grid.Column="0"
+                                  Margin="4,6,4,4"
+                                  Background="Transparent"
+                                  IsItemsHost="True" />
+                        <Border Grid.Column="1"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                BorderThickness="1,1,0,0"
+                                CornerRadius="8,0,0,0">
+                            <ContentPresenter x:Name="TabContentPresenter"
+                                              Margin="0"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              Content="{TemplateBinding SelectedContent}" />
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -79,8 +79,10 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="TabItem">
-                    <Setter Property="MinWidth" Value="180"></Setter>
-                    <Setter Property="Padding" Value="13,9,16,9" />
+                    <Setter Property="MinWidth"
+                            Value="180" />
+                    <Setter Property="Padding"
+                            Value="13,9,16,9" />
                     <Setter Property="Background"
                             Value="Transparent" />
                     <Setter Property="HeaderTemplate">
@@ -90,23 +92,45 @@
                                     <iconPacks:PackIconLucide x:Name="Icon"
                                                               Kind="{Binding Icon}"
                                                               Margin="0,0,13,0"
-                                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                              Visibility="Visible" />
                                     <TextBlock x:Name="Text"
                                                Text="{Binding Title}"
-                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               Visibility="Visible" />
                                 </StackPanel>
                                 <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=CompactMode}"
+                                                 Value="True">
+                                        <Setter TargetName="Text"
+                                                Property="Visibility"
+                                                Value="Collapsed" />
+                                        <Setter TargetName="Icon"
+                                                Property="Margin"
+                                                Value="0" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}"
+                                                 Value="True">
+                                        <Setter TargetName="Icon"
+                                                Property="Foreground"
+                                                Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <Setter TargetName="Text"
+                                                Property="Foreground"
+                                                Value="{DynamicResource TextFillColorPrimaryBrush}" />
                                     </DataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsMouseOver}" Value="True" />
-                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="False" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsMouseOver}"
+                                                       Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}"
+                                                       Value="False" />
                                         </MultiDataTrigger.Conditions>
-                                        <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-                                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <Setter TargetName="Icon"
+                                                Property="Foreground"
+                                                Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <Setter TargetName="Text"
+                                                Property="Foreground"
+                                                Value="{DynamicResource TextFillColorPrimaryBrush}" />
                                     </MultiDataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
@@ -121,19 +145,17 @@
                                             Width="3"
                                             Height="16"
                                             Panel.ZIndex="2"
-                                            CornerRadius="3"></Border>
-                                    <Border
-                                        x:Name="HeaderBorder"
-                                        Padding="{TemplateBinding Padding}"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="4"
-                                        Margin="0,2,0,2">
-                                        <ContentPresenter
-                                            x:Name="Content"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            ContentSource="Header"
-                                            RecognizesAccessKey="True" />
+                                            CornerRadius="3" />
+                                    <Border x:Name="HeaderBorder"
+                                            Padding="{TemplateBinding Padding}"
+                                            Background="{TemplateBinding Background}"
+                                            CornerRadius="4"
+                                            Margin="0,2,0,2">
+                                        <ContentPresenter x:Name="Content"
+                                                          HorizontalAlignment="Left"
+                                                          VerticalAlignment="Center"
+                                                          ContentSource="Header"
+                                                          RecognizesAccessKey="True" />
                                     </Border>
                                 </Grid>
                                 <ControlTemplate.Triggers>

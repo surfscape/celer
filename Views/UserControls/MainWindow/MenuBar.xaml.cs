@@ -1,4 +1,5 @@
 ﻿using Celer.Services;
+using Celer.Utilities;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -127,6 +128,9 @@ namespace Celer.Views.UserControls.MainWindow
     {
         private readonly NavigationService _navigationService;
 
+        [ObservableProperty]
+        private bool isCompact = false;
+
         public MenuBarNavigation(NavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -141,6 +145,14 @@ namespace Celer.Views.UserControls.MainWindow
         {
             _navigationService.Navigate(tab);
         }
+
+        [RelayCommand]
+        private void ToggleCompactMode()
+        {
+            _navigationService.CompactMode = !_navigationService.CompactMode;
+            IsCompact = _navigationService.CompactMode;
+        }
+
 
         [RelayCommand]
         private void GoBack()

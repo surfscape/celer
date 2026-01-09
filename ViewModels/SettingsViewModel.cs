@@ -25,6 +25,7 @@ namespace Celer.ViewModels
         private bool _initialEnableAlertTrackProcess;
         private string _initialTrackProcess = string.Empty;
         private bool _initialEnableRounding;
+        private bool _initialSaveSidebarCompactMode;
         private string _initialCurrentTheme = string.Empty;
         private string _initialGraphicRenderingMode = string.Empty;
         private List<string> _initialPaths = [];
@@ -150,6 +151,14 @@ namespace Celer.ViewModels
 
         partial void OnEnableRoundingChanged(bool value) => CheckForUnsavedChanges();
 
+        [ObservableProperty]
+        private bool saveSidebarCompactMode = MainConfiguration.Default.SaveSidebarCompactMode;
+
+        partial void OnSaveSidebarCompactModeChanged(bool value) {
+            CheckForUnsavedChanges();
+            MainConfiguration.Default.SidebarCompactMode = false;
+        }
+
         public ObservableCollection<string> Themes { get; } = ["System","Light", "Dark"];
 
         [ObservableProperty]
@@ -157,7 +166,7 @@ namespace Celer.ViewModels
 
         public ObservableCollection<string> RenderingModes { get; } = ["Auto", "Hardware (default)", "Software only"];
 
-        [ObservableProperty] 
+        [ObservableProperty]
         public string graphicRenderingMode = MainConfiguration.Default.GraphicRenderingMode == 0 ? "Auto" : MainConfiguration.Default.GraphicRenderingMode == 1 ? "Hardware (default)" : "Software only";
 
         partial void OnGraphicRenderingModeChanged(string value) => CheckForUnsavedChanges();
@@ -190,6 +199,7 @@ namespace Celer.ViewModels
             _initialEnableAlertTrackProcess = EnableAlertTrackProcess;
             _initialTrackProcess = TrackProcess;
             _initialEnableRounding = EnableRounding;
+            _initialSaveSidebarCompactMode = SaveSidebarCompactMode;
             _initialCurrentTheme = CurrentTheme;
             _initialPaths = new List<string>(Paths);
             _initialEnableExportCleaningLog = EnableExportCleaningLog;
@@ -212,7 +222,7 @@ namespace Celer.ViewModels
                     _initialTrackProcess,
                     System.StringComparison.Ordinal
                 )
-                || EnableRounding != _initialEnableRounding
+                || EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode
                 || !string.Equals(
                     CurrentTheme,
                     _initialCurrentTheme,
@@ -247,6 +257,7 @@ namespace Celer.ViewModels
                 EnableAlertTrackProcess = _initialEnableAlertTrackProcess;
                 TrackProcess = _initialTrackProcess;
                 EnableRounding = _initialEnableRounding;
+                SaveSidebarCompactMode = _initialSaveSidebarCompactMode;
                 CurrentTheme = _initialCurrentTheme;
                 EnableExportCleaningLog = _initialEnableExportCleaningLog;
                 GraphicRenderingMode = _initialGraphicRenderingMode;
@@ -267,6 +278,7 @@ namespace Celer.ViewModels
             OnPropertyChanged(nameof(EnableAlertTrackProcess));
             OnPropertyChanged(nameof(TrackProcess));
             OnPropertyChanged(nameof(EnableRounding));
+            OnPropertyChanged(nameof(SaveSidebarCompactMode));
             OnPropertyChanged(nameof(CurrentTheme));
             OnPropertyChanged(nameof(EnableExportCleaningLog));
             OnPropertyChanged(nameof(Paths));
@@ -288,6 +300,7 @@ namespace Celer.ViewModels
             MainConfiguration.Default.ALERTS_EnableTrackProcess = EnableAlertTrackProcess;
             MainConfiguration.Default.ALERTS_TrackProcess = TrackProcess;
             MainConfiguration.Default.EnableRounding = EnableRounding;
+            MainConfiguration.Default.SaveSidebarCompactMode = SaveSidebarCompactMode;
             MainConfiguration.Default.Theme = CurrentTheme == "System" ? 0 : CurrentTheme == "Light" ? 1 : 2;
             MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
             MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? 0 : GraphicRenderingMode == "Hardware (default)" ? 1 : 2;

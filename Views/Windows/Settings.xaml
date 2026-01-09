@@ -72,7 +72,8 @@
                                                       Margin="0,0,0,8"
                                                       ItemsSource="{Binding Themes}"
                                                       SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
-                                            <CheckBox IsChecked="{Binding EnableRounding}">Round values</CheckBox>
+                                            <CheckBox IsChecked="{Binding EnableRounding}" ToolTip="Round most values to one decimal case. Do note that some values may not respect this preference.">Round values</CheckBox>
+                                            <CheckBox IsChecked="{Binding SaveSidebarCompactMode}" ToolTip="Saves the sidebar compact state.">Save sidebar state</CheckBox>
                                         </StackPanel>
                                     </Border>
                                     <TextBlock Margin="0,12,0,4" Style="{DynamicResource Heading2}">
