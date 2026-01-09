@@ -13,7 +13,6 @@ namespace Celer.Utilities
                 try
                 {
                     proc.Kill();
-                    proc.WaitForExit();
                 }
                 catch (Exception ex)
                 {
@@ -29,18 +28,21 @@ namespace Celer.Utilities
 
         public static void StartExplorer()
         {
-            try
+            if (Process.GetProcessesByName("explorer").Length == 0)
             {
-                Process.Start("explorer.exe");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    $"Erro ao reiniciar o processo Explorer: {ex.Message}",
-                    "Celer Processes",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                try
+                {
+                    Process.Start("explorer.exe");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"Erro ao reiniciar o processo Explorer: {ex.Message}",
+                        "Celer Processes",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                }
             }
         }
     }
