@@ -1,24 +1,23 @@
-﻿<Window
-    x:Class="Celer.Views.Windows.Settings"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Celer.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:Celer.Views.Windows"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Celer.Models"
-    xmlns:vm="clr-namespace:Celer.ViewModels"
-    Title="Settings"
-    Width="860"
-    Height="550"
-    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
-    Closing="Window_Closing"
-    ResizeMode="NoResize"
-    ShowInTaskbar="False"
-    Style="{StaticResource {x:Type Window}}"
-    WindowStartupLocation="CenterOwner"
-    mc:Ignorable="d">
+﻿<Window x:Class="Celer.Views.Windows.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:Celer.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:Celer.Views.Windows"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:Celer.Models"
+        xmlns:vm="clr-namespace:Celer.ViewModels"
+        Title="Settings"
+        Width="860"
+        Height="550"
+        d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+        Closing="Window_Closing"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Style="{StaticResource {x:Type Window}}"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
     <Window.Resources>
         <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
     </Window.Resources>
@@ -30,125 +29,138 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TabControl
-                Grid.Row="0"
-                Margin="0"
-                Style="{StaticResource CelerStripTabLeft}">
+            <TabControl Grid.Row="0"
+                        Margin="0"
+                        Style="{StaticResource CelerStripTabLeft}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type iconPacks:PackIconLucide}">
-                        <Setter Property="Margin" Value="0,0,8,0" />
-                        <Setter Property="Width" Value="14" />
-                        <Setter Property="Height" Value="14" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
+                        <Setter Property="Margin"
+                                Value="0,0,8,0" />
+                        <Setter Property="Width"
+                                Value="14" />
+                        <Setter Property="Height"
+                                Value="14" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SecondaryText}" />
                     </Style>
                 </TabControl.Resources>
                 <TabItem>
                     <TabItem.Header>
-                        <model:TabHeaderData Title="General" Icon="Settings" />
+                        <model:TabHeaderData Title="General"
+                                             Icon="Settings" />
                     </TabItem.Header>
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Border Padding="16">
+                    <Border Padding="16,16,16,0">
+                        <StackPanel>
+                            <TextBlock Style="{DynamicResource Heading1}"
+                                       Margin="0,0,0,12">Appearance and Presentation</TextBlock>
+                            <Border CornerRadius="4"
+                                    Padding="12"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}">
                                 <StackPanel>
-                                    <TextBlock Style="{DynamicResource Heading2}">
-                                        Appearance and Presentation
-                                    </TextBlock>
-                                    <Border CornerRadius="8"
-                                            Padding="12"
-                                            BorderThickness="1"
-                                            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
-                                            Background="{DynamicResource ControlFillColorDefaultBrush}">
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
                                         <StackPanel>
                                             <TextBlock VerticalAlignment="Center"
                                                        Text="Theme"
-                                                       Margin="0,0,0,8"
+                                                       FontSize="17"
                                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                        FontWeight="DemiBold" />
-                                            <ComboBox Padding="6,2,6,4"
-                                                      Margin="0,0,0,8"
-                                                      ItemsSource="{Binding Themes}"
-                                                      SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
-                                            <CheckBox IsChecked="{Binding EnableRounding}" ToolTip="Round most values to one decimal case. Do note that some values may not respect this preference.">Round values</CheckBox>
-                                            <CheckBox IsChecked="{Binding SaveSidebarCompactMode}" ToolTip="Saves the sidebar compact state.">Save sidebar state</CheckBox>
+                                            <TextBlock Margin="0,4,0,0"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                            Changes the global application theme
+                                            </TextBlock>
                                         </StackPanel>
-                                    </Border>
-                                    <TextBlock Margin="0,12,0,4" Style="{DynamicResource Heading2}">
-                                        Dashboard
-                                    </TextBlock>
-                                    <Border CornerRadius="8"
-                                            Padding="12"
-                                            BorderThickness="1"
-                                            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
-                                            Background="{DynamicResource ControlFillColorDefaultBrush}">
-                                        <StackPanel>
-                                            <TextBlock VerticalAlignment="Center"
-                                                       Text="Alerts"
-                                                       Margin="0,0,0,8"
-                                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                       FontWeight="DemiBold" />
-                                            <StackPanel VerticalAlignment="Top"
-                                                        Orientation="Vertical">
-                                                <CheckBox Content="Enable Alerts"
-                                                          IsChecked="{Binding EnableAlerts, Mode=TwoWay}"
-                                                          IsThreeState="True" />
-                                                <StackPanel Margin="20,4">
-                                                    <CheckBox Content="Enable CPU monitoring (triggers at 80%)"
-                                                              IsChecked="{Binding EnableAlertCPUTracking, Mode=TwoWay}"
-                                                              IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
-                                                    <CheckBox Content="Enable memory monitoring (triggers at 80%)"
-                                                              IsChecked="{Binding EnableAlertMemoryTracking, Mode=TwoWay}"
-                                                              IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
-                                                    <CheckBox Content="Enable process monitoring memory usage (triggers at 500MB)"
-                                                              IsChecked="{Binding EnableAlertTrackProcess, Mode=TwoWay}"
-                                                              IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
-                                                    <Label
-                                                           Content="Process to monitor"
-                                                           IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}" />
-                                                    <TextBox IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}"
-                                                             Text="{Binding TrackProcess, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Border>
+                                        <ComboBox Padding="12,0,4,1"
+                                                  Grid.Column="1"
+                                                  MinWidth="150"
+                                                  ItemsSource="{Binding Themes}"
+                                                  SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
+                                    </Grid>
+
+                                    <CheckBox IsChecked="{Binding EnableRounding}"
+                                              ToolTip="Round most values to one decimal case. Do note that some values may not respect this preference.">Round values</CheckBox>
+                                    <CheckBox IsChecked="{Binding SaveSidebarCompactMode}"
+                                              ToolTip="Saves the current sidebar compact state.">Save sidebar state</CheckBox>
                                 </StackPanel>
                             </Border>
-                        </Grid>
-                    </StackPanel>
+                            <TextBlock Visibility="Collapsed" Margin="0,12,0,4"
+                                       Style="{DynamicResource Heading2}">Dashboard
+                            </TextBlock>
+                            <Border CornerRadius="8"
+                                    Padding="12"
+                                    Visibility="Collapsed"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}">
+                                <StackPanel>
+                                    <TextBlock VerticalAlignment="Center"
+                                               Text="Alerts"
+                                               Margin="0,0,0,8"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               FontWeight="DemiBold" />
+                                    <StackPanel VerticalAlignment="Top"
+                                                Orientation="Vertical">
+                                        <CheckBox Content="Enable Alerts"
+                                                  IsChecked="{Binding EnableAlerts, Mode=TwoWay}"
+                                                  IsThreeState="True" />
+                                        <StackPanel Margin="20,4">
+                                            <CheckBox Content="Enable CPU monitoring (triggers at 80%)"
+                                                      IsChecked="{Binding EnableAlertCPUTracking, Mode=TwoWay}"
+                                                      IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <CheckBox Content="Enable memory monitoring (triggers at 80%)"
+                                                      IsChecked="{Binding EnableAlertMemoryTracking, Mode=TwoWay}"
+                                                      IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <CheckBox Content="Enable process monitoring memory usage (triggers at 500MB)"
+                                                      IsChecked="{Binding EnableAlertTrackProcess, Mode=TwoWay}"
+                                                      IsEnabled="{Binding AreInnerAlertsEnabled, Mode=OneWay}" />
+                                            <Label Content="Process to monitor"
+                                                   IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}" />
+                                            <TextBox IsEnabled="{Binding IsProcessTrackingTextBoxEnabled, Mode=OneWay}"
+                                                     Text="{Binding TrackProcess, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
                 </TabItem>
-                <TabItem>
+                <TabItem Visibility="Collapsed">
                     <TabItem.Header>
-                        <model:TabHeaderData Title="Cleaning" Icon="Trash2" />
+                        <model:TabHeaderData Title="Cleaning"
+                                             Icon="Trash2" />
                     </TabItem.Header>
                     <Border Padding="16">
                         <StackPanel>
-                            <StackPanel Margin="0,6,0,12" Orientation="Horizontal">
-                                <CheckBox Content="Ativar exportação do log de limpeza" IsChecked="{Binding EnableExportCleaningLog}" />
+                            <StackPanel Margin="0,6,0,12"
+                                        Orientation="Horizontal">
+                                <CheckBox Content="Ativar exportação do log de limpeza"
+                                          IsChecked="{Binding EnableExportCleaningLog}" />
                             </StackPanel>
                             <TextBlock Style="{StaticResource Heading2}">Limpeza Customizada</TextBlock>
                             <TextBlock>Permite adicionar pastas para incluir no processo de limpeza.</TextBlock>
-                            <GroupBox
-                                Margin="0,8"
-                                Header="Caminhos"
-                                SnapsToDevicePixels="True"
-                                UseLayoutRounding="True">
+                            <GroupBox Margin="0,8"
+                                      Header="Caminhos"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="True">
                                 <StackPanel>
-                                    <ListBox
-                                        x:Name="pathsListBox"
-                                        Height="100"
-                                        ItemsSource="{Binding Paths}" />
-                                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                        <Button
-                                            Margin="0,0,8,0"
-                                            Command="{Binding PickAndAddPathCommand}"
-                                            Content="Procurar e Adicionar Pasta" />
-                                        <Button
-                                            Command="{Binding RemovePathCommand}"
-                                            CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"
-                                            Content="Remover caminho selecionado" />
+                                    <ListBox x:Name="pathsListBox"
+                                             Height="100"
+                                             ItemsSource="{Binding Paths}" />
+                                    <StackPanel Margin="0,5,0,0"
+                                                Orientation="Horizontal">
+                                        <Button Margin="0,0,8,0"
+                                                Command="{Binding PickAndAddPathCommand}"
+                                                Content="Procurar e Adicionar Pasta" />
+                                        <Button Command="{Binding RemovePathCommand}"
+                                                CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"
+                                                Content="Remover caminho selecionado" />
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>
@@ -158,18 +170,16 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Margin="0,0,8,0">Localização das assinaturas</TextBlock>
-                                    <iconPacks:PackIconLucide
-                                        Width="15"
-                                        Height="15"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        Kind="BadgeQuestionMark"
-                                        ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
+                                    <iconPacks:PackIconLucide Width="15"
+                                                              Height="15"
+                                                              VerticalAlignment="Center"
+                                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                              Kind="BadgeQuestionMark"
+                                                              ToolTip="Utilizar uma fonte diferente para buscar os dados e assinaturas de limpeza." />
                                 </StackPanel>
-                                <TextBox
-                                    Width="300"
-                                    Height="19"
-                                    HorizontalAlignment="Left" />
+                                <TextBox Width="300"
+                                         Height="19"
+                                         HorizontalAlignment="Left" />
 
 
                             </StackPanel>
@@ -178,32 +188,47 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <model:TabHeaderData Title="Advanced" Icon="FlaskConical" />
+                        <model:TabHeaderData Title="Advanced"
+                                             Icon="FlaskConical" />
                     </TabItem.Header>
                     <Border Padding="16">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource Heading1}" Margin="0,0,0,12">Rendering</TextBlock>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                                <TextBlock Style="{StaticResource BodyTextBlockStyle}"
-                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                           VerticalAlignment="Center" MaxWidth="250" Margin="0,0,16,0">
-                                    Choose what graphic rendering mode to use to render Celer
-                                </TextBlock>
-                            <ComboBox ItemsSource="{Binding RenderingModes}"
-                                      MinWidth="250"
-                                      HorizontalAlignment="Right"
-                                      SelectedItem="{Binding GraphicRenderingMode, Mode=TwoWay}">
+                            <Border CornerRadius="4"
+                                    Padding="12"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock VerticalAlignment="Center"
+                                                   Text="Rendering"
+                                                   FontSize="17"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   FontWeight="DemiBold" />
+                                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Margin="0,4,0,0">Choose what graphic rendering mode to use to render Celer
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <ComboBox ItemsSource="{Binding RenderingModes}"
+                                              MinWidth="150"
+                                              Grid.Column="1"
+                                              SelectedItem="{Binding GraphicRenderingMode, Mode=TwoWay}">
 
-                            </ComboBox>
-                            </StackPanel>
+                                    </ComboBox>
+                                </Grid>
+                            </Border>
                             <Button Margin="0,8,0,0"
-                                HorizontalAlignment="Left"
+                                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
                                     Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}"
                                     BorderBrush="{DynamicResource SystemFillColorCriticalBrush}"
                                     Foreground="{DynamicResource SystemFillColorCriticalBrush}"
-                                Command="{Binding ResetAppDataCommand}">
-                            Delete and reset app data
-                        </Button>
+                                    Command="{Binding ResetAppDataCommand}">
+                                Delete and reset app data
+                            </Button>
                         </StackPanel>
                     </Border>
                 </TabItem>
@@ -213,21 +238,17 @@
                     BorderThickness="1,0,0,0"
                     Grid.Row="2"
                     Padding="8">
-                <StackPanel
-HorizontalAlignment="Right"
-                Orientation="Horizontal">
-                <Button
-                    HorizontalAlignment="Right"
-                   MinWidth="90"
-                    Margin="0,0,10,0"
-                    
-                    Command="{Binding OkCommand}"
-                    Content="OK" />
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    <Button HorizontalAlignment="Right"
+                            MinWidth="90"
+                            Margin="0,0,10,0"
+                            Command="{Binding OkCommand}"
+                            Content="OK" />
                     <Button MinWidth="90"
                             Margin="0,0,10,0"
-                    
-                    Command="{Binding CancelCommand}"
-                    Content="Cancel" />
+                            Command="{Binding CancelCommand}"
+                            Content="Cancel" />
                     <Button MinWidth="90"
                             Style="{DynamicResource AccentButtonStyle}"
                             Command="{Binding ApplyCommand}"
