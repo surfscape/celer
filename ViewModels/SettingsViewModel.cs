@@ -1,4 +1,5 @@
 ﻿using Celer.Properties;
+using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -331,7 +332,12 @@ namespace Celer.ViewModels
                 sc.Add(p);
             MainConfiguration.Default.CLEANENGINE_CustomPaths = sc;
 
-            MainConfiguration.Default.Save();
+            if(MainConfiguration.Default.AutoStartup) {
+                UserLand.SetAutoStartup();
+            } else
+                UserLand.RemoveAutoStartup();
+
+                MainConfiguration.Default.Save();
 
             StoreInitialValues();
             CheckForUnsavedChanges();

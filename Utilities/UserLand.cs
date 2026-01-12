@@ -1,4 +1,7 @@
-﻿using System.Net.NetworkInformation;
+﻿using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
+using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 namespace Celer.Utilities
 {
@@ -15,6 +18,64 @@ namespace Celer.Utilities
             catch
             {
                 return false;
+            }
+        }
+
+        public static void SetAutoStartup()
+        {
+            var process = Process.GetCurrentProcess();
+            string fullPath = process.MainModule.FileName;
+            using (TaskService ts = new TaskService())
+            {
+                TaskDefinition td = ts.NewTask();
+                td.RegistrationInfo.Description = "Run Celer as admin at startup";
+
+                LogonTrigger lt = new LogonTrigger();
+                lt.UserId = Environment.UserName;
+                td.Triggers.Add(lt);
+
+                td.Actions.Add(new ExecAction(
+                    fullPath,
+                    "-silent",
+                    null
+                ));
+
+                td.Settings.StartWhenAvailable = true;
+                td.Settings.DisallowStartIfOnBatteries = false;
+                td.Settings.StopIfGoingOnBatteries = false;
+
+                td.Principal.RunLevel = TaskRunLevel.Highest;
+
+                ts.RootFolder.RegisterTaskDefinition(
+                    "Run Celer at Startup",
+                    td,
+                    TaskCreation.CreateOrUpdate,
+                    null,
+                    null,
+                    TaskLogonType.InteractiveToken
+                );
+                ts.GetTask("Run Celer at Startup").Enabled = true;
+                Console.WriteLine("Task created successfully!");
+            }
+        }
+
+        public static void RemoveAutoStartup()
+        {
+            var process = Process.GetCurrentProcess();
+            string fullPath = process.MainModule.FileName;
+            using (TaskService ts = new TaskService())
+            {
+                Microsoft.Win32.TaskScheduler.Task task = ts.GetTask("Run Celer at Startup");
+
+                if (task != null)
+                {
+                    task.Enabled = false;
+                    Console.WriteLine("Task disabled successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Task not found.");
+                }
             }
         }
     }

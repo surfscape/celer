@@ -51,6 +51,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="System.Management" Version="10.0.0" />
+		<PackageReference Include="TaskScheduler" Version="2.12.2" />
 		<PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
