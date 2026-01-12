@@ -55,7 +55,7 @@ namespace Celer.ViewModels
             _limpezaControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Limpeza>());
             _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
             _maintenanceControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Maintenance>());
-            tabControlCompactMode = _navigationService.CompactMode;
+            TabControlCompactMode = _navigationService.CompactMode;
         }
 
         private void OnCompactModeChanged(object sender, bool isCompact)
@@ -79,6 +79,28 @@ namespace Celer.ViewModels
 
             var innerView = _navigationService.GetInnerViewForTab(tabName);
             _navigationService.NavigateInternal(tabName, innerView);
+        }
+    }
+    public partial class QCMenuViewModel : ObservableObject
+    {
+        [RelayCommand]
+        private static void QCExitApp()
+        {
+            Application.Current.Shutdown();
+        }
+
+        [RelayCommand]
+        private static void QCOpenApp()
+        {
+            if (Application.Current.MainWindow.DataContext == null)
+            {
+                Application.Current.MainWindow.DataContext = App.AppHost.Services.GetService<MainWindowViewModel>();
+            }
+            Application.Current.MainWindow.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.Activate();
+            Application.Current.MainWindow.Focus();
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
     }
 }

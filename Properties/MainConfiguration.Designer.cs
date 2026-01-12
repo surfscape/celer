@@ -249,5 +249,17 @@ namespace Celer.Properties {
                 this["SidebarCompactMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CloseShouldMinimize {
+            get {
+                return ((bool)(this["CloseShouldMinimize"]));
+            }
+            set {
+                this["CloseShouldMinimize"] = value;
+            }
+        }
     }
 }

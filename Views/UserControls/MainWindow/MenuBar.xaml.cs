@@ -120,7 +120,7 @@ namespace Celer.Views.UserControls.MainWindow
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Close();
+            Application.Current.Shutdown();
         }
     }
 

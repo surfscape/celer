@@ -56,9 +56,7 @@ public partial class App : Application
             }
         }
 
-        if (!e.Args.Contains("-silent"))
-        {
-            AppHost = Host.CreateDefaultBuilder()
+        AppHost = Host.CreateDefaultBuilder()
     .ConfigureServices(
         (context, services) =>
         {
@@ -98,6 +96,9 @@ public partial class App : Application
         }
     )
     .Build();
+        bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
+        if (!e.Args.Contains("-silent") && hasUserDoneSetup)
+        {
             if (AppHost == null)
             {
                 MessageBox.Show(
@@ -108,35 +109,24 @@ public partial class App : Application
                 );
                 throw new InvalidOperationException("AppHost not initialized");
             }
-            bool hasUseDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
             var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
-            if (MainConfiguration.Default.Theme == 1)
-            {
-                Current.ThemeMode = ThemeMode.Light;
-            }
-            else if (MainConfiguration.Default.Theme == 2)
-            {
-                Current.ThemeMode = ThemeMode.Dark;
-            }
-            if (!hasUseDoneSetup)
-            {
-                var onboardingWindow = new Onboarding();
-                onboardingWindow.Show();
-            }
-            else
-            {
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
-            }
             if (MainConfiguration.Default.GraphicRenderingMode == 1)
                 RenderOptions.ProcessRenderMode = RenderMode.Default;
             else if (MainConfiguration.Default.GraphicRenderingMode == 2)
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+        }
+        else if (!hasUserDoneSetup)
+        {
+            var onboardingWindow = new Onboarding();
+            onboardingWindow.Show();
         } else
         {
-            MessageBox.Show("Celer is running in silent mode.");
-            AboutWindow window = new AboutWindow();
-            window.Show();
+            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
+            surfScapeGateway.MainWindowTrigger = true;
+            surfScapeGateway.SilentStartup = true;
+            surfScapeGateway.ShowDialog();
         }
         base.OnStartup(e);
     }

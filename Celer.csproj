@@ -16,6 +16,7 @@
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
 	</PropertyGroup>
 	<PropertyGroup>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
@@ -24,20 +25,26 @@
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Resources\Assets\fluent_heart.png" />
+	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="celer_icon.ico" />
 		<Resource Include="Resources\Assets\celer_256.png" />
+		<Resource Include="Resources\Assets\fluent_heart.png" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="ByteSize" Version="2.1.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
 		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="6.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />

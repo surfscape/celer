@@ -5,6 +5,9 @@
         xmlns:local="clr-namespace:Celer.Views.Windows"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx="clr-namespace:Celer.Resources.i18n"
+        mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        d:DataContext="{d:DesignInstance Type=local:OnboardingViewModel}"
         Title="{x:Static resx:Strings.Onboarding_WindowTitle}"
         Width="800"
         Icon="/celer_icon.ico"
@@ -93,7 +96,7 @@
                     </ScrollViewer>
                 </Border>
                 <StackPanel x:Name="OnboardingOptions">
-                    <CheckBox Margin="0,0,0,6"
+                    <CheckBox Margin="0,0,0,4"
                               IsChecked="{Binding AcceptTerms}"
                               VerticalAlignment="Stretch">
                         <TextBlock Margin="0,0,0,0"
@@ -103,7 +106,8 @@
                                            NavigateUri="https://surfscape.eu/projects/celer/legal/privacy/"
                                            RequestNavigate="Hyperlink_RequestNavigate">Privacy Policy</Hyperlink></TextBlock>
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding AutoUpdates}">
+                    <CheckBox IsChecked="{Binding AutoUpdates}"
+                              Margin="0,0,0,4">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -116,6 +120,25 @@
                                         Background="Transparent"
                                         VerticalAlignment="Bottom"
                                         ToolTip="This let's Celer update it's signatures when starting up without manually updating them in the Tools menu. This can later be changed in the settings.">
+                                <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                          Kind="BadgeQuestionMark"
+                                                          Width="14" />
+                            </StackPanel>
+                        </Grid>
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding AutoStartup}">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0"
+                                       Text="Open Celer on startup" />
+                            <StackPanel Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Background="Transparent"
+                                        VerticalAlignment="Bottom"
+                                        ToolTip="This allows Celer to run when starting up Windows which allows you to use Celer Quick Center available in the icon tray.">
                                 <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                           Kind="BadgeQuestionMark"
                                                           Width="14" />

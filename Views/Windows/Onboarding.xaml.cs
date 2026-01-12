@@ -38,22 +38,22 @@ namespace Celer.Views.Windows
             public Action? IsDone { get; set; }
 
             [ObservableProperty]
-            private bool? acceptTerms = false;
+            private bool acceptTerms = false;
 
             [ObservableProperty]
-            private bool? autoUpdates = false;
+            private bool autoUpdates = false;
+
+            [ObservableProperty]
+            private bool autoStartup = false;
 
             [RelayCommand]
             private void Start(string url)
             {
-                if (AcceptTerms is not null && AutoUpdates is not null)
-                {
-
-                    Properties.MainConfiguration.Default.HasUserDoneSetup = (bool)AcceptTerms;
-                    Properties.MainConfiguration.Default.EnableAutoSurfScapeGateway = (bool)AutoUpdates;
-                    Properties.MainConfiguration.Default.Save();
-                }
-
+                Properties.MainConfiguration.Default.HasUserDoneSetup = AcceptTerms;
+                Properties.MainConfiguration.Default.EnableAutoSurfScapeGateway = AutoUpdates;
+                Properties.MainConfiguration.Default.AutoStartup = AutoStartup;
+                Properties.MainConfiguration.Default.CloseShouldMinimize = AutoStartup;
+                Properties.MainConfiguration.Default.Save();
 
                 var gateway = App.AppHost?.Services.GetService<SurfScapeGateway>();
                 if (gateway is not null)

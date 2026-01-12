@@ -83,11 +83,24 @@
                                                   ItemsSource="{Binding Themes}"
                                                   SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
                                     </Grid>
-
                                     <CheckBox IsChecked="{Binding EnableRounding}"
                                               ToolTip="Round most values to one decimal case. Do note that some values may not respect this preference.">Round values</CheckBox>
                                     <CheckBox IsChecked="{Binding SaveSidebarCompactMode}"
                                               ToolTip="Saves the current sidebar compact state.">Save sidebar state</CheckBox>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Style="{DynamicResource Heading1}"
+                                       Margin="0,12,0,12">Startup</TextBlock>
+                            <Border CornerRadius="4"
+                                    Padding="12"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}">
+                                <StackPanel>
+                                    <CheckBox IsChecked="{Binding StartWithWindows}"
+                                              ToolTip="Start Celer minimized when Windows starts">Start with Windows</CheckBox>
+                                    <CheckBox IsChecked="{Binding CloseShouldMinimize}"
+                                              ToolTip="Closing will make Celer go into the icon tray">Close should minimize to the icon tray</CheckBox>
                                 </StackPanel>
                             </Border>
                             <TextBlock Visibility="Collapsed" Margin="0,12,0,4"

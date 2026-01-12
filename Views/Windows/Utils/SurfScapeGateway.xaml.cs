@@ -35,6 +35,7 @@ namespace Celer.Views.Windows.Utils
         /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, it can still open if triggered manually.
         /// </summary>
         public bool MainWindowTrigger { get; set; } = false;
+        public bool SilentStartup { get; set; } = false;
 
         public SurfScapeGateway(MainWindow mainWindow)
         {
@@ -47,9 +48,13 @@ namespace Celer.Views.Windows.Utils
 
         private void InitializeApp()
         {
-            if (MainWindowTrigger == true)
+            if (MainWindowTrigger)
             {
-                _mainWindow.Show();
+                if (SilentStartup)
+                    _mainWindow.Visibility = Visibility.Collapsed;
+                else
+                    _mainWindow.Show();
+                Close();
             }
             Close();
         }

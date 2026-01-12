@@ -13,11 +13,12 @@
     MinHeight="620"
     MaxWidth="940"
     ResizeMode="CanMinimize"
-    WindowStartupLocation="CenterScreen"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:Celer.Utilities"
         xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
-    mc:Ignorable="d">
+        mc:Ignorable="d">
     <Window.Resources>
         <Style TargetType="ContentControl">
             <Setter Property="Focusable"
@@ -85,6 +86,20 @@
                 </local:CompactTabControl>
             </Grid>
         </Border>
+        <tb:TaskbarIcon IconSource="/Resources/Assets/celer_256.png"
+                        ToolTipText="Celer">
+            <tb:TaskbarIcon.TrayPopup>
+                <mainwindow:QuickCenter></mainwindow:QuickCenter>
+            </tb:TaskbarIcon.TrayPopup>
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu x:Name="QCMenu">
+                    <MenuItem Header="Open"
+                              Command="{Binding QCOpenAppCommand}" />
+                    <MenuItem Header="Exit"
+                              Command="{Binding QCExitAppCommand}" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
     </Grid>
 </Window>
 

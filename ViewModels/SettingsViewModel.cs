@@ -26,6 +26,8 @@ namespace Celer.ViewModels
         private string _initialTrackProcess = string.Empty;
         private bool _initialEnableRounding;
         private bool _initialSaveSidebarCompactMode;
+        private bool _initialStartWithWindows;
+        private bool _initialCloseMinimize;
         private string _initialCurrentTheme = string.Empty;
         private string _initialGraphicRenderingMode = string.Empty;
         private List<string> _initialPaths = [];
@@ -159,6 +161,16 @@ namespace Celer.ViewModels
             MainConfiguration.Default.SidebarCompactMode = false;
         }
 
+        [ObservableProperty]
+        private bool startWithWindows = MainConfiguration.Default.AutoStartup;
+
+        partial void OnStartWithWindowsChanged(bool value) => CheckForUnsavedChanges();
+
+        [ObservableProperty]
+        private bool closeShouldMinimize = MainConfiguration.Default.CloseShouldMinimize;
+
+        partial void OnCloseShouldMinimizeChanged(bool value) => CheckForUnsavedChanges();
+
         public ObservableCollection<string> Themes { get; } = ["System","Light", "Dark"];
 
         [ObservableProperty]
@@ -200,6 +212,8 @@ namespace Celer.ViewModels
             _initialTrackProcess = TrackProcess;
             _initialEnableRounding = EnableRounding;
             _initialSaveSidebarCompactMode = SaveSidebarCompactMode;
+            _initialStartWithWindows = StartWithWindows;
+            _initialCloseMinimize = CloseShouldMinimize;
             _initialCurrentTheme = CurrentTheme;
             _initialPaths = new List<string>(Paths);
             _initialEnableExportCleaningLog = EnableExportCleaningLog;
@@ -222,7 +236,7 @@ namespace Celer.ViewModels
                     _initialTrackProcess,
                     System.StringComparison.Ordinal
                 )
-                || EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode
+                || EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode || StartWithWindows != _initialStartWithWindows || CloseShouldMinimize != _initialCloseMinimize
                 || !string.Equals(
                     CurrentTheme,
                     _initialCurrentTheme,
@@ -252,13 +266,15 @@ namespace Celer.ViewModels
             {
                 Paths.CollectionChanged -= OnPathsCollectionChanged;
 
+                CurrentTheme = _initialCurrentTheme;
+                EnableRounding = _initialEnableRounding;
+                SaveSidebarCompactMode = _initialSaveSidebarCompactMode;
+                StartWithWindows = _initialStartWithWindows;
+                CloseShouldMinimize = _initialCloseMinimize;
                 EnableAlertCPUTracking = _initialEnableAlertCPUTracking;
                 EnableAlertMemoryTracking = _initialEnableAlertMemoryTracking;
                 EnableAlertTrackProcess = _initialEnableAlertTrackProcess;
                 TrackProcess = _initialTrackProcess;
-                EnableRounding = _initialEnableRounding;
-                SaveSidebarCompactMode = _initialSaveSidebarCompactMode;
-                CurrentTheme = _initialCurrentTheme;
                 EnableExportCleaningLog = _initialEnableExportCleaningLog;
                 GraphicRenderingMode = _initialGraphicRenderingMode;
 
@@ -273,18 +289,22 @@ namespace Celer.ViewModels
             {
                 _isUpdatingChildrenFromMaster = false;
             }
-            OnPropertyChanged(nameof(EnableAlertCPUTracking));
-            OnPropertyChanged(nameof(EnableAlertMemoryTracking));
-            OnPropertyChanged(nameof(EnableAlertTrackProcess));
-            OnPropertyChanged(nameof(TrackProcess));
+
+            OnPropertyChanged(nameof(CurrentTheme));
             OnPropertyChanged(nameof(EnableRounding));
             OnPropertyChanged(nameof(SaveSidebarCompactMode));
-            OnPropertyChanged(nameof(CurrentTheme));
+            OnPropertyChanged(nameof(StartWithWindows));
+            OnPropertyChanged(nameof(CloseShouldMinimize));
+            
             OnPropertyChanged(nameof(EnableExportCleaningLog));
             OnPropertyChanged(nameof(Paths));
 
             OnPropertyChanged(nameof(EnableAlerts));
             OnPropertyChanged(nameof(AreInnerAlertsEnabled));
+            OnPropertyChanged(nameof(EnableAlertCPUTracking));
+            OnPropertyChanged(nameof(EnableAlertMemoryTracking));
+            OnPropertyChanged(nameof(EnableAlertTrackProcess));
+            OnPropertyChanged(nameof(TrackProcess));
             OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
 
             OnPropertyChanged(nameof(GraphicRenderingMode));
@@ -295,14 +315,16 @@ namespace Celer.ViewModels
         [RelayCommand]
         private void Save()
         {
+            MainConfiguration.Default.Theme = CurrentTheme == "System" ? 0 : CurrentTheme == "Light" ? 1 : 2;
+            MainConfiguration.Default.EnableRounding = EnableRounding;
+            MainConfiguration.Default.SaveSidebarCompactMode = SaveSidebarCompactMode;
+            MainConfiguration.Default.AutoStartup = StartWithWindows;
+            MainConfiguration.Default.CloseShouldMinimize = CloseShouldMinimize;
+            MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
             MainConfiguration.Default.ALERTS_CPUTrackingEnable = EnableAlertCPUTracking;
             MainConfiguration.Default.ALERTS_MemoryTrackingEnable = EnableAlertMemoryTracking;
             MainConfiguration.Default.ALERTS_EnableTrackProcess = EnableAlertTrackProcess;
             MainConfiguration.Default.ALERTS_TrackProcess = TrackProcess;
-            MainConfiguration.Default.EnableRounding = EnableRounding;
-            MainConfiguration.Default.SaveSidebarCompactMode = SaveSidebarCompactMode;
-            MainConfiguration.Default.Theme = CurrentTheme == "System" ? 0 : CurrentTheme == "Light" ? 1 : 2;
-            MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
             MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? 0 : GraphicRenderingMode == "Hardware (default)" ? 1 : 2;
             var sc = new StringCollection();
             foreach (var p in Paths)
