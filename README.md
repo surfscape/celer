@@ -53,11 +53,13 @@ The setup is hosted on GitHub and can be downloaded either through [GitHub Relea
 We are currently planning new features some of these include:
 
 - Support for third-party tools (ex: AdWare Cleaner, TRON Script, Snappy Driver Installer Origin)
-- A frontend for Winget with recommended software
+- Support for third-party plugins (ex: AIDA64 and HWiNFO for system status)
+- Frontend for Winget with bulk installing and updating
 - ~~Light theme (already available on beta 2 but without a setting to change it)~~ Fully implemented with [commit `f70dd49`](https://github.com/surfscape/celer/commit/f70dd49088783e92f89f3728ccd6fe2eb2620edb)
 - Multi-language support
-- Run in the background (wip in beta 2)
-- Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status) (wip in beta 2)
+- ~~Run in the background~~ Fully implemented with [commit `8811595`](https://github.com/surfscape/celer/commit/88115954d3562ae827a416edd91e21c76f483ba8)
+- ~~Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status)~~ Fully implemented with [commit `8811595`](https://github.com/surfscape/celer/commit/88115954d3562ae827a416edd91e21c76f483ba8)
+- Additional modules (ex: Process Manager, Disk Utilities, Windows Components Manager, and more)
 
 ## Contributing
 
