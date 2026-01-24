@@ -39,7 +39,8 @@ public partial class App : Application
         else if (MainConfiguration.Default.Theme == 2)
         {
             Current.ThemeMode = ThemeMode.Dark;
-        } else
+        }
+        else
         {
             Current.ThemeMode = ThemeMode.System;
         }
@@ -110,8 +111,8 @@ public partial class App : Application
                 throw new InvalidOperationException("AppHost not initialized");
             }
             var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
-                surfScapeGateway.MainWindowTrigger = true;
-                surfScapeGateway.ShowDialog();
+            surfScapeGateway.MainWindowTrigger = true;
+            surfScapeGateway.ShowDialog();
             if (MainConfiguration.Default.GraphicRenderingMode == 1)
                 RenderOptions.ProcessRenderMode = RenderMode.Default;
             else if (MainConfiguration.Default.GraphicRenderingMode == 2)
@@ -121,7 +122,8 @@ public partial class App : Application
         {
             var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
-        } else
+        }
+        else
         {
             var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
             surfScapeGateway.MainWindowTrigger = true;
