@@ -9,7 +9,8 @@
 > [!IMPORTANT]
 > Celer is still a work in progress and thus should only be used for testing. Please be patient for a stable release.
 
-[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total)
+[![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/surfscape/celer/latest/total)
+
 
 ## Table of Contents
 
