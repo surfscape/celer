@@ -145,10 +145,10 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource AccentFillColorDefaultBrush}" />
         <Setter Property="Background"
-                Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                Value="{DynamicResource ControlStrongFillColorDefaultBrush}" />
         <Setter Property="BorderThickness"
-                Value="0"></Setter>
+                Value="0" />
         <Setter Property="MinHeight"
-                Value="16"></Setter>
+                Value="4" />
     </Style>
 </ResourceDictionary>
