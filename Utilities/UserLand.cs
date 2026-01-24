@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using Microsoft.Win32.TaskScheduler;
+﻿using Microsoft.Win32.TaskScheduler;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 

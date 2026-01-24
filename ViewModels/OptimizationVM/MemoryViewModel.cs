@@ -21,7 +21,7 @@ namespace Celer.ViewModels.OptimizationVM
         public ObservableCollection<RamSlotInfo> Slots { get; } = [];
 
         public MemoryViewModel()
-        { 
+        {
             UpdateMemoryInfo(false);
             _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);
             _updateTimer.Start();

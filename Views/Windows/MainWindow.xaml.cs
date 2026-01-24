@@ -18,15 +18,12 @@ public partial class MainWindow : Window
         IsVisibleChanged += new DependencyPropertyChangedEventHandler(CheckVisibility);
         DataContext = _viewModel;
         QCMenu.DataContext = new QCMenuViewModel();
-
     }
 
     void CheckVisibility(object sender, DependencyPropertyChangedEventArgs e)
     {
         if (Visibility == Visibility.Visible && DataContext == null)
-        {
             DataContext = _viewModel;
-        }
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -36,9 +33,8 @@ public partial class MainWindow : Window
             e.Cancel = true;
             Visibility = Visibility.Collapsed;
             DataContext = null;
-        } else
-        {
-            e.Cancel = false;
         }
+        else
+            e.Cancel = false;
     }
 }

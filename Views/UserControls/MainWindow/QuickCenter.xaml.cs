@@ -4,11 +4,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 
 
 namespace Celer.Views.UserControls.MainWindow
@@ -77,7 +75,8 @@ namespace Celer.Views.UserControls.MainWindow
         }
 
         [RelayCommand]
-        private void EmptyRecycleBin() {
+        private void EmptyRecycleBin()
+        {
             CanRecycleBin = false;
             IsRecycleBin = true;
             long size = 0;
@@ -95,7 +94,7 @@ namespace Celer.Views.UserControls.MainWindow
                 fi.Delete();
             }
             var byteFileSize = ByteSize.FromBytes(size);
-            RecycleCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteFileSize.MegaBytes,1) : byteFileSize.MegaBytes;
+            RecycleCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteFileSize.MegaBytes, 1) : byteFileSize.MegaBytes;
         }
 
         [RelayCommand]
@@ -122,7 +121,7 @@ namespace Celer.Views.UserControls.MainWindow
             {
                 size += fi.Length;
                 var byteSize = ByteSize.FromBytes(size);
-                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteTotalSize.MegaBytes,1) : byteTotalSize.MegaBytes;
+                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteTotalSize.MegaBytes, 1) : byteTotalSize.MegaBytes;
                 try
                 {
                     fi.Delete();

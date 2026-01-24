@@ -157,7 +157,8 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private bool saveSidebarCompactMode = MainConfiguration.Default.SaveSidebarCompactMode;
 
-        partial void OnSaveSidebarCompactModeChanged(bool value) {
+        partial void OnSaveSidebarCompactModeChanged(bool value)
+        {
             CheckForUnsavedChanges();
             MainConfiguration.Default.SidebarCompactMode = false;
         }
@@ -172,7 +173,7 @@ namespace Celer.ViewModels
 
         partial void OnCloseShouldMinimizeChanged(bool value) => CheckForUnsavedChanges();
 
-        public ObservableCollection<string> Themes { get; } = ["System","Light", "Dark"];
+        public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
 
         [ObservableProperty]
         private string currentTheme = MainConfiguration.Default.Theme == 0 ? "System" : MainConfiguration.Default.Theme == 1 ? "Light" : "Dark";
@@ -296,7 +297,7 @@ namespace Celer.ViewModels
             OnPropertyChanged(nameof(SaveSidebarCompactMode));
             OnPropertyChanged(nameof(StartWithWindows));
             OnPropertyChanged(nameof(CloseShouldMinimize));
-            
+
             OnPropertyChanged(nameof(EnableExportCleaningLog));
             OnPropertyChanged(nameof(Paths));
 
@@ -332,12 +333,14 @@ namespace Celer.ViewModels
                 sc.Add(p);
             MainConfiguration.Default.CLEANENGINE_CustomPaths = sc;
 
-            if(MainConfiguration.Default.AutoStartup) {
+            if (MainConfiguration.Default.AutoStartup)
+            {
                 UserLand.SetAutoStartup();
-            } else
+            }
+            else
                 UserLand.RemoveAutoStartup();
 
-                MainConfiguration.Default.Save();
+            MainConfiguration.Default.Save();
 
             StoreInitialValues();
             CheckForUnsavedChanges();

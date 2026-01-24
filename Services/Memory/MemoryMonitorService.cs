@@ -19,7 +19,7 @@ namespace Celer.Services.Memory
                 UsedMemoryMB = GetUsedMemoryMB(),
                 TotalMemoryMB = Math.Round(GetTotalMemory()),
                 SpeedMHz = GetMemorySpeed(),
-                VirtualUsedMB = MainConfiguration.Default.EnableRounding ? (int)virtualUsed : Math.Round(virtualUsed,3),
+                VirtualUsedMB = MainConfiguration.Default.EnableRounding ? (int)virtualUsed : Math.Round(virtualUsed, 3),
                 VirtualTotalMB = virtualTotal,
                 Slots = GetRamSlotInfo(),
             };
@@ -99,7 +99,7 @@ namespace Celer.Services.Memory
                 double totalMB = memStatus.ullTotalPageFile / (1024.00 * 1024.00);
                 double usedMB =
                     (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024.00 * 1024.00);
-                    return (totalMB, usedMB);
+                return (totalMB, usedMB);
             }
             return (0, 0);
         }
@@ -143,7 +143,7 @@ namespace Celer.Services.Memory
                         var deviceLocator = obj["DeviceLocator"] != null ? Convert.ToString(obj["DeviceLocator"]) : "Undefined";
 
                         int parsedSlotId = ParseSlotNumber(deviceLocator, bankLabel);
-                        
+
 
                         if (parsedSlotId == -1)
                         {
