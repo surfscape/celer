@@ -10,7 +10,7 @@ namespace Celer.Converters
             bool rounding = false;
             if (parameter == null)
                 parameter = false;
-            
+
             if (value is double mb)
             {
                 if (mb >= 1024 && bool.TryParse(parameter.ToString(), out rounding))
