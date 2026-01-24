@@ -132,9 +132,9 @@ namespace Celer.ViewModels
                         new CleanupItem
                         {
                             Name = name!,
-                            Description = item.TryGetProperty("description", out var desc)
-                                ? desc.GetString()
-                                : null,
+                            Description = item.TryGetProperty("description", out JsonElement desc)
+                                ? desc.GetString() ?? string.Empty
+                                : string.Empty,
                             Actions = new Action
                             {
                                 Type = type!,
@@ -320,7 +320,7 @@ namespace Celer.ViewModels
         /// <summary>
         /// Deletes all files and folders in a specified directory recursively.
         /// </summary>
-        /// <param name="resolvedPath">The path of the directory that we want to delete it's content</param>
+        /// <param name="resolvedPath">The path of the directory that we want to delete the contents of</param>
         /// <param name="freed">To increment the total space saved</param>
         /// <param name="task">The name of the current task we are executing</param>
         public void DeleteFolderContent(string resolvedPath, ref long freed, string task)
@@ -408,7 +408,7 @@ namespace Celer.ViewModels
         public partial class CleanupItem : ObservableObject
         {
             public required string Name { get; set; }
-            public string? Description { get; set; }
+            public string Description { get; set; } = string.Empty;
             public required Action Actions { get; set; }
             public List<RequiredProcess>? RequiredProcesses { get; set; }
 

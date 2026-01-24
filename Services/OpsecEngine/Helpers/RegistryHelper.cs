@@ -35,6 +35,6 @@
             );
 
         private static int GetRegDWORD(string path, string name) =>
-            Convert.ToInt32(Microsoft.Win32.Registry.GetValue(path, name, 1) ?? 1);
+            Convert.ToInt32(Microsoft.Win32.Registry.GetValue(path, name, 1));
     }
 }
