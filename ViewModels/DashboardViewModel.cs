@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
@@ -101,11 +100,11 @@ public partial class DashboardViewModel : ObservableObject
     public DashboardViewModel(NavigationService navigationService)
     {
         _navigationService = navigationService;
-        MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
         _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
+        //MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
     }
 
-    private void OnSettingsChanged(object sender, PropertyChangedEventArgs e)
+    /*private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
         var propertiesToWatch = new[]
         {
@@ -118,6 +117,7 @@ public partial class DashboardViewModel : ObservableObject
         {
             EnableAlertTracking();
         }
+
     }
 
     private void EnableAlertTracking()
@@ -136,7 +136,7 @@ public partial class DashboardViewModel : ObservableObject
         {
             EnableAlerts = false;
         }
-    }
+    }*/
 
 
     public async Task InitializeAsync()
@@ -152,13 +152,13 @@ public partial class DashboardViewModel : ObservableObject
                 WindowsVersion = GetWindowsVersion();
                 PostTime = GetPostTime();
                 TotalMemory = GetTotalMemory();
-                
+
                 LoadCpuInfo();
                 LoadGpuInfo();
             });
 
             GetDriveInfo();
-            EnableAlertTracking();
+            //EnableAlertTracking();
         }
         catch (Exception ex)
         {
@@ -272,7 +272,7 @@ public partial class DashboardViewModel : ObservableObject
             foreach (var item in collection)
             {
                 var result = (ulong)item["TotalVisibleMemorySize"];
-                return  MainConfiguration.Default.EnableRounding ? (int) Math.Floor((result / 1024.0)) : result / 1024.0;
+                return MainConfiguration.Default.EnableRounding ? (int)Math.Floor((result / 1024.0)) : result / 1024.0;
             }
         }
         catch (Exception ex)
@@ -315,7 +315,8 @@ public partial class DashboardViewModel : ObservableObject
                 if (o != null)
                 {
                     int fwPostTimeMs = Convert.ToInt32(o);
-                    return fwPostTimeMs / 1000.0;
+                    double postTime = fwPostTimeMs / 1000.0;
+                    return MainConfiguration.Default.EnableRounding ? Math.Round(postTime, 1) : postTime;
                 }
             }
         }
@@ -446,4 +447,5 @@ public partial class DashboardViewModel : ObservableObject
     {
         _navigationService.Navigate("Optimization", view);
     }
+
 }
