@@ -61,6 +61,15 @@ namespace Celer.ViewModels.OptimizationVM
         private int chargedCapacityPercentage;
 
         [ObservableProperty]
+        private double remainingCapacityD;
+
+        [ObservableProperty]
+        private double factoryCapacityD;
+
+        [ObservableProperty]
+        private double chargedCapacityD;
+
+        [ObservableProperty]
         private bool isLegacyPowerPlansEnabled = MainConfiguration.Default.EnableLegacyPowerPlans;
 
         public BatteryViewModel()
@@ -130,6 +139,9 @@ namespace Celer.ViewModels.OptimizationVM
             FactoryCapacity = info.FactoryCapacity;
             ChargedCapacity = info.ChargedCapacity;
             ChargedCapacityPercentage = info.ChargedCapacityPercentage;
+            RemainingCapacityD = info.RemainingCapacity / 1000.0;
+            FactoryCapacityD = info.FactoryCapacity / 1000.0;
+            ChargedCapacityD = info.ChargedCapacity / 1000.0;
         }
 
         partial void OnIsFastBootEnabledChanged(bool value)
