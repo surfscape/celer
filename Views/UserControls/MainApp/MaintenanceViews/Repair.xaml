@@ -12,7 +12,6 @@
     mc:Ignorable="d">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Style="{StaticResource Heading1}" Text="Tarefas Disponíveis" />
             <ListBox Margin="0,6,0,0"
          ItemsSource="{Binding RepairSteps}"
          HorizontalContentAlignment="Stretch">
@@ -64,10 +63,10 @@
             <Button
                     Margin="0,8,0,0"
                     Command="{Binding ToggleSelectAllCommand}"
-                    Content="Selecionar/Deselecionar Todos"
-                HorizontalAlignment="Left"
+                    Content="Select/Deselect All Tasks"
+                HorizontalAlignment="Right"
                 />
-            <TextBlock Style="{DynamicResource Heading2}" Margin="0,8">Progresso Total</TextBlock>
+            <TextBlock Style="{DynamicResource Heading2}" Margin="0,8">Total Progress</TextBlock>
             <ProgressBar
                 Margin="0,0,0,10"
                 Maximum="100"
@@ -76,7 +75,7 @@
 
             <Button Margin="0,0,0,10" HorizontalAlignment="Center"
                 Command="{Binding StartRepairCommand}"
-                Content="Iniciar Reparação" />
+                Content="Start Repair" />
             </StackPanel>
     </Grid>
 </UserControl>
