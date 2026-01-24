@@ -13,17 +13,18 @@ namespace Celer.ViewModels.MaintenanceVM
             [
                 new RepairStep(
                     "DISM",
-                    "Repara e verifica a integridade dos ficheiros do sistema.",
+                    "Repairs and verifies the integrity of system files.",
                     "dism /online /cleanup-image /restorehealth"
                 ),
                 new RepairStep(
                     "SFC",
-                    "Verifica e repara ficheiros corrompidos do sistema.",
+                    "Checks and repairs corrupted system files.",
                     "sfc /scannow"
+
                 ),
                 new RepairStep(
                     "CheckDisk",
-                    "Verificar e corrigir erros no sistema de ficheiros e setores no disco.",
+                    "Check and fix errors in the file system and sectors on the disk.",
                     "chkdsk C: /f /r",
                     requiresReboot: true
                 ),
@@ -69,7 +70,7 @@ namespace Celer.ViewModels.MaintenanceVM
 
                 if (step.RequiresReboot)
                 {
-                    step.StatusMessage = "Agendado para próximo arranque";
+                    step.StatusMessage = "Scheduled for next startup";
                     step.Progress = 100;
                 }
                 else
@@ -102,7 +103,7 @@ namespace Celer.ViewModels.MaintenanceVM
 
             try
             {
-                status.Report("Em execução...");
+                status.Report("Running...");
 
                 await Task.Run(() =>
                 {
@@ -165,12 +166,12 @@ namespace Celer.ViewModels.MaintenanceVM
                     process.BeginErrorReadLine();
                     process.WaitForExit();
                     progress.Report(100);
-                    status.Report("Concluído.");
+                    status.Report("Finished.");
                 });
             }
             catch (Exception ex)
             {
-                status.Report($"Erro: {ex.Message}");
+                status.Report($"Error: {ex.Message}");
                 progress.Report(100);
             }
         }
@@ -191,7 +192,7 @@ namespace Celer.ViewModels.MaintenanceVM
             private double progress;
 
             [ObservableProperty]
-            private string statusMessage = "Em espera";
+            private string statusMessage = string.Empty;
 
             [ObservableProperty]
             private bool isSelected = true;
