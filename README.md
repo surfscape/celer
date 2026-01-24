@@ -46,7 +46,7 @@ Celer is an app for Windows 10 & 11 with the purpose of giving you back control 
 
 We currently only provide x64 binaries and setup files for Celer but x86 and portable packages are planned when we reach a stable release.
 
-The setup is hosted on GitHub and can be downloaded either through [GitHub Releases](https://github.com/surfscape/celer/releases) or through [Celer's page on SurfScape](http://surfscape.eu/projects/celer/#downloads).
+The setup is hosted on GitHub and can be downloaded either through [GitHub Releases](https://github.com/surfscape/celer/releases) or through [Celer's page on SurfScape](http://surfscape.eu/celer/#downloads).
 
 ## Roadmap
 
