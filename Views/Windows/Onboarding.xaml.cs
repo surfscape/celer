@@ -1,4 +1,5 @@
-﻿using Celer.Views.Windows.Utils;
+﻿using Celer.Utilities;
+using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,8 @@ namespace Celer.Views.Windows
                 Properties.MainConfiguration.Default.CloseShouldMinimize = AutoStartup;
                 Properties.MainConfiguration.Default.Save();
 
+                if (Properties.MainConfiguration.Default.AutoStartup)
+                    UserLand.SetAutoStartup();
                 var gateway = App.AppHost?.Services.GetService<SurfScapeGateway>();
                 if (gateway is not null)
                 {
