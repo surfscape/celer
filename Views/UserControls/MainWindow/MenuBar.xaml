@@ -128,6 +128,7 @@
     </UserControl.Resources>
     <Menu BorderThickness="0"
           HorizontalAlignment="Stretch"
+          x:Name="MMenu"
           FontSize="12">
         <Menu.ItemsPanel>
             <ItemsPanelTemplate>
@@ -204,32 +205,20 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem x:Name="AboutMenu"
+        <MenuItem 
                   Header="_Help">
             <MenuItem Command="{Binding OpenLinkCommand}"
-                      CommandParameter="https://surfscape.eu/support"
+                      CommandParameter="https://surfscape.eu/about/support"
                       Header="_Support">
                 <MenuItem.Icon>
                     <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                               Kind="LifeBuoy" />
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem Command="{Binding OpenLinkCommand}"
+                      CommandParameter="https://github.com/surfscape/celer/issues"
+                      Header="_Report Issues" />
             <Separator />
-            <MenuItem Command="{Binding OpenLinkCommand}"
-                      CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/jryIYOly60yYlx1sMiUFvgfa5JML2QV4aLDfPNDeags/"
-                      Header="_Feedback Form">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                              Kind="HandHelping" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Command="{Binding OpenLinkCommand}"
-                      CommandParameter="https://cryptpad.disroot.org/form/#/2/form/view/C1r1yBjeghM5pg1Nzc4s050GsWA18ZKGQ83FNlAQ0zo/"
-                      Header="_Report Errors" />
-            <Separator />
-            <MenuItem Command="{Binding OpenLinkCommand}"
-                      CommandParameter="https://status.surfscape.eu"
-                      Header="_Service Status" />
             <MenuItem Command="{Binding OpenAboutWindowCommand}"
                       Header="_About">
                 <MenuItem.Icon>
@@ -238,7 +227,11 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem HorizontalAlignment="Right" Margin="0,0,6,0">
+        <MenuItem HorizontalAlignment="Right"
+                  Margin="0,0,6,0"
+                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
+                  Command="{Binding OpenLinkCommand}"
+                  CommandParameter="https://ko-fi.com/reduxflakes">
             <MenuItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Assets/fluent_heart.png"

@@ -1,5 +1,4 @@
 ﻿using Celer.Services;
-using Celer.Utilities;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -22,7 +21,7 @@ namespace Celer.Views.UserControls.MainWindow
             InitializeComponent();
             _menuBarNavigation = menuBarNavigation;
             NavigationMenu.DataContext = _menuBarNavigation;
-            AboutMenu.DataContext = new AboutDataContext();
+            MMenu.DataContext = new AboutDataContext();
         }
 
         public partial class AboutDataContext : ObservableObject
