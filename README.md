@@ -13,13 +13,13 @@
 
 ## Table of Contents
 
-- [1. Introduction](#1-introduction)
-- [2. Features](#3-features)
-- [3. Installation](#4-installation)
-- [4. Requirements](#5-requirements)
-- [5. Roadmap](#6-roadmap)
-- [7. Contributing](#8-contributing)
-- [8. License](#9-license)
+- [1. Introduction](#introduction)
+- [2. Features](#features)
+- [3. Requirements](#requirements)
+- [4. Installation](#installation)
+- [5. Roadmap](#roadmap)
+- [7. Contributing](#contributing)
+- [8. License](#license)
 
 ## Introduction
 
@@ -33,12 +33,6 @@ Celer is an app for Windows 10 & 11 with the purpose of giving you back control 
 - Maintenance - easy access to Windows internal repair tools and network testing (with option to change DNS system-wide)
 - Privacy & Security - general information of the system's privacy and security ratings
 
-## Installation
-
-We currently only provide x64 binaries and setup files for Celer but x86 and portable packages are planned when we reach a stable release.
-
-The setup is hosted on GitHub and can be downloaded either through [GitHub Releases](https://github.com/surfscape/celer/releases) or through [Celer's page on SurfScape](http://surfscape.eu/projects/celer/#downloads).
-
 ### Requirements
 
 - Windows 10 or 11 (64-bit only)
@@ -47,6 +41,12 @@ The setup is hosted on GitHub and can be downloaded either through [GitHub Relea
 - [.NET Runtime 10 (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-10.0.0-windows-x64-installer) must be installed
 
 <small>\* This metric depends on the RAM available to .NET which might reduce/increase Celer memory usage</small>
+
+## Installation
+
+We currently only provide x64 binaries and setup files for Celer but x86 and portable packages are planned when we reach a stable release.
+
+The setup is hosted on GitHub and can be downloaded either through [GitHub Releases](https://github.com/surfscape/celer/releases) or through [Celer's page on SurfScape](http://surfscape.eu/projects/celer/#downloads).
 
 ## Roadmap
 
