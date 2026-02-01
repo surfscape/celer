@@ -56,9 +56,6 @@ public partial class DashboardViewModel : ObservableObject
     private ObservableCollection<DiskInformation> diskData = [];
 
     [ObservableProperty]
-    private ObservableCollection<AlertModel> alerts = [];
-
-    [ObservableProperty]
     private bool enableAlerts = false;
 
     /// <summary>
@@ -101,44 +98,7 @@ public partial class DashboardViewModel : ObservableObject
     {
         _navigationService = navigationService;
         _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
-        //MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
     }
-
-    /*private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        var propertiesToWatch = new[]
-        {
-        nameof(MainConfiguration.Default.ALERTS_CPUTrackingEnable),
-        nameof(MainConfiguration.Default.ALERTS_MemoryTrackingEnable),
-        nameof(MainConfiguration.Default.ALERTS_EnableTrackProcess)
-    };
-
-        if (propertiesToWatch.Contains(e.PropertyName))
-        {
-            EnableAlertTracking();
-        }
-
-    }
-
-    private void EnableAlertTracking()
-    {
-        if (
-    MainConfiguration.Default.ALERTS_CPUTrackingEnable
-    || MainConfiguration.Default.ALERTS_MemoryTrackingEnable
-    || MainConfiguration.Default.ALERTS_EnableTrackProcess
-)
-        {
-            EnableAlerts = true;
-            var alertService = new AlertMonitoringService(Alerts);
-            alertService.StartMonitoring();
-        }
-        else
-        {
-            EnableAlerts = false;
-        }
-    }*/
-
-
     public async Task InitializeAsync()
     {
         try
@@ -156,9 +116,7 @@ public partial class DashboardViewModel : ObservableObject
                 LoadCpuInfo();
                 LoadGpuInfo();
             });
-
             GetDriveInfo();
-            //EnableAlertTracking();
         }
         catch (Exception ex)
         {
@@ -220,8 +178,9 @@ public partial class DashboardViewModel : ObservableObject
                         {
                             return p.Threads.Count;
                         }
-                        catch
+                        catch(SystemException e)
                         {
+                            Debug.WriteLine($"Error when getting process count {e}");
                             return 0;
                         }
                     });
@@ -255,9 +214,9 @@ public partial class DashboardViewModel : ObservableObject
 
             LoadDxDiagInfo();
         }
-        catch (Exception ex)
+        catch (ArgumentNullException ex)
         {
-            Debug.WriteLine("Error loading GPU info: " + ex.Message);
+            Debug.WriteLine($"Error loading GPU info {ex.Message}");
         }
     }
 
