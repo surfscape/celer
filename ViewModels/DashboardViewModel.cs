@@ -55,9 +55,6 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<DiskInformation> diskData = [];
 
-    [ObservableProperty]
-    private bool enableAlerts = false;
-
     /// <summary>
     /// CPU Data
     /// </summary>
