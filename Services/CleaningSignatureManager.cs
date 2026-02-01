@@ -1,4 +1,5 @@
 ﻿using Celer.Properties;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 
@@ -24,7 +25,9 @@ namespace Celer.Services
                     return true;
                 }
             }
-            catch { }
+            catch(HttpRequestException e) {
+                Debug.WriteLine(e.Message);
+            }
             return false;
         }
     }

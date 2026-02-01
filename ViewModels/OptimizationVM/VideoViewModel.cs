@@ -3,6 +3,7 @@ using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Windows;
@@ -48,6 +49,7 @@ namespace Celer.ViewModels.OptimizationVM
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
+                Debug.WriteLine(e);
             }
             finally
             {
@@ -108,13 +110,12 @@ namespace Celer.ViewModels.OptimizationVM
                 try
                 {
                     dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
-                }
-                catch { }
-                try
-                {
                     shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
                 }
-                catch { }
+                catch(Exception e) {
+                    MessageBox.Show($"Error when parsing adapter memory {e}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Debug.WriteLine(e);
+                }
 
                 var gpuInfo = new GpuInfo
                 {
@@ -164,7 +165,10 @@ namespace Celer.ViewModels.OptimizationVM
                     }
                 );
             }
-            catch { }
+            catch(Exception e) {
+                MessageBox.Show($"Error parsing dxDiag {e}","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine(e);
+            }
 
             return list;
         }
