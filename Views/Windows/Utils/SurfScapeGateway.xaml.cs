@@ -151,7 +151,7 @@ namespace Celer.Views.Windows.Utils
                     {
                         try
                         {
-                            var proc = new Process
+                            using var proc = new Process
                             {
                                 StartInfo = new ProcessStartInfo
                                 {

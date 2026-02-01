@@ -8,11 +8,12 @@ using System.Windows.Forms;
 
 namespace Celer.Services.Memory
 {
-    public class MemoryMonitorService
+    public class MemoryMonitorService : IDisposable
     {
         public MemoryInfo GetMemoryInfo()
         {
             var (virtualTotal, virtualUsed) = GetVirtualMemory();
+
 
             return new MemoryInfo
             {
@@ -28,7 +29,8 @@ namespace Celer.Services.Memory
         // TODO implement a try-catch block since this can throw an exception if the PerformanceCounter is broken on the machine
         private static float GetUsedMemoryMB()
         {
-            float availableMB = new PerformanceCounter("Memory", "Available MBytes").NextValue();
+            using var availableMBCounter = new PerformanceCounter("Memory", "Available MBytes");
+            float availableMB = availableMBCounter.NextValue();
             double totalMB = GetTotalMemory();
             return (float)(totalMB - availableMB);
         }
@@ -344,6 +346,11 @@ namespace Celer.Services.Memory
                 23 => "LGA",
                 _ => $"Uknown ({id})",
             };
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

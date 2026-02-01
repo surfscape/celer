@@ -29,15 +29,12 @@ namespace Celer.Utilities
                 TaskDefinition td = ts.NewTask();
                 td.RegistrationInfo.Description = "Run Celer as admin at startup";
 
-                LogonTrigger lt = new LogonTrigger();
+                using LogonTrigger lt = new LogonTrigger();
                 lt.UserId = Environment.UserName;
                 td.Triggers.Add(lt);
 
-                td.Actions.Add(new ExecAction(
-                    fullPath,
-                    "-silent",
-                    null
-                ));
+                using ExecAction ea = new ExecAction(fullPath, "-silent", null);
+                td.Actions.Add(ea);
 
                 td.Settings.StartWhenAvailable = true;
                 td.Settings.DisallowStartIfOnBatteries = false;
