@@ -100,7 +100,7 @@ public partial class App : Application
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         if (!e.Args.Contains("-silent") && hasUserDoneSetup)
         {
-            if (AppHost is not null)
+            if (AppHost != null)
             {
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
@@ -112,12 +112,6 @@ public partial class App : Application
             }
             else
             {
-                MessageBox.Show(
-    "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
-    "Infrastructure Error",
-    MessageBoxButton.OK,
-    MessageBoxImage.Error
-);
                 throw new InvalidOperationException("AppHost not initialized");
             }
         }
