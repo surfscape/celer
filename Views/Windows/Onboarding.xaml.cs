@@ -48,7 +48,7 @@ namespace Celer.Views.Windows
             private bool autoStartup = false;
 
             [RelayCommand]
-            private void Start(string url)
+            private void Start()
             {
                 Properties.MainConfiguration.Default.HasUserDoneSetup = AcceptTerms;
                 Properties.MainConfiguration.Default.EnableAutoSurfScapeGateway = AutoUpdates;
