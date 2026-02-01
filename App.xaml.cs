@@ -13,6 +13,7 @@ using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -131,6 +132,10 @@ public partial class App : Application
             surfScapeGateway.MainWindowTrigger = true;
             surfScapeGateway.SilentStartup = true;
             surfScapeGateway.ShowDialog();
+        }
+        if(e.Args.Contains("-silent") && !hasUserDoneSetup)
+        {
+            Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
         }
         base.OnStartup(e);
     }
