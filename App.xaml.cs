@@ -26,6 +26,8 @@ public partial class App : Application
 {
     public static IHost? AppHost { get; private set; }
 
+    private Mutex? _singleInstanceMutex;
+
     public App()
     {
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
@@ -54,7 +56,9 @@ public partial class App : Application
         {
             if (!createdNew)
             {
-                return;
+                _singleInstanceMutex.Dispose();
+                _singleInstanceMutex = null;
+                Shutdown();
             }
         }
 
