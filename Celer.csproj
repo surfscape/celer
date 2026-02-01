@@ -17,6 +17,7 @@
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<ServerGarbageCollection>false</ServerGarbageCollection>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 	<PropertyGroup>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
