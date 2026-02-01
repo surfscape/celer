@@ -37,42 +37,6 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ALERTS_CPUTrackingEnable {
-            get {
-                return ((bool)(this["ALERTS_CPUTrackingEnable"]));
-            }
-            set {
-                this["ALERTS_CPUTrackingEnable"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ALERTS_MemoryTrackingEnable {
-            get {
-                return ((bool)(this["ALERTS_MemoryTrackingEnable"]));
-            }
-            set {
-                this["ALERTS_MemoryTrackingEnable"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("explorer")]
-        public string ALERTS_TrackProcess {
-            get {
-                return ((string)(this["ALERTS_TrackProcess"]));
-            }
-            set {
-                this["ALERTS_TrackProcess"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnableRounding {
             get {
@@ -103,18 +67,6 @@ namespace Celer.Properties {
             }
             set {
                 this["CLEANENGINE_CustomPaths"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ALERTS_EnableTrackProcess {
-            get {
-                return ((bool)(this["ALERTS_EnableTrackProcess"]));
-            }
-            set {
-                this["ALERTS_EnableTrackProcess"] = value;
             }
         }
         
@@ -163,18 +115,6 @@ namespace Celer.Properties {
             }
             set {
                 this["CLEANENGINE_EnableCustomSource"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public int ALERTS_CPUTrackingLimit {
-            get {
-                return ((int)(this["ALERTS_CPUTrackingLimit"]));
-            }
-            set {
-                this["ALERTS_CPUTrackingLimit"] = value;
             }
         }
         

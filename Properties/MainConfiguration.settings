@@ -5,15 +5,6 @@
     <Setting Name="HasUserDoneSetup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ALERTS_CPUTrackingEnable" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ALERTS_MemoryTrackingEnable" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ALERTS_TrackProcess" Type="System.String" Scope="User">
-      <Value Profile="(Default)">explorer</Value>
-    </Setting>
     <Setting Name="EnableRounding" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -22,9 +13,6 @@
     </Setting>
     <Setting Name="CLEANENGINE_CustomPaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="ALERTS_EnableTrackProcess" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DISKS_ShowHiddenDrives" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -37,9 +25,6 @@
     </Setting>
     <Setting Name="CLEANENGINE_EnableCustomSource" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ALERTS_CPUTrackingLimit" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="EnableAutoSurfScapeGateway" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
