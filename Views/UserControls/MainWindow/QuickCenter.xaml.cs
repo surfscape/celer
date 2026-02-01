@@ -121,7 +121,7 @@ namespace Celer.Views.UserControls.MainWindow
             {
                 size += fi.Length;
                 var byteSize = ByteSize.FromBytes(size);
-                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteTotalSize.MegaBytes, 1) : byteTotalSize.MegaBytes;
+                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteSize.MegaBytes, 1) : byteSize.MegaBytes;
                 try
                 {
                     fi.Delete();
@@ -136,7 +136,7 @@ namespace Celer.Views.UserControls.MainWindow
             {
                 size += fi.Length;
                 var byteSize = ByteSize.FromBytes(size);
-                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteTotalSize.MegaBytes, 1) : byteTotalSize.MegaBytes;
+                TempFilesCleaned = MainConfiguration.Default.EnableRounding ? Math.Round(byteSize.MegaBytes, 1) : byteSize.MegaBytes;
                 try
                 {
                     fi.Delete();
