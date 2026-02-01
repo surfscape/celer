@@ -100,23 +100,26 @@ public partial class App : Application
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         if (!e.Args.Contains("-silent") && hasUserDoneSetup)
         {
-            if (AppHost == null)
+            if (AppHost is not null)
+            {
+                var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
+                surfScapeGateway.MainWindowTrigger = true;
+                surfScapeGateway.ShowDialog();
+                if (MainConfiguration.Default.GraphicRenderingMode == 1)
+                    RenderOptions.ProcessRenderMode = RenderMode.Default;
+                else if (MainConfiguration.Default.GraphicRenderingMode == 2)
+                    RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+            }
+            else
             {
                 MessageBox.Show(
-                    "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
-                    "Infrastructure Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+    "Error while initializing AppHost. Please try to restart or reinstall Celer from an official source.",
+    "Infrastructure Error",
+    MessageBoxButton.OK,
+    MessageBoxImage.Error
+);
                 throw new InvalidOperationException("AppHost not initialized");
             }
-            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
-            surfScapeGateway.MainWindowTrigger = true;
-            surfScapeGateway.ShowDialog();
-            if (MainConfiguration.Default.GraphicRenderingMode == 1)
-                RenderOptions.ProcessRenderMode = RenderMode.Default;
-            else if (MainConfiguration.Default.GraphicRenderingMode == 2)
-                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
         }
         else if (!hasUserDoneSetup)
         {
