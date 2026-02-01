@@ -57,8 +57,6 @@ namespace Celer.Utilities
 
         public static void RemoveAutoStartup()
         {
-            var process = Process.GetCurrentProcess();
-            string fullPath = process.MainModule.FileName;
             using (TaskService ts = new TaskService())
             {
                 Microsoft.Win32.TaskScheduler.Task task = ts.GetTask("Run Celer at Startup");
