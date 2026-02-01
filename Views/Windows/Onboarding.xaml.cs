@@ -63,7 +63,7 @@ namespace Celer.Views.Windows
                 {
                     gateway.MainWindowTrigger = true;
                     IsDone?.Invoke();
-                    gateway?.ShowDialog();
+                    gateway.ShowDialog();
 
                 }
             }
