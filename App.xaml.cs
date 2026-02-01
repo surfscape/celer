@@ -1,4 +1,5 @@
-﻿using Celer.Properties;
+﻿using Celer.Models.Preferences;
+using Celer.Properties;
 using Celer.Services;
 using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
@@ -32,11 +33,11 @@ public partial class App : Application
 
     private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (MainConfiguration.Default.Theme == 1)
+        if (MainConfiguration.Default.Theme == (int)CelerTheme.Light)
         {
             Current.ThemeMode = ThemeMode.Light;
         }
-        else if (MainConfiguration.Default.Theme == 2)
+        else if (MainConfiguration.Default.Theme == (int)CelerTheme.Dark)
         {
             Current.ThemeMode = ThemeMode.Dark;
         }
@@ -105,9 +106,9 @@ public partial class App : Application
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
-                if (MainConfiguration.Default.GraphicRenderingMode == 1)
+                if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferHardware || MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.Auto)
                     RenderOptions.ProcessRenderMode = RenderMode.Default;
-                else if (MainConfiguration.Default.GraphicRenderingMode == 2)
+                else if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferSoftware)
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
             else

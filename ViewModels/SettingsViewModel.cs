@@ -1,3 +1,4 @@
+﻿using Celer.Models.Preferences;
 ﻿using Celer.Properties;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -62,12 +63,12 @@ namespace Celer.ViewModels
         public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
 
         [ObservableProperty]
-        private string currentTheme = MainConfiguration.Default.Theme == 0 ? "System" : MainConfiguration.Default.Theme == 1 ? "Light" : "Dark";
+        private string currentTheme = MainConfiguration.Default.Theme == (int)CelerTheme.Auto ? "System" : MainConfiguration.Default.Theme == (int)CelerTheme.Light ? "Light" : "Dark";
 
-        public ObservableCollection<string> RenderingModes { get; } = ["Auto", "Hardware (default)", "Software only"];
+        public ObservableCollection<string> RenderingModes { get; } = ["Auto (default)", "Hardware", "Software only"];
 
         [ObservableProperty]
-        public string graphicRenderingMode = MainConfiguration.Default.GraphicRenderingMode == 0 ? "Auto" : MainConfiguration.Default.GraphicRenderingMode == 1 ? "Hardware (default)" : "Software only";
+        public string graphicRenderingMode = MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.Auto ? "Auto (default)" : MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferHardware ? "Hardware (default)" : "Software only";
 
         partial void OnGraphicRenderingModeChanged(string value) => CheckForUnsavedChanges();
 
@@ -177,13 +178,13 @@ namespace Celer.ViewModels
         [RelayCommand]
         private void Save()
         {
-            MainConfiguration.Default.Theme = CurrentTheme == "System" ? 0 : CurrentTheme == "Light" ? 1 : 2;
+            MainConfiguration.Default.Theme = CurrentTheme == "System" ? (int)CelerTheme.Auto : CurrentTheme == "Light" ? (int)CelerTheme.Light : (int)CelerTheme.Dark;
             MainConfiguration.Default.EnableRounding = EnableRounding;
             MainConfiguration.Default.SaveSidebarCompactMode = SaveSidebarCompactMode;
             MainConfiguration.Default.AutoStartup = StartWithWindows;
             MainConfiguration.Default.CloseShouldMinimize = CloseShouldMinimize;
             MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
-            MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? 0 : GraphicRenderingMode == "Hardware (default)" ? 1 : 2;
+            MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? (int)CelerRenderMode.Auto : GraphicRenderingMode == "Hardware" ? (int)CelerRenderMode.PreferHardware : (int)CelerRenderMode.PreferSoftware;
             var sc = new StringCollection();
             foreach (var p in Paths)
                 sc.Add(p);
