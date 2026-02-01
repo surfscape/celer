@@ -30,8 +30,6 @@ namespace Celer.ViewModels
         private List<string> _initialPaths = [];
         private bool _initialEnableExportCleaningLog;
 
-        private bool _isUpdatingChildrenFromMaster = false;
-
         [ObservableProperty]
         private bool enableExportCleaningLog = MainConfiguration.Default.CLEANENGINE_ExportLog;
 
@@ -139,7 +137,6 @@ namespace Celer.ViewModels
 
         private void RevertChanges()
         {
-            _isUpdatingChildrenFromMaster = true;
             try
             {
                 Paths.CollectionChanged -= OnPathsCollectionChanged;
@@ -159,11 +156,10 @@ namespace Celer.ViewModels
                 }
                 Paths.CollectionChanged += OnPathsCollectionChanged;
             }
-            finally
+            catch (Exception ex)
             {
-                _isUpdatingChildrenFromMaster = false;
+                MessageBox.Show($"Error trying to revert changes {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
             OnPropertyChanged(nameof(CurrentTheme));
             OnPropertyChanged(nameof(EnableRounding));
             OnPropertyChanged(nameof(SaveSidebarCompactMode));
