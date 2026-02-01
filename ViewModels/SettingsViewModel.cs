@@ -21,10 +21,6 @@ namespace Celer.ViewModels
         { get; set; }
         public Action? CloseWindowAction { get; set; }
 
-        private bool _initialEnableAlertCPUTracking;
-        private bool _initialEnableAlertMemoryTracking;
-        private bool _initialEnableAlertTrackProcess;
-        private string _initialTrackProcess = string.Empty;
         private bool _initialEnableRounding;
         private bool _initialSaveSidebarCompactMode;
         private bool _initialStartWithWindows;
@@ -37,117 +33,9 @@ namespace Celer.ViewModels
         private bool _isUpdatingChildrenFromMaster = false;
 
         [ObservableProperty]
-        private bool enableAlertCPUTracking = MainConfiguration.Default.ALERTS_CPUTrackingEnable;
-
-        partial void OnEnableAlertCPUTrackingChanged(bool value)
-        {
-            CheckForUnsavedChanges();
-            if (!_isUpdatingChildrenFromMaster)
-            {
-                OnPropertyChanged(nameof(EnableAlerts));
-                OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-                OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
-            }
-        }
-
-        [ObservableProperty]
-        private bool enableAlertMemoryTracking = MainConfiguration
-            .Default
-            .ALERTS_MemoryTrackingEnable;
-
-        partial void OnEnableAlertMemoryTrackingChanged(bool value)
-        {
-            CheckForUnsavedChanges();
-            if (!_isUpdatingChildrenFromMaster)
-            {
-                OnPropertyChanged(nameof(EnableAlerts));
-                OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-                OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
-            }
-        }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsProcessTrackingTextBoxEnabled))]
-        private bool enableAlertTrackProcess = MainConfiguration.Default.ALERTS_EnableTrackProcess;
-
-        partial void OnEnableAlertTrackProcessChanged(bool value)
-        {
-            CheckForUnsavedChanges();
-            if (!_isUpdatingChildrenFromMaster)
-            {
-                OnPropertyChanged(nameof(EnableAlerts));
-                OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-            }
-        }
-
-        [ObservableProperty]
-        private string trackProcess = MainConfiguration.Default.ALERTS_TrackProcess ?? string.Empty;
-
-        partial void OnTrackProcessChanged(string value) => CheckForUnsavedChanges();
-
-        public bool AreInnerAlertsEnabled => EnableAlerts != false;
-
-        public bool IsProcessTrackingTextBoxEnabled =>
-            AreInnerAlertsEnabled && EnableAlertTrackProcess;
-
-        [ObservableProperty]
         private bool enableExportCleaningLog = MainConfiguration.Default.CLEANENGINE_ExportLog;
 
         partial void OnEnableExportCleaningLogChanged(bool value) => CheckForUnsavedChanges();
-
-        public bool? EnableAlerts
-        {
-            get
-            {
-                bool allChecked = EnableAlertCPUTracking && EnableAlertMemoryTracking && EnableAlertTrackProcess;
-                if (allChecked) return true;
-
-                bool noneChecked = !EnableAlertCPUTracking && !EnableAlertMemoryTracking && !EnableAlertTrackProcess;
-                if (noneChecked) return false;
-
-                return null;
-            }
-            set
-            {
-                if (EnableAlerts == true && value == false)
-                {
-                    OnPropertyChanged(nameof(EnableAlerts));
-                    return;
-                }
-
-                if (EnableAlertCPUTracking && EnableAlertMemoryTracking && EnableAlertTrackProcess)
-                {
-                    value = false;
-                    EnableAlertCPUTracking = false;
-                    EnableAlertMemoryTracking = false;
-                    EnableAlertTrackProcess = false;
-                    OnPropertyChanged(nameof(EnableAlerts));
-                    OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-                    OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
-
-                }
-
-                if (value.HasValue)
-                {
-                    bool targetState = value.Value;
-                    _isUpdatingChildrenFromMaster = true;
-                    try
-                    {
-                        EnableAlertCPUTracking = targetState;
-                        EnableAlertMemoryTracking = targetState;
-                        EnableAlertTrackProcess = targetState;
-                    }
-                    finally
-                    {
-                        _isUpdatingChildrenFromMaster = false;
-                    }
-                }
-
-                OnPropertyChanged(nameof(EnableAlerts));
-                OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-                OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
-            }
-        }
 
         [ObservableProperty]
         private bool enableRounding = MainConfiguration.Default.EnableRounding;
@@ -208,10 +96,6 @@ namespace Celer.ViewModels
 
         private void StoreInitialValues()
         {
-            _initialEnableAlertCPUTracking = EnableAlertCPUTracking;
-            _initialEnableAlertMemoryTracking = EnableAlertMemoryTracking;
-            _initialEnableAlertTrackProcess = EnableAlertTrackProcess;
-            _initialTrackProcess = TrackProcess;
             _initialEnableRounding = EnableRounding;
             _initialSaveSidebarCompactMode = SaveSidebarCompactMode;
             _initialStartWithWindows = StartWithWindows;
@@ -230,15 +114,7 @@ namespace Celer.ViewModels
         private void CheckForUnsavedChanges()
         {
             bool changed =
-                EnableAlertCPUTracking != _initialEnableAlertCPUTracking
-                || EnableAlertMemoryTracking != _initialEnableAlertMemoryTracking
-                || EnableAlertTrackProcess != _initialEnableAlertTrackProcess
-                || !string.Equals(
-                    TrackProcess,
-                    _initialTrackProcess,
-                    System.StringComparison.Ordinal
-                )
-                || EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode || StartWithWindows != _initialStartWithWindows || CloseShouldMinimize != _initialCloseMinimize
+                EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode || StartWithWindows != _initialStartWithWindows || CloseShouldMinimize != _initialCloseMinimize
                 || !string.Equals(
                     CurrentTheme,
                     _initialCurrentTheme,
@@ -273,10 +149,6 @@ namespace Celer.ViewModels
                 SaveSidebarCompactMode = _initialSaveSidebarCompactMode;
                 StartWithWindows = _initialStartWithWindows;
                 CloseShouldMinimize = _initialCloseMinimize;
-                EnableAlertCPUTracking = _initialEnableAlertCPUTracking;
-                EnableAlertMemoryTracking = _initialEnableAlertMemoryTracking;
-                EnableAlertTrackProcess = _initialEnableAlertTrackProcess;
-                TrackProcess = _initialTrackProcess;
                 EnableExportCleaningLog = _initialEnableExportCleaningLog;
                 GraphicRenderingMode = _initialGraphicRenderingMode;
 
@@ -301,14 +173,6 @@ namespace Celer.ViewModels
             OnPropertyChanged(nameof(EnableExportCleaningLog));
             OnPropertyChanged(nameof(Paths));
 
-            OnPropertyChanged(nameof(EnableAlerts));
-            OnPropertyChanged(nameof(AreInnerAlertsEnabled));
-            OnPropertyChanged(nameof(EnableAlertCPUTracking));
-            OnPropertyChanged(nameof(EnableAlertMemoryTracking));
-            OnPropertyChanged(nameof(EnableAlertTrackProcess));
-            OnPropertyChanged(nameof(TrackProcess));
-            OnPropertyChanged(nameof(IsProcessTrackingTextBoxEnabled));
-
             OnPropertyChanged(nameof(GraphicRenderingMode));
 
             CheckForUnsavedChanges();
@@ -323,10 +187,6 @@ namespace Celer.ViewModels
             MainConfiguration.Default.AutoStartup = StartWithWindows;
             MainConfiguration.Default.CloseShouldMinimize = CloseShouldMinimize;
             MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
-            MainConfiguration.Default.ALERTS_CPUTrackingEnable = EnableAlertCPUTracking;
-            MainConfiguration.Default.ALERTS_MemoryTrackingEnable = EnableAlertMemoryTracking;
-            MainConfiguration.Default.ALERTS_EnableTrackProcess = EnableAlertTrackProcess;
-            MainConfiguration.Default.ALERTS_TrackProcess = TrackProcess;
             MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? 0 : GraphicRenderingMode == "Hardware (default)" ? 1 : 2;
             var sc = new StringCollection();
             foreach (var p in Paths)
