@@ -455,61 +455,6 @@
                                 </UniformGrid>
                             </StackPanel>
                         </Border>
-                        <!--<Border IsEnabled="{Binding EnableAlerts}" Visibility="{Binding EnableAlerts, Converter={StaticResource BoolToVisConverter}}" Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Padding="8">
-                                <StackPanel Margin="0,0,0,0"   >
-                                    <local2:HeadingHelp
-                                HelpText="Notifications related to the system state. These can be modified in the settings."
-                                Label="Alerts"
-                                LabelStyleKey="Heading2" />
-                                    <Grid >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <ListBox
-                                    ItemsSource="{Binding Alerts}"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid Margin="4">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="auto" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <iconPacks:PackIconLucide
-                                                    Grid.Column="0"
-                                                    Width="18"
-                                                    Height="18"
-                                                    Margin="0,0,8,0"
-                                                    VerticalAlignment="Top"
-                                                    Foreground="#ff9e6a"
-                                                    Kind="{Binding Icon}" />
-                                                        <StackPanel Grid.Column="1">
-                                                            <TextBlock
-                                                        FontWeight="Bold"
-                                                        Foreground="{DynamicResource PrimaryText}"
-                                                        Text="{Binding Title}"
-                                                        TextTrimming="CharacterEllipsis" />
-                                                            <TextBlock
-                                                        FontSize="13"
-                                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                        Text="{Binding Description}"
-                                                        TextWrapping="Wrap" />
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                            <ListBox.ItemContainerStyle>
-                                                <Style TargetType="{x:Type ListBoxItem}">
-                                                    <Setter Property="Focusable" Value="False" />
-                                                    <Setter Property="IsHitTestVisible" Value="False" />
-                                                </Style>
-                                            </ListBox.ItemContainerStyle>
-                                        </ListBox>
-                                        <TextBlock Visibility="{Binding Alerts.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=True}">No active alerts</TextBlock>
-                                    </Grid>
-                                </StackPanel>
-                            </Border>-->
                     </Grid>
                 </Grid>
             </Border>
