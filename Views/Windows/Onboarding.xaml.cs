@@ -30,7 +30,7 @@ namespace Celer.Views.Windows
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Erro ao abrir link: " + ex.Message);
+                Debug.WriteLine($"Failed to open link {ex.Message}");
             }
         }
 
