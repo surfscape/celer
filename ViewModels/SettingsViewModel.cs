@@ -1,5 +1,5 @@
 ﻿using Celer.Models.Preferences;
-﻿using Celer.Properties;
+using Celer.Properties;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

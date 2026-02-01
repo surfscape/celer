@@ -53,7 +53,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         // closes celer if another instance is already running
-        using (new Mutex(true, "Celer", out bool createdNew))
+        using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
         {
             if (!createdNew)
             {
