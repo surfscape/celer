@@ -28,7 +28,7 @@ namespace Celer.Views.Windows
                     new ProcessStartInfo { FileName = e.Uri.ToString(), UseShellExecute = true }
                 );
             }
-            catch (Exception ex)
+            catch (Win32Exception ex)
             {
                 Debug.WriteLine($"Failed to open link {ex.Message}");
             }
