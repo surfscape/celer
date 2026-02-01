@@ -17,7 +17,7 @@ namespace Celer.Views.Windows
         public Onboarding()
         {
             InitializeComponent();
-            OnboardingOptions.DataContext = new OnboardingViewModel { IsDone = Close };
+            OnboardingOptions.DataContext = new OnboardingViewModel { OnCompleted = Close };
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -36,7 +36,7 @@ namespace Celer.Views.Windows
 
         public partial class OnboardingViewModel : ObservableObject
         {
-            public Action? IsDone { get; set; }
+            public Action? OnCompleted { get; set; }
 
             [ObservableProperty]
             private bool acceptTerms = false;
@@ -62,7 +62,7 @@ namespace Celer.Views.Windows
                 if (gateway is not null)
                 {
                     gateway.MainWindowTrigger = true;
-                    IsDone?.Invoke();
+                    OnCompleted?.Invoke();
                     gateway.ShowDialog();
 
                 }
