@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Celer.Models.Preferences
+﻿namespace Celer.Models.Preferences
 {
-   public enum CelerTheme
+    public enum CelerTheme
     {
         Auto,
         Light,

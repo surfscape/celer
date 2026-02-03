@@ -1,5 +1,4 @@
-﻿using Celer.Models;
-using Celer.Models.SystemInfo;
+﻿using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
 using Celer.Utilities;
@@ -175,7 +174,7 @@ public partial class DashboardViewModel : ObservableObject
                         {
                             return p.Threads.Count;
                         }
-                        catch(SystemException e)
+                        catch (SystemException e)
                         {
                             Debug.WriteLine($"Error when getting process count {e}");
                             return 0;

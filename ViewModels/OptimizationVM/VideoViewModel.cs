@@ -112,7 +112,8 @@ namespace Celer.ViewModels.OptimizationVM
                     dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
                     shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
                 }
-                catch(Exception e) {
+                catch (Exception e)
+                {
                     MessageBox.Show($"Error when parsing adapter memory {e}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Debug.WriteLine(e);
                 }
@@ -165,8 +166,9 @@ namespace Celer.ViewModels.OptimizationVM
                     }
                 );
             }
-            catch(Exception e) {
-                MessageBox.Show($"Error parsing dxDiag {e}","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error parsing dxDiag {e}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Debug.WriteLine(e);
             }
 

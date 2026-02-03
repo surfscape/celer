@@ -25,7 +25,8 @@ namespace Celer.Services
                     return true;
                 }
             }
-            catch(HttpRequestException e) {
+            catch (HttpRequestException e)
+            {
                 Debug.WriteLine(e.Message);
             }
             return false;

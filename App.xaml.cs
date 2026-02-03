@@ -133,7 +133,7 @@ public partial class App : Application
             surfScapeGateway.SilentStartup = true;
             surfScapeGateway.ShowDialog();
         }
-        if(e.Args.Contains("-silent") && !hasUserDoneSetup)
+        if (e.Args.Contains("-silent") && !hasUserDoneSetup)
         {
             Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
         }
