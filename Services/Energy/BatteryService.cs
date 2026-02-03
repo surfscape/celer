@@ -68,10 +68,24 @@ namespace Celer.Services.Energy
                 info.FactoryCapacity = factoryCapacity;
                 info.ChargedCapacity = chargedCapacity;
             }
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine($"Failed to retrieve WMI ${ex}");
                 info.HasBattery = false;
+            }
+            catch(FormatException ex)
+            {
+                Debug.WriteLine($"Failed to convert battery values ${ex}");
+                info.HasBattery = false;
+            }
+            catch(OverflowException ex)
+            {
+                Debug.WriteLine($"Overflow on battery values ${ex}");
+                info.HasBattery = false;
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                Debug.WriteLine($"Battery estimated run time value has overflown ${ex}");
             }
             return info;
         }
