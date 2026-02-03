@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Celer;
 
@@ -31,20 +32,29 @@ public partial class App : Application
 
     public App()
     {
+        if (MainConfiguration.Default.EnableSentry)
+        {
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
+            SentrySdk.Init(o =>
+            {
+                //o.Dsn = ;
+                o.Debug = true;
+                o.TracesSampleRate = 1.0;
+            });
+        }
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
+    }
+
+    void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        SentrySdk.CaptureException(e.Exception);
+        e.Handled = true;
     }
 
     private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (MainConfiguration.Default.Theme == (int)CelerTheme.Light)
-        {
-            Current.ThemeMode = ThemeMode.Light;
-        }
-
-    private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
-        {
         Current.ThemeMode = MainConfiguration.Default.Theme == (int)CelerTheme.Light ? ThemeMode.Light : MainConfiguration.Default.Theme == (int)CelerTheme.Dark ? ThemeMode.Dark : ThemeMode.System;
-        }
+    }
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -102,8 +112,8 @@ public partial class App : Application
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         if (AppHost is not null)
         {
-        if (!e.Args.Contains("-silent") && hasUserDoneSetup)
-        {
+            if (!e.Args.Contains("-silent") && hasUserDoneSetup)
+            {
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
@@ -114,18 +124,18 @@ public partial class App : Application
             }
             else if (!e.Args.Contains("-silent") && !hasUserDoneSetup)
             {
-            var onboardingWindow = new Onboarding();
-            onboardingWindow.Show();
-        }
+                var onboardingWindow = new Onboarding();
+                onboardingWindow.Show();
+            }
             else if (e.Args.Contains("-silent"))
-        {
-            var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
-            surfScapeGateway.MainWindowTrigger = true;
-            surfScapeGateway.SilentStartup = true;
-            surfScapeGateway.ShowDialog();
-        }
+            {
+                var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
+                surfScapeGateway.MainWindowTrigger = true;
+                surfScapeGateway.SilentStartup = true;
+                surfScapeGateway.ShowDialog();
+            }
             else
-            Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
+                Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
         }
         else
             throw new InvalidOperationException("AppHost not initialized!");
