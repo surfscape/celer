@@ -101,6 +101,8 @@ public partial class App : Application
     )
     .Build();
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
+        if (AppHost is not null)
+        {
         if (!e.Args.Contains("-silent") && hasUserDoneSetup)
         {
             if (AppHost != null)
@@ -134,6 +136,8 @@ public partial class App : Application
         {
             Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
         }
+        else
+            throw new InvalidOperationException("AppHost not initialized!");
         base.OnStartup(e);
     }
 
