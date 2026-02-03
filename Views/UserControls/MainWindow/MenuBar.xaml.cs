@@ -86,14 +86,7 @@ namespace Celer.Views.UserControls.MainWindow
                     return;
                 }
                 T? window = null;
-                if (App.AppHost?.Services.GetService(typeof(T)) is T resolvedWindow)
-                {
-                    window = resolvedWindow;
-                }
-                else
-                {
-                    window = Activator.CreateInstance<T>();
-                }
+                window = App.AppHost?.Services.GetService(typeof(T)) is T resolvedWindow ? resolvedWindow : window = Activator.CreateInstance<T>(); ;
 
                 if (
                     Application.Current.MainWindow != null

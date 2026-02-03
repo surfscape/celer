@@ -55,13 +55,7 @@ namespace Celer.Services.Energy
                 info.Percentage = Convert.ToInt32(battery["EstimatedChargeRemaining"]);
                 info.IsCharging = Convert.ToUInt16(battery["BatteryStatus"]) is 2 or 6;
                 uint rawMinutes = Convert.ToUInt32(battery["EstimatedRunTime"]);
-                if (rawMinutes == 0 || rawMinutes > 71582787 || info.IsCharging)
-                {
-                    info.EstimatedTime = TimeSpan.Zero;
-                }
-                else
-                    info.EstimatedTime = TimeSpan.FromMinutes(rawMinutes);
-
+                info.EstimatedTime = (rawMinutes == 0 || rawMinutes > 71582787 || info.IsCharging) ? TimeSpan.FromMinutes(rawMinutes) : TimeSpan.Zero;
                 var (health, capacity, factoryCapacity, chargedCapacity) = GetBatteyHealthInfo("batteryreport.xml", info.Percentage);
                 info.Health = health;
                 info.RemainingCapacity = capacity;
@@ -86,6 +80,11 @@ namespace Celer.Services.Energy
             catch (ArgumentOutOfRangeException ex)
             {
                 Debug.WriteLine($"Battery estimated run time value has overflown ${ex}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"An exception on BatteryService has ocurred ${ex}");
+                info.HasBattery = false;
             }
             return info;
         }
