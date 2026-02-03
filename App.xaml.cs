@@ -105,8 +105,6 @@ public partial class App : Application
         {
         if (!e.Args.Contains("-silent") && hasUserDoneSetup)
         {
-            if (AppHost != null)
-            {
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
@@ -117,11 +115,6 @@ public partial class App : Application
             }
             else if (!e.Args.Contains("-silent") && !hasUserDoneSetup)
             {
-                throw new InvalidOperationException("AppHost not initialized");
-            }
-        }
-        else if (!hasUserDoneSetup)
-        {
             var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
         }
