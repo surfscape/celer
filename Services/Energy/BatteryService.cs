@@ -54,13 +54,14 @@ namespace Celer.Services.Energy
                 info.HasBattery = true;
                 info.Percentage = Convert.ToInt32(battery["EstimatedChargeRemaining"]);
                 info.IsCharging = Convert.ToUInt16(battery["BatteryStatus"]) is 2 or 6;
-                // TODO: Add a delay, since WMI returns the wrong run time right after unplugging the charger
-                var runtime = Convert.ToUInt32(battery["EstimatedRunTime"]);
-                if (!info.IsCharging)
+                uint rawMinutes = Convert.ToUInt32(battery["EstimatedRunTime"]);
+                if (rawMinutes == 0 || rawMinutes > 71582787 || info.IsCharging)
                 {
-                    info.EstimatedTime =
-                        runtime > 0 ? TimeSpan.FromMinutes(runtime) : TimeSpan.Zero;
+                    info.EstimatedTime = TimeSpan.Zero;
                 }
+                else
+                    info.EstimatedTime = TimeSpan.FromMinutes(rawMinutes);
+
                 var (health, capacity, factoryCapacity, chargedCapacity) = GetBatteyHealthInfo("batteryreport.xml", info.Percentage);
                 info.Health = health;
                 info.RemainingCapacity = capacity;
