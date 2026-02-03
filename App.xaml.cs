@@ -115,7 +115,7 @@ public partial class App : Application
                 else if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferSoftware)
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
-            else
+            else if (!e.Args.Contains("-silent") && !hasUserDoneSetup)
             {
                 throw new InvalidOperationException("AppHost not initialized");
             }
@@ -125,15 +125,14 @@ public partial class App : Application
             var onboardingWindow = new Onboarding();
             onboardingWindow.Show();
         }
-        else
+            else if (e.Args.Contains("-silent"))
         {
             var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
             surfScapeGateway.MainWindowTrigger = true;
             surfScapeGateway.SilentStartup = true;
             surfScapeGateway.ShowDialog();
         }
-        if (e.Args.Contains("-silent") && !hasUserDoneSetup)
-        {
+            else
             Debug.WriteLine("The launch option -silent can't be used without finishing the onboarding first!");
         }
         else
