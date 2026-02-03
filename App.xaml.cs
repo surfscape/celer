@@ -40,13 +40,10 @@ public partial class App : Application
         {
             Current.ThemeMode = ThemeMode.Light;
         }
-        else if (MainConfiguration.Default.Theme == (int)CelerTheme.Dark)
+
+    private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            Current.ThemeMode = ThemeMode.Dark;
-        }
-        else
-        {
-            Current.ThemeMode = ThemeMode.System;
+        Current.ThemeMode = MainConfiguration.Default.Theme == (int)CelerTheme.Light ? ThemeMode.Light : MainConfiguration.Default.Theme == (int)CelerTheme.Dark ? ThemeMode.Dark : ThemeMode.System;
         }
     }
 
