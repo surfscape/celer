@@ -45,7 +45,6 @@ public partial class App : Application
         {
         Current.ThemeMode = MainConfiguration.Default.Theme == (int)CelerTheme.Light ? ThemeMode.Light : MainConfiguration.Default.Theme == (int)CelerTheme.Dark ? ThemeMode.Dark : ThemeMode.System;
         }
-    }
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -135,7 +134,7 @@ public partial class App : Application
 
     protected override async void OnExit(ExitEventArgs e)
     {
-        if (AppHost != null)
+        if (AppHost is not null)
         {
             await AppHost.StopAsync();
             AppHost.Dispose();
