@@ -22,59 +22,56 @@ namespace Celer.Utilities
             catch (Exception ex) {
                 Debug.Write(ex.Message);
                 return false;
-        }
+            }
         }
 
         public static void SetAutoStartup()
         {
             var process = Process.GetCurrentProcess();
             string fullPath = process.MainModule.FileName;
-            using (TaskService ts = new TaskService())
-            {
-                TaskDefinition td = ts.NewTask();
-                td.RegistrationInfo.Description = "Run Celer as admin at startup";
+            using TaskService ts = new();
+            TaskDefinition td = ts.NewTask();
+            td.RegistrationInfo.Description = "Run Celer as admin at startup";
 
-                using LogonTrigger lt = new LogonTrigger();
-                lt.UserId = Environment.UserName;
-                td.Triggers.Add(lt);
+            using LogonTrigger lt = new();
+            lt.UserId = Environment.UserName;
+            td.Triggers.Add(lt);
 
-                using ExecAction ea = new ExecAction(fullPath, "-silent", null);
-                td.Actions.Add(ea);
+            using ExecAction ea = new(fullPath, "-silent", null);
+            td.Actions.Add(ea);
 
-                td.Settings.StartWhenAvailable = true;
-                td.Settings.DisallowStartIfOnBatteries = false;
-                td.Settings.StopIfGoingOnBatteries = false;
+            td.Settings.StartWhenAvailable = true;
+            td.Settings.DisallowStartIfOnBatteries = false;
+            td.Settings.StopIfGoingOnBatteries = false;
 
-                td.Principal.RunLevel = TaskRunLevel.Highest;
+            td.Principal.RunLevel = TaskRunLevel.Highest;
 
-                ts.RootFolder.RegisterTaskDefinition(
-                    "Run Celer at Startup",
-                    td,
-                    TaskCreation.CreateOrUpdate,
-                    null,
-                    null,
-                    TaskLogonType.InteractiveToken
-                );
-                ts.GetTask("Run Celer at Startup").Enabled = true;
-                Console.WriteLine("Task created successfully!");
-            }
+            ts.RootFolder.RegisterTaskDefinition(
+                "Run Celer at Startup",
+                td,
+                TaskCreation.CreateOrUpdate,
+                null,
+                null,
+                TaskLogonType.InteractiveToken
+            );
+            ts.GetTask("Run Celer at Startup").Enabled = true;
+            Debug.WriteLine("Task created successfully!");
         }
 
+        // TODO: currently only disabled the task, I should check to see if I can actually delete the task
         public static void RemoveAutoStartup()
         {
-            using (TaskService ts = new TaskService())
-            {
-                Microsoft.Win32.TaskScheduler.Task task = ts.GetTask("Run Celer at Startup");
+            using TaskService ts = new();
+            Microsoft.Win32.TaskScheduler.Task task = ts.GetTask("Run Celer at Startup");
 
-                if (task != null)
-                {
-                    task.Enabled = false;
-                    Console.WriteLine("Task disabled successfully!");
-                }
-                else
-                {
-                    Console.WriteLine("Task not found.");
-                }
+            if (task != null)
+            {
+                task.Enabled = false;
+                Debug.WriteLine("Task disabled successfully!");
+            }
+            else
+            {
+                Debug.WriteLine("Task not found.");
             }
         }
     }
