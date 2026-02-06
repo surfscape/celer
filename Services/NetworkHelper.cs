@@ -72,6 +72,7 @@ namespace Celer.Services
                     };
 
                     using var process = Process.Start(psi);
+                    if (process is not null)
                     await process.WaitForExitAsync();
                 }
 
