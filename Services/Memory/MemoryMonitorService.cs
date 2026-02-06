@@ -113,7 +113,7 @@ namespace Celer.Services.Memory
             return (0, 0);
         }
 
-        public List<RamSlotInfo> GetRamSlotInfo()
+        public static List<RamSlotInfo> GetRamSlotInfo()
         {
             var slots = new List<RamSlotInfo>();
 
@@ -152,7 +152,6 @@ namespace Celer.Services.Memory
                         var deviceLocator = obj["DeviceLocator"] is not null ? Convert.ToString(obj["DeviceLocator"])! : "Undefined";
 
                         int parsedSlotId = ParseSlotNumber(deviceLocator, bankLabel);
-
 
                         if (parsedSlotId == -1)
                         {
@@ -263,7 +262,7 @@ namespace Celer.Services.Memory
         /// <param name="deviceLocator">ID of the RAM stick</param>
         /// <param name="bankLabel">Bank where the RAM stick is in</param>
         /// <returns></returns>
-        private int ParseSlotNumber(string deviceLocator, string bankLabel)
+        private static int ParseSlotNumber(string deviceLocator, string bankLabel)
         {
             string S_SLOT_PATTERN = @"(\d+)";
 
