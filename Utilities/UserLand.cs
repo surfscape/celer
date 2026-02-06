@@ -14,10 +14,15 @@ namespace Celer.Utilities
                 PingReply reply = ping.Send("9.9.9.9", 2000); // TODO: add a preference to choose a different ping server if the default one is blocked in other countries
                 return reply.Status == IPStatus.Success;
             }
-            catch
+            catch (PingException ex)
             {
+                Debug.Write(ex.Message);
                 return false;
             }
+            catch (Exception ex) {
+                Debug.Write(ex.Message);
+                return false;
+        }
         }
 
         public static void SetAutoStartup()
