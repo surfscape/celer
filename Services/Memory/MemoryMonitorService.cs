@@ -48,11 +48,11 @@ namespace Celer.Services.Memory
                         return Convert.ToInt32(obj["Speed"]);
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Failed to retrieve memory speed");
+                Debug.WriteLine($"Failed to retrieve memory speed from WMI\n ${ex.Message}");
             }
-            return null;
+            return 0;
         }
         private static double GetTotalMemory()
         {
@@ -70,7 +70,7 @@ namespace Celer.Services.Memory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Failed to obtain total memory: {ex.Message}");
+                Debug.WriteLine($"Failed to obtain total memory\n {ex.Message}");
             }
             return 0;
         }
