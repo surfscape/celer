@@ -33,7 +33,7 @@
                     <WrapPanel>
                         <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                    Style="{DynamicResource TitleLargeTextBlockStyle}"
-                                   Text="{Binding PrivacyScore}" />
+                                   Text="{Binding PrivacyTotalScore}" />
                         <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                    Margin="6,0,0,5"
                                    VerticalAlignment="Bottom"
@@ -53,7 +53,7 @@
                     <WrapPanel>
                         <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                    Style="{DynamicResource TitleLargeTextBlockStyle}"
-                                   Text="{Binding SecurityScore}" />
+                                   Text="{Binding SecurityTotalScore}" />
                         <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                    Margin="6,0,0,5"
                                    VerticalAlignment="Bottom"

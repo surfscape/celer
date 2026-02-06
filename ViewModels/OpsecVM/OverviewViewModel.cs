@@ -10,10 +10,10 @@ namespace Celer.ViewModels.OpsecVM
     public partial class OverviewViewModel : ObservableObject
     {
         [ObservableProperty]
-        private int privacyScore;
+        private int privacyTotalScore;
 
         [ObservableProperty]
-        private int securityScore;
+        private int securityTotalScore;
 
         public ObservableCollection<StatusItem> PrivacyItems { get; } = [];
         public ObservableCollection<StatusItem> SecurityItems { get; } = [];
@@ -29,12 +29,12 @@ namespace Celer.ViewModels.OpsecVM
             var (privacy, privacyScore) = await PrivacyEvaluator.EvaluateAsync();
             foreach (var item in privacy)
                 PrivacyItems.Add(item);
-            PrivacyScore = privacyScore;
+            PrivacyTotalScore = privacyScore;
 
             var (security, securityScore) = await SecurityEvaluator.EvaluateAsync();
             foreach (var item in security)
                 SecurityItems.Add(item);
-            SecurityScore = securityScore;
+            SecurityTotalScore = securityScore;
         }
 
         [RelayCommand]
