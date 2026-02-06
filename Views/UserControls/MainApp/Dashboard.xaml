@@ -348,9 +348,9 @@
                                     <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
                                     <Button Grid.Column="1"
                                             Command="{Binding RefreshDisksCommand}">
-                                        <iconPacks:PackIconControl Width="14"
+                                        <iconPacks:PackIconLucide Width="14"
                                                                    Height="14"
-                                                                   Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
+                                                                   Kind="RefreshCw" />
                                     </Button>
                                 </Grid>
                                 <DockPanel Grid.Row="1">
@@ -421,10 +421,10 @@
                                             Command="{Binding NavigateToOptimizationCommand}"
                                             CommandParameter="Battery">
                                         <StackPanel Margin="0">
-                                            <iconPacks:PackIconControl HorizontalAlignment="Center"
+                                            <iconPacks:PackIconLucide HorizontalAlignment="Center"
                                                                        Margin="0,4,0,4"
                                                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                                       Kind="{x:Static iconPacks:PackIconLucideKind.Power}" />
+                                                                       Kind="Power" />
                                             <TextBlock HorizontalAlignment="Center">Power Manager</TextBlock>
                                         </StackPanel>
                                     </Button>
@@ -433,10 +433,10 @@
                                             Command="{Binding NavigateToOptimizationCommand}"
                                             CommandParameter="Video">
                                         <StackPanel Margin="0">
-                                            <iconPacks:PackIconControl HorizontalAlignment="Center"
+                                            <iconPacks:PackIconLucide HorizontalAlignment="Center"
                                                                        Margin="0,4,0,4"
                                                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                                       Kind="{x:Static iconPacks:PackIconLucideKind.Gpu}" />
+                                                                       Kind="Gpu" />
                                             <TextBlock HorizontalAlignment="Center">Video Manager</TextBlock>
                                         </StackPanel>
                                     </Button>
@@ -445,10 +445,10 @@
                                             Command="{Binding NavigateToOptimizationCommand}"
                                             CommandParameter="Memory">
                                         <StackPanel Margin="0">
-                                            <iconPacks:PackIconControl HorizontalAlignment="Center"
+                                            <iconPacks:PackIconLucide HorizontalAlignment="Center"
                                                                        Margin="0,4,0,4"
                                                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                                       Kind="{x:Static iconPacks:PackIconLucideKind.MemoryStick}" />
+                                                                       Kind="MemoryStick" />
                                             <TextBlock HorizontalAlignment="Center">Memory Manager</TextBlock>
                                         </StackPanel>
                                     </Button>
@@ -466,19 +466,19 @@
                     BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                     Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
                 <DockPanel>
-                    <iconPacks:PackIconControl Margin="0,0,8,0"
+                    <iconPacks:PackIconRemixIcon Margin="0,0,8,0"
                                                VerticalAlignment="Center"
                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                               Kind="{x:Static iconPacks:PackIconRemixIconKind.MicrosoftFill}" />
+                                               Kind="MicrosoftFill" />
                     <TextBlock Text="{Binding WindowsVersion}"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     <StackPanel HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
-                        <iconPacks:PackIconControl Margin="0,0,8,0"
+                        <iconPacks:PackIconLucide Margin="0,0,8,0"
                                                    VerticalAlignment="Center"
                                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                   Kind="{x:Static iconPacks:PackIconLucideKind.Timer}" />
+                                                   Kind="Timer" />
                         <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}"
                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     </StackPanel>

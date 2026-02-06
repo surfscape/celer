@@ -74,25 +74,25 @@
             </StackPanel.Resources>
             <Button Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconControl Margin="0,0,8,0"
+                    <iconPacks:PackIconLucide Margin="0,0,8,0"
                                                VerticalAlignment="Center"
-                                               Kind="{x:Static iconPacks:PackIconLucideKind.RefreshCw}" />
+                                               Kind="RefreshCw" />
                     <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Refresh</TextBlock>
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenPrivacySettingsCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconControl Margin="0,0,8,0"
+                    <iconPacks:PackIconLucide Margin="0,0,8,0"
                                                VerticalAlignment="Center"
-                                               Kind="{x:Static iconPacks:PackIconLucideKind.EarthLock}" />
+                                               Kind="EarthLock" />
                     <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Privacy Settings</TextBlock>
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenDefenderCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconControl Margin="0,0,8,0"
+                    <iconPacks:PackIconLucide Margin="0,0,8,0"
                                                VerticalAlignment="Center"
-                                               Kind="{x:Static iconPacks:PackIconLucideKind.Shield}" />
+                                               Kind="Shield" />
                     <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush }">Windows Defender</TextBlock>
                 </StackPanel>
             </Button>

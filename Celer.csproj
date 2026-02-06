@@ -8,7 +8,7 @@
 		<ApplicationIcon>celer_icon.ico</ApplicationIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<UseWindowsForms>False</UseWindowsForms>
-		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Platforms>x64;x86</Platforms>
 		<Version>1.0.0-beta.2</Version>
 		<InformationalVersion>1.0.0-beta.2 "Orion"</InformationalVersion>
@@ -47,7 +47,9 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
 		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="6.2.1" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Core" Version="6.2.1" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Lucide" Version="6.2.1" />
+		<PackageReference Include="MahApps.Metro.IconPacks.RemixIcon" Version="6.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />

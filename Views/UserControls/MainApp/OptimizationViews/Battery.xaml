@@ -40,7 +40,7 @@
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,8">
-                        <iconPacks:PackIconControl Width="42"
+                        <iconPacks:PackIconLucide Width="42"
                                                    Height="42"
                                                    Margin="0,0,16,0"
                                                    VerticalAlignment="Center"
@@ -137,11 +137,11 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,0,24,0">
 
-                            <iconPacks:PackIconControl Width="20"
+                            <iconPacks:PackIconLucide Width="20"
                                                        Margin="0,0,8,0"
                                                        VerticalAlignment="Center"
                                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                       Kind="{x:Static iconPacks:PackIconLucideKind.BatteryPlus}" />
+                                                       Kind="BatteryPlus" />
                             <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                        ToolTip="Battery Health"
                                        Margin="0,0,0,2"
@@ -205,12 +205,12 @@
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <iconPacks:PackIconControl Width="24"
+                                <iconPacks:PackIconLucide Width="24"
                                                            Height="24"
                                                            Margin="4,0,16,0"
                                                            VerticalAlignment="Center"
                                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                           Kind="{x:Static iconPacks:PackIconLucideKind.Gauge}" />
+                                                           Kind="Gauge" />
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                Margin="0,0,0,4">Power Modes</TextBlock>
@@ -278,9 +278,7 @@
                                     </StackPanel>
                                     <ComboBox DisplayMemberPath="Name"
                                               Grid.Column="1"
-                                              MinWidth="190"
- />
-
+                                              MinWidth="190" />
                                     <Button Margin="8,0,8,0"
                                             Grid.Column="2"
                                             Style="{DynamicResource AccentButtonStyle}"
@@ -298,12 +296,12 @@
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <iconPacks:PackIconControl Width="24"
+                                <iconPacks:PackIconLucide Width="24"
                                                            Height="24"
                                                            Margin="4,0,16,0"
                                                            VerticalAlignment="Center"
                                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                           Kind="{x:Static iconPacks:PackIconLucideKind.Wrench}" />
+                                                           Kind="Wrench" />
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                Margin="0,0,0,4">Advanced Settings</TextBlock>
