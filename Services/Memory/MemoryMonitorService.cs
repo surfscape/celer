@@ -35,7 +35,7 @@ namespace Celer.Services.Memory
             return (float)(totalMB - availableMB);
         }
 
-        public static int? GetMemorySpeed()
+        public static int GetMemorySpeed()
         {
             try
             {
@@ -148,8 +148,8 @@ namespace Celer.Services.Memory
                 {
                     foreach (ManagementObject obj in memSearcher.Get().Cast<ManagementObject>())
                     {
-                        var bankLabel = obj["BankLabel"] != null ? Convert.ToString(obj["BankLabel"]) : "Undefined";
-                        var deviceLocator = obj["DeviceLocator"] != null ? Convert.ToString(obj["DeviceLocator"]) : "Undefined";
+                        var bankLabel = obj["BankLabel"] is not null ? Convert.ToString(obj["BankLabel"])! : "Undefined";
+                        var deviceLocator = obj["DeviceLocator"] is not null ? Convert.ToString(obj["DeviceLocator"])! : "Undefined";
 
                         int parsedSlotId = ParseSlotNumber(deviceLocator, bankLabel);
 
@@ -170,24 +170,27 @@ namespace Celer.Services.Memory
                         // Currently does not work for modern memory types like DDR4, DDR5, and laptops. I should move to using SMBIOS or a third party library like AIDA64 or CPUZ to get memory type and form factor
                         string memoryTypeStr = "Unknown";
                         var memoryTypeObj = obj["MemoryType"];
-                        if (memoryTypeObj != null)
+                        if (memoryTypeObj is not null)
                         {
                             memoryTypeStr = GetMemoryTypeString(Convert.ToInt32(memoryTypeObj));
                         }
 
                         string memoryFormFactor = "Unknown";
-                        if (obj["FormFactor"] != null)
+                        if (obj["FormFactor"] is not null)
                         {
                             memoryFormFactor = GetFormFactorString(
                                 Convert.ToUInt16(obj["FormFactor"])
                             );
                         }
 
+                        string manufacturer = obj["Manufacturer"] is not null ? Convert.ToString(obj["Manufacturer"])!.Trim() : "Unknown";
+                        string model = obj["PartNumber"] is not null ? Convert.ToString(obj["Manufacturer"])!.Trim() : "Unknown";
+
                         occupiedSlotsByParsedLabel[parsedSlotId] = new RamSlotInfo
                         {
                             IsOccupied = true,
-                            Manufacturer = obj["Manufacturer"]?.ToString().Trim() ?? "Unknown",
-                            Model = obj["PartNumber"]?.ToString().Trim() ?? "Unknown",
+                            Manufacturer = manufacturer,
+                            Model = model,
                             SizeMB = (int)capacityMB,
                             MemoryType = memoryTypeStr,
                             FormFactor = memoryFormFactor,
