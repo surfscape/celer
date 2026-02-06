@@ -41,7 +41,7 @@
         private static async Task<bool> RunPowerShellCheckAsync(
             string command,
             bool invert = false,
-            string? expectedValue = null
+            string expectedValue = ""
         )
         {
             using var process = new Process
@@ -65,7 +65,7 @@
 
                 string result = output.Trim();
 
-                if (expectedValue != null)
+                if (expectedValue is not null)
                     return result == expectedValue;
 
                 if (bool.TryParse(result, out bool boolResult))
