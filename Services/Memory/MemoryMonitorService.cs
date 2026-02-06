@@ -126,7 +126,7 @@ namespace Celer.Services.Memory
                     )
                 )
                 {
-                    foreach (ManagementObject array in arraySearcher.Get())
+                    foreach (ManagementObject array in arraySearcher.Get().Cast<ManagementObject>())
                     {
                         totalSlots = Convert.ToInt32(array["MemoryDevices"]);
                         break;
@@ -146,7 +146,7 @@ namespace Celer.Services.Memory
                     )
                 )
                 {
-                    foreach (ManagementObject obj in memSearcher.Get())
+                    foreach (ManagementObject obj in memSearcher.Get().Cast<ManagementObject>())
                     {
                         var bankLabel = obj["BankLabel"] != null ? Convert.ToString(obj["BankLabel"]) : "Undefined";
                         var deviceLocator = obj["DeviceLocator"] != null ? Convert.ToString(obj["DeviceLocator"]) : "Undefined";
