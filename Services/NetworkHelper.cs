@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 
@@ -73,9 +74,8 @@ namespace Celer.Services
 
                     using var process = Process.Start(psi);
                     if (process is not null)
-                    await process.WaitForExitAsync();
+                        await process.WaitForExitAsync();
                 }
-
                 return true;
             }
             catch(NetworkInformationException ex)
