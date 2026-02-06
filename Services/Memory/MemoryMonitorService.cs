@@ -278,7 +278,7 @@ namespace Celer.Services.Memory
             MatchCollection matches = Regex.Matches(stringToParse, S_SLOT_PATTERN);
             if (matches.Count > 0)
             {
-                string numStr = matches[matches.Count - 1].Groups[1].Value;
+                string numStr = matches[^1].Groups[1].Value;
                 if (int.TryParse(numStr, out int slotNum))
                 {
                     return slotNum;
