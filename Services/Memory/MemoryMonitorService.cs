@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Celer.Services.Memory
 {
-    public class MemoryMonitorService : IDisposable
+    public partial class MemoryMonitorService : IDisposable
     {
         public MemoryInfo GetMemoryInfo()
         {
@@ -54,7 +54,6 @@ namespace Celer.Services.Memory
             }
             return null;
         }
-
         private static double GetTotalMemory()
         {
             try
@@ -76,10 +75,10 @@ namespace Celer.Services.Memory
             return 0;
         }
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private class MEMORYSTATUSEX
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MEMORYSTATUSEX
         {
-            public uint dwLength = (uint)Marshal.SizeOf<MEMORYSTATUSEX>();
+            public uint dwLength;
             public uint dwMemoryLoad;
             public ulong ullTotalPhys;
             public ulong ullAvailPhys;
@@ -88,21 +87,29 @@ namespace Celer.Services.Memory
             public ulong ullTotalVirtual;
             public ulong ullAvailVirtual;
             public ulong ullAvailExtendedVirtual;
+
+            public void RefreshLength() => dwLength = (uint)Marshal.SizeOf<MEMORYSTATUSEX>();
         }
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
+        [LibraryImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
-        private static (double TotalMB, double UsedMB) GetVirtualMemory()
+        public static (double TotalMB, double UsedMB) GetVirtualMemory()
         {
             var memStatus = new MEMORYSTATUSEX();
-            if (GlobalMemoryStatusEx(memStatus))
+            memStatus.RefreshLength();
+
+            if (GlobalMemoryStatusEx(ref memStatus))
             {
-                double totalMB = memStatus.ullTotalPageFile / (1024.00 * 1024.00);
-                double usedMB =
-                    (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / (1024.00 * 1024.00);
-                return (totalMB, usedMB);
+                const double bytesInMB = 1024.0 * 1024.0;
+
+                double totalMB = memStatus.ullTotalPageFile / bytesInMB;
+                double usedMB = (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / bytesInMB;
+
+                return (Math.Round(totalMB, 2), Math.Round(usedMB, 2));
             }
+
             return (0, 0);
         }
 
