@@ -120,9 +120,7 @@ namespace Celer.ViewModels
                                 new RequiredProcess
                                 {
                                     Name = proc.GetProperty("name").GetString()!,
-                                    CanTerminate = proc.TryGetProperty("canTerminate", out var ct)
-                                        ? ct.GetBoolean()
-                                        : null,
+                                    CanTerminate = proc.TryGetProperty("canTerminate", out var ct) && ct.GetBoolean(),
                                 }
                             );
                         }
@@ -180,17 +178,12 @@ namespace Celer.ViewModels
 
             foreach (var item in selectedItems)
             {
-                if (item.RequiredProcesses != null && item.RequiredProcesses.Count > 0)
+                if (item.RequiredProcesses != null && item.RequiredProcesses.Count > 0 && runningProcs is not null)
                 {
                     foreach (var proc in item.RequiredProcesses)
                     {
-                        if (proc.CanTerminate == false || proc.CanTerminate is null)
-                            if (
-                                runningProcs.Contains(
-                                    Path.GetFileNameWithoutExtension(proc.Name).ToLower()
-                                )
-                            )
-                                toClose.Add(proc.Name);
+                        if (!proc.CanTerminate && runningProcs.Contains(Path.GetFileNameWithoutExtension(proc.Name).ToLower()))
+                           toClose.Add(proc.Name);
                     }
                 }
             }
@@ -419,7 +412,7 @@ namespace Celer.ViewModels
         public class RequiredProcess
         {
             public required string Name { get; set; }
-            public bool? CanTerminate { get; set; }
+            public bool CanTerminate { get; set; }
         }
 
         public class Action
