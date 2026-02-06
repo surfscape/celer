@@ -22,7 +22,7 @@ namespace Celer.Services
             try
             {
                 using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(3) };
-                var result = await client.GetAsync("https://www.google.com");
+                var result = await client.GetAsync("8.8.8.8");
                 return result.IsSuccessStatusCode;
             }
             catch(Exception ex)
