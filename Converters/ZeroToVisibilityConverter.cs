@@ -10,12 +10,14 @@ namespace Celer.Converters
         {
             int zeroValue = (value is int b) ? b : 0;
 
-            bool invert = (parameter is string s && bool.TryParse(s, out bool p)) && p;
+            bool invert = (bool.TryParse(parameter.ToString(), out bool p));
 
-            if (!invert)
-                return zeroValue > 0 ? Visibility.Visible : Visibility.Collapsed;
-            else
-                return zeroValue > 0 ? Visibility.Collapsed : Visibility.Visible;
+            return (zeroValue > 0, invert) switch
+            {
+                (true, false) => Visibility.Visible,
+                (false, true) => Visibility.Visible,
+                _ => Visibility.Collapsed
+            };
         }
 
         public object ConvertBack(
