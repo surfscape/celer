@@ -17,10 +17,19 @@
             <Style TargetType="UIElement">
                 <Setter Property="RenderOptions.CachingHint"
                         Value="Cache" />
+                <Setter Property="SnapsToDevicePixels" Value="true"></Setter>            
             </Style>
-            <Style TargetType="Image">
-                <Setter Property="RenderOptions.BitmapScalingMode"
-                        Value="NearestNeighbor" />
+            <Style TargetType="StackPanel">
+                <Setter Property="UseLayoutRounding"
+                        Value="true"></Setter>
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="UseLayoutRounding"
+                        Value="true"></Setter>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="UseLayoutRounding"
+                        Value="true"></Setter>
             </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />

@@ -20,6 +20,8 @@
                     Value="8,4" />
             <Setter Property="FontSize"
                     Value="14" />
+            <Setter Property="UseLayoutRounding"
+                    Value="True"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="MenuItem">
