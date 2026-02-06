@@ -42,9 +42,8 @@ namespace Celer.Services.Memory
                 using var searcher = new ManagementObjectSearcher(
                     "SELECT Speed FROM Win32_PhysicalMemory"
                 );
-                foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>())
+                foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>().Where(e => e["Speed"] is not null))
                 {
-                    if (obj["Speed"] != null)
                         return Convert.ToInt32(obj["Speed"]);
                 }
             }
