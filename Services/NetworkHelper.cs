@@ -25,8 +25,9 @@ namespace Celer.Services
                 var result = await client.GetAsync("https://www.google.com");
                 return result.IsSuccessStatusCode;
             }
-            catch
+            catch(Exception ex)
             {
+                Debug.WriteLine($"Failed to get internet access status: {ex.Message}");
                 return false;
             }
         }
@@ -39,9 +40,10 @@ namespace Celer.Services
                 var reply = await ping.SendPingAsync(host, 1000);
                 return reply.Status == IPStatus.Success ? reply.RoundtripTime.ToString() : "Timeout";
             }
-            catch
+            catch (Exception ex)
             {
-                return "Erro";
+                Debug.WriteLine($"Failed to get internet acess status: {ex.Message}");
+                return "Failed";
             }
         }
         public static async Task<bool> SetSystemDnsAsync(string dns)
@@ -75,8 +77,29 @@ namespace Celer.Services
 
                 return true;
             }
-            catch
+            catch(NetworkInformationException ex)
             {
+                Debug.WriteLine($"Faild to retrieve all network interfaces\n {ex.Message}");
+                return false;
+            }
+            catch(ArgumentNullException ex)
+            {
+                Debug.WriteLine($"Faild to filter network interfaces\n {ex.Message}");
+                return false;
+            }
+            catch(InvalidOperationException ex)
+            {
+                Debug.WriteLine($"Faild to start the process\n {ex.Message}");
+                return false;
+            }
+            catch(Win32Exception ex)
+            {
+                Debug.WriteLine($"Faild to start the process\n {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Faild to start the process\n {ex.Message}");
                 return false;
             }
         }
