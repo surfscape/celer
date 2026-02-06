@@ -17,7 +17,6 @@
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
         <converters:DiskSizeConverter x:Key="DiskSizeConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
         <converters:PositiveToNegative x:Key="PositiveToNegativeConverter" />
         <DataTemplate x:Key="ItemTemplate">
             <Border Padding="8"
