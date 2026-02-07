@@ -9,7 +9,7 @@ namespace Celer.Views.Windows
     /// </summary>
     public partial class AboutWindow : Window
     {
-        string infoVersion = Assembly
+        readonly string infoVersion = Assembly
     .GetExecutingAssembly()
     .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
     ?.InformationalVersion.Split('+')[0] ?? "Versão N/A";

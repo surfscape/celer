@@ -22,7 +22,7 @@ namespace Celer.ViewModels.OptimizationVM
             IsMemoryEnabled = true,
         };
 
-        private DispatcherTimer _updateTimer = new() { Interval = TimeSpan.FromSeconds(1) };
+        private readonly DispatcherTimer _updateTimer = new() { Interval = TimeSpan.FromSeconds(1) };
 
         public SensorViewModel()
         {

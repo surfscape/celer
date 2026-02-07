@@ -16,7 +16,7 @@ namespace Celer.Views.UserControls.MainWindow
     /// </summary>
     public partial class QuickCenter : UserControl
     {
-        private QuickCenterViewModel viewModel;
+        private readonly QuickCenterViewModel viewModel;
         public QuickCenter()
         {
             InitializeComponent();
