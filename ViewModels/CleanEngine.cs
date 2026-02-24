@@ -253,7 +253,7 @@ namespace Celer.ViewModels
                             {
                                 foreach (var proc in item.RequiredProcesses ?? [])
                                 {
-                                    if (proc.CanTerminate == true && proc.Name == "explorer.exe")
+                                    if (proc.CanTerminate && proc.Name == "explorer.exe")
                                     {
                                         Processes.KillExplorer();
                                     }

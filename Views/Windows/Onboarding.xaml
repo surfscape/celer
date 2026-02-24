@@ -126,7 +126,7 @@
                             </StackPanel>
                         </Grid>
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding AutoStartup}">
+                    <CheckBox IsChecked="{Binding AutoStartup}" Margin="0,0,0,4">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -145,7 +145,71 @@
                             </StackPanel>
                         </Grid>
                     </CheckBox>
+                    <CheckBox IsChecked="{Binding EnableSentry}">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0"
+                                       Text="Enable telemetry and crash/error reports" />
+                            <StackPanel Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Background="Transparent"
+                                        VerticalAlignment="Bottom">
+                                <StackPanel.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontSize="12"
+                                                   Margin="0"
+                                                   TextWrapping="Wrap">Enables Sentry which makes it possible to log exceptions that may happen when Celer is running.</TextBlock>
+                                        <TextBlock FontSize="12"
+                                                   Margin="0,8"
+                                                   TextWrapping="Wrap">Information collected include:</TextBlock>
+                                        <BulletDecorator>
+                                            <BulletDecorator.Bullet>
+                                                <Ellipse Height="5"
+                                                         Width="5"
+                                                         Fill="{DynamicResource TextFillColorSecondaryBrush}" />
+                                            </BulletDecorator.Bullet>
+                                            <TextBlock FontSize="12"
+                                                     Margin="6,0,0,0"
+                                                     TextWrapping="Wrap"
+                                                     Text="Stack traces and error messages" />
+                                        </BulletDecorator>
+                                        <BulletDecorator Margin="0,4">
+                                            <BulletDecorator.Bullet>
+                                                <Ellipse Height="5"
+                                                         Width="5"
+                                                         Fill="{DynamicResource TextFillColorSecondaryBrush}" />
+                                            </BulletDecorator.Bullet>
+                                            <TextBlock FontSize="12"
+                                                       Margin="6,0,0,0"
+                                                       TextWrapping="Wrap"
+                                                     Text="Limited system information (Windows edition &amp; version, and Celer version)" />
+                                        </BulletDecorator>
+                                        <BulletDecorator>
+                                            <BulletDecorator.Bullet>
+                                                <Ellipse Height="5"
+                                                         Width="5"
+                                                         Fill="{DynamicResource TextFillColorSecondaryBrush}" />
+                                            </BulletDecorator.Bullet>
+                                            <TextBlock FontSize="12"
+                                                       Margin="6,0,0,0"
+                                                       TextWrapping="Wrap" 
+                                                     Text="To improve privacy Sentry's data scrubber is enabled and collection of IP, city, region, and city code has been disabled and is not stored." />
+                                        </BulletDecorator>
+                                    </StackPanel>
+
+                                    
+                                </StackPanel.ToolTip>
+                                <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                          Kind="BadgeQuestionMark"
+                                                          Width="14" />
+                            </StackPanel>
+                        </Grid>
+                    </CheckBox>
                     <Button HorizontalAlignment="Right"
+                            MinWidth="125"
                             Command="{Binding StartCommand}"
                             Style="{DynamicResource AccentButtonStyle}"
                             IsEnabled="{Binding AcceptTerms}">Start</Button>

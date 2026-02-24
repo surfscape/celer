@@ -37,7 +37,7 @@ public partial class App : Application
             DispatcherUnhandledException += App_DispatcherUnhandledException;
             SentrySdk.Init(o =>
             {
-                //o.Dsn = ;
+                o.Dsn = "";
                 o.Debug = true;
                 o.TracesSampleRate = 1.0;
             });
@@ -59,6 +59,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         // closes celer if another instance is already running
+        if(!e.Args.Contains("-disableMutexProtection")) { 
         using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
         {
             if (!createdNew)
@@ -67,6 +68,7 @@ public partial class App : Application
                 _singleInstanceMutex = null;
                 Shutdown();
             }
+        }
         }
 
         AppHost = Host.CreateDefaultBuilder()

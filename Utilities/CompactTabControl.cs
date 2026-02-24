@@ -29,7 +29,7 @@ namespace Celer.Utilities
                     {
                         item.MinWidth = 40;
                         item.Width = 40;
-                        item.Padding = new Thickness(13, 12, 13, 12);
+                        item.Padding = new Thickness(13, 11, 13, 12);
                     }
                     else
                     {

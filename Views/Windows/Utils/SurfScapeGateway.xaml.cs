@@ -91,7 +91,7 @@ namespace Celer.Views.Windows.Utils
             {
                 try
                 {
-                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway || windowTriggered == false)
+                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway || !windowTriggered)
                     {
                         await Task.Delay(200);
                         await SurfScapeWebServices();

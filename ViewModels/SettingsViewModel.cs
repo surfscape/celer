@@ -126,12 +126,9 @@ namespace Celer.ViewModels
                     System.StringComparison.Ordinal
                 );
 
-            if (!changed)
+            if (!changed && !Paths.SequenceEqual(_initialPaths))
             {
-                if (!Paths.SequenceEqual(_initialPaths))
-                {
-                    changed = true;
-                }
+                    changed = true;   
             }
             HasUnsavedChanges = changed;
         }
