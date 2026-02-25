@@ -7,9 +7,12 @@
     ThemeMode="System">
     <Application.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Key="WindowBackground"
+                             Color="Transparent"></SolidColorBrush>
             <Style TargetType="Window">
                 <Setter Property="FontFamily" Value="Segoe UI" />
-                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource WindowBackground}"></Setter>
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"></Setter>
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"></Setter>

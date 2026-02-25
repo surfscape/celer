@@ -12,8 +12,10 @@ using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -53,7 +55,41 @@ public partial class App : Application
 
     private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
+        SetFluentTheme();
+        LegacyTheme();
+    }
+
+    private static void SetFluentTheme()
+    {
         Current.ThemeMode = MainConfiguration.Default.Theme == (int)CelerTheme.Light ? ThemeMode.Light : MainConfiguration.Default.Theme == (int)CelerTheme.Dark ? ThemeMode.Dark : ThemeMode.System;
+    }
+
+   /// <summary>
+   /// Set window background to a static color depending on the theme. This is used if the OS is on the latest or older version of Windows 10, since Windows 10 does not support Mica.
+   /// </summary>
+    private static void LegacyTheme()
+    {
+        if (Environment.OSVersion.Version.Build <= 22000)
+        {
+            if (Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme())
+                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+            else if(Current.ThemeMode == ThemeMode.System && !IsLightLegacyTheme())
+                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+
+            if (Current.ThemeMode == ThemeMode.Light)
+                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+            else if (Current.ThemeMode == ThemeMode.Dark)
+                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+
+
+        }
+    }
+
+    private static bool IsLightLegacyTheme()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+        var value = key?.GetValue("AppsUseLightTheme");
+        return value is int i && i > 0;
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -116,6 +152,8 @@ public partial class App : Application
         {
             if (!e.Args.Contains("-silent") && hasUserDoneSetup)
             {
+                SetFluentTheme();
+                LegacyTheme();
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
@@ -126,11 +164,15 @@ public partial class App : Application
             }
             else if (!e.Args.Contains("-silent") && !hasUserDoneSetup)
             {
+                SetFluentTheme();
+                LegacyTheme();
                 var onboardingWindow = new Onboarding();
                 onboardingWindow.Show();
             }
             else if (e.Args.Contains("-silent"))
             {
+                SetFluentTheme();
+                LegacyTheme();
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.SilentStartup = true;
