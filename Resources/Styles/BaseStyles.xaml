@@ -184,7 +184,8 @@
         </Setter>
     </Style>
     <Style BasedOn="{StaticResource {x:Type ListBox}}" TargetType="{x:Type ListBox}">
-        <Setter Property="BorderBrush" Value="{StaticResource Border}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style TargetType="Hyperlink">

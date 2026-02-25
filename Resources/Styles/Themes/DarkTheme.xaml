@@ -1,12 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="StrongText">White</Color>
-    <Color x:Key="DefaultText">#cecece</Color>
-    <SolidColorBrush x:Key="AppBackground" Color="#191A1A" />
-    <SolidColorBrush x:Key="Primary" Color="#99cfff" />
-    <SolidColorBrush x:Key="Border" Color="#484b4f" />
-    <SolidColorBrush x:Key="ActiveContainer" Color="#132839"></SolidColorBrush>
-    <SolidColorBrush x:Key="PrimaryText" Color="{StaticResource StrongText}" />
-    <SolidColorBrush x:Key="SecondaryText" Color="{StaticResource DefaultText}" />
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="SteelError">#ff4545</Color>
     <Color x:Key="SteelSucess">#4ff7a8</Color>
@@ -14,4 +7,5 @@
 
     <SolidColorBrush x:Key="ErrorCode" Color="#ff4545"></SolidColorBrush>
     <SolidColorBrush x:Key="SucessCode" Color="#4ff7a8"></SolidColorBrush>
+
 </ResourceDictionary>
