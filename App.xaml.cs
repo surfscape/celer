@@ -15,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -44,6 +43,9 @@ public partial class App : Application
                 o.TracesSampleRate = 1.0;
             });
         }
+        /* event for windows 10 to check when a user preference is changed to trigger a theme update */
+        if (Environment.OSVersion.Version.Build <= 26000)
+            SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
     }
 
@@ -52,6 +54,18 @@ public partial class App : Application
         SentrySdk.CaptureException(e.Exception);
         e.Handled = true;
     }
+
+
+    private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+    {
+        switch (e.Category)
+        {
+            case UserPreferenceCategory.General:
+                LegacyTheme();
+                break;
+        }
+    }
+
 
     private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -64,24 +78,21 @@ public partial class App : Application
         Current.ThemeMode = MainConfiguration.Default.Theme == (int)CelerTheme.Light ? ThemeMode.Light : MainConfiguration.Default.Theme == (int)CelerTheme.Dark ? ThemeMode.Dark : ThemeMode.System;
     }
 
-   /// <summary>
-   /// Set window background to a static color depending on the theme. This is used if the OS is on the latest or older version of Windows 10, since Windows 10 does not support Mica.
-   /// </summary>
+    /// <summary>
+    /// Set window background to a static color depending on the theme. This is used if the OS is on the latest or older version of Windows 10, since Windows 10 does not support Mica.
+    /// </summary>
     private static void LegacyTheme()
     {
-        if (Environment.OSVersion.Version.Build <= 22000)
+        if (Environment.OSVersion.Version.Build <= 26000)
         {
             if (Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme())
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
-            else if(Current.ThemeMode == ThemeMode.System && !IsLightLegacyTheme())
+            else if (Current.ThemeMode == ThemeMode.System && !IsLightLegacyTheme())
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
-
-            if (Current.ThemeMode == ThemeMode.Light)
+            else if (Current.ThemeMode == ThemeMode.Light)
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
-            else if (Current.ThemeMode == ThemeMode.Dark)
+            else
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
-
-
         }
     }
 
