@@ -1,4 +1,5 @@
-﻿using Celer.Models;
+﻿using ByteSizeLib;
+using Celer.Models;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,7 +19,7 @@ namespace Celer.ViewModels
         private ObservableCollection<CleanupCategory> categories = [];
 
         [ObservableProperty]
-        private double totalFreedText = 0;
+        private string totalFreedText = string.Empty;
 
         [ObservableProperty]
         private object? selectedItem;
@@ -151,7 +152,7 @@ namespace Celer.ViewModels
         [RelayCommand]
         private async Task CleanAsync()
         {
-            TotalFreedText = 0;
+            TotalFreedText = string.Empty;
 
             /* add only the selected items in the categories for cleaning */
             var selectedItems = Categories
@@ -244,6 +245,7 @@ namespace Celer.ViewModels
 
                     if (item.Actions.Type == "content-pattern")
                     {
+                        string processHelper = String.Empty;
                         string resolvedPath = Environment.ExpandEnvironmentVariables(
                             item.Actions.Path!
                         );
@@ -255,6 +257,7 @@ namespace Celer.ViewModels
                                 {
                                     if (proc.CanTerminate && proc.Name == "explorer.exe")
                                     {
+                                        processHelper = proc.Name;
                                         Processes.KillExplorer();
                                     }
                                 }
@@ -264,7 +267,9 @@ namespace Celer.ViewModels
                                     ref freed,
                                     item.Name
                                 );
+
                                 Interlocked.Add(ref totalFreed, freed);
+                                Processes.StartExplorer();
                             }
                             else
                             {
@@ -281,7 +286,6 @@ namespace Celer.ViewModels
                                 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                             );
                         }
-                        Processes.StartExplorer();
                         continue;
                     }
                     Interlocked.Add(ref totalFreed, freed);
@@ -304,8 +308,7 @@ namespace Celer.ViewModels
                     );
                 }
             });
-
-            TotalFreedText = (long)(totalFreed / 1024f / 1024f);
+            TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
             hasRan = true;
             AppGlobals.EnableCleanEngine = true;
         }
