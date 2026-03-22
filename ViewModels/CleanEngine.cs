@@ -202,7 +202,7 @@ namespace Celer.ViewModels
             StringBuilder log = new();
             long totalFreed = 0;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 AppGlobals.EnableCleanEngine = false;
                 AddLog(
@@ -245,7 +245,7 @@ namespace Celer.ViewModels
 
                     if (item.Actions.Type == "content-pattern")
                     {
-                        string processHelper = String.Empty;
+                        string processHelper = string.Empty;
                         string resolvedPath = Environment.ExpandEnvironmentVariables(
                             item.Actions.Path!
                         );
@@ -259,6 +259,7 @@ namespace Celer.ViewModels
                                     {
                                         processHelper = proc.Name;
                                         Processes.KillExplorer();
+                                        await Task.Delay(300);
                                     }
                                 }
                                 DeleteFilesWithPatterns(
@@ -269,7 +270,8 @@ namespace Celer.ViewModels
                                 );
 
                                 Interlocked.Add(ref totalFreed, freed);
-                                Processes.StartExplorer();
+                                if (processHelper == "explorer.exe")
+                                    Processes.StartExplorer();
                             }
                             else
                             {
