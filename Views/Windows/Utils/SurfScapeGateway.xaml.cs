@@ -12,7 +12,7 @@ using System.Windows.Interop;
 namespace Celer.Views.Windows.Utils
 {
     /// <summary>
-    /// Interaction logic for SurfScapeGateway.xaml
+    /// Interaction logic for SurfScapeGateway, responsible for initializing hardware services and downloading cleaning signatures.
     /// </summary>
     public partial class SurfScapeGateway : Window
     {
@@ -20,6 +20,8 @@ namespace Celer.Views.Windows.Utils
         // Source - https://stackoverflow.com/a
         // Posted by Joe White, modified by community.
         // Retrieved 2025-11-12, License - CC BY-SA 4.0
+
+        // Hides the titlebar close button
 
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
@@ -32,9 +34,12 @@ namespace Celer.Views.Windows.Utils
         private readonly MainWindow _mainWindow;
 
         /// <summary>
-        /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, it can still open if triggered manually.
+        /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, they can still trigger when gateway is ran manually.
         /// </summary>
         public bool MainWindowTrigger { get; set; } = false;
+        /// <summary>
+        /// When true hides the main window. Used when gateway is ran during startup and if "Starting with Windows" is enabled.
+        /// </summary>
         public bool SilentStartup { get; set; } = false;
 
         public SurfScapeGateway(MainWindow mainWindow)
@@ -118,7 +123,7 @@ namespace Celer.Views.Windows.Utils
                     if (success)
                     {
                         AppGlobals.EnableCleanEngine = true;
-                        CurrentTask = "Signatures updated!";
+                        CurrentTask = "Signatures updated";
                     }
                     else
                     {
@@ -128,10 +133,10 @@ namespace Celer.Views.Windows.Utils
                 }
                 else
                 {
-                    CurrentTask = "No internet. Trying to get local signatures.";
+                    CurrentTask = "No internet. Searching for local signatures...";
                     SetOfflineDatabase();
                     CurrentTask = hasOfflineDb
-                        ? "Found local signatures!"
+                        ? "Found local signatures"
                         : "No local signatures found, cleaning has been disabled";
                 }
             }
