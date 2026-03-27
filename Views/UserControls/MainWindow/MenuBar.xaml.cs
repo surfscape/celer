@@ -118,43 +118,6 @@ namespace Celer.Views.UserControls.MainWindow
 
     public partial class MenuBarNavigation : ObservableObject
     {
-        private readonly NavigationService _navigationService;
 
-        [ObservableProperty]
-        private bool isCompact = false;
-
-        public MenuBarNavigation(NavigationService navigationService)
-        {
-            _navigationService = navigationService;
-            _navigationService.NavigationChanged += OnNavigationChanged;
-        }
-
-        [ObservableProperty]
-        private bool canGoBack;
-
-        [RelayCommand]
-        private void NavigateToTab(string tab)
-        {
-            _navigationService.Navigate(tab);
-        }
-
-        [RelayCommand]
-        private void ToggleCompactMode()
-        {
-            _navigationService.CompactMode = !_navigationService.CompactMode;
-            IsCompact = _navigationService.CompactMode;
-        }
-
-
-        [RelayCommand]
-        private void GoBack()
-        {
-            _navigationService.BackToParent();
-        }
-
-        private void OnNavigationChanged(string? tab, string? innerView)
-        {
-            CanGoBack = !string.IsNullOrEmpty(innerView) && !string.Equals(innerView, "Main", StringComparison.Ordinal);
-        }
     }
 }

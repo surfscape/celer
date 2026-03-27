@@ -9,19 +9,31 @@
              d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <Style x:Key="FocusMenu">
+  <Setter Property="Control.Template">
+    <Setter.Value>
+      <ControlTemplate>
+                        <Border CornerRadius="4"
+                                BorderBrush="{DynamicResource FocusStrokeColorOuterBrush}"
+                                BorderThickness="1">
+                        </Border>
+                    </ControlTemplate>
+    </Setter.Value>
+  </Setter>
+</Style>
         <Style TargetType="MenuItem">
-            <Setter Property="VerticalAlignment"
-                    Value="Stretch"></Setter>
-            <Setter Property="VerticalContentAlignment"
-                    Value="Stretch"></Setter>
+            
             <Setter Property="Foreground"
                     Value="{DynamicResource TextFillColorPrimaryBrush}" />
             <Setter Property="Padding"
-                    Value="8,4" />
+                    Value="10,5" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center"></Setter>
             <Setter Property="FontSize"
                     Value="14" />
-            <Setter Property="UseLayoutRounding"
+            <Setter Property="SnapsToDevicePixels"
                     Value="True"></Setter>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusMenu}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="MenuItem">
@@ -130,36 +142,12 @@
     </UserControl.Resources>
     <Menu BorderThickness="0"
           HorizontalAlignment="Stretch"
-          x:Name="MMenu"
-          FontSize="12">
+          x:Name="MMenu">
         <Menu.ItemsPanel>
             <ItemsPanelTemplate>
                 <DockPanel HorizontalAlignment="Stretch" />
             </ItemsPanelTemplate>
         </Menu.ItemsPanel>
-        <MenuItem DataContext="{Binding DataContext, ElementName=NavigationMenu}"
-                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
-                  ToolTip="Toggle compact mode"
-                  Command="{Binding ToggleCompactModeCommand}">
-            <MenuItem.Header>
-                <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                          Kind="Menu" Width="12" Height="12" Margin="0,2,0,0"/>
-            </MenuItem.Header>
-        </MenuItem>
-        <MenuItem DataContext="{Binding DataContext, ElementName=NavigationMenu}"
-                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
-                  ToolTip="Go back to the previous screen"
-                  Command="{Binding GoBackCommand}"
-                  IsEnabled="{Binding CanGoBack}"
-                  Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}">
-            <MenuItem.Header>
-                <iconPacks:PackIconLucide Width="12"
-                                          Height="12"
-                                          Margin="0,2,0,0"
-                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                          Kind="ArrowLeft" />
-            </MenuItem.Header>
-        </MenuItem>
         <MenuItem Header="_App">
             <MenuItem Click="OpenSettings_Click"
                       Header="_Preferences"
@@ -207,8 +195,15 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem 
-                  Header="_Help">
+        <MenuItem Header="_Help">
+            <MenuItem Command="{Binding OpenLinkCommand}"
+                      CommandParameter="https://ko-fi.com/reduxflakes"
+                      Header="_Donate">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                              Kind="HandHeart" />
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Command="{Binding OpenLinkCommand}"
                       CommandParameter="https://surfscape.eu/about/support"
                       Header="_Support">
@@ -228,23 +223,7 @@
                                               Kind="Info" />
                 </MenuItem.Icon>
             </MenuItem>
-        </MenuItem>
-        <MenuItem HorizontalAlignment="Right"
-                  Margin="0,0,6,0"
-                  d:DataContext="{d:DesignInstance Type=local:MenuBarNavigation}"
-                  Command="{Binding OpenLinkCommand}"
-                  CommandParameter="https://ko-fi.com/reduxflakes">
-            <MenuItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Assets/fluent_heart.png"
-                           RenderOptions.BitmapScalingMode="HighQuality"
-                           Width="17"
-                           Height="17"
-                           Margin="0,0,6,0"></Image>
-                    <TextBlock Text="Donate"
-                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"></TextBlock>
-                </StackPanel>
-            </MenuItem.Header>
+
         </MenuItem>
     </Menu>
 </UserControl>

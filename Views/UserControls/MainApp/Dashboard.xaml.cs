@@ -17,6 +17,7 @@ namespace Celer.Views.UserControls.MainApp
             _viewModel = viewModel;
             DataContext = _viewModel;
             Loaded += Dashboard_Loaded;
+            
         }
 
         private async void Dashboard_Loaded(object sender, RoutedEventArgs e)
@@ -26,6 +27,7 @@ namespace Celer.Views.UserControls.MainApp
             {
                 await _viewModel.InitializeAsync();
             }
+            
         }
     }
 }

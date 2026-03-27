@@ -27,14 +27,12 @@ namespace Celer.Utilities
                 {
                     if (isCompact)
                     {
-                        item.MinWidth = 40;
-                        item.Width = 40;
-                        item.Padding = new Thickness(13, 11, 13, 12);
+                        item.MinWidth = 42;
+                        item.Width = 42;
                     }
                     else
                     {
-                        item.MinWidth = 180;
-                        item.Padding = new Thickness(13, 9, 16, 9);
+                        item.MinWidth = 172;
                     }
                 }
             }

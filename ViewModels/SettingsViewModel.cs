@@ -1,6 +1,8 @@
 ﻿using Celer.Models.Preferences;
 using Celer.Properties;
 using Celer.Utilities;
+using Celer.Views;
+using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;

@@ -13,7 +13,9 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels;
 
-public partial class DashboardViewModel : ObservableObject
+
+
+public partial class DashboardViewModel : BaseModuleViewModel
 {
     private readonly NavigationService _navigationService;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };

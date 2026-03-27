@@ -17,6 +17,13 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private bool tabControlCompactMode;
 
+
+        [ObservableProperty]
+        private bool isCompact = false;
+
+        [ObservableProperty]
+        private bool canGoBack;
+
         private readonly Lazy<UserControl> _menuBarControl;
         private readonly Lazy<UserControl> _dashboardControl;
         private readonly Lazy<UserControl> _limpezaControl;
@@ -48,7 +55,6 @@ namespace Celer.ViewModels
         {
             _navigationService = navigationService;
             _navigationService.NavigateTo = NavigateTo;
-            _navigationService.CompactModeChanged += OnCompactModeChanged;
             _serviceProvider = serviceProvider;
             _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
             _dashboardControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Dashboard>());
@@ -56,6 +62,8 @@ namespace Celer.ViewModels
             _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
             _maintenanceControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Maintenance>());
             TabControlCompactMode = _navigationService.CompactMode;
+            _navigationService.CompactModeChanged += OnCompactModeChanged;
+            _navigationService.NavigationChanged += OnNavigationChanged;
         }
 
         private void OnCompactModeChanged(object sender, bool isCompact)
@@ -73,12 +81,39 @@ namespace Celer.ViewModels
         }
         partial void OnSelectedTabIndexChanged(int value)
         {
-            var tabName = _tabIndexes.FirstOrDefault(kv => kv.Value == value).Key;
+            var tabName = _tabIndexes.FirstOrDefault(kv => kv.Value == value && kv.Value != 99).Key;
             if (string.IsNullOrEmpty(tabName))
                 return;
 
             var innerView = _navigationService.GetInnerViewForTab(tabName);
             _navigationService.NavigateInternal(tabName, innerView);
+        }
+
+
+
+        [RelayCommand]
+        private void NavigateToTab(string tab)
+        {
+            _navigationService.Navigate(tab);
+        }
+
+        [RelayCommand]
+        private void ToggleCompactMode()
+        {
+            _navigationService.CompactMode = !_navigationService.CompactMode;
+            IsCompact = _navigationService.CompactMode;
+        }
+
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            _navigationService.BackToParent();
+        }
+
+        private void OnNavigationChanged(string? tab, string? innerView)
+        {
+            CanGoBack = !string.IsNullOrEmpty(innerView) && !string.Equals(innerView, "Main", StringComparison.Ordinal);
         }
     }
     public partial class QCMenuViewModel : ObservableObject
