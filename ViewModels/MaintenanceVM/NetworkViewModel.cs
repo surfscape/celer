@@ -3,30 +3,32 @@ using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Celer.ViewModels.MaintenanceVM
 {
     public partial class NetworkViewModel : ObservableObject
     {
-        public ObservableCollection<DnsServer> DnsServers { get; } = [];
-
+        public ObservableCollection<DnsServer> DnsServers { get; set; } = [];
 
         [ObservableProperty]
         private DnsServer? selectedDnsServer;
 
-        public string NetworkAdaptersStatus { get; set; } = "N/A";
-        public string ConnectionStatus { get; set; } = "N/A";
-        public string InternetStatus { get; set; } = "N/A";
+        [ObservableProperty]
+        private string adaptersFound = "N/A";
 
+        [ObservableProperty]
+        private string connectionStatus  = "N/A";
+
+        [ObservableProperty]
+        private string internetConnectionStatus = "N/A";
 
         public NetworkViewModel()
         {
             LoadDnsServers();
-            UpdatePing();
         }
 
-        [RelayCommand]
         private void LoadDnsServers()
         {
             DnsServers.Clear();
@@ -38,27 +40,25 @@ namespace Celer.ViewModels.MaintenanceVM
         }
 
         [RelayCommand]
-        private async void TestNetwork()
+        private async Task TestNetwork()
         {
-            NetworkAdaptersStatus = await NetworkHelper.HasNetworkAdapters() ? "Found" : "None";
-            ConnectionStatus = await NetworkHelper.IsConnected() ? "Active" : "No active connection";
-            InternetStatus = await NetworkHelper.HasInternetAccess() ? "With access" : "No access";
-            OnPropertyChanged(nameof(NetworkAdaptersStatus));
-            OnPropertyChanged(nameof(ConnectionStatus));
-            OnPropertyChanged(nameof(InternetStatus));
+            AdaptersFound = await NetworkHelper.HasNetworkAdapters() ? "Found" : "None";
+            ConnectionStatus = await NetworkHelper.IsConnected() ? "Active" : "No connection";
+            InternetConnectionStatus = await NetworkHelper.HasInternetAccess() ? "Access" : "No access";
         }
 
         [RelayCommand]
-        private async void UpdatePing()
+        public async Task UpdatePing()
         {
             foreach (var dns in DnsServers)
             {
-                dns.Ping = await NetworkHelper.PingAsync(dns.IP);
+                dns.PingStatus = await NetworkHelper.PingAsync(dns.IP);
             }
+            OnPropertyChanged(nameof(DnsServer));
         }
 
         [RelayCommand]
-        private async void SetDns()
+        private async Task SetDns()
         {
             if (SelectedDnsServer == null)
                 return;

@@ -5,11 +5,12 @@
     xmlns:converters="clr-namespace:Celer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.MaintenanceViews"
-    xmlns:maintenancevm="clr-namespace:Celer.ViewModels.MaintenanceVM"
+    xmlns:vm="clr-namespace:Celer.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DataContext="{d:DesignInstance Type=maintenancevm:NetworkViewModel}"
+    d:DataContext="{d:DesignInstance Type=vm:MaintenanceVM.NetworkViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    d:Background="white"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
@@ -26,7 +27,7 @@
                     <TextBlock FontSize="17"
                                FontWeight="DemiBold"
                                Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="Network Adapters" />
-                    <TextBlock Text="{Binding NetworkAdaptersStatus}"
+                    <TextBlock Text="{Binding AdaptersFound}"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
                 <StackPanel>
@@ -44,7 +45,7 @@
                                FontWeight="DemiBold"
                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                Text="Internet Access" />
-                    <TextBlock Text="{Binding InternetStatus}"
+                    <TextBlock Text="{Binding InternetConnectionStatus}"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
             </UniformGrid>
@@ -58,7 +59,7 @@
                 <ComboBox
                     Width="300"
                     Height="30"
-                    ItemsSource="{Binding DnsServers}"
+                          ItemsSource="{Binding DnsServers}"
                     SelectedItem="{Binding SelectedDnsServer}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -67,7 +68,7 @@
                                 <TextBlock Text=" - " />
                                 <TextBlock Text="{Binding IP}" />
                                 <TextBlock Text=" (" />
-                                <TextBlock Text="{Binding Ping}" />
+                                <TextBlock Text="{Binding PingStatus}" />
                                 <TextBlock Text=" ms)" />
                             </StackPanel>
                         </DataTemplate>
