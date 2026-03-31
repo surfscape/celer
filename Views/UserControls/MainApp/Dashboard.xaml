@@ -55,7 +55,8 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    <sg:SpacedGrid RowSpacing="8" Margin="0,0,0,16">
+    <sg:SpacedGrid RowSpacing="8"
+                   Margin="0,0,0,16">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -123,33 +124,23 @@
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
                                 <ed:Arc StartAngle="-100"
                                         EndAngle="{Binding CpuUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
                             </Grid>
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Margin="0,0,0,0">
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Bottom"
-                                           Margin="0,20,0,4"
-                                           Text="{Binding CpuUsage, StringFormat={}{0}%}"
-                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Bottom"
-                                           Visibility="Collapsed"
-                                           Text="Idle"
-                                           FontSize="13"
-                                           Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
-                            </StackPanel>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Margin="0,16,0,0"
+                                       Text="{Binding CpuUsage, StringFormat={}{0}%}"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
                     </Grid>
                     <TextBlock Margin="0,0,0,0"
@@ -211,32 +202,26 @@
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
                                 <ed:Arc StartAngle="-100"
                                         EndAngle="{Binding UsedMemoryGraph, StringFormat={}{0}}"
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
                             </Grid>
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Margin="0,0,0,0">
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Bottom"
-                                           Margin="0,16,0,0"
-                                           Text="{Binding MemoryUsage, StringFormat={}{0}%}"
-                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                            </StackPanel>
-
+                            <TextBlock Margin="0,16,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding MemoryUsage, StringFormat={}{0}%}"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
                     </Grid>
-                    <UniformGrid Columns="2"
-                                 Margin="0,8,0,0">
+                    <UniformGrid Columns="2">
                         <StackPanel>
                             <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                        Text="In Use "
@@ -281,28 +266,24 @@
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
                                 <ed:Arc StartAngle="-100"
                                         EndAngle="{Binding GpuGeneralUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
                                         Stretch="None"
                                         Height="100"
                                         Width="100"
-                                        StrokeThickness="14"
-                                        StrokeDashArray=".2"
+                                        StrokeThickness="16"
+                                        StrokeDashArray=".15"
                                         Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
                             </Grid>
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Margin="0,0,0,0">
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Bottom"
-                                           Margin="0,16,0,0"
-                                           Text="{Binding GpuGeneralUsage, StringFormat={}{0}%}"
-                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                            </StackPanel>
-
+                            <TextBlock 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Margin="0,16,0,0"
+                                       Text="{Binding GpuGeneralUsage, StringFormat={}{0}%}"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
                     </Grid>
                     <TextBlock FontWeight="DemiBold"
@@ -328,9 +309,8 @@
                 </StackPanel>
             </Border>
         </sg:SpacedGrid>
-        <sg:SpacedGrid  
-                        ColumnSpacing="8"
-                        Grid.Row="3">
+        <sg:SpacedGrid ColumnSpacing="8"
+                       Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
