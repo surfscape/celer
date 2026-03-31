@@ -33,7 +33,7 @@
             Padding="3,0,0,0"
             BorderThickness="8 1 8 8">
         <Grid RowDefinitions="auto *" x:Name="MainGrid">
-            <!-- titlebar -->
+            <!-- Titlebar -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="44" />
@@ -42,7 +42,6 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -77,16 +76,11 @@
                                VerticalAlignment="Center"
                                Style="{StaticResource CaptionTextBlockStyle}"
                                Text="Celer Beta" />
-                    <Rectangle Width="1"
-                               Height="24"
-                               Margin="0,1,8,0"
-                               Grid.Column="3"
-                               Fill="{DynamicResource SurfaceStrokeColorDefaultBrush}"></Rectangle>
-                    <Border Grid.Column="4"
+                    <Border Grid.Column="3"
                             Background="Transparent"
                             BorderBrush="Transparent"
                             BorderThickness="0" />
-                    <UniformGrid Grid.Column="5"
+                    <UniformGrid Grid.Column="4"
                                  Columns="3"
                                  VerticalAlignment="Top">
                         <Button Padding="18,12"
