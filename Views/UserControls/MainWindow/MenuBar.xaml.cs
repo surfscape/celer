@@ -25,7 +25,7 @@ namespace Celer.Views.UserControls.MainWindow
             _menuBarNavigation = menuBarNavigation;
             _serviceProvider = serviceProvider;
             NavigationMenu.DataContext = _menuBarNavigation;
-            MMenu.DataContext = new AboutDataContext(this); // pass the MenuBar instance
+            MMenu.DataContext = new AboutDataContext(this);
         }
 
         public partial class AboutDataContext : ObservableObject
@@ -58,7 +58,6 @@ namespace Celer.Views.UserControls.MainWindow
             [RelayCommand]
             private void OpenAboutWindow()
             {
-                // Use the MenuBar instance to call the instance method
                 _menuBar.OpenWindow<AboutWindow>();
             }
 
@@ -78,8 +77,7 @@ namespace Celer.Views.UserControls.MainWindow
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
-            Settings window = _serviceProvider.GetRequiredService<Settings>();
-            window.ShowDialog();
+            OpenWindow<Settings>();
         }
 
 

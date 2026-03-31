@@ -113,11 +113,11 @@ namespace Celer.ViewModels
         [RelayCommand]
         private void GoBack()
         {
-            if(_settingsNavigation.CurrentViewModel != App.AppHost.Services.GetRequiredService<SettingsShellViewModel>()) {
-                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+            if(_settingsNavigation.CurrentViewModel.ToString() == "Celer.Views.Pages.Settings.SettingsShellViewModel") {
+                CloseWindowAction?.Invoke();
             } else
             {
-                CloseWindowAction?.Invoke();
+                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
             }
         }
 
