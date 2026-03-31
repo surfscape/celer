@@ -10,19 +10,30 @@ namespace Celer.Services.Memory
 {
     public partial class MemoryMonitorService : IDisposable
     {
+
+        private readonly double _totalMemory;
+        private readonly float _memorySpeed;
+        private readonly List<RamSlotInfo> _ramSlots;
+
+        public MemoryMonitorService()
+        {
+            _totalMemory = GetTotalMemory();
+            _memorySpeed = GetMemorySpeed();
+            _ramSlots = GetRamSlotInfo();
+        }
         public MemoryInfo GetMemoryInfo()
         {
             var (virtualTotal, virtualUsed) = GetVirtualMemory();
-
+            
 
             return new MemoryInfo
             {
                 UsedMemoryMB = GetUsedMemoryMB(),
-                TotalMemoryMB = Math.Round(GetTotalMemory()),
-                SpeedMHz = GetMemorySpeed(),
+                TotalMemoryMB = Math.Round(_totalMemory),
+                SpeedMHz = _memorySpeed,
                 VirtualUsedMB = MainConfiguration.Default.EnableRounding ? (int)virtualUsed : Math.Round(virtualUsed, 3),
                 VirtualTotalMB = virtualTotal,
-                Slots = GetRamSlotInfo(),
+                Slots = _ramSlots,
             };
         }
 
@@ -53,7 +64,7 @@ namespace Celer.Services.Memory
             }
             return 0;
         }
-        private static double GetTotalMemory()
+        public static double GetTotalMemory()
         {
             try
             {
@@ -64,12 +75,12 @@ namespace Celer.Services.Memory
                 foreach (var item in collection)
                 {
                     var result = (ulong)item["TotalVisibleMemorySize"];
-                    return result / 1024.0;
+                    return MainConfiguration.Default.EnableRounding ? (int)Math.Floor((result / 1024.0)) : result / 1024.0;
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Failed to obtain total memory\n {ex.Message}");
+                Debug.WriteLine($"Error getting total memory: {ex.Message}");
             }
             return 0;
         }
