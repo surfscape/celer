@@ -128,12 +128,7 @@ public partial class App : Application
             services.AddSingleton<MainWindow>();
             services.AddSingleton<NavigationService>();
             services.AddSingleton<MainWindowViewModel>();
-            services.AddTransient<NavTest>();
-            services.AddTransient<NavTestViewModel>();
-            services.AddSingleton<INavigationService,NavService>();
             services.AddSingleton<SettingsNavigation>();
-            services.AddTransient<Views.Pages.Dashboard>();
-            services.AddTransient<Views.Pages.Collections>();
 
             // viewmodels for the user controls
             services.AddSingleton<MenuBarNavigation>();
