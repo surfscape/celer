@@ -18,7 +18,7 @@
             <local1:ModuleHeader CurrentView="{Binding CurrentView}"
                                  ViewLabel="{Binding CurrentViewName}"
                                  ViewDescription="{Binding CurrentViewDescription}" />
-            <Border Padding="16">
+            <Border>
                 <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -42,23 +42,6 @@
                     <StackPanel Grid.Row="1">
                         <UniformGrid Margin="-10,-5,0,0"
                                      Columns="1">
-                            <UniformGrid.Resources>
-                                <Style BasedOn="{StaticResource {x:Type Button}}"
-                                       TargetType="Button">
-                                    <Setter Property="Margin"
-                                            Value="10,10,0,0" />
-                                    <Setter Property="Padding"
-                                            Value="16" />
-                                    <Setter Property="HorizontalContentAlignment"
-                                            Value="Left" />
-                                    <Setter Property="VerticalContentAlignment"
-                                            Value="Top" />
-                                    <Setter Property="HorizontalAlignment"
-                                            Value="Stretch" />
-                                    <Setter Property="VerticalAlignment"
-                                            Value="Stretch" />
-                                </Style>
-                            </UniformGrid.Resources>
                             <local1:ModuleButton NavigateCommand="{Binding NavigateCommand}"
                                                  NavigateTo="Repair"
                                                  Label="System Repair"

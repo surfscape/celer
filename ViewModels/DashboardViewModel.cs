@@ -1,6 +1,7 @@
 ﻿using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Services;
+using Celer.Services.Memory;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,6 +19,7 @@ namespace Celer.ViewModels;
 public partial class DashboardViewModel : BaseModuleViewModel
 {
     private readonly NavigationService _navigationService;
+    private readonly MemoryMonitorService _memoryService;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private PerformanceCounter? _cpuCounter;
     private PerformanceCounter? _availableMemoryCounter;
@@ -95,6 +97,7 @@ public partial class DashboardViewModel : BaseModuleViewModel
     public DashboardViewModel(NavigationService navigationService)
     {
         _navigationService = navigationService;
+        _memoryService = new();
         _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
     }
     public async Task InitializeAsync()
@@ -103,13 +106,14 @@ public partial class DashboardViewModel : BaseModuleViewModel
         {
             await Task.Run(() =>
             {
+                var mem = _memoryService.GetMemoryInfo();
                 _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
                 _cpuCounter.NextValue();
 
                 WindowsVersion = GetWindowsVersion();
                 PostTime = GetPostTime();
-                TotalMemory = GetTotalMemory();
+                TotalMemory = mem.TotalMemoryMB;
 
                 LoadCpuInfo();
                 LoadGpuInfo();
@@ -206,27 +210,6 @@ public partial class DashboardViewModel : BaseModuleViewModel
         {
             Debug.WriteLine($"Error loading GPU info {ex.Message}");
         }
-    }
-
-    private static double GetTotalMemory()
-    {
-        try
-        {
-            using var searcher = new ManagementObjectSearcher(
-                "SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem"
-            );
-            using var collection = searcher.Get();
-            foreach (var item in collection)
-            {
-                var result = (ulong)item["TotalVisibleMemorySize"];
-                return MainConfiguration.Default.EnableRounding ? (int)Math.Floor((result / 1024.0)) : result / 1024.0;
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error getting total memory: {ex.Message}");
-        }
-        return 0;
     }
 
     private static string GetWindowsVersion()

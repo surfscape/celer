@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Celer.Views.Pages.Settings.SettingsAdvanced"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Celer.Views.Pages.Settings"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:SettingsAdvancedViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid RowDefinitions="auto auto">
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                   Margin="0,0,0,16">Advanced</TextBlock>
+        <Expander VerticalAlignment="Top" Grid.Row="1">
+            <Expander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <iconPacks:PackIconLucide Width="24"
+                                              Height="24"
+                                              Margin="4,0,16,0"
+                                              VerticalAlignment="Center"
+                                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                              Kind="Gauge" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Margin="0,0,0,4">Debug Information</TextBlock>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   MaxWidth="620">Current process memory usage, GC, and other info</TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <StackPanel>
+                    <TextBlock Text="{Binding ProcessMemory, StringFormat=Process memory: {0:#,#.0}}"
+                               Margin="0,4,30,0"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Expander.Content>
+        </Expander>
+    </Grid>
+</UserControl>

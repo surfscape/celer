@@ -11,111 +11,107 @@
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
     </UserControl.Resources>
-    <Border Padding="16,16,16,0">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Border Padding="0,0,0,16">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Heading1}">Cleaning</TextBlock>
-                    <TextBlock Style="{StaticResource Subheading}">Delete temporary files, third party app cache, and other unnecessary files.</TextBlock>
-                </StackPanel>
-            </Border>
-            <Grid Grid.Row="1"
-                  Margin="0,0,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.25*" />
-                    <ColumnDefinition Width="1.5*" />
-                </Grid.ColumnDefinitions>
-                <DockPanel Grid.Column="0">
-                    <Border>
-                        <ScrollViewer Grid.Column="0"
-                                      Focusable="False"
-                                      VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding Categories}" Padding="0,0,0,16">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Expander Margin="0,0,12,2"
-                                                  IsExpanded="True">
-                                            <Expander.Header>
-                                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                           Text="{Binding Name}" />
-                                            </Expander.Header>
-                                            <ItemsControl ItemsSource="{Binding Items}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <DockPanel Margin="4">
-                                                            <CheckBox VerticalAlignment="Center"
-                                                                      Content="{Binding Name}"
-                                                                      IsChecked="{Binding IsChecked}"
-                                                                      ToolTip="{Binding Description}" />
-                                                        </DockPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </Expander>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Border>
-                </DockPanel>
-                <Border Grid.Column="1"
-                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                        CornerRadius="6"
-                        BorderThickness="1"
-                        Margin="0,0,0,16"
-                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                        Padding="12">
-                    <Grid Margin="0,0,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
+    <Grid Height="{Binding }">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Padding="0,0,0,16">
+            <StackPanel>
+                <TextBlock Style="{StaticResource Heading1}">Cleaning</TextBlock>
+                <TextBlock Style="{StaticResource Subheading}">Delete temporary files, third party app cache, and other unnecessary files.</TextBlock>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.25*" />
+                <ColumnDefinition Width="1.5*" />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Focusable="False"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Categories}"
+                              Padding="0,0,0,16">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander Margin="0,0,12,2"
+                                      IsExpanded="True">
+                                <Expander.Header>
+                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               Text="{Binding Name}" />
+                                </Expander.Header>
+                                <ItemsControl ItemsSource="{Binding Items}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="4">
+                                                <CheckBox VerticalAlignment="Center"
+                                                          Content="{Binding Name}"
+                                                          IsChecked="{Binding IsChecked}"
+                                                          ToolTip="{Binding Description}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Border Grid.Column="1"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="6"
+                    BorderThickness="1"
+                    Margin="0,0,0,16"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    Padding="12">
+                <Grid> 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="0,0,0,8"
+                               Style="{DynamicResource Heading2}"
+                               Text="Log" />
+
+                    <ListBox Name="LogListBox"
+                             Grid.Row="1"
+                             ItemsSource="{Binding LogEntries}"
+                             VirtualizingPanel.IsVirtualizing="True"
+  
+                             ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Focusable"
+                                        Value="False" />
+                                <Setter Property="IsHitTestVisible"
+                                        Value="False" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding LogColor}"
+                                           Text="{Binding LogEntry}"
+                                           TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Grid Grid.Row="2"
+                          RowDefinitions="auto auto">
                         <TextBlock Margin="0,0,0,8"
-                                   Style="{DynamicResource Heading2}"
-                                   Text="Log" />
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <ListBox Name="LogListBox"
-                                     ItemsSource="{Binding LogEntries}"
-                                     ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="Focusable"
-                                                Value="False" />
-                                        <Setter Property="IsHitTestVisible"
-                                                Value="False" />
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Foreground="{Binding LogColor}"
-                                                   Text="{Binding LogEntry}"
-                                                   TextWrapping="Wrap" />
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <StackPanel Grid.Row="1">
-                                <TextBlock Margin="0,0,0,8"
-                                           Style="{DynamicResource CaptionTextBlockStyle}"
-                                           Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                           Text="{Binding TotalFreedText, StringFormat=Space freed: {0}}" />
-                                <Button HorizontalAlignment="Center"
-                                        Command="{Binding CleanCommand}"
-                                        Content="Start Cleaning"
-                                        IsEnabled="{Binding CanClean}" />
-                            </StackPanel>
-                        </Grid>
+                                   Style="{DynamicResource CaptionTextBlockStyle}"
+                                   Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                   Text="{Binding TotalFreedText, StringFormat=Space freed: {0}}" />
+                        <Button HorizontalAlignment="Center"
+                                Grid.Row="1"
+                                Command="{Binding CleanCommand}"
+                                Content="Start Cleaning"
+                                IsEnabled="{Binding CanClean}" />
                     </Grid>
-                </Border>
-            </Grid>
+                </Grid>
+            </Border>
         </Grid>
-    </Border>
+    </Grid>
 </UserControl>

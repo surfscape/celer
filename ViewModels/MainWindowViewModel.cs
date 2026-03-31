@@ -1,9 +1,12 @@
-﻿using Celer.Services;
+﻿using Celer.Models;
+using Celer.Services;
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainWindow;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,12 +14,12 @@ namespace Celer.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+
         [ObservableProperty]
-        private int selectedTabIndex;
+        private int selectedTabIndex = 0;
 
         [ObservableProperty]
         private bool tabControlCompactMode;
-
 
         [ObservableProperty]
         private bool isCompact = false;
@@ -24,26 +27,11 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private bool canGoBack;
 
-        private readonly Lazy<UserControl> _menuBarControl;
-        private readonly Lazy<UserControl> _dashboardControl;
-        private readonly Lazy<UserControl> _limpezaControl;
-        private readonly Lazy<UserControl> _optimizationControl;
-        private readonly Lazy<UserControl> _maintenanceControl;
+        [ObservableProperty]
+        private ObservableCollection<TabModule> tabsModule;
 
-        public UserControl MenuBarControl => _menuBarControl.Value;
-        public UserControl DashboardControl => _dashboardControl.Value;
-        public UserControl LimpezaControl => _limpezaControl.Value;
-        public UserControl OptimizationControl => _optimizationControl.Value;
-        public UserControl MaintenanceControl => _maintenanceControl.Value;
-
-        private readonly Dictionary<string, int> _tabIndexes = new()
-        {
-            { "Dashboard", 0 },
-            { "Cleaning", 1 },
-            { "Optimization", 2 },
-            { "Maintenance", 3 },
-            { "Opsec", 4 },
-        };
+        [ObservableProperty]
+        private UserControl menuBarControl;
 
         private readonly NavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
@@ -56,14 +44,18 @@ namespace Celer.ViewModels
             _navigationService = navigationService;
             _navigationService.NavigateTo = NavigateTo;
             _serviceProvider = serviceProvider;
-            _menuBarControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<MenuBar>());
-            _dashboardControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Dashboard>());
-            _limpezaControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Limpeza>());
-            _optimizationControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Optimization>());
-            _maintenanceControl = new Lazy<UserControl>(() => _serviceProvider.GetRequiredService<Maintenance>());
             TabControlCompactMode = _navigationService.CompactMode;
             _navigationService.CompactModeChanged += OnCompactModeChanged;
             _navigationService.NavigationChanged += OnNavigationChanged;
+            MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
+            TabsModule =
+        [
+            new() { Title = "Dashboard", Icon = PackIconLucideKind.HeartPulse, Content = _serviceProvider.GetRequiredService<Dashboard>() },
+            new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<Limpeza>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
+            new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<Optimization>() },
+            new() { Title = "Maintenance", Icon = PackIconLucideKind.Construction, Content = _serviceProvider.GetRequiredService<Maintenance>() },
+            new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<Privacidade>() }
+        ];
         }
 
         private void OnCompactModeChanged(object sender, bool isCompact)
@@ -73,23 +65,22 @@ namespace Celer.ViewModels
 
         private void NavigateTo(string tabName, string subview)
         {
-            if (_tabIndexes.TryGetValue(tabName, out var index))
+            var tab = TabsModule.FirstOrDefault(tbId => tbId.Title == tabName);
+            if (tab != null)
             {
-                SelectedTabIndex = index;
+                SelectedTabIndex = TabsModule.IndexOf(tab);
                 _navigationService.NavigateInternal(tabName, subview);
             }
         }
         partial void OnSelectedTabIndexChanged(int value)
         {
-            var tabName = _tabIndexes.FirstOrDefault(kv => kv.Value == value && kv.Value != 99).Key;
+            var tabName = TabsModule[value].Title != null ? TabsModule[value].Title : TabsModule[0].Title;
             if (string.IsNullOrEmpty(tabName))
                 return;
 
             var innerView = _navigationService.GetInnerViewForTab(tabName);
             _navigationService.NavigateInternal(tabName, innerView);
         }
-
-
 
         [RelayCommand]
         private void NavigateToTab(string tab)

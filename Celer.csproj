@@ -48,6 +48,7 @@
 		<PackageReference Include="MahApps.Metro.IconPacks.Core" Version="6.2.1" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Lucide" Version="6.2.1" />
 		<PackageReference Include="MahApps.Metro.IconPacks.RemixIcon" Version="6.2.1" />
+		<PackageReference Include="Metalama.Patterns.Wpf" Version="2026.0.20" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />

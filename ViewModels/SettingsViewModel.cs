@@ -1,19 +1,26 @@
 ﻿using Celer.Models.Preferences;
 using Celer.Properties;
+using Celer.Services;
 using Celer.Utilities;
 using Celer.Views;
+using Celer.Views.Pages.Settings;
 using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace Celer.ViewModels
 {
     public partial class SettingsViewModel : ObservableObject
     {
+        private readonly SettingsNavigation _settingsNavigation;
+
         public Func<
             string,
             string,
@@ -23,6 +30,7 @@ namespace Celer.ViewModels
         >? ShowDialogAsync
         { get; set; }
         public Action? CloseWindowAction { get; set; }
+
 
         private bool _initialEnableRounding;
         private bool _initialSaveSidebarCompactMode;
@@ -89,10 +97,33 @@ namespace Celer.ViewModels
         [NotifyCanExecuteChangedFor(nameof(ApplyCommand))]
         private bool hasUnsavedChanges;
 
-        public SettingsViewModel()
+
+        public SettingsBaseViewModel CurrentViewModel => _settingsNavigation.CurrentViewModel;
+
+        public SettingsViewModel(SettingsNavigation settingsNavigation)
         {
+            _settingsNavigation = settingsNavigation;
             StoreInitialValues();
             Paths.CollectionChanged += OnPathsCollectionChanged;
+            _settingsNavigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+        }
+
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            if(_settingsNavigation.CurrentViewModel != App.AppHost.Services.GetRequiredService<SettingsShellViewModel>()) {
+                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+            } else
+            {
+                CloseWindowAction?.Invoke();
+            }
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
 
         private void StoreInitialValues()
@@ -130,7 +161,7 @@ namespace Celer.ViewModels
 
             if (!changed && !Paths.SequenceEqual(_initialPaths))
             {
-                    changed = true;   
+                changed = true;
             }
             HasUnsavedChanges = changed;
         }
@@ -158,7 +189,7 @@ namespace Celer.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error trying to revert changes {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error trying to revert changes {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             OnPropertyChanged(nameof(CurrentTheme));
             OnPropertyChanged(nameof(EnableRounding));
@@ -334,8 +365,18 @@ namespace Celer.ViewModels
                 File.Delete("batteryreport.xml");
                 File.Delete("signatures.json");
                 File.Delete("dxdiag.xml");
-                Application.Current.Shutdown();
+                System.Windows.Application.Current.Shutdown();
             }
+        }
+
+
+        private NavTest navTest;
+
+        [RelayCommand]
+        private void OpenNavTestWindow()
+        {
+            navTest = App.AppHost.Services.GetRequiredService<NavTest>();
+            navTest.Show();
         }
     }
 }

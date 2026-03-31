@@ -3,6 +3,8 @@ using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using Mono.Unix.Native;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,16 +18,25 @@ namespace Celer.Views.UserControls.MainWindow
     {
         private readonly MenuBarNavigation _menuBarNavigation;
 
-        public MenuBar(MenuBarNavigation menuBarNavigation)
+        public readonly IServiceProvider _serviceProvider;
+        public MenuBar(MenuBarNavigation menuBarNavigation, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _menuBarNavigation = menuBarNavigation;
+            _serviceProvider = serviceProvider;
             NavigationMenu.DataContext = _menuBarNavigation;
-            MMenu.DataContext = new AboutDataContext();
+            MMenu.DataContext = new AboutDataContext(this); // pass the MenuBar instance
         }
 
         public partial class AboutDataContext : ObservableObject
         {
+            private readonly MenuBar _menuBar;
+
+            public AboutDataContext(MenuBar menuBar)
+            {
+                _menuBar = menuBar;
+            }
+
             [RelayCommand]
             private void OpenLink(string url)
             {
@@ -45,9 +56,10 @@ namespace Celer.Views.UserControls.MainWindow
             }
 
             [RelayCommand]
-            private static void OpenAboutWindow()
+            private void OpenAboutWindow()
             {
-                OpenWindow<AboutWindow>();
+                // Use the MenuBar instance to call the instance method
+                _menuBar.OpenWindow<AboutWindow>();
             }
 
 
@@ -66,7 +78,8 @@ namespace Celer.Views.UserControls.MainWindow
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow<Settings>();
+            Settings window = _serviceProvider.GetRequiredService<Settings>();
+            window.ShowDialog();
         }
 
 
@@ -74,7 +87,7 @@ namespace Celer.Views.UserControls.MainWindow
         /// Helper function that opens a specific window, prohibits opening another instance of it and has the ability to bring it to the foreground if already opened.
         /// </summary>
         /// <param name="window">Object of the desired window to open</param>
-        private static void OpenWindow<T>()
+        private void OpenWindow<T>()
             where T : Window
         {
             try
@@ -86,8 +99,8 @@ namespace Celer.Views.UserControls.MainWindow
                     return;
                 }
                 T? window = null;
-                window = App.AppHost?.Services.GetService(typeof(T)) is T resolvedWindow ? resolvedWindow : window = Activator.CreateInstance<T>(); ;
-
+                //window = App.AppHost?.Services.GetService(typeof(T)) is T resolvedWindow ? resolvedWindow : window = Activator.CreateInstance<T>();
+                window ??= _serviceProvider.GetService<T>() ?? Activator.CreateInstance<T>();
                 if (
                     Application.Current.MainWindow != null
                     && Application.Current.MainWindow != window
@@ -101,12 +114,7 @@ namespace Celer.Views.UserControls.MainWindow
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"Erro ao abrir a janela {typeof(T).Name}:\n\n{ex}",
-                    "Erro",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                Debug.WriteLine(ex);
             }
         }
 

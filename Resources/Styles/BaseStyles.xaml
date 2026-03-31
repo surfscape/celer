@@ -84,21 +84,32 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
                         <TabPanel Grid.Column="0"
                                   Margin="4,6,4,4"
                                   Background="Transparent"
                                   IsItemsHost="True" />
                         <Border Grid.Column="1"
-                                Padding="{TemplateBinding Padding}"
                                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                                 Background="{DynamicResource LayerFillColorDefaultBrush}"
                                 BorderThickness="1,1,0,0"
-                                CornerRadius="8,0,0,0">
-                            <ContentPresenter x:Name="TabContentPresenter"
-                                              Margin="0"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              Content="{TemplateBinding SelectedContent}" />
+                                CornerRadius="8,0,0,0"
+                                Padding="16,0,0,0">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                          Focusable="False"
+                                          VerticalScrollBarVisibility="{Binding SelectedContent.VerticalScrollMode, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter x:Name="Content"
+                                                  Margin="0,16,16,0"
+                                                  MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=UserContentSize}"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Top"
+                                                  ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  Content="{TemplateBinding SelectedContent}"
+                                                  ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
+                            </ScrollViewer>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -107,8 +118,8 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="TabItem">
-                    <Setter Property="MinWidth"
-                            Value="172" />
+                    <Setter Property="Header"
+                            Value="{Binding}" />
                     <Setter Property="Padding"
                             Value="0"></Setter>
                     <Setter Property="Background"
@@ -118,22 +129,27 @@
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <Border Padding="13.3,0,0,0" Height="36" ToolTip="{Binding Title}">
-                                <StackPanel Orientation="Horizontal" Background="Transparent">
-                                    <iconPacks:PackIconLucide x:Name="Icon"
-                                                              Kind="{Binding Icon}"
-                                                              Margin="0,0,14,0"
-                                                              VerticalAlignment="Center"
-                                                              SnapsToDevicePixels="True"
-                                                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                              Visibility="Visible" />
-                                    <TextBlock x:Name="Text"
-                                               Text="{Binding Title}"
-                                               FontSize="14"
-                                               VerticalAlignment="Center"
-                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                               Visibility="Visible" />
-                                </StackPanel>
+                                <Border Padding="13.3,0,0,0"
+                                        Height="36"
+                                        ToolTip="{Binding Title}">
+                                    <StackPanel Orientation="Horizontal"
+                                                Background="Transparent"
+                                                MinWidth="172"
+                                                x:Name="Wrap">
+                                        <iconPacks:PackIconLucide x:Name="Icon"
+                                                                  Kind="{Binding Icon}"
+                                                                  Margin="0,0,14,0"
+                                                                  VerticalAlignment="Center"
+                                                                  SnapsToDevicePixels="True"
+                                                                  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                                  Visibility="Visible" />
+                                        <TextBlock x:Name="Text"
+                                                   Text="{Binding Title}"
+                                                   FontSize="14"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   Visibility="Visible" />
+                                    </StackPanel>
                                 </Border>
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=CompactMode}"
@@ -141,9 +157,21 @@
                                         <Setter TargetName="Text"
                                                 Property="Visibility"
                                                 Value="Collapsed" />
-                                        <Setter TargetName="Icon"
-                                                Property="Margin"
-                                                Value="0" />
+                                        <Setter TargetName="Wrap"
+                                                Property="MinWidth"
+                                                Value="0"></Setter>
+                                        <Setter TargetName="Wrap"
+                                                Property="Width"
+                                                Value="auto"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=CompactMode}"
+                                                 Value="false">
+                                        <Setter TargetName="Text"
+                                                Property="Visibility"
+                                                Value="Visible" />
+                                        <Setter TargetName="Wrap"
+                                                Property="MinWidth"
+                                                Value="172"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}"
                                                  Value="True">
@@ -229,5 +257,144 @@
     <Style TargetType="Hyperlink">
         <Setter Property="Foreground"
                 Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+    </Style>
+    <Style x:Key="ModuleButton"
+           BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Margin"
+                Value="10,10,0,0" />
+        <Setter Property="Padding"
+                Value="16" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Top" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="local:ButtonHelper.CornerRadius"
+                Value="6"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding local:ButtonHelper.CornerRadius}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.IsDefaulted"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="{DynamicResource  SubtleFillColorTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="Transparent" />
+                            <Setter TargetName="border"
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TransparentButton"
+           BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="white" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="10,5" />
+        <Setter Property="local:ButtonHelper.CornerRadius"
+                Value="4" />
+        <Setter Property="local:ButtonHelper.BackgroundHover"
+                Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding local:ButtonHelper.CornerRadius}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.IsDefaulted"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="{Binding Path=(local:ButtonHelper.BackgroundHover), 
+                 RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="{DynamicResource  SubtleFillColorTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="border"
+                                    Property="Background"
+                                    Value="Transparent" />
+                            <Setter TargetName="border"
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -1,42 +1,21 @@
-﻿using System.Windows;
+﻿using Celer.Properties;
+using Metalama.Patterns.Wpf;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Celer.Utilities
 {
     public class CompactTabControl : TabControl
     {
-        public static readonly DependencyProperty CompactModeProperty =
-            DependencyProperty.Register(
-                "CompactMode",
-                typeof(bool),
-                typeof(CompactTabControl),
-                new PropertyMetadata(false, OnCompactModeChanged));
+        [DependencyProperty]
+        public bool CompactMode { get; set; } = MainConfiguration.Default.SidebarCompactMode;
 
-        public bool CompactMode
-        {
-            get => (bool)GetValue(CompactModeProperty);
-            set => SetValue(CompactModeProperty, value);
-        }
+        [DependencyProperty]
+        public string UserContentSize { get; set; } = MainConfiguration.Default.AppearanceMaxWidth ? "960" : "auto";
 
-        private static void OnCompactModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is CompactTabControl tabControl)
-            {
-                bool isCompact = (bool)e.NewValue;
-                foreach (var item in tabControl.Items.OfType<TabItem>())
-                {
-                    if (isCompact)
-                    {
-                        item.MinWidth = 42;
-                        item.Width = 42;
-                    }
-                    else
-                    {
-                        item.MinWidth = 172;
-                    }
-                }
-            }
-        }
+        [DependencyProperty]
+        public string Scroll { get; set; } = "auto";
+
     }
 
 

@@ -4,6 +4,7 @@ using Celer.Services;
 using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
+using Celer.Views.Pages.Settings;
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainApp.MaintenanceViews;
 using Celer.Views.UserControls.MainApp.OptimizationViews;
@@ -127,7 +128,12 @@ public partial class App : Application
             services.AddSingleton<MainWindow>();
             services.AddSingleton<NavigationService>();
             services.AddSingleton<MainWindowViewModel>();
-
+            services.AddTransient<NavTest>();
+            services.AddTransient<NavTestViewModel>();
+            services.AddSingleton<INavigationService,NavService>();
+            services.AddSingleton<SettingsNavigation>();
+            services.AddTransient<Views.Pages.Dashboard>();
+            services.AddTransient<Views.Pages.Collections>();
 
             // viewmodels for the user controls
             services.AddSingleton<MenuBarNavigation>();
@@ -141,6 +147,11 @@ public partial class App : Application
             services.AddSingleton<MaintenanceViewModel>();
             services.AddSingleton<RepairViewModel>();
             services.AddTransient<NetworkViewModel>();
+            services.AddSingleton<SettingsViewModel>();
+            services.AddTransient<SettingsBaseViewModel>();
+            services.AddTransient<SettingsShellViewModel>();
+            services.AddTransient<SettingsGeneralViewModel>();
+            services.AddTransient<SettingsAdvancedViewModel>();
 
             // usercontrols themselves (and other views that need access to the services)
             services.AddSingleton<MenuBar>();
@@ -155,6 +166,7 @@ public partial class App : Application
             services.AddTransient<Repair>();
             services.AddTransient<Network>();
             services.AddSingleton<Privacidade>();
+            services.AddTransient<Settings>();
         }
     )
     .Build();

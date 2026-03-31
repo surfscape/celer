@@ -22,16 +22,13 @@
   </Setter>
 </Style>
         <Style TargetType="MenuItem">
-            
             <Setter Property="Foreground"
                     Value="{DynamicResource TextFillColorPrimaryBrush}" />
             <Setter Property="Padding"
-                    Value="10,5" />
-            <Setter Property="VerticalAlignment"
-                    Value="Center"></Setter>
+                    Value="12,5" />
             <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="SnapsToDevicePixels"
+                    Value="13" />
+            <Setter Property="UseLayoutRounding"
                     Value="True"></Setter>
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusMenu}"></Setter>
             <Setter Property="Template">
@@ -41,9 +38,9 @@
                             <Border x:Name="Border"
                                     Padding="{TemplateBinding Padding}"
                                     Background="{TemplateBinding Background}"
-                                    CornerRadius="4"
-                                    Margin="0,0,0,0"
-                                    BorderThickness="0">
+                                    CornerRadius="5"
+                                    BorderThickness="0,1,0,0"
+                                    Margin="0,0,0,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition x:Name="LeftColumn"
@@ -91,12 +88,13 @@
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
                                    Focusable="False"
+                                   MinWidth="170"
                                    IsOpen="{TemplateBinding IsSubmenuOpen}"
                                    PopupAnimation="Fade">
                                 <Border Padding="4"
-                                        CornerRadius="4"
+                                        CornerRadius="6"
                                         BorderThickness="1"
-                                        Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                                        Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}"
                                         BorderBrush="{DynamicResource ControlElevationBorderBrush}">
                                     <StackPanel IsItemsHost="True" />
                                 </Border>
@@ -108,6 +106,12 @@
                                 <Setter TargetName="Border"
                                         Property="Background"
                                         Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Border"
+                                        Property="BorderBrush"
+                                        Value="{DynamicResource ControlElevationBorderBrush}" />
                             </Trigger>
                             <Trigger Property="IsCheckable"
                                      Value="True">

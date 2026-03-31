@@ -10,12 +10,16 @@
             <SolidColorBrush x:Key="WindowBackground"
                              Color="Transparent"></SolidColorBrush>
             <Style TargetType="Window">
+                <Setter Property="RenderOptions.ClearTypeHint"
+                        Value="Auto" />
+                <Setter Property="TextOptions.TextFormattingMode"
+                        Value="Ideal"></Setter>
+                <Setter Property="TextOptions.TextRenderingMode"
+                        Value="ClearType"></Setter>
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="Background"
                         Value="{DynamicResource WindowBackground}"></Setter>
-                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"></Setter>
-                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"></Setter>
+
             </Style>
             <Style TargetType="UIElement">
                 <Setter Property="RenderOptions.CachingHint"
@@ -38,6 +42,7 @@
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Themes/TreeViewNavFluent.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
