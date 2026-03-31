@@ -368,15 +368,5 @@ namespace Celer.ViewModels
                 System.Windows.Application.Current.Shutdown();
             }
         }
-
-
-        private NavTest navTest;
-
-        [RelayCommand]
-        private void OpenNavTestWindow()
-        {
-            navTest = App.AppHost.Services.GetRequiredService<NavTest>();
-            navTest.Show();
-        }
     }
 }
