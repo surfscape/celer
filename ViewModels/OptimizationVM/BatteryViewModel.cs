@@ -100,9 +100,13 @@ namespace Celer.ViewModels.OptimizationVM
                 UpdateBatteryInfo();
                 IsFastBootEnabled = fastBootDetected;
             }
+            catch(ArgumentException e)
+            {
+                Debug.WriteLine($"Argument exception when starting BatteryService: ${e.Message}");
+            }
             catch (Exception e)
             {
-                Trace.WriteLine("Exception while trying to load BatteryViewModel: " + e.Message);
+                Debug.WriteLine($"Exception while trying to load BatteryViewModel: ${e.Message}");
             }
             finally
             {
