@@ -16,11 +16,14 @@ namespace Celer.ViewModels.OptimizationVM
         };
 
         [ObservableProperty]
+        private bool isLoading = true;
+
+        [ObservableProperty]
         private MemoryInfo? memory;
 
         public ObservableCollection<RamSlotInfo> Slots { get; } = [];
 
-        public MemoryViewModel()
+        public async Task Initialize()
         {
             UpdateMemoryInfo(false);
             _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);

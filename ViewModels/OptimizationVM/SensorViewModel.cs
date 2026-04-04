@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -24,11 +25,6 @@ namespace Celer.ViewModels.OptimizationVM
 
         private readonly DispatcherTimer _updateTimer = new() { Interval = TimeSpan.FromSeconds(1) };
 
-        public SensorViewModel()
-        {
-            _updateTimer.Tick += (_, _) => Update();
-        }
-
         public async Task Initialize()
         {
             try
@@ -41,16 +37,12 @@ namespace Celer.ViewModels.OptimizationVM
             }
             catch (Exception e)
             {
-                MessageBox.Show(
-                    $"Error initializing sensors: {e.Message}",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                Debug.WriteLine($"Failed to initialize LHM sensors: ${e.Message}");
             }
             finally
             {
                 IsLoading = false;
+                _updateTimer.Tick += (_, _) => Update();
                 _updateTimer.Start();
             }
         }
@@ -65,9 +57,7 @@ namespace Celer.ViewModels.OptimizationVM
                 var category = new SensorCategoryModel(hardware.HardwareType.ToString());
 
                 foreach (var sensor in hardware.Sensors.Where(e => e.SensorType is SensorType.Temperature or SensorType.Fan))
-                {
-                        category.AddSensor(sensor);
-                }
+                        category.AddSensor(sensor); 
 
                 if (category.Sensors.Count > 0)
                     Application.Current.Dispatcher.Invoke(() => Categories.Add(category));
