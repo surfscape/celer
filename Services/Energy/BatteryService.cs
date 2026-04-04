@@ -36,7 +36,9 @@ namespace Celer.Services.Energy
 
     public class BatteryService
     {
+#pragma warning disable CA1822 // Mark members as static
         public BatteryInfo GetBatteryInfo()
+#pragma warning restore CA1822 // Mark members as static
         {
             var info = new BatteryInfo();
 
@@ -89,6 +91,12 @@ namespace Celer.Services.Energy
             return info;
         }
 
+        /// <summary>
+        /// Helper function to retrieve values from a key in a .xml file
+        /// </summary>
+        /// <param name="xml">The xml content</param>
+        /// <param name="elementName">The desired key</param>
+        /// <returns></returns>
         public static string? ExtractXmlValue(string xml, string elementName)
         {
             var doc = XDocument.Parse(xml);
@@ -98,6 +106,12 @@ namespace Celer.Services.Energy
             return element?.Value;
         }
 
+        /// <summary>
+        /// Retrives battery wear data from the BatteryReport.xml file
+        /// </summary>
+        /// <param name="reportPath">Path to the BatteryReport.xaml</param>
+        /// <param name="percentage">Current battery percentage</param>
+        /// <returns></returns>
         public static (int health, int currentCapacity, int factoryCapacity, int chargeCapacity) GetBatteyHealthInfo(
             string reportPath, int percentage
         )
