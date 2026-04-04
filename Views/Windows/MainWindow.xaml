@@ -19,7 +19,6 @@
                                xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
                                xmlns:converters="clr-namespace:Celer.Converters"
                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-
                                d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
                                d:Background="white"
                                mc:Ignorable="d">

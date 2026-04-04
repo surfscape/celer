@@ -76,22 +76,22 @@
 
                 return false;
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 Debug.WriteLine(ex.Message);
                 return false;
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 Debug.WriteLine(ex.Message);
                 return false;
             }
-            catch(SystemException ex)
+            catch (SystemException ex)
             {
                 Debug.WriteLine(ex.Message);
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return false;

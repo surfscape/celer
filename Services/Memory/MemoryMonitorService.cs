@@ -24,7 +24,7 @@ namespace Celer.Services.Memory
         public MemoryInfo GetMemoryInfo()
         {
             var (virtualTotal, virtualUsed) = GetVirtualMemory();
-            
+
 
             return new MemoryInfo
             {
@@ -55,10 +55,10 @@ namespace Celer.Services.Memory
                 );
                 foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>().Where(e => e["Speed"] is not null))
                 {
-                        return Convert.ToInt32(obj["Speed"]);
+                    return Convert.ToInt32(obj["Speed"]);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to retrieve memory speed from WMI\n ${ex.Message}");
             }

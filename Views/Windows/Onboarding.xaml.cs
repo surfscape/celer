@@ -66,7 +66,7 @@ namespace Celer.Views.Windows
 
                 if (EnableSentry)
                 {
-                   Process.Start(Application.ResourceAssembly.Location, "-disableMutexProtection");
+                    Process.Start(Application.ResourceAssembly.Location, "-disableMutexProtection");
                     Process.GetCurrentProcess().Kill();
                 }
                 var gateway = App.AppHost?.Services.GetService<SurfScapeGateway>();

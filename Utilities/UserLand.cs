@@ -19,7 +19,8 @@ namespace Celer.Utilities
                 Debug.Write(ex.Message);
                 return false;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.Write(ex.Message);
                 return false;
             }

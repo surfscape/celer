@@ -2,9 +2,7 @@
 using Celer.Properties;
 using Celer.Services;
 using Celer.Utilities;
-using Celer.Views;
 using Celer.Views.Pages.Settings;
-using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +10,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace Celer.ViewModels
 {
@@ -113,12 +109,12 @@ namespace Celer.ViewModels
         [RelayCommand]
         private void GoBack()
         {
-            if(_settingsNavigation.CurrentViewModel.ToString() == "Celer.Views.Pages.Settings.SettingsShellViewModel") {
-                CloseWindowAction?.Invoke();
-            } else
+            if (_settingsNavigation.CurrentViewModel.ToString() == "Celer.Views.Pages.Settings.SettingsShellViewModel")
             {
-                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+                CloseWindowAction?.Invoke();
             }
+            else
+                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
         }
 
         private void OnCurrentViewModelChanged()

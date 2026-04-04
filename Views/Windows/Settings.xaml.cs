@@ -1,7 +1,5 @@
-﻿using Celer.Services;
-using Celer.ViewModels;
+﻿using Celer.ViewModels;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shell;
@@ -17,7 +15,7 @@ namespace Celer.Views.Windows
 
         public Settings(SettingsViewModel viewModel)
         {
-            _viewModel = viewModel ;
+            _viewModel = viewModel;
             DataContext = _viewModel;
             InitializeComponent();
             viewModel.CloseWindowAction = Close;

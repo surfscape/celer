@@ -26,7 +26,7 @@ namespace Celer.Services
                 var result = await client.GetAsync("8.8.8.8");
                 return result.IsSuccessStatusCode;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to get internet access status: {ex.Message}");
                 return false;
@@ -78,22 +78,22 @@ namespace Celer.Services
                 }
                 return true;
             }
-            catch(NetworkInformationException ex)
+            catch (NetworkInformationException ex)
             {
                 Debug.WriteLine($"Faild to retrieve all network interfaces\n {ex.Message}");
                 return false;
             }
-            catch(ArgumentNullException ex)
+            catch (ArgumentNullException ex)
             {
                 Debug.WriteLine($"Faild to filter network interfaces\n {ex.Message}");
                 return false;
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 Debug.WriteLine($"Faild to start the process\n {ex.Message}");
                 return false;
             }
-            catch(Win32Exception ex)
+            catch (Win32Exception ex)
             {
                 Debug.WriteLine($"Faild to start the process\n {ex.Message}");
                 return false;

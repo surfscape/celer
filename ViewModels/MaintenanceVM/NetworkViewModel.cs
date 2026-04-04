@@ -3,7 +3,6 @@ using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 
 namespace Celer.ViewModels.MaintenanceVM
@@ -19,7 +18,7 @@ namespace Celer.ViewModels.MaintenanceVM
         private string adaptersFound = "N/A";
 
         [ObservableProperty]
-        private string connectionStatus  = "N/A";
+        private string connectionStatus = "N/A";
 
         [ObservableProperty]
         private string internetConnectionStatus = "N/A";

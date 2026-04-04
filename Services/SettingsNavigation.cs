@@ -1,9 +1,4 @@
 ﻿using Celer.Views.Pages.Settings;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 
 namespace Celer.Services
 {

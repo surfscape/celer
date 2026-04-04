@@ -57,7 +57,7 @@ namespace Celer.ViewModels.OptimizationVM
                 var category = new SensorCategoryModel(hardware.HardwareType.ToString());
 
                 foreach (var sensor in hardware.Sensors.Where(e => e.SensorType is SensorType.Temperature or SensorType.Fan))
-                        category.AddSensor(sensor); 
+                    category.AddSensor(sensor);
 
                 if (category.Sensors.Count > 0)
                     Application.Current.Dispatcher.Invoke(() => Categories.Add(category));

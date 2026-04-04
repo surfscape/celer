@@ -184,7 +184,7 @@ namespace Celer.ViewModels
                     foreach (var proc in item.RequiredProcesses)
                     {
                         if (!proc.CanTerminate && runningProcs.Contains(Path.GetFileNameWithoutExtension(proc.Name).ToLower()))
-                           toClose.Add(proc.Name);
+                            toClose.Add(proc.Name);
                     }
                 }
             }

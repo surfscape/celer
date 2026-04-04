@@ -8,10 +8,10 @@ namespace Celer.Views.Pages.Settings
     /// Interaction logic for SettingsShell.xaml
     /// </summary>
     public partial class SettingsShell : UserControl
-    {   
+    {
         public SettingsShell()
         {
-           InitializeComponent();   
+            InitializeComponent();
         }
     }
 }

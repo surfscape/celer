@@ -2,9 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Celer.Views.Pages.Settings
 {
@@ -29,7 +26,8 @@ namespace Celer.Views.Pages.Settings
         }
 
         [RelayCommand]
-        private void NavigateToAdvanced() {
+        private void NavigateToAdvanced()
+        {
             _settingsNavigation.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsAdvancedViewModel>();
         }
     }

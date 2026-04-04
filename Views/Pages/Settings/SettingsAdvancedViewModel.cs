@@ -1,8 +1,5 @@
 ﻿using ByteSizeLib;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Threading;
 
 namespace Celer.Views.Pages.Settings
