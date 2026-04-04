@@ -122,7 +122,7 @@ public partial class DashboardViewModel : BaseModuleViewModel
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Erro na inicialização: {ex}");
+            Debug.WriteLine($"Failed to initialize: {ex.Message}");
         }
         finally
         {
