@@ -96,12 +96,13 @@
                                 Background="{DynamicResource LayerFillColorDefaultBrush}"
                                 BorderThickness="1,1,0,0"
                                 CornerRadius="8,0,0,0"
-                                Padding="16,0,0,0">
+                                Padding="0,0,4,4">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                           Focusable="False"
+                                          
                                           VerticalScrollBarVisibility="{Binding SelectedContent.VerticalScrollMode, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ContentPresenter x:Name="Content"
-                                                  Margin="0,16,16,0"
+                                                  Margin="16,16,16,0"
                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=UserContentSize}"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Top"
