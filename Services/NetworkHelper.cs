@@ -22,11 +22,12 @@ namespace Celer.Services
         {
             try
             {
-                using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(3) };
-                var result = await client.GetAsync("8.8.8.8");
-                return result.IsSuccessStatusCode;
+                using var pinger = new Ping();
+                //using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(3) };
+                var result = await pinger.SendPingAsync("8.8.8.8");
+                return result.Status.Equals(IPStatus.Success);
             }
-            catch (Exception ex)
+            catch (PingException ex)
             {
                 Debug.WriteLine($"Failed to get internet access status: {ex.Message}");
                 return false;
