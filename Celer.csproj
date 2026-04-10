@@ -44,7 +44,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="ControlzEx" Version="7.0.3" />
 		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
-		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
+		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Core" Version="6.2.1" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Lucide" Version="6.2.1" />
 		<PackageReference Include="MahApps.Metro.IconPacks.RemixIcon" Version="6.2.1" />
@@ -54,7 +54,7 @@
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="Sentry" Version="6.0.0" />
 		<PackageReference Include="SpacedGrid-WPF" Version="1.0.2" />
-		<PackageReference Include="System.Management" Version="10.0.0" />
+		<PackageReference Include="System.Management" Version="10.0.5" />
 		<PackageReference Include="TaskScheduler" Version="2.12.2" />
 		<PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
 	</ItemGroup>
