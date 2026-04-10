@@ -9,9 +9,12 @@
              xmlns:Optimization="clr-namespace:Celer.ViewModels.OptimizationVM"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:components="clr-namespace:Celer.Views.Components"
+             xmlns:controls="clr-namespace:Celer.Controls"
              d:DataContext="{d:DesignInstance Type=Optimization:BatteryViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800"
+             d:Background="white"
+             d:Foreground="black"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -196,138 +199,108 @@
                           Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Margin="0,0,16,16">
-                    <Expander>
-                        <Expander.Header>
-                            <Grid>
+                <StackPanel Margin="0,0,16,0">
+                    <controls:ComplexExpander Icon="Gauge"
+                                              Title="Power Modes"
+                                              Description="Optimize the system based on it's current workflow to balance performance and energy consumption"
+                                              Margin="0,0,0,4">
+                        <StackPanel Margin="6,0,6,0">
+                            <Grid Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-
-                                <iconPacks:PackIconLucide Width="24"
-                                                           Height="24"
-                                                           Margin="4,0,16,0"
-                                                           VerticalAlignment="Center"
-                                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                           Kind="Gauge" />
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                               Margin="0,0,0,4">Power Modes</TextBlock>
-                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                <StackPanel>
+                                    <TextBlock Text="Legacy Power Plans"
+                                               Style="{StaticResource BodyTextBlockStyle}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="Change the active power plan, provided by powercfg"
+                                               Margin="0,4,30,0"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                               MaxWidth="620">Optimize the system based on it's current workflow to balance performance and energy consumption</TextBlock>
+                                               VerticalAlignment="Center" />
                                 </StackPanel>
-                            </Grid>
-                        </Expander.Header>
-                        <Expander.Content>
-                            <StackPanel>
-                                <Grid Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <TextBlock Text="Legacy Power Plans"
-                                                   Style="{StaticResource BodyTextBlockStyle}"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   VerticalAlignment="Center" />
-                                        <TextBlock Text="Change the active power plan, provided by powercfg"
-                                                   Margin="0,4,30,0"
-                                                   Style="{StaticResource CaptionTextBlockStyle}"
-                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                   VerticalAlignment="Center" />
-                                    </StackPanel>
-                                    <ComboBox DisplayMemberPath="Name"
-                                              Grid.Column="1"
-                                              MinWidth="190"
-                                              ItemsSource="{Binding PowerPlans}"
-                                              SelectedValuePath="Name"
-                                              SelectedValue="{Binding SelectedPowerPlan.Name, Mode=TwoWay}"/>
-                                    <StackPanel Grid.Column="2"
-                                                Orientation="Horizontal">
-                                        <Button Margin="8,0,8,0"
-                                                Style="{DynamicResource AccentButtonStyle}"
-                                                Command="{Binding ApplyPowerPlanCommand}"
-                                                Content="Apply" />
-                                        <Button Command="{Binding InstallPlansCommand}"
-                                                Content="Install More Plans" />
-                                    </StackPanel>
-                                </Grid>
-                                <Border BorderThickness="0,1,0,0"
-                                        BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
-                                        Margin="0,12"
-                                        Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"></Border>
-                                <Grid   Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <TextBlock Text="New Power Modes"
-                                                   Style="{StaticResource BodyTextBlockStyle}"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   VerticalAlignment="Center" />
-                                        <TextBlock Text="Switch to the different power modes"
-                                                   Margin="0,4,30,0"
-                                                   Style="{StaticResource CaptionTextBlockStyle}"
-                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                   VerticalAlignment="Center" />
-                                    </StackPanel>
-                                    <ComboBox DisplayMemberPath="Name"
-                                              Grid.Column="1"
-                                              MinWidth="190" />
+                                <ComboBox DisplayMemberPath="Name"
+                                          Grid.Column="1"
+                                          MinWidth="190"
+                                          ItemsSource="{Binding PowerPlans}"
+                                          SelectedValuePath="Name"
+                                          SelectedValue="{Binding SelectedPowerPlan.Name, Mode=TwoWay}" />
+                                <StackPanel Grid.Column="2"
+                                            Orientation="Horizontal">
                                     <Button Margin="8,0,8,0"
-                                            Grid.Column="2"
                                             Style="{DynamicResource AccentButtonStyle}"
                                             Command="{Binding ApplyPowerPlanCommand}"
                                             Content="Apply" />
-                                </Grid>
-                            </StackPanel>
-
-                        </Expander.Content>
-                    </Expander>
-                    <Expander Margin="0,2,0,0">
-                        <Expander.Header>
-                            <Grid>
+                                    <Button Command="{Binding InstallPlansCommand}"
+                                            Content="Install More Plans" />
+                                </StackPanel>
+                            </Grid>
+                            <Border BorderThickness="0,1,0,0"
+                                    BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+                                    Margin="0,12"
+                                    Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"></Border>
+                            <Grid   Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <iconPacks:PackIconLucide Width="24"
-                                                           Height="24"
-                                                           Margin="4,0,16,0"
-                                                           VerticalAlignment="Center"
-                                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                           Kind="Wrench" />
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                               Margin="0,0,0,4">Advanced Settings</TextBlock>
-                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                <StackPanel>
+                                    <TextBlock Text="New Power Modes"
+                                               Style="{StaticResource BodyTextBlockStyle}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="Switch to the different power modes"
+                                               Margin="0,4,30,0"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                               MaxWidth="620">Change advanced energy parameters like fast startup, hibernation, and more</TextBlock>
+                                               VerticalAlignment="Center" />
                                 </StackPanel>
+                                <ComboBox DisplayMemberPath="Name"
+                                          Grid.Column="1"
+                                          MinWidth="190" />
+                                <Button Margin="8,0,8,0"
+                                        Grid.Column="2"
+                                        Style="{DynamicResource AccentButtonStyle}"
+                                        Command="{Binding ApplyPowerPlanCommand}"
+                                        Content="Apply" />
                             </Grid>
-                        </Expander.Header>
-                        <Expander.Content>
-                            <StackPanel>
-                                <StackPanel Margin="0,0,0,8">
-                                    <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
-                                        <CheckBox.Content>
-                                            <StackPanel>
-                                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Fast Startup</TextBlock>
-                                                <TextBlock TextWrapping="Wrap"
-                                                           Style="{StaticResource BodyTextBlockStyle}"
-                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}">Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a system with dual boot it's recommended to disable this feature.</TextBlock>
-                                            </StackPanel>
-                                        </CheckBox.Content>
-                                    </CheckBox>
-                                </StackPanel>
+                        </StackPanel>
+                    </controls:ComplexExpander>
+                    <controls:ComplexExpander Icon="Wrench"
+                                              Title="Advanced Settings"
+                                              Description="Change advanced energy parameters like fast startup, hibernation, and more">
+                        <StackPanel Margin="6,0,6,0">
+                            <StackPanel Margin="0,0,0,12">
+                                <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}"
+                                          VerticalContentAlignment="Center">
+                                    <CheckBox.Content>
+                                        <StackPanel Margin="8,0,0,0">
+                                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Fast Startup</TextBlock>
+                                            <TextBlock TextWrapping="Wrap"
+                                                       Style="{StaticResource BodyTextBlockStyle}"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a system with dual boot it's recommended to disable this feature.</TextBlock>
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
                             </StackPanel>
-                        </Expander.Content>
-                    </Expander>
+                            <StackPanel Margin="0,0,0,8">
+                                <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
+                                    <CheckBox.Content>
+                                        <StackPanel Margin="8,0,0,0">
+                                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Hibernation</TextBlock>
+                                            <TextBlock TextWrapping="Wrap"
+                                                       Style="{StaticResource BodyTextBlockStyle}"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">Saves the current state of the system into the drive when the PC shuts down and resumes to the last state when logged back in. It can cause issues when dual booting with Linux.</TextBlock>
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </controls:ComplexExpander>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

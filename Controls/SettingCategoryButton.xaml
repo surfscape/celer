@@ -13,32 +13,37 @@
              x:Name="root">
     <Button HorizontalAlignment="Stretch"
             Padding="16,12"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             HorizontalContentAlignment="Stretch"
             Command="{Binding Path=Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <sg:SpacedGrid ColumnDefinitions="auto * auto"
-                       ColumnSpacing="12">
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <iconPacks:PackIconLucide Width="16"
                                       Height="16"
-                                      Margin="0"
+                                      Margin="0,0,16,0"
+                                      Grid.Column="0"
                                       VerticalAlignment="Center"
                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                       Kind="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             <StackPanel Grid.Column="1">
                 <TextBlock Style="{DynamicResource BodyStrongTextBlockStyle}"
                            Margin="0,0,0,2"
-                           Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
+                           Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 <TextBlock Style="{DynamicResource BodyTextBlockStyle}"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                           Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
+                           Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </StackPanel>
-            <iconPacks:PackIconLucide Width="13"
-                                      Height="13"
-                                      Margin="0"
-                                      Grid.Column="2"
-                                      VerticalAlignment="Center"
-                                      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                      Kind="ChevronRight" />
-        </sg:SpacedGrid>
+            <TextBlock Text="&#xE76C;"
+                           Grid.Column="2"
+                       VerticalAlignment="Center"
+                           FontFamily="Segoe Fluent Icons"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+            
+        </Grid>
     </Button>
 </UserControl>
