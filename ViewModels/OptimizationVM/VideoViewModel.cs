@@ -43,12 +43,6 @@ namespace Celer.ViewModels.OptimizationVM
             }
             catch (Exception e)
             {
-                MessageBox.Show(
-                    $"Error initializing Celer video engine: {e.Message}",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
                 Debug.WriteLine(e);
             }
             finally
@@ -98,7 +92,7 @@ namespace Celer.ViewModels.OptimizationVM
             using var searcher = new ManagementObjectSearcher(
                 "SELECT * FROM Win32_VideoController"
             );
-            foreach (ManagementObject mo in searcher.Get())
+            foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
             {
                 var name = mo["Name"]?.ToString() ?? "Desconhecido";
                 var manufacturer = mo["AdapterCompatibility"]?.ToString() ?? "Desconhecido";
@@ -112,10 +106,18 @@ namespace Celer.ViewModels.OptimizationVM
                     dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
                     shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
                 }
-                catch (Exception e)
+                catch (FormatException e)
                 {
-                    MessageBox.Show($"Error when parsing adapter memory {e}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Debug.WriteLine(e);
+                    
+                    Debug.WriteLine(e.Message);
+                }
+                catch(OverflowException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message);
                 }
 
                 var gpuInfo = new GpuInfo
@@ -127,9 +129,7 @@ namespace Celer.ViewModels.OptimizationVM
                     DedicatedMemoryMb = dedicated,
                     SharedMemoryMb = shared,
                     MemoryUsedMb = 0,
-                    IsInternal =
-                        name.Contains("intel", StringComparison.OrdinalIgnoreCase)
-                        || name.Contains("radeon graphics", StringComparison.OrdinalIgnoreCase),
+                    AdapterType = mo["AdapterDACType"]?.ToString() ?? "Unknown",
                 };
 
                 result.Add(gpuInfo);
@@ -239,13 +239,13 @@ namespace Celer.ViewModels.OptimizationVM
 
             [ObservableProperty]
             private ulong memoryUsedMb;
-            public string Name { get; set; } = "Desconhecido";
-            public string Manufacturer { get; set; } = "Desconhecido";
-            public string DriverVersion { get; set; } = "0.0.0";
-            public UInt32 MemoryTotalMb { get; set; }
-            public UInt32? DedicatedMemoryMb { get; set; }
-            public UInt32? SharedMemoryMb { get; set; }
-            public bool IsInternal { get; set; }
+            public string Name { get; set; } = "Unknown";
+            public string Manufacturer { get; set; } = "Unknown";
+            public string DriverVersion { get; set; } = "N/A";
+            public ulong MemoryTotalMb { get; set; }
+            public ulong? DedicatedMemoryMb { get; set; }
+            public ulong? SharedMemoryMb { get; set; }
+            public string? AdapterType { get; set; }
             public string? DirectXVersion { get; set; }
             public string? WddmVersion { get; set; }
             public bool? IsWhqlLogoPresent { get; set; }

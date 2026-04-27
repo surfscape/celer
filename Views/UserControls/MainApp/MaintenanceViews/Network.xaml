@@ -7,7 +7,8 @@
     xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.MaintenanceViews"
     xmlns:vm="clr-namespace:Celer.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DataContext="{d:DesignInstance Type=vm:MaintenanceVM.NetworkViewModel}"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             d:DataContext="{d:DesignInstance Type=vm:MaintenanceVM.NetworkViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     d:Background="white"
@@ -53,38 +54,52 @@
                     Command="{Binding TestNetworkCommand}"
                     Content="Check" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="0,12">
-            <TextBlock Style="{StaticResource Heading2}">DNS</TextBlock>
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="0,12">
-                <ComboBox
-                    Width="300"
-                    Height="30"
-                          ItemsSource="{Binding DnsServers}"
-                    SelectedItem="{Binding SelectedDnsServer}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="Bold" Text="{Binding Name}" />
-                                <TextBlock Text=" - " />
-                                <TextBlock Text="{Binding IP}" />
-                                <TextBlock Text=" (" />
-                                <TextBlock Text="{Binding PingStatus}" />
-                                <TextBlock Text=" ms)" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button
-                    Margin="10,0,0,0"
-                    Command="{Binding UpdatePingCommand}"
-                    Content="Refresh Ping" />
-                <StackPanel Margin="8,0,0,0" Orientation="Horizontal">
-                    <Button
-                        Command="{Binding SetDnsCommand}"
-                        Content="Define as system-wide DNS"
-                        IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}" />
+        <Border Grid.Row="1"
+                Padding="12"
+                BorderThickness="1"
+                CornerRadius="6"
+                Margin="0,12,0,0"
+                HorizontalAlignment="Left"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource Heading2}">DNS Manager</TextBlock>
+                <StackPanel VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Margin="0,6,0,12">
+                    <ComboBox Width="300"
+                              Height="30"
+                              ItemsSource="{Binding DnsServers}"
+                              SelectedItem="{Binding SelectedDnsServer}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold"
+                                               Text="{Binding Name}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding IP}" />
+                                    <TextBlock Text=" (" />
+                                    <TextBlock Text="{Binding PingStatus}" />
+                                    <TextBlock Text=" ms)" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="10,0,0,0"
+                            Padding="8"
+                            ToolTip="Refresh Ping"
+                            Command="{Binding UpdatePingCommand}">
+                        <iconPacks:PackIconLucide Width="14"
+                                                  Height="14"
+                                                  Kind="RefreshCw" />
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding SetDnsCommand}"
+                            Content="Apply DNS as system-wide"
+                            IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}" />
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

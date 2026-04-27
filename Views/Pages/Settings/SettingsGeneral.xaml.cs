@@ -3,11 +3,11 @@
 namespace Celer.Views.Pages.Settings
 {
     /// <summary>
-    /// Interaction logic for General.xaml
+    /// Interaction logic for SettingsGeneral.xaml
     /// </summary>
-    public partial class General : Page
+    public partial class SettingsGeneral : UserControl
     {
-        public General()
+        public SettingsGeneral()
         {
             InitializeComponent();
         }

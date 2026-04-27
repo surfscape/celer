@@ -1,10 +1,10 @@
 ﻿using Celer.Properties;
+using Celer.Utilities;
 using Celer.ViewModels;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shell;
-
 
 namespace Celer.Views.Windows;
 
@@ -130,10 +130,13 @@ public partial class MainWindow : Window
     void CheckVisibility(object sender, DependencyPropertyChangedEventArgs e)
     {
         if (Visibility == Visibility.Visible && DataContext == null)
+        {
             DataContext = _viewModel;
+            ProcessPowerManager.Disable();
+        }
     }
 
-    private NonClientFrameEdges GetPrefferedNonClientFrameEdges()
+    private static NonClientFrameEdges GetPrefferedNonClientFrameEdges()
     {
         if (SystemParameters.HighContrast == true || IsWindows11OrGreater() == false)
             return NonClientFrameEdges.None;
@@ -179,6 +182,7 @@ public partial class MainWindow : Window
             e.Cancel = true;
             Visibility = Visibility.Collapsed;
             DataContext = null;
+            ProcessPowerManager.Enable();
         }
         else
             e.Cancel = false;

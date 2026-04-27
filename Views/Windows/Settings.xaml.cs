@@ -138,7 +138,7 @@ namespace Celer.Views.Windows
 
             if (appContextBackdropData != null)
             {
-                disableFluentThemeWindowBackdrop = bool.Parse(Convert.ToString(appContextBackdropData));
+                disableFluentThemeWindowBackdrop = bool.Parse((string)appContextBackdropData);
             }
 
             return disableFluentThemeWindowBackdrop;

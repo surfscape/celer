@@ -531,7 +531,7 @@
         </Style>
     </UserControl.Resources>
     <Expander ScrollViewer.CanContentScroll="False"
-
+              ScrollViewer.VerticalScrollBarVisibility="Disabled"
               Style="{StaticResource CustomExpander}"
               Content="{Binding ExpanderContent, ElementName=Root}">
         <Expander.Header>

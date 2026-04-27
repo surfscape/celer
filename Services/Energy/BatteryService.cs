@@ -36,9 +36,9 @@ namespace Celer.Services.Energy
 
     public class BatteryService
     {
-#pragma warning disable CA1822 // Mark members as static
+
         public BatteryInfo GetBatteryInfo()
-#pragma warning restore CA1822 // Mark members as static
+
         {
             var info = new BatteryInfo();
 

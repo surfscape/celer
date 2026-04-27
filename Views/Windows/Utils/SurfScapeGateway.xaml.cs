@@ -56,7 +56,10 @@ namespace Celer.Views.Windows.Utils
             if (MainWindowTrigger)
             {
                 if (SilentStartup)
+                {
                     _mainWindow.Visibility = Visibility.Collapsed;
+                    ProcessPowerManager.Enable();
+                }
                 else
                     _mainWindow.Show();
                 Close();

@@ -36,7 +36,7 @@
             <!-- Titlebar -->
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="44" />
+                    <RowDefinition Height="48" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
@@ -49,7 +49,7 @@
                     </Grid.ColumnDefinitions>
                     <!-- Navigation controls -->
                     <StackPanel Grid.Column="0"
-                                Margin="4,4,0,0"
+                                Margin="4,5,0,0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Top">
                         <Button ToolTip="Go back to the previous screen"
@@ -384,19 +384,24 @@
                 </Grid>
             </Border>
             <Border Grid.Row="1"
-                    Padding="16"
+                    Padding="16,0,5,5"
                     MaxWidth="960">
                 <Grid>
-                    <ContentControl Content="{Binding CurrentViewModel}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ContentControl Content="{Binding CurrentViewModel}" Margin="0,0,16,16">
                         <ContentControl.Resources>
                             <DataTemplate DataType="{x:Type pages:SettingsShellViewModel}">
                                 <pages:SettingsShell />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type pages:SettingsGeneralViewModel}">
+                                <pages:SettingsGeneral />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type pages:SettingsAdvancedViewModel}">
                                 <pages:SettingsAdvanced />
                             </DataTemplate>
                         </ContentControl.Resources>
                     </ContentControl>
+                    </ScrollViewer>
                 </Grid>
             </Border>
         </Grid>

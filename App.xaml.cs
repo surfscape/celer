@@ -107,16 +107,17 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         // closes celer if another instance is already running
-        if(!e.Args.Contains("-disableMutexProtection")) { 
-        using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
+        if (!e.Args.Contains("-disableMutexProtection"))
         {
-            if (!createdNew)
+            using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
             {
-                _singleInstanceMutex.Dispose();
-                _singleInstanceMutex = null;
-                Shutdown();
+                if (!createdNew)
+                {
+                    _singleInstanceMutex.Dispose();
+                    _singleInstanceMutex = null;
+                    Shutdown();
+                }
             }
-        }
         }
 
         AppHost = Host.CreateDefaultBuilder()
@@ -130,7 +131,7 @@ public partial class App : Application
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<SettingsNavigation>();
 
-            // viewmodels for the user controls
+            // viewmodels for the user controls and other views
             services.AddSingleton<MenuBarNavigation>();
             services.AddSingleton<DashboardViewModel>();
             services.AddSingleton<CleanEngine>();
@@ -154,7 +155,7 @@ public partial class App : Application
             services.AddSingleton<Limpeza>();
             services.AddSingleton<Optimization>();
             services.AddTransient<MemoryManagement>();
-            services.AddTransient<Battery>();
+            services.AddTransient<Views.UserControls.MainApp.OptimizationViews.Battery>();
             services.AddTransient<Video>();
             services.AddTransient<Sensors>();
             services.AddSingleton<Maintenance>();
@@ -201,6 +202,7 @@ public partial class App : Application
         }
         else
             throw new InvalidOperationException("AppHost not initialized!");
+
         base.OnStartup(e);
     }
 

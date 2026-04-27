@@ -71,7 +71,7 @@
                     <StackPanel>
                         <TextBlock Style="{StaticResource Title}"
                                    Text="GPU Type" />
-                        <TextBlock Text="{Binding IsInternal, Converter={StaticResource BoolToGpuTypeConverter}}"
+                        <TextBlock Text="{Binding AdapterType}"
                                    Style="{StaticResource Description}" />
                     </StackPanel>
                     <StackPanel>

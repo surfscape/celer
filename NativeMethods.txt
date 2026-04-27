@@ -1,0 +1,5 @@
+﻿SetProcessInformation
+GetCurrentProcess
+SetPriorityClass
+PROCESS_POWER_THROTTLING_STATE
+PROCESS_INFORMATION_CLASS

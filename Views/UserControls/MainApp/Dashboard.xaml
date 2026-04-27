@@ -55,399 +55,406 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    <sg:SpacedGrid RowSpacing="8"
-                   Margin="0,0,0,16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition MaxHeight="240"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Border>
-            <StackPanel>
-                <TextBlock FontWeight="Medium"
-                           Foreground="{DynamicResource TextFillColorTertiaryBrush}">Welcome to Celer</TextBlock>
-                <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="1"
-                Padding="12,8"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                BorderThickness="1"
-                CornerRadius="6"
-                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
-            <DockPanel>
-                <iconPacks:PackIconRemixIcon Margin="0,0,8,0"
-                                             VerticalAlignment="Center"
-                                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                             Kind="MicrosoftFill" />
-                <TextBlock Text="{Binding WindowsVersion}"
-                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                <StackPanel HorizontalAlignment="Right"
-                            Orientation="Horizontal"
-                            ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
-                    <iconPacks:PackIconLucide Margin="0,0,8,0"
-                                              VerticalAlignment="Center"
-                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                              Kind="Timer" />
-                    <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}"
-                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                </StackPanel>
-            </DockPanel>
-        </Border>
-        <sg:SpacedGrid Grid.Row="2"
-                       ColumnSpacing="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                    Padding="12">
-                <StackPanel Grid.Column="0">
-                    <TextBlock Style="{StaticResource Heading2}"
-                               Text="CPU" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid>
-                            <Grid Margin="0,0,0,-16">
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="100"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="{Binding CpuUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
-                            </Grid>
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0,16,0,0"
-                                       Text="{Binding CpuUsage, StringFormat={}{0}%}"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                        </Grid>
-                    </Grid>
-                    <TextBlock Margin="0,0,0,0"
-                               FontSize="14"
-                               FontWeight="DemiBold"
-                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                               Text="{Binding CpuName}"
-                               TextWrapping="Wrap" />
-                    <UniformGrid Columns="2"
-                                 Margin="0,8,0,0">
-                        <StackPanel>
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                       Text="Processes"
-                                       Style="{StaticResource BodyTextBlockStyle}" />
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Margin="0,2,0,0"
-                                       Text="{Binding ProcessCount}"
-                                       FontSize="17"
-                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                       Text="Threads"
-                                       Style="{StaticResource BodyTextBlockStyle}" />
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Margin="0,2,0,0"
-                                       Text="{Binding ThreadCount}"
-                                       FontSize="17"
-                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        </StackPanel>
-                    </UniformGrid>
-                </StackPanel>
-            </Border>
-            <Border Grid.Column="1"
-                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                    Padding="12">
-                <StackPanel>
-                    <UniformGrid Columns="2">
-                        <TextBlock Style="{StaticResource Heading2}"
-                                   Text="Memory" />
-                        <TextBlock FontSize="17"
-                                   VerticalAlignment="Center"
-                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                   HorizontalAlignment="Right"
-                                   Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, ConverterParameter=true, StringFormat={}}" />
-                    </UniformGrid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid>
-                            <Grid Margin="0,0,0,-16">
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="100"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="{Binding UsedMemoryGraph, StringFormat={}{0}}"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
-                            </Grid>
-                            <TextBlock Margin="0,16,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding MemoryUsage, StringFormat={}{0}%}"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                        </Grid>
-                    </Grid>
-                    <UniformGrid Columns="2">
-                        <StackPanel>
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                       Text="In Use "
-                                       Style="{StaticResource BodyTextBlockStyle}" />
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Margin="0,2,0,0"
-                                       Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}}"
-                                       FontSize="17"
-                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                       Text="Available"
-                                       Style="{StaticResource BodyTextBlockStyle}" />
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Margin="0,2,0,0"
-                                       Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}}"
-                                       FontSize="17"
-                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        </StackPanel>
-                    </UniformGrid>
-                </StackPanel>
-            </Border>
-            <Border Grid.Column="2"
-                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                    Padding="12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Heading2}"
-                               Text="GPU" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid>
-                            <Grid Margin="0,0,0,-16">
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="100"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
-                                <ed:Arc StartAngle="-100"
-                                        EndAngle="{Binding GpuGeneralUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
-                                        Stretch="None"
-                                        Height="100"
-                                        Width="100"
-                                        StrokeThickness="16"
-                                        StrokeDashArray=".15"
-                                        Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
-                            </Grid>
-                            <TextBlock 
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0,16,0,0"
-                                       Text="{Binding GpuGeneralUsage, StringFormat={}{0}%}"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                        </Grid>
-                    </Grid>
-                    <TextBlock FontWeight="DemiBold"
-                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                               Text="{Binding GpuName}" />
-                    <TextBlock Margin="0,4,0,4"
-                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                               Text="{Binding GpuVendor}" />
-                    <StackPanel Margin="0,0,0,4"
-                                Orientation="Horizontal">
-                        <TextBlock Text="Driver "
-                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                        <TextBlock Text="{Binding GpuDriverVersion}"
-                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="DirectX "
-                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                        <TextBlock Text="{Binding GpuDirectXVersion}"
-                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                    </StackPanel>
-
-                </StackPanel>
-            </Border>
-        </sg:SpacedGrid>
-        <sg:SpacedGrid ColumnSpacing="8"
-                       Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid VerticalAlignment="Stretch">
+        <sg:SpacedGrid RowSpacing="8"
+                       Margin="0,0,0,16"
+                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=true}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto">
-                </RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition MaxHeight="240"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                    Padding="12">
-                <Grid Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Margin="0,0,0,4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
-                        <Button Grid.Column="1"
-                                Padding="9,8"
-                                ToolTip="Refresh drives"
-                                Command="{Binding RefreshDisksCommand}">
-                            <iconPacks:PackIconLucide Width="14"
-                                                      Height="14"
-                                                      Kind="RefreshCw" />
-                        </Button>
-                    </Grid>
-                    <DockPanel Grid.Row="1">
-                        <ListBox MaxHeight="174"
-                                 ItemTemplate="{StaticResource ItemTemplate}"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 VirtualizingPanel.ScrollUnit="Pixel"
-                                 ItemsSource="{Binding DiskData}">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListBoxItem}">
-                                    <Setter Property="Focusable"
-                                            Value="False" />
-                                    <Setter Property="IsHitTestVisible"
-                                            Value="False" />
-                                    <Setter Property="HorizontalContentAlignment"
-                                            Value="Stretch">
-                                    </Setter>
-                                    <Setter Property="Margin"
-                                            Value="-5,0,-5,0"></Setter>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                        </ListBox>
-                    </DockPanel>
-                </Grid>
-            </Border>
-            <Border Grid.Column="1"
-                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                    Padding="12">
-                <StackPanel Margin="0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
-                        <ToggleButton Name="PCheckBox"
-                                      Grid.Column="1"
-                                      FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      Content="&#xE70F;"
-                                      Visibility="Hidden"
-                                      HorizontalAlignment="Right">
-                        </ToggleButton>
-                    </Grid>
-                    <Popup StaysOpen="False"
-                           IsOpen="{Binding ElementName=PCheckBox,Path=IsChecked}"
-                           PlacementTarget="{Binding ElementName=PCheckBox}"
-                           AllowsTransparency="True"
-                           PopupAnimation="Fade"
-                           HorizontalOffset="-4"
-                           Placement="Left">
-                        <Border Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-                                CornerRadius="6"
-                                BorderThickness="1"
-                                MinWidth="170"
-                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                Padding="12">
-                            <StackPanel>
-                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Customize</TextBlock>
-                            </StackPanel>
-                        </Border>
-                    </Popup>
-                    <UniformGrid Columns="2"
-                                 Margin="0,4,0,0">
-                        <Button HorizontalAlignment="Stretch"
-                                Margin="0,0,3,0"
-                                Command="{Binding NavigateToOptimizationCommand}"
-                                CommandParameter="Battery">
-                            <StackPanel Margin="0">
-                                <iconPacks:PackIconLucide HorizontalAlignment="Center"
-                                                          Margin="0,4,0,4"
-                                                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                          Kind="Power" />
-                                <TextBlock HorizontalAlignment="Center">Power Manager</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button HorizontalAlignment="Stretch"
-                                Margin="3,0,0,0"
-                                Command="{Binding NavigateToOptimizationCommand}"
-                                CommandParameter="Video">
-                            <StackPanel Margin="0">
-                                <iconPacks:PackIconLucide HorizontalAlignment="Center"
-                                                          Margin="0,4,0,4"
-                                                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                          Kind="Gpu" />
-                                <TextBlock HorizontalAlignment="Center">Video Manager</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button HorizontalAlignment="Stretch"
-                                Margin="0,6,3,0"
-                                Command="{Binding NavigateToOptimizationCommand}"
-                                CommandParameter="Memory">
-                            <StackPanel Margin="0">
-                                <iconPacks:PackIconLucide HorizontalAlignment="Center"
-                                                          Margin="0,4,0,4"
-                                                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                          Kind="MemoryStick" />
-                                <TextBlock HorizontalAlignment="Center">Memory Manager</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </UniformGrid>
+            <Border>
+                <StackPanel>
+                    <TextBlock FontWeight="Medium"
+                               Foreground="{DynamicResource TextFillColorTertiaryBrush}">Welcome to Celer</TextBlock>
+                    <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                 </StackPanel>
             </Border>
-        </sg:SpacedGrid>
+            <Border Grid.Row="1"
+                    Padding="12,8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+                <DockPanel>
+                    <iconPacks:PackIconRemixIcon Margin="0,0,8,0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                 Kind="MicrosoftFill" />
+                    <TextBlock Text="{Binding WindowsVersion}"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    <StackPanel HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
+                        <iconPacks:PackIconLucide Margin="0,0,8,0"
+                                                  VerticalAlignment="Center"
+                                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                  Kind="Timer" />
+                        <TextBlock Text="{Binding PostTime, StringFormat=POST time: {0:F2} seconds}"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <sg:SpacedGrid Grid.Row="2"
+                           ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Padding="12">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource Heading2}"
+                                   Text="CPU" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid Margin="0,0,0,-16">
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="100"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="{Binding CpuUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
+                                </Grid>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Margin="0,16,0,0"
+                                           Text="{Binding CpuUsage, StringFormat={}{0}%}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            </Grid>
+                        </Grid>
+                        <TextBlock Margin="0,0,0,0"
+                                   FontSize="14"
+                                   FontWeight="DemiBold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="{Binding CpuName}"
+                                   TextWrapping="Wrap" />
+                        <UniformGrid Columns="2"
+                                     Margin="0,8,0,0">
+                            <StackPanel>
+                                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           Text="Processes"
+                                           Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding ProcessCount}"
+                                           FontSize="17"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           Text="Threads"
+                                           Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding ThreadCount}"
+                                           FontSize="17"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            </StackPanel>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1"
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Padding="12">
+                    <StackPanel>
+                        <UniformGrid Columns="2">
+                            <TextBlock Style="{StaticResource Heading2}"
+                                       Text="Memory" />
+                            <TextBlock FontSize="17"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       HorizontalAlignment="Right"
+                                       Text="{Binding TotalMemory, Converter={StaticResource MemorySizeConverter}, ConverterParameter=true, StringFormat={}}" />
+                        </UniformGrid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid Margin="0,0,0,-16">
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="100"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="{Binding UsedMemoryGraph, StringFormat={}{0}}"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
+                                </Grid>
+                                <TextBlock Margin="0,16,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding MemoryUsage, StringFormat={}{0}%}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            </Grid>
+                        </Grid>
+                        <UniformGrid Columns="2">
+                            <StackPanel>
+                                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           Text="In Use "
+                                           Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding UsedMemory, Converter={StaticResource MemorySizeConverter}}"
+                                           FontSize="17"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           Text="Available"
+                                           Style="{StaticResource BodyTextBlockStyle}" />
+                                <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding AvailableMemory, Converter={StaticResource MemorySizeConverter}}"
+                                           FontSize="17"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            </StackPanel>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2"
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Padding="12">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Heading2}"
+                                   Text="GPU" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid Margin="0,0,0,-16">
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="100"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource ControlStrongFillColorDefaultBrush}" />
+                                    <ed:Arc StartAngle="-100"
+                                            EndAngle="{Binding GpuGeneralUsage, Converter={StaticResource PositiveToNegativeConverter}, StringFormat={}{0}}"
+                                            Stretch="None"
+                                            Height="100"
+                                            Width="100"
+                                            StrokeThickness="16"
+                                            StrokeDashArray=".15"
+                                            Stroke="{DynamicResource AccentFillColorDefaultBrush}" />
+                                </Grid>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Margin="0,16,0,0"
+                                           Text="{Binding GpuGeneralUsage, StringFormat={}{0}%}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            </Grid>
+                        </Grid>
+                        <TextBlock FontWeight="DemiBold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Text="{Binding GpuName}" />
+                        <TextBlock Margin="0,4,0,4"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   Text="{Binding GpuVendor}" />
+                        <StackPanel Margin="0,0,0,4"
+                                    Orientation="Horizontal">
+                            <TextBlock Text="Driver "
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Text="{Binding GpuDriverVersion}"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="DirectX "
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Text="{Binding GpuDirectXVersion}"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        </StackPanel>
 
-    </sg:SpacedGrid>
+                    </StackPanel>
+                </Border>
+            </sg:SpacedGrid>
+            <sg:SpacedGrid ColumnSpacing="8"
+                           Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto">
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Padding="12">
+                    <Grid Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
+                            <Button Grid.Column="1"
+                                    Padding="8"
+                                    ToolTip="Refresh drives"
+                                    Command="{Binding RefreshDisksCommand}">
+                                <iconPacks:PackIconLucide Width="14"
+                                                          Height="14"
+                                                          Kind="RefreshCw" />
+                            </Button>
+                        </Grid>
+                        <DockPanel Grid.Row="1">
+                            <ListBox MaxHeight="138"
+                                     ItemTemplate="{StaticResource ItemTemplate}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     VirtualizingPanel.ScrollUnit="Pixel"
+                                     ItemsSource="{Binding DiskData}">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Focusable"
+                                                Value="False" />
+                                        <Setter Property="IsHitTestVisible"
+                                                Value="False" />
+                                        <Setter Property="HorizontalContentAlignment"
+                                                Value="Stretch">
+                                        </Setter>
+                                        <Setter Property="Margin"
+                                                Value="-5,0,-5,0"></Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
+                        </DockPanel>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1"
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Padding="12">
+                    <StackPanel Margin="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
+                            <ToggleButton Name="PCheckBox"
+                                          Grid.Column="1"
+                                          FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                          Content="&#xE70F;"
+                                          Visibility="Hidden"
+                                          HorizontalAlignment="Right">
+                            </ToggleButton>
+                        </Grid>
+                        <Popup StaysOpen="False"
+                               IsOpen="{Binding ElementName=PCheckBox,Path=IsChecked}"
+                               PlacementTarget="{Binding ElementName=PCheckBox}"
+                               AllowsTransparency="True"
+                               PopupAnimation="Fade"
+                               HorizontalOffset="-4"
+                               Placement="Left">
+                            <Border Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                                    CornerRadius="6"
+                                    BorderThickness="1"
+                                    MinWidth="170"
+                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                    Padding="12">
+                                <StackPanel>
+                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Customize</TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                        <UniformGrid Columns="2"
+                                     Margin="0,4,0,0">
+                            <Button HorizontalAlignment="Stretch"
+                                    Margin="0,0,3,0"
+                                    Command="{Binding NavigateToOptimizationCommand}"
+                                    CommandParameter="Battery">
+                                <StackPanel Margin="0">
+                                    <iconPacks:PackIconLucide HorizontalAlignment="Center"
+                                                              Margin="0,4,0,4"
+                                                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                              Kind="Power" />
+                                    <TextBlock HorizontalAlignment="Center">Power Manager</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button HorizontalAlignment="Stretch"
+                                    Margin="3,0,0,0"
+                                    Command="{Binding NavigateToOptimizationCommand}"
+                                    CommandParameter="Video">
+                                <StackPanel Margin="0">
+                                    <iconPacks:PackIconLucide HorizontalAlignment="Center"
+                                                              Margin="0,4,0,4"
+                                                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                              Kind="Gpu" />
+                                    <TextBlock HorizontalAlignment="Center">Video Manager</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button HorizontalAlignment="Stretch"
+                                    Margin="0,6,3,0"
+                                    Command="{Binding NavigateToOptimizationCommand}"
+                                    CommandParameter="Memory">
+                                <StackPanel Margin="0">
+                                    <iconPacks:PackIconLucide HorizontalAlignment="Center"
+                                                              Margin="0,4,0,4"
+                                                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                              Kind="MemoryStick" />
+                                    <TextBlock HorizontalAlignment="Center">Memory Manager</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+            </sg:SpacedGrid>
+        </sg:SpacedGrid>
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
+            <TextBlock VerticalAlignment="Center">Retrieving system information...</TextBlock>
+        </Grid>
+    </Grid>
+    
 </UserControl>
