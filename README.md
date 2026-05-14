@@ -2,12 +2,9 @@
 <img src="./banner.png" width="700">
 </p>
 
-# Celer [ARCHIVED]
+# Celer
 
 > The open source, advanced, friendly and cutest toolbox for Windows 10 & 11.
-
-> [!IMPORTANT]
-> Celer development has ceased and the project has been archived. There are no plans to continue working on it. More information on the [official surfscape website](https://surfscape.eu).
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/surfscape/celer/latest/total)
 
