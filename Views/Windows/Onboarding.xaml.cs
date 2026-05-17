@@ -48,9 +48,6 @@ namespace Celer.Views.Windows
             [ObservableProperty]
             private bool autoStartup = false;
 
-            [ObservableProperty]
-            private bool enableSentry = false;
-
             [RelayCommand]
             private void Start()
             {
@@ -58,17 +55,10 @@ namespace Celer.Views.Windows
                 Properties.MainConfiguration.Default.EnableAutoSurfScapeGateway = AutoUpdates;
                 Properties.MainConfiguration.Default.AutoStartup = AutoStartup;
                 Properties.MainConfiguration.Default.CloseShouldMinimize = AutoStartup;
-                Properties.MainConfiguration.Default.EnableSentry = EnableSentry;
                 Properties.MainConfiguration.Default.Save();
 
                 if (Properties.MainConfiguration.Default.AutoStartup)
                     UserLand.SetAutoStartup();
-
-                if (EnableSentry)
-                {
-                    Process.Start(Application.ResourceAssembly.Location, "-disableMutexProtection");
-                    Process.GetCurrentProcess().Kill();
-                }
                 var gateway = App.AppHost?.Services.GetService<SurfScapeGateway>();
                 if (gateway is not null)
                 {

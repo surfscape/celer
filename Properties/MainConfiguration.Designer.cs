@@ -12,7 +12,7 @@ namespace Celer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.6.0.0")]
     internal sealed partial class MainConfiguration : global::System.Configuration.ApplicationSettingsBase {
         
         private static MainConfiguration defaultInstance = ((MainConfiguration)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new MainConfiguration())));
@@ -199,18 +199,6 @@ namespace Celer.Properties {
             }
             set {
                 this["CloseShouldMinimize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableSentry {
-            get {
-                return ((bool)(this["EnableSentry"]));
-            }
-            set {
-                this["EnableSentry"] = value;
             }
         }
         

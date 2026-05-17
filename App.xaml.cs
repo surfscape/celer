@@ -34,28 +34,11 @@ public partial class App : Application
 
     public App()
     {
-        if (MainConfiguration.Default.EnableSentry)
-        {
-            DispatcherUnhandledException += App_DispatcherUnhandledException;
-            SentrySdk.Init(o =>
-            {
-                o.Dsn = "";
-                o.Debug = true;
-                o.TracesSampleRate = 1.0;
-            });
-        }
         /* event for windows 10 to check when a user preference is changed to trigger a theme update */
         if (Environment.OSVersion.Version.Build <= 26000)
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
     }
-
-    void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-    {
-        SentrySdk.CaptureException(e.Exception);
-        e.Handled = true;
-    }
-
 
     private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
     {
