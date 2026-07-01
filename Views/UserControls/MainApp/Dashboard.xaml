@@ -62,7 +62,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition MaxHeight="240"></RowDefinition>
+                <RowDefinition Height="auto" MinHeight="230"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Border>
@@ -74,8 +74,6 @@
             </Border>
             <Border Grid.Row="1"
                     Padding="12,8"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
                     BorderThickness="1"
                     CornerRadius="6"
                     BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -89,7 +87,7 @@
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     <StackPanel HorizontalAlignment="Right"
                                 Orientation="Horizontal"
-                                ToolTip="The time the system takes to post. A value over 70 seconds might mean a hardware issue/conflict.">
+                                ToolTip="How much time the system takes to post. A value over 70 seconds could mean a hardware issue/conflict.">
                         <iconPacks:PackIconLucide Margin="0,0,8,0"
                                                   VerticalAlignment="Center"
                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
@@ -316,21 +314,17 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto">
-                    </RowDefinition>
-                </Grid.RowDefinitions>
                 <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
                         CornerRadius="6"
                         BorderThickness="1"
-                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                        Padding="12">
-                    <Grid Margin="0">
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
+                    <Grid Margin="0" Height="auto">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Margin="0,0,0,4">
+                        <Grid Margin="16,16,16,4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -346,10 +340,12 @@
                             </Button>
                         </Grid>
                         <DockPanel Grid.Row="1">
-                            <ListBox MaxHeight="138"
+                            <ListBox VerticalAlignment="Stretch"
                                      ItemTemplate="{StaticResource ItemTemplate}"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                      VirtualizingPanel.ScrollUnit="Pixel"
+                                     Margin="0,0,0,0"
                                      ItemsSource="{Binding DiskData}">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">
@@ -361,7 +357,7 @@
                                                 Value="Stretch">
                                         </Setter>
                                         <Setter Property="Margin"
-                                                Value="-5,0,-5,0"></Setter>
+                                                Value="10,0,10,10"></Setter>
                                     </Style>
                                 </ListBox.ItemContainerStyle>
                             </ListBox>
@@ -372,8 +368,10 @@
                         Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
                         CornerRadius="6"
                         BorderThickness="1"
+                        Height="auto"
+                        VerticalAlignment="Top"
                         BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                        Padding="12">
+                        Padding="16">
                     <StackPanel Margin="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
