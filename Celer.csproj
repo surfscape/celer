@@ -52,6 +52,7 @@
 		<PackageReference Include="Metalama.Patterns.Wpf" Version="2026.0.23" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
+		<PackageReference Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="SpacedGrid-WPF" Version="1.0.2" />
 		<PackageReference Include="System.Management" Version="10.0.8" />
