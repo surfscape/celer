@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:Celer.Controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Celer.Converters"
              mc:Ignorable="d"
              x:Name="Root"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"></converters:NullToVisibilityConverter>
         <system:Double x:Key="ExpanderChevronSize">14.0</system:Double>
         <ControlTemplate x:Key="DefaultExpanderToggleButtonDownStyle"
                          TargetType="{x:Type ToggleButton}">
@@ -553,6 +555,7 @@
                     <TextBlock Style="{DynamicResource BodyTextBlockStyle}"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                MaxWidth="620"
+                               Visibility="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}"
                                Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
                 </StackPanel>
             </Grid>

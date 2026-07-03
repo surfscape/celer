@@ -31,7 +31,7 @@ namespace Celer.Controls
 
 
         [DependencyProperty]
-        public string Description { get; set; } = "Expander description";
+        public string? Description { get; set; } = null;
 
         [DependencyProperty]
         public object ExpanderContent { get; set; }
