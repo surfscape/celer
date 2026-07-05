@@ -16,6 +16,7 @@ namespace Celer.ViewModels
     public partial class SettingsViewModel : ObservableObject
     {
         private readonly SettingsNavigation _settingsNavigation;
+        private readonly SettingsShellViewModel _settingsShellViewModel;
 
         public Func<
             string,
@@ -96,25 +97,24 @@ namespace Celer.ViewModels
 
         public SettingsBaseViewModel CurrentViewModel => _settingsNavigation.CurrentViewModel;
 
-        public SettingsViewModel(SettingsNavigation settingsNavigation)
+        public SettingsViewModel(SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellViewModel)
         {
             _settingsNavigation = settingsNavigation;
+            _settingsShellViewModel = settingsShellViewModel;
             StoreInitialValues();
             Paths.CollectionChanged += OnPathsCollectionChanged;
             _settingsNavigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+            _settingsNavigation.CurrentViewModel = settingsShellViewModel;
         }
 
 
         [RelayCommand]
         private void GoBack()
         {
-            if (_settingsNavigation.CurrentViewModel.ToString() == "Celer.Views.Pages.Settings.SettingsShellViewModel")
-            {
+            if (_settingsNavigation.CurrentViewModel == _settingsShellViewModel) {
                 CloseWindowAction?.Invoke();
-            }
-            else
-                _settingsNavigation.CurrentViewModel = App.AppHost.Services.GetRequiredService<SettingsShellViewModel>();
+            } else 
+                _settingsNavigation.CurrentViewModel = _settingsShellViewModel;
         }
 
         private void OnCurrentViewModelChanged()
