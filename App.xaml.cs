@@ -69,11 +69,7 @@ public partial class App : Application
     {
         if (Environment.OSVersion.Version.Build <= 26000)
         {
-            if (Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme())
-                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
-            else if (Current.ThemeMode == ThemeMode.System && !IsLightLegacyTheme())
-                Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
-            else if (Current.ThemeMode == ThemeMode.Light)
+            if ((Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme()) || Current.ThemeMode == ThemeMode.Light)
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             else
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
