@@ -38,7 +38,7 @@ namespace Celer.Utilities
             lt.UserId = Environment.UserName;
             td.Triggers.Add(lt);
 
-            using ExecAction ea = new(fullPath, "-silent", null);
+            using ExecAction ea = new(fullPath, "--silent", null);
             td.Actions.Add(ea);
 
             td.Settings.StartWhenAvailable = true;

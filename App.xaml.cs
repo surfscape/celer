@@ -86,7 +86,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         // closes celer if another instance is already running
-        if (!e.Args.Contains("-disableMutexProtection"))
+        if (!e.Args.Contains("--disableMutexProtection"))
         {
             using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
             {
@@ -148,7 +148,7 @@ public partial class App : Application
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         if (AppHost is not null)
         {
-            if (!e.Args.Contains("-silent") && hasUserDoneSetup)
+            if (!e.Args.Contains("--silent") && hasUserDoneSetup)
             {
                 SetFluentTheme();
                 LegacyTheme();
@@ -160,14 +160,14 @@ public partial class App : Application
                 else if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferSoftware)
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
-            else if (!e.Args.Contains("-silent") && !hasUserDoneSetup)
+            else if (!e.Args.Contains("--silent") && !hasUserDoneSetup)
             {
                 SetFluentTheme();
                 LegacyTheme();
                 var onboardingWindow = new Onboarding();
                 onboardingWindow.Show();
             }
-            else if (e.Args.Contains("-silent"))
+            else if (e.Args.Contains("--silent"))
             {
                 SetFluentTheme();
                 LegacyTheme();
