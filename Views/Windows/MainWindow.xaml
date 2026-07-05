@@ -47,8 +47,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -82,33 +80,22 @@
                                                       Kind="ArrowLeft" />
                         </Button>
                     </StackPanel>
-                    <Image Margin="8,0,0,0"
-                           Width="24"
-                           Grid.Column="1"
-                           RenderOptions.BitmapScalingMode="HighQuality"
-                           VerticalAlignment="Center"
-                           Source="/Resources/Assets/app.ico"></Image>
-                    <TextBlock Grid.Column="2"
-                               Margin="12 0 18 0"
+                    <TextBlock Grid.Column="1"
+                               Margin="8 0 24 0"
                                AutomationProperties.HeadingLevel="Level1"
                                VerticalAlignment="Center"
                                Style="{StaticResource CaptionTextBlockStyle}"
                                Text="Celer Beta" />
-                    <Rectangle Width="1"
-                               Height="24"
-                               Margin="0,1,8,0"
-                               Grid.Column="3"
-                               Fill="{DynamicResource SurfaceStrokeColorDefaultBrush}"></Rectangle>
                     <ContentControl Content="{Binding MenuBarControl}"
                                     Focusable="False"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                     VerticalAlignment="Center"
-                                    Grid.Column="4" />
-                    <Border Grid.Column="5"
+                                    WindowChrome.IsHitTestVisibleInChrome="True"
+                                    Grid.Column="2" />
+                    <Border Grid.Column="3"
                             Background="Transparent"
                             BorderBrush="Transparent"
                             BorderThickness="0" />
-                    <UniformGrid Grid.Column="6"
+                    <UniformGrid Grid.Column="4"
                                  Columns="3"
                                  VerticalAlignment="Top">
                         <Button Padding="18,12"
