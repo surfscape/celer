@@ -1,5 +1,4 @@
 ﻿using Celer.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,9 +8,6 @@ namespace Celer.Views.Pages.Settings
     {
         private readonly SettingsNavigation _settingsNavigation;
         private readonly IServiceProvider _serviceProvider;
-
-        [ObservableProperty]
-        private string name = "Hello World";
 
         public SettingsShellViewModel(SettingsNavigation settingsNavigation, IServiceProvider serviceProvider)
         {
