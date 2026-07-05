@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance Type=local:OnboardingViewModel}"
         Title="{x:Static resx:Strings.Onboarding_WindowTitle}"
         Width="800"
-        Icon="/celer_icon.ico"
+        Icon="/Resources/Assets/app.ico"
         ResizeMode="NoResize"
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen">
