@@ -14,21 +14,13 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels;
 
-
-
 public partial class DashboardViewModel : BaseModuleViewModel
 {
     private readonly NavigationService _navigationService;
     private readonly MemoryMonitorService _memoryService;
-    private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
+    private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromMilliseconds(MainConfiguration.Default.GeneralPollingRate) };
     private PerformanceCounter? _cpuCounter;
     private PerformanceCounter? _availableMemoryCounter;
-
-    /// <summary>
-    /// Used to track if the dashboard is loading data and to show a loading bar if true
-    /// </summary>
-    [ObservableProperty]
-    private bool isLoading = true;
 
     [ObservableProperty]
     private string? windowsVersion;
@@ -139,20 +131,10 @@ public partial class DashboardViewModel : BaseModuleViewModel
             {
                 if (_availableMemoryCounter != null)
                 {
-                    AvailableMemory =  MainConfiguration.Default.EnableRounding ? (int)_availableMemoryCounter.NextValue() : _availableMemoryCounter.NextValue();
-                    UsedMemory = MainConfiguration.Default.EnableRounding ?  (int)TotalMemory - AvailableMemory : TotalMemory - AvailableMemory;
+                    AvailableMemory = MainConfiguration.Default.EnableRounding ? (int)_availableMemoryCounter.NextValue() : _availableMemoryCounter.NextValue();
+                    UsedMemory = MainConfiguration.Default.EnableRounding ? (int)TotalMemory - AvailableMemory : TotalMemory - AvailableMemory;
                     UsedMemoryGraph = MainConfiguration.Default.EnableRounding ? (int)ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory) : ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
                     MemoryUsage = MainConfiguration.Default.EnableRounding ? (int)Math.Round((UsedMemory / TotalMemory) * 100, 2) : Math.Round((UsedMemory / TotalMemory) * 100, 2);
-                    }
-                    else
-                    {
-                        AvailableMemory = _availableMemoryCounter.NextValue();
-                        UsedMemory = TotalMemory - AvailableMemory;
-                        UsedMemoryGraph = ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
-                        MemoryUsage = Math.Round((UsedMemory / TotalMemory) * 100, 2);
-                    }
-
-
                 }
 
                 if (_cpuCounter != null)
@@ -177,9 +159,13 @@ public partial class DashboardViewModel : BaseModuleViewModel
                 GpuGeneralUsage = await GetGpuUsageAsync();
             });
         }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Debug.WriteLine($"Failed to round system values: {ex.Message}");
+        }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error updating system data: {ex.Message}");
+            Debug.WriteLine($"Failed to update system data: {ex.Message}");
         }
     }
 
@@ -274,46 +260,7 @@ public partial class DashboardViewModel : BaseModuleViewModel
         }
     }
 
-    private void GetDriveInfo()
-    {
-        DriveInfo[] allDrives = DriveInfo.GetDrives();
-        foreach (DriveInfo driveInfo in allDrives)
-        {
-            if (MainConfiguration.Default.DISKS_ShowHiddenDrives)
-            {
-                DiskData.Add(
-                    new DiskInformation
-                    {
-                        Format = driveInfo.DriveFormat,
-                        Label = driveInfo.VolumeLabel,
-                        Name = driveInfo.Name,
-                        AvailableSpace = driveInfo.AvailableFreeSpace,
-                        Size = driveInfo.TotalSize,
-                        Type = driveInfo.DriveType.ToString(),
-                        UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
-                    }
-                );
-            }
-            else
-            {
-                if (driveInfo.IsReady)
-                {
-                    DiskData.Add(
-                        new DiskInformation
-                        {
-                            Format = driveInfo.DriveFormat,
-                            Label = driveInfo.VolumeLabel,
-                            Name = driveInfo.Name,
-                            AvailableSpace = driveInfo.AvailableFreeSpace,
-                            Size = driveInfo.TotalSize,
-                            Type = driveInfo.DriveType.ToString(),
-                            UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
-                        }
-                    );
-                }
-            }
-        }
-    }
+
 
     private void LoadDxDiagInfo()
     {
@@ -362,11 +309,46 @@ public partial class DashboardViewModel : BaseModuleViewModel
     }
 
     [RelayCommand]
-    private void RefreshDisks()
+    private void GetDriveInfo()
     {
-        // Clear DiskData object since the default way to insert data is to add instead of updating
+        DriveInfo[] allDrives = DriveInfo.GetDrives();
         DiskData = [];
-        GetDriveInfo();
+        foreach (DriveInfo driveInfo in allDrives)
+        {
+            if (MainConfiguration.Default.DISKS_ShowHiddenDrives)
+            {
+                DiskData.Add(
+                    new DiskInformation
+                    {
+                        Format = driveInfo.DriveFormat,
+                        Label = driveInfo.VolumeLabel,
+                        Name = driveInfo.Name,
+                        AvailableSpace = driveInfo.AvailableFreeSpace,
+                        Size = driveInfo.TotalSize,
+                        Type = driveInfo.DriveType.ToString(),
+                        UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
+                    }
+                );
+            }
+            else
+            {
+                if (driveInfo.IsReady)
+                {
+                    DiskData.Add(
+                        new DiskInformation
+                        {
+                            Format = driveInfo.DriveFormat,
+                            Label = driveInfo.VolumeLabel,
+                            Name = driveInfo.Name,
+                            AvailableSpace = driveInfo.AvailableFreeSpace,
+                            Size = driveInfo.TotalSize,
+                            Type = driveInfo.DriveType.ToString(),
+                            UsedSpace = driveInfo.TotalSize - driveInfo.TotalFreeSpace,
+                        }
+                    );
+                }
+            }
+        }
     }
 
     [RelayCommand]
