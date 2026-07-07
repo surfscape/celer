@@ -139,13 +139,10 @@ public partial class DashboardViewModel : BaseModuleViewModel
             {
                 if (_availableMemoryCounter != null)
                 {
-
-                    if (MainConfiguration.Default.EnableRounding)
-                    {
-                        AvailableMemory = (int)_availableMemoryCounter.NextValue();
-                        UsedMemory = (int)TotalMemory - AvailableMemory;
-                        UsedMemoryGraph = (int)ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
-                        MemoryUsage = (int)Math.Round((UsedMemory / TotalMemory) * 100, 2);
+                    AvailableMemory =  MainConfiguration.Default.EnableRounding ? (int)_availableMemoryCounter.NextValue() : _availableMemoryCounter.NextValue();
+                    UsedMemory = MainConfiguration.Default.EnableRounding ?  (int)TotalMemory - AvailableMemory : TotalMemory - AvailableMemory;
+                    UsedMemoryGraph = MainConfiguration.Default.EnableRounding ? (int)ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory) : ValueHelpers.scaleToGraph((TotalMemory - AvailableMemory), TotalMemory);
+                    MemoryUsage = MainConfiguration.Default.EnableRounding ? (int)Math.Round((UsedMemory / TotalMemory) * 100, 2) : Math.Round((UsedMemory / TotalMemory) * 100, 2);
                     }
                     else
                     {
