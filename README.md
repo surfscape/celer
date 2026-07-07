@@ -4,10 +4,13 @@
 
 # Celer
 
-> The open source, advanced, friendly and cutest toolbox for Windows 10 & 11.
+<p align="center">The open source, friendly, and cutest toolbox for Windows 10 & 11.</p>
+
+<div align="center">
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/surfscape/celer/latest/total)
 
+</div>
 
 ## Table of Contents
 
@@ -16,6 +19,7 @@
 - [3. Requirements](#requirements)
 - [4. Installation](#installation)
 - [5. Roadmap](#roadmap)
+- [6. Building](#building)
 - [7. Contributing](#contributing)
 - [8. License](#license)
 
@@ -36,12 +40,12 @@ Celer is an app for Windows 10 & 11 with the purpose of giving you back control 
 
 ### Requirements
 
-- Windows 10 or 11 (64-bit only)
-- *Minimum* of 512 MB of available RAM \*
-- Minimum of 150 MB of free disk space
+- Windows 10 (build 18362 or higher) or 11 x64
+- *Minimum* of 300MB of available RAM \*
+- Minimum of 100MB of free disk space
 - [.NET Runtime 10 (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-10.0.0-windows-x64-installer) must be installed
 
-<small>\* This metric depends on the RAM available to .NET which might reduce/increase Celer memory usage</small>
+<small>\* Due to the nature of .NET and other factors, Celer memory usage may reduce/increase with usage.</small>
 
 ## Installation
 
@@ -51,18 +55,31 @@ The setup is hosted on GitHub and can be downloaded either through [GitHub Relea
 
 ## Roadmap
 
-We are currently planning new features some of these include:
-
-- Support for third-party tools (ex: AdWare Cleaner, TRON Script, Snappy Driver Installer Origin)
-- Support for third-party plugins (ex: AIDA64 and HWiNFO for system status)
-- Frontend for Winget with bulk installing and updating
-- ~~Light theme (already available on beta 2 but without a setting to change it)~~ Fully implemented with [commit `f70dd49`](https://github.com/surfscape/celer/commit/f70dd49088783e92f89f3728ccd6fe2eb2620edb)
-- Multi-language support
-- ~~Run in the background~~ Fully implemented with [commit `8811595`](https://github.com/surfscape/celer/commit/88115954d3562ae827a416edd91e21c76f483ba8)
-- ~~Tray icon support with a small dashboard for quick actions (ex: cleaning temp files, restarting services and checking system status)~~ Fully implemented with [commit `8811595`](https://github.com/surfscape/celer/commit/88115954d3562ae827a416edd91e21c76f483ba8)
-- Additional modules (ex: Process Manager, Disk Utilities, Windows Components Manager, and more)
+- Support for third-party maintenance tools (ex: AdWare Cleaner, TRON Script, Snappy Driver Installer Origin).
+- Winget frontend with bulk installing and updating.
+- Process and power management utilities that leverage hidden Win32 APIs.
+- Multi-language support.
 - Add-in system.
 - Additional themes.
+
+## Building
+
+Celer is developed and built using Visual Studio Community 2026 and the .NET 10 SDK under a Windows 11 Pro laptop. For development and testing purposes it's important to have a fully up to date Windows 11 Pro environment, it's also recommended to have a similar environment on a Windows 10 machine (or VM) since Celer does have official Windows 10.
+
+
+### Building Solution
+
+```bash
+dotnet build
+```
+
+### Running Solution
+
+> Do note that Celer requires admin privileges and as such the following command will only work on an eleveated terminal.
+
+```bash
+dotnet run
+```
 
 ## Contributing
 
@@ -78,3 +95,5 @@ We are currently planning new features some of these include:
 ## License
 
 Celer is licensed under [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+For other services Celer may use check out [SurfScape Gateway](https://github.com/surfscape/gateway).
