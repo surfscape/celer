@@ -11,40 +11,38 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <Grid>
         <StackPanel>
-            <TextBlock Style="{DynamicResource Heading1}"
-                       Margin="0,0,0,12">Appearance and Presentation</TextBlock>
+            <TextBlock Style="{DynamicResource Heading2}"
+                       Margin="0,0,0,16">Appearance and Presentation</TextBlock>
             <Border CornerRadius="4"
                     Padding="12"
                     BorderThickness="1"
-                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                    BorderBrush="{DynamicResource ControlStrokeColorOnAccentSecondaryBrush}"
                     Background="{DynamicResource ControlFillColorDefaultBrush}">
                 <StackPanel>
-                    <Grid Margin="0,0,0,8">
+                    <Grid Margin="0,0,0,4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
                             <TextBlock VerticalAlignment="Center"
-                                       Text="Theme"
+                                       Text="Application Theme"
                                        FontSize="17"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                        FontWeight="DemiBold" />
-                            <TextBlock Margin="0,4,0,0"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}">
-         Changes the global application theme
-                            </TextBlock>
                         </StackPanel>
-                        <ComboBox Padding="12,0,4,1"
+                        <ComboBox 
                                   Grid.Column="1"
-                                  MinWidth="150"
+                                  MinWidth="170"
                                   ItemsSource="{Binding Themes}"
                                   SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
                     </Grid>
                     <CheckBox IsChecked="{Binding EnableRounding}"
-                              ToolTip="Round most values to one decimal case. Do note that some values may not respect this preference.">Round values</CheckBox>
+                              ToolTip="When enabled, content will expand to fill the window size.">Fill content to window size</CheckBox>
+                    <CheckBox IsChecked="{Binding EnableRounding}"
+                              ToolTip="Round most values to one decimal case. Some values may not respect this preference.">Round values</CheckBox>
                     <CheckBox IsChecked="{Binding SaveSidebarCompactMode}"
-                              ToolTip="Saves the current sidebar compact state.">Save sidebar state</CheckBox>
+                              ToolTip="By default Celer will perserve the last sidebar mode state when relaunching. This will disable that feature">Save sidebar state</CheckBox>
                 </StackPanel>
             </Border>
             <TextBlock Style="{DynamicResource Heading1}"
@@ -108,9 +106,7 @@
                                       Title="Design and Presentation"
                                       Icon="Rocket"
                                       Description="Change how values are shown and the general app theme"></uc:SettingCategoryButton>
-            <uc:ComplexExpander Title="Theme" Description="Change Theme" Icon="Accessibility">
-                <Button>Test</Button>
-            </uc:ComplexExpander>
+
         </StackPanel>
     </Grid>
 </UserControl>
