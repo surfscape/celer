@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace Celer.Utilities
 {
-    public class CompactTabControl : TabControl
+    public partial class CompactTabControl : TabControl
     {
         [DependencyProperty]
         public bool CompactMode { get; set; } = MainConfiguration.Default.SidebarCompactMode;
