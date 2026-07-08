@@ -204,13 +204,13 @@ namespace Celer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AppearanceMaxWidth {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ViewFillContent {
             get {
-                return ((bool)(this["AppearanceMaxWidth"]));
+                return ((bool)(this["ViewFillContent"]));
             }
             set {
-                this["AppearanceMaxWidth"] = value;
+                this["ViewFillContent"] = value;
             }
         }
         
