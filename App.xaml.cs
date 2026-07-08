@@ -44,7 +44,7 @@ public partial class App : Application
     {
         switch (e.Category)
         {
-            case UserPreferenceCategory.General:
+            case UserPreferenceCategory.General: // TODO: maybe using the Color category might be better but needs testing
                 LegacyTheme();
                 break;
         }
@@ -71,7 +71,7 @@ public partial class App : Application
         {
             if ((Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme()) || Current.ThemeMode == ThemeMode.Light)
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
-            else
+            else 
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
         }
     }
