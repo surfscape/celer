@@ -3,6 +3,7 @@ using Celer.Utilities;
 using Celer.ViewModels;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 
@@ -14,6 +15,7 @@ namespace Celer.Views.Windows;
 public partial class MainWindow : Window
 {
     private readonly MainWindowViewModel _viewModel;
+    private readonly QCMenuViewModel _menuViewModel;
     public MainWindow(MainWindowViewModel viewModel)
     {
         _viewModel = viewModel;
@@ -39,9 +41,11 @@ public partial class MainWindow : Window
         Deactivated += (s, e) => UpdateMainWindowVisuals();
 
         DataContext = _viewModel;
-        QCMenu.DataContext = new QCMenuViewModel();
-    }
+        _menuViewModel = new QCMenuViewModel();
+        QCMenu.DataContext = _menuViewModel;
+        traybarMenu.LeftClickCommand = _menuViewModel.QCOpenAppCommand;
 
+    }
 
     private void UpdateMainWindowVisuals()
     {
@@ -69,7 +73,7 @@ public partial class MainWindow : Window
         {
             WindowChrome wc = WindowChrome.GetWindowChrome(this);
             if (wc is not null)
-                wc.NonClientFrameEdges = GetPrefferedNonClientFrameEdges(); ;
+                wc.NonClientFrameEdges = GetPrefferedNonClientFrameEdges();
         }
     }
 

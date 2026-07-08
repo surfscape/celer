@@ -116,17 +116,20 @@ namespace Celer.ViewModels
         }
 
         [RelayCommand]
-        private static void QCOpenApp()
+        public static void QCOpenApp()
         {
             if (Application.Current.MainWindow.DataContext == null)
             {
                 Application.Current.MainWindow.DataContext = App.AppHost.Services.GetService<MainWindowViewModel>();
             }
-            Application.Current.MainWindow.Visibility = Visibility.Visible;
-            Application.Current.MainWindow.Show();
+            if(!Application.Current.MainWindow.IsVisible)
+            {
+                Application.Current.MainWindow.Visibility = Visibility.Visible;
+                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+            }
             Application.Current.MainWindow.Activate();
-            Application.Current.MainWindow.Focus();
-            Application.Current.MainWindow.WindowState = WindowState.Normal;
+            
         }
     }
 }
