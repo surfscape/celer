@@ -50,10 +50,10 @@ namespace Celer.ViewModels
             MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
             TabsModule =
         [
-            new() { Title = "Dashboard", Icon = PackIconLucideKind.HeartPulse, Content = _serviceProvider.GetRequiredService<Dashboard>() },
+            new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<Dashboard>(), VerticalScrollMode = ScrollBarVisibility.Disabled  },
             new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<Limpeza>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
             new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<Optimization>() },
-            new() { Title = "Maintenance", Icon = PackIconLucideKind.Construction, Content = _serviceProvider.GetRequiredService<Maintenance>() },
+            new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<Maintenance>() },
             new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<Privacidade>() }
         ];
         }

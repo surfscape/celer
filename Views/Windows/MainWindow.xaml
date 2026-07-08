@@ -1,41 +1,42 @@
-﻿<Window 
-                               x:Class="Celer.Views.Windows.MainWindow"
-                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                               xmlns:model="clr-namespace:Celer.Models"
-                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                               xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
-                               xmlns:viewmodels="clr-namespace:Celer.ViewModels"
-                               Title="Celer"
-                               MinWidth="940"
-                               MinHeight="640"
-                               Width="940"
-                               Height="640"
-                               xmlns:tb="http://www.hardcodet.net/taskbar"
-                               WindowStartupLocation="CenterScreen"
-                               xmlns:local="clr-namespace:Celer.Utilities"
-                               xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
-                               xmlns:converters="clr-namespace:Celer.Converters"
-                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                               d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
-                               d:Background="white"
-                               mc:Ignorable="d">
+﻿<Window
+    x:Class="Celer.Views.Windows.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:Celer.Utilities"
+    xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Celer.Models"
+    xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
+    xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
+    xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    Title="Celer"
+    Width="980"
+    Height="640"
+    MinWidth="960"
+    MinHeight="640"
+    d:Background="white"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:MenuStateToolTipConverter x:Key="MenuStateToolTipConverter" />
     </Window.Resources>
-    <Border x:Name="HighContrastBorder"
-            BorderBrush="Transparent"
-            Padding="3,0,0,0"
-            BorderThickness="8 1 8 8">
+    <Border
+        x:Name="HighContrastBorder"
+        Padding="3,0,0,0"
+        BorderBrush="Transparent"
+        BorderThickness="8,1,8,8">
         <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!-- Titlebar -->
+            <!--  Titlebar  -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="44" />
@@ -50,139 +51,151 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <!-- Navigation controls -->
-                    <StackPanel Grid.Column="0"
-                                Margin="4,4,0,0"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Top">
-                        <Button Padding="14,12"
-                                WindowChrome.IsHitTestVisibleInChrome="True"
-                                Style="{DynamicResource TransparentButton}"
-                                ToolTip="{Binding TabControlCompactMode, Converter={StaticResource MenuStateToolTipConverter}}"
-                                Command="{Binding ToggleCompactModeCommand}">
-                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                      Kind="Menu"
-                                                      Width="13"
-                                                      Height="13" />
+                    <!--  Navigation controls  -->
+                    <StackPanel
+                        Grid.Column="0"
+                        Margin="4,4,0,0"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                        <Button
+                            Padding="14,12"
+                            Command="{Binding ToggleCompactModeCommand}"
+                            Style="{DynamicResource TransparentButton}"
+                            ToolTip="{Binding TabControlCompactMode, Converter={StaticResource MenuStateToolTipConverter}}"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                            <iconPacks:PackIconLucide
+                                Width="13"
+                                Height="13"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Kind="Menu" />
                         </Button>
-                        <Button ToolTip="Go back to the previous screen"
-                                Margin="4,0,0,0"
-                                Style="{DynamicResource TransparentButton}"
-                                Padding="14,11"
-                                WindowChrome.IsHitTestVisibleInChrome="True"
-                                IsEnabled="{Binding CanGoBack}"
-                                Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
-                                Command="{Binding GoBackCommand}">
+                        <Button
+                            Margin="4,0,0,0"
+                            Padding="14,11"
+                            Command="{Binding GoBackCommand}"
+                            IsEnabled="{Binding CanGoBack}"
+                            Style="{DynamicResource TransparentButton}"
+                            ToolTip="Go back to the previous screen"
+                            Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
 
-                            <iconPacks:PackIconLucide Width="13"
-                                                      Height="13"
-                                                      Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                      Kind="ArrowLeft" />
+                            <iconPacks:PackIconLucide
+                                Width="13"
+                                Height="13"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Kind="ArrowLeft" />
                         </Button>
                     </StackPanel>
-                    <TextBlock Grid.Column="1"
-                               Margin="8 0 24 0"
-                               AutomationProperties.HeadingLevel="Level1"
-                               VerticalAlignment="Center"
-                               Style="{StaticResource CaptionTextBlockStyle}"
-                               Text="Celer Beta" />
-                    <ContentControl Content="{Binding MenuBarControl}"
-                                    Focusable="False"
-                                    VerticalAlignment="Center"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
-                                    Grid.Column="2" />
-                    <Border Grid.Column="3"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            BorderThickness="0" />
-                    <UniformGrid Grid.Column="4"
-                                 Columns="3"
-                                 VerticalAlignment="Top">
-                        <Button Padding="18,12"
-                                Style="{DynamicResource TransparentButton}"
-                                Click="MinimizeButton_Click"
-                                Focusable="False"
-                                x:Name="MinimizeButton"
-                                local:ButtonHelper.CornerRadius="0">
-                            <TextBlock FontFamily="Segoe Fluent Icons"
-                                       FontSize="10"
-                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Text="&#xE921;">
-                            </TextBlock>
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="8,0,24,0"
+                        VerticalAlignment="Center"
+                        AutomationProperties.HeadingLevel="Level1"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Celer Beta" />
+                    <ContentControl
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Content="{Binding MenuBarControl}"
+                        Focusable="False"
+                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Border
+                        Grid.Column="3"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0" />
+                    <UniformGrid
+                        Grid.Column="4"
+                        VerticalAlignment="Top"
+                        Columns="3">
+                        <Button
+                            x:Name="MinimizeButton"
+                            Padding="18,12"
+                            local:ButtonHelper.CornerRadius="0"
+                            Click="MinimizeButton_Click"
+                            Focusable="False"
+                            Style="{DynamicResource TransparentButton}">
+                            <TextBlock
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="10"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="&#xE921;" />
                         </Button>
-                        <Button IsEnabled="{Binding IsEnabled, ElementName=MaximizeButton}"
-                                Style="{DynamicResource TransparentButton}"
-                                Click="RestoreOrMaximizeButton_Click"
-                                Padding="18,12"
-                                Focusable="False"
-                                x:Name="MaximizeButton"
-                                local:ButtonHelper.CornerRadius="0">
-                            <TextBlock FontFamily="Segoe Fluent Icons"
-                                       FontSize="10"
-                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Text="&#xE922;"></TextBlock>
+                        <Button
+                            x:Name="MaximizeButton"
+                            Padding="18,12"
+                            local:ButtonHelper.CornerRadius="0"
+                            Click="RestoreOrMaximizeButton_Click"
+                            Focusable="False"
+                            IsEnabled="{Binding IsEnabled, ElementName=MaximizeButton}"
+                            Style="{DynamicResource TransparentButton}">
+                            <TextBlock
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="10"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="&#xE922;" />
                         </Button>
-                        <Button Style="{DynamicResource TransparentButton}"
-                                Click="CloseButton_Click"
-                                Padding="18,12"
-                                Focusable="False"
-                                x:Name="CloseButton"
-                                local:ButtonHelper.BackgroundHover="#C42B1C"
-                                local:ButtonHelper.CornerRadius="0">
-                            <TextBlock FontFamily="Segoe Fluent Icons"
-                                       FontSize="10"
-                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                       Text="&#xE8BB;"></TextBlock>
+                        <Button
+                            x:Name="CloseButton"
+                            Padding="18,12"
+                            local:ButtonHelper.BackgroundHover="#C42B1C"
+                            local:ButtonHelper.CornerRadius="0"
+                            Click="CloseButton_Click"
+                            Focusable="False"
+                            Style="{DynamicResource TransparentButton}">
+                            <TextBlock
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="10"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="&#xE8BB;" />
                         </Button>
                     </UniformGrid>
                 </Grid>
             </Grid>
-            <!-- Main content -->
+            <!--  Main content  -->
             <Border Grid.Row="1">
                 <Grid>
-                    <local:CompactTabControl  SelectedIndex="{Binding SelectedTabIndex}" 
-                                              CompactMode="{Binding TabControlCompactMode, Mode=TwoWay}"
-                                              Style="{StaticResource CelerStripTabLeft}"
-                                              ItemsSource="{Binding TabsModule}"
-                                              >
+                    <local:CompactTabControl
+                        CompactMode="{Binding TabControlCompactMode, Mode=TwoWay}"
+                        ItemsSource="{Binding TabsModule}"
+                        SelectedIndex="{Binding SelectedTabIndex}"
+                        Style="{StaticResource CelerStripTabLeft}">
                         <local:CompactTabControl.Resources>
                             <Style TargetType="{x:Type iconPacks:PackIconLucide}">
-                                <Setter Property="Width"
-                                        Value="15" />
-                                <Setter Property="Height"
-                                        Value="15" />
+                                <Setter Property="Width" Value="15" />
+                                <Setter Property="Height" Value="15" />
 
                             </Style>
                         </local:CompactTabControl.Resources>
                         <local:CompactTabControl.ContentTemplate>
                             <DataTemplate DataType="{x:Type model:TabModule}">
-                                <ContentPresenter x:Name="AnimatedContent"
-                                                  Content="{Binding Content, NotifyOnTargetUpdated=True}">
+                                <ContentPresenter x:Name="AnimatedContent" Content="{Binding Content, NotifyOnTargetUpdated=True}">
                                     <ContentPresenter.RenderTransform>
                                         <TranslateTransform Y="20" />
                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
 
                                 <DataTemplate.Triggers>
-                                    <EventTrigger RoutedEvent="Binding.TargetUpdated"
-                                                  SourceName="AnimatedContent">
+                                    <EventTrigger RoutedEvent="Binding.TargetUpdated" SourceName="AnimatedContent">
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="AnimatedContent"
-                                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                                                 From="28"
-                                                                 To="0"
-                                                                 Duration="0:0:0.4">
+                                                <DoubleAnimation
+                                                    Storyboard.TargetName="AnimatedContent"
+                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                    From="28"
+                                                    To="0"
+                                                    Duration="0:0:0.4">
                                                     <DoubleAnimation.EasingFunction>
                                                         <CircleEase EasingMode="EaseOut" />
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
 
-                                                <DoubleAnimation Storyboard.TargetName="AnimatedContent"
-                                                                 Storyboard.TargetProperty="Opacity"
-                                                                 From="0"
-                                                                 To="1"
-                                                                 Duration="0:0:0.2" />
+                                                <DoubleAnimation
+                                                    Storyboard.TargetName="AnimatedContent"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    From="0"
+                                                    To="1"
+                                                    Duration="0:0:0.2" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger>
@@ -192,19 +205,21 @@
                     </local:CompactTabControl>
                 </Grid>
             </Border>
-            <!-- Quick Center -->
-            <tb:TaskbarIcon IconSource="/Resources/Assets/app.ico"
-                            ToolTipText="Celer"
-                            d:DataContext="{d:DesignInstance Type=viewmodels:QCMenuViewModel}">
-                <tb:TaskbarIcon.TrayPopup>
-                    <mainwindow:QuickCenter></mainwindow:QuickCenter>
-                </tb:TaskbarIcon.TrayPopup>
+            <!--  Quick Center  -->
+            <tb:TaskbarIcon
+                x:Name="traybarMenu"
+                d:DataContext="{d:DesignInstance Type=viewmodels:QCMenuViewModel}"
+                IconSource="/Resources/Assets/app.ico"
+                ToolTipText="Celer">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu x:Name="QCMenu">
-                        <MenuItem Header="Open"
-                                  Command="{Binding QCOpenAppCommand}" />
-                        <MenuItem Header="Exit"
-                                  Command="{Binding QCExitAppCommand}" />
+                        <MenuItem Command="{Binding QCOpenAppCommand}" Header="Show Celer" />
+                        <!-- TODO
+                        <MenuItem Header="Power Plans">
+                            <MenuItem Header="Balanced" IsCheckable="True"></MenuItem>
+                        </MenuItem>-->
+                        <Separator />
+                        <MenuItem Command="{Binding QCExitAppCommand}" Header="Exit" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>

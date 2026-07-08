@@ -135,7 +135,7 @@
                                         ToolTip="{Binding Title}">
                                     <StackPanel Orientation="Horizontal"
                                                 Background="Transparent"
-                                                MinWidth="172"
+                                                MinWidth="185"
                                                 x:Name="Wrap">
                                         <iconPacks:PackIconLucide x:Name="Icon"
                                                                   Kind="{Binding Icon}"
@@ -172,7 +172,7 @@
                                                 Value="Visible" />
                                         <Setter TargetName="Wrap"
                                                 Property="MinWidth"
-                                                Value="172"></Setter>
+                                                Value="185"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}"
                                                  Value="True">
