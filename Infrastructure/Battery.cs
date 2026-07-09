@@ -148,9 +148,12 @@ namespace Celer.Infrastructure
         private TimeSpan GetBatteryEstimatedRuntime()
         {
             using var batteryEstimatedRunTime = _session.QueryInstances(BatteryClassesNamespace, "WQL", $"SELECT EstimatedRuntime FROM {BatteryRuntimeClass}").FirstOrDefault();
-            if (batteryEstimatedRunTime != null && batteryEstimatedRunTime.CimInstanceProperties["EstimatedRuntime"].Value is int estimatedRuntime)
-                return TimeSpan.FromSeconds(estimatedRuntime);
-            return TimeSpan.FromSeconds(0);
+            uint rawMinutes = batteryEstimatedRunTime is not null ? Convert.ToUInt32(batteryEstimatedRunTime.CimInstanceProperties["EstimatedRuntime"].Value) : 0;
+            if (rawMinutes == 0 || rawMinutes > 71582787 || (GetBatteryStatus() == 2 || GetBatteryStatus() == 6)) {
+                return  TimeSpan.Zero;
+
+            } else
+                return TimeSpan.FromMinutes(rawMinutes);
         }
 
         public void Dispose()
