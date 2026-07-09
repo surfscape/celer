@@ -47,7 +47,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -67,7 +66,7 @@
                                 Width="13"
                                 Height="13"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Kind="Menu" />
+                                Kind="PanelLeft" />
                         </Button>
                         <Button
                             Margin="4,0,0,0"
@@ -78,13 +77,17 @@
                             ToolTip="Go back to the previous screen"
                             Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
                             WindowChrome.IsHitTestVisibleInChrome="True">
-
                             <iconPacks:PackIconLucide
                                 Width="13"
                                 Height="13"
                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                 Kind="ArrowLeft" />
                         </Button>
+                        <ContentControl
+                            Margin="4,0,0,0"
+                            Content="{Binding MenuBarControl}"
+                            Focusable="False"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
                     </StackPanel>
                     <TextBlock
                         Grid.Column="1"
@@ -93,14 +96,8 @@
                         AutomationProperties.HeadingLevel="Level1"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="Celer Beta" />
-                    <ContentControl
-                        Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Content="{Binding MenuBarControl}"
-                        Focusable="False"
-                        WindowChrome.IsHitTestVisibleInChrome="True" />
                     <Border
-                        Grid.Column="3"
+                        Grid.Column="2"
                         Background="Transparent"
                         BorderBrush="Transparent"
                         BorderThickness="0" />

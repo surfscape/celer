@@ -23,7 +23,7 @@ namespace Celer.Views.UserControls.MainWindow
             _menuBarNavigation = menuBarNavigation;
             _serviceProvider = serviceProvider;
             NavigationMenu.DataContext = _menuBarNavigation;
-            MMenu.DataContext = new AboutDataContext(this);
+            AppMenu.DataContext = new AboutDataContext(this);
         }
 
         public partial class AboutDataContext : ObservableObject
