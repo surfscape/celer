@@ -1,5 +1,6 @@
-﻿using Celer.Properties;
-using Celer.Services.Energy;
+﻿using Celer.Infrastructure;
+using Celer.Infrastructure.Models.Battery;
+using Celer.Properties;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -12,68 +13,38 @@ namespace Celer.ViewModels.OptimizationVM
     public partial class BatteryViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool isLoading = true;
+        public partial bool IsLoading { get; set; } = true;
 
-        private BatteryService? batteryService;
-        private PowerPlanService? powerPlanService;
+        private bool hasBattery = false;
+        private readonly Services.Energy.PowerPlanService? powerPlanService;
+        private readonly Battery? batteryService = new();
         private readonly DispatcherTimer _updateTimer = new()
         {
             Interval = TimeSpan.FromSeconds(2),
         };
 
         [ObservableProperty]
-        private bool hasBattery;
+        public partial BatteryInfo? BatteryStaticData { get; set; }
+        [ObservableProperty]
+        public partial BatteryStats? BatteryStats { get; set; }
 
         [ObservableProperty]
-        private int batteryPercentage;
+        public partial ObservableCollection<Services.Energy.PowerPlan>? PowerPlans { get; set; }
+        [ObservableProperty]
+        public partial Services.Energy.PowerPlan? SelectedPowerPlan { get; set; }
 
         [ObservableProperty]
-        private bool isCharging;
+        public partial bool IsFastBootEnabled { get; set; }
 
         [ObservableProperty]
-        private TimeSpan batteryTimeRemaining;
-
+        public partial bool IsHibernationEnabled { get; set; } = GetHibernationStatus();
         [ObservableProperty]
-        private int batteryHealthPercentage;
-
-        [ObservableProperty]
-        private int batteryChargedPercentageHealth;
-
-        [ObservableProperty]
-        private ObservableCollection<PowerPlan>? powerPlans;
-
-        [ObservableProperty]
-        private PowerPlan? selectedPowerPlan;
-
-        [ObservableProperty]
-        private bool isFastBootEnabled;
-
-        [ObservableProperty]
-        private int remainingCapacity;
-
-        [ObservableProperty]
-        private int factoryCapacity;
-
-        [ObservableProperty]
-        private int chargedCapacity;
-
-        [ObservableProperty]
-        private int chargedCapacityPercentage;
-
-        [ObservableProperty]
-        private double remainingCapacityD;
-
-        [ObservableProperty]
-        private double factoryCapacityD;
-
-        [ObservableProperty]
-        private double chargedCapacityD;
-
-        [ObservableProperty]
-        private bool isLegacyPowerPlansEnabled = MainConfiguration.Default.EnableLegacyPowerPlans;
+        public partial bool IsLegacyPowerPlansEnabled { get; set; } = MainConfiguration.Default.EnableLegacyPowerPlans;
 
         public BatteryViewModel()
         {
+            if (MainConfiguration.Default.EnableLegacyPowerPlans)
+                powerPlanService = new Services.Energy.PowerPlanService();
             _updateTimer.Tick += (_, _) => UpdateBatteryInfo();
         }
 
@@ -84,37 +55,36 @@ namespace Celer.ViewModels.OptimizationVM
             {
                 await Task.Run(() =>
                 {
-                    batteryService = new BatteryService();
-                    if (MainConfiguration.Default.EnableLegacyPowerPlans)
+                    if (batteryService is not null)
                     {
-                        powerPlanService = new PowerPlanService();
+                        hasBattery = true;
+                        BatteryStaticData = batteryService.BatteryStaticData;
                     }
-
                     fastBootDetected = IsFastStartupEnabled();
                 });
-                if (powerPlanService != null)
+                if (powerPlanService is not null)
                 {
-                    PowerPlans = new ObservableCollection<PowerPlan>(powerPlanService.GetAllPowerPlans());
+                    PowerPlans = new ObservableCollection<Services.Energy.PowerPlan>(powerPlanService.GetAllPowerPlans());
                     SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
                 }
                 UpdateBatteryInfo();
                 IsFastBootEnabled = fastBootDetected;
             }
-            catch (ArgumentException e)
+            catch (ArgumentNullException e)
             {
-                Debug.WriteLine($"Argument exception when starting BatteryService: ${e.Message}");
+                Debug.WriteLine($"ArgumentNullExpection failed to load BatteryViewModel: ${e.Message}");
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Exception while trying to load BatteryViewModel: ${e.Message}");
+                Debug.WriteLine($"Exception while trying to initialize BatteryViewModel: ${e.Message}");
             }
             finally
             {
                 IsLoading = false;
-                _updateTimer.Start();
+                if (hasBattery) _updateTimer.Start();
             }
         }
-
+        
         [RelayCommand]
         private void ApplyPowerPlan()
         {
@@ -124,34 +94,12 @@ namespace Celer.ViewModels.OptimizationVM
 
         private void UpdateBatteryInfo()
         {
-            var info = batteryService?.GetBatteryInfo();
-            if (info == null)
-            {
-                HasBattery = false;
-                return;
-            }
-            HasBattery = info.HasBattery;
-            if (!HasBattery)
-                return;
-
-            BatteryPercentage = info.Percentage;
-            IsCharging = info.IsCharging;
-            BatteryHealthPercentage = info.Health;
-            RemainingCapacity = info.RemainingCapacity;
-            BatteryTimeRemaining = info.EstimatedTime;
-            BatteryChargedPercentageHealth = info.ChargedCapacity;
-            FactoryCapacity = info.FactoryCapacity;
-            ChargedCapacity = info.ChargedCapacity;
-            ChargedCapacityPercentage = info.ChargedCapacityPercentage;
-            RemainingCapacityD = info.RemainingCapacity / 1000.0;
-            FactoryCapacityD = info.FactoryCapacity / 1000.0;
-            ChargedCapacityD = info.ChargedCapacity / 1000.0;
+            if (batteryService is not null) { 
+                batteryService.Update();
+                BatteryStats = batteryService.BatteryStats;
+        }
         }
 
-        partial void OnIsFastBootEnabledChanged(bool value)
-        {
-            Task.Run(() => SetFastStartup(value));
-        }
 
         private const string RegistryPath =
             @"SYSTEM\CurrentControlSet\Control\Session Manager\Power";
@@ -163,10 +111,20 @@ namespace Celer.ViewModels.OptimizationVM
             return key != null && Convert.ToInt32(key.GetValue(ValueName, 1)) == 1;
         }
 
+        partial void OnIsFastBootEnabledChanged(bool value)
+        {
+            Task.Run(() => SetFastStartup(value));
+        }
         public static void SetFastStartup(bool enabled)
         {
             using var key = Registry.LocalMachine.OpenSubKey(RegistryPath, true);
             key?.SetValue(ValueName, enabled ? 1 : 0, RegistryValueKind.DWord);
+        }
+
+        public static bool GetHibernationStatus()
+        {
+            // TODO: Implement Hibernation
+            return true;
         }
     }
 }
