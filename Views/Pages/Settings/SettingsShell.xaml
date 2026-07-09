@@ -16,26 +16,25 @@
         VerticalAlignment="Top"
         ScrollViewer.VerticalScrollBarVisibility="Visible">
         <StackPanel Height="auto" VerticalAlignment="Top">
-            <TextBlock Margin="0,0,0,16" Style="{StaticResource TitleTextBlockStyle}">Celer Settings</TextBlock>
             <uc:SettingCategoryButton
                 Title="General preferences"
                 Command="{Binding NavigateToGeneralCommand}"
-                Description="Telemetry, and manage Celer settings"
+                Description="TBA"
                 Icon="Settings" />
             <uc:SettingCategoryButton
-                Title="User Interface &amp; presentation"
+                Title="User interface &amp; presentation"
                 Margin="0,4,0,0"
-                Description="Change how values are shown and the general app theme"
+                Description="Change theme and how elements and values are presented"
                 Icon="Palette" />
+            <TextBlock Margin="0,16,0,8" Style="{StaticResource BodyStrongTextBlockStyle}">Module Settings</TextBlock>
             <uc:SettingCategoryButton
                 Title="Startup &amp; system tray"
-                Margin="0,24,0,0"
                 Description="Change startup behaviour and manage Celer Quick Center"
                 Icon="Power" />
             <uc:SettingCategoryButton
                 Title="Cleaning options"
                 Margin="0,4,0,0"
-                Description="Add folders/files for cleaning and change the signatures source"
+                Description="Add folders/files for cleaning and change the source of signatures"
                 Icon="Trash" />
             <uc:SettingCategoryButton
                 Title="Advanced options"

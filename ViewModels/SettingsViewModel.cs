@@ -1,108 +1,24 @@
-﻿using Celer.Models.Preferences;
-using Celer.Properties;
-using Celer.Services;
-using Celer.Utilities;
+﻿using Celer.Services;
 using Celer.Views.Pages.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.IO;
-using System.Windows;
+using System.Diagnostics;
 
 namespace Celer.ViewModels
 {
-    public partial class SettingsViewModel : ObservableObject
+    public partial class SettingsViewModel : SettingsBaseViewModel
     {
         private readonly SettingsNavigation _settingsNavigation;
         private readonly SettingsShellViewModel _settingsShellViewModel;
 
-        public Func<
-            string,
-            string,
-            MessageBoxButton,
-            MessageBoxImage,
-            Task<MessageBoxResult>
-        >? ShowDialogAsync
-        { get; set; }
-        public Action? CloseWindowAction { get; set; }
-
-
-        private bool _initialEnableRounding;
-        private bool _initialSaveSidebarCompactMode;
-        private bool _initialStartWithWindows;
-        private bool _initialCloseMinimize;
-        private string _initialCurrentTheme = string.Empty;
-        private string _initialGraphicRenderingMode = string.Empty;
-        private List<string> _initialPaths = [];
-        private bool _initialEnableExportCleaningLog;
-
-        [ObservableProperty]
-        private bool enableExportCleaningLog = MainConfiguration.Default.CLEANENGINE_ExportLog;
-
-        partial void OnEnableExportCleaningLogChanged(bool value) => CheckForUnsavedChanges();
-
-        [ObservableProperty]
-        private bool enableRounding = MainConfiguration.Default.EnableRounding;
-
-        partial void OnEnableRoundingChanged(bool value) => CheckForUnsavedChanges();
-
-        [ObservableProperty]
-        private bool saveSidebarCompactMode = MainConfiguration.Default.SaveSidebarCompactMode;
-
-        partial void OnSaveSidebarCompactModeChanged(bool value)
-        {
-            CheckForUnsavedChanges();
-            MainConfiguration.Default.SidebarCompactMode = false;
-        }
-
-        [ObservableProperty]
-        private bool startWithWindows = MainConfiguration.Default.AutoStartup;
-
-        partial void OnStartWithWindowsChanged(bool value) => CheckForUnsavedChanges();
-
-        [ObservableProperty]
-        private bool closeShouldMinimize = MainConfiguration.Default.CloseShouldMinimize;
-
-        partial void OnCloseShouldMinimizeChanged(bool value) => CheckForUnsavedChanges();
-
-        public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
-
-        [ObservableProperty]
-        private string currentTheme = MainConfiguration.Default.Theme == (int)CelerTheme.Auto ? "System" : MainConfiguration.Default.Theme == (int)CelerTheme.Light ? "Light" : "Dark";
-
-        public ObservableCollection<string> RenderingModes { get; } = ["Auto (default)", "Hardware", "Software only"];
-
-        [ObservableProperty]
-        public string graphicRenderingMode = MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.Auto ? "Auto (default)" : MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferHardware ? "Hardware (default)" : "Software only";
-
-        partial void OnGraphicRenderingModeChanged(string value) => CheckForUnsavedChanges();
-
-        partial void OnCurrentThemeChanged(string value) => CheckForUnsavedChanges();
-
-        public ObservableCollection<string> Paths { get; } =
-            new ObservableCollection<string>(
-                MainConfiguration.Default.CLEANENGINE_CustomPaths?.Cast<string>()
-                    ?? Enumerable.Empty<string>()
-            );
-
-        [ObservableProperty]
-        private string newPath = string.Empty;
-
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(ApplyCommand))]
-        private bool hasUnsavedChanges;
-
-
         public SettingsBaseViewModel CurrentViewModel => _settingsNavigation.CurrentViewModel;
+        public string CurrentViewTitle => _settingsNavigation.PageTitle;
+        public Action? CloseWindowAction { get; set; }
 
         public SettingsViewModel(SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellViewModel)
         {
             _settingsNavigation = settingsNavigation;
             _settingsShellViewModel = settingsShellViewModel;
-            StoreInitialValues();
-            Paths.CollectionChanged += OnPathsCollectionChanged;
             _settingsNavigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _settingsNavigation.CurrentViewModel = settingsShellViewModel;
         }
@@ -113,256 +29,16 @@ namespace Celer.ViewModels
         {
             if (_settingsNavigation.CurrentViewModel == _settingsShellViewModel) {
                 CloseWindowAction?.Invoke();
-            } else 
+            } else { 
                 _settingsNavigation.CurrentViewModel = _settingsShellViewModel;
+                _settingsNavigation.PageTitle = "Settings";
+                OnCurrentViewModelChanged();
+            }
         }
-
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
-        }
-
-        private void StoreInitialValues()
-        {
-            _initialEnableRounding = EnableRounding;
-            _initialSaveSidebarCompactMode = SaveSidebarCompactMode;
-            _initialStartWithWindows = StartWithWindows;
-            _initialCloseMinimize = CloseShouldMinimize;
-            _initialCurrentTheme = CurrentTheme;
-            _initialPaths = new List<string>(Paths);
-            _initialEnableExportCleaningLog = EnableExportCleaningLog;
-            _initialGraphicRenderingMode = GraphicRenderingMode;
-        }
-
-        private void OnPathsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            CheckForUnsavedChanges();
-        }
-
-        private void CheckForUnsavedChanges()
-        {
-            bool changed =
-                EnableRounding != _initialEnableRounding || SaveSidebarCompactMode != _initialSaveSidebarCompactMode || StartWithWindows != _initialStartWithWindows || CloseShouldMinimize != _initialCloseMinimize
-                || !string.Equals(
-                    CurrentTheme,
-                    _initialCurrentTheme,
-                    System.StringComparison.Ordinal
-                )
-                || EnableExportCleaningLog != _initialEnableExportCleaningLog
-            || !string.Equals(
-                    GraphicRenderingMode,
-                    _initialGraphicRenderingMode,
-                    System.StringComparison.Ordinal
-                );
-
-            if (!changed && !Paths.SequenceEqual(_initialPaths))
-            {
-                changed = true;
-            }
-            HasUnsavedChanges = changed;
-        }
-
-        private void RevertChanges()
-        {
-            try
-            {
-                Paths.CollectionChanged -= OnPathsCollectionChanged;
-
-                CurrentTheme = _initialCurrentTheme;
-                EnableRounding = _initialEnableRounding;
-                SaveSidebarCompactMode = _initialSaveSidebarCompactMode;
-                StartWithWindows = _initialStartWithWindows;
-                CloseShouldMinimize = _initialCloseMinimize;
-                EnableExportCleaningLog = _initialEnableExportCleaningLog;
-                GraphicRenderingMode = _initialGraphicRenderingMode;
-
-                Paths.Clear();
-                foreach (var p in _initialPaths)
-                {
-                    Paths.Add(p);
-                }
-                Paths.CollectionChanged += OnPathsCollectionChanged;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Error trying to revert changes {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            OnPropertyChanged(nameof(CurrentTheme));
-            OnPropertyChanged(nameof(EnableRounding));
-            OnPropertyChanged(nameof(SaveSidebarCompactMode));
-            OnPropertyChanged(nameof(StartWithWindows));
-            OnPropertyChanged(nameof(CloseShouldMinimize));
-
-            OnPropertyChanged(nameof(EnableExportCleaningLog));
-            OnPropertyChanged(nameof(Paths));
-
-            OnPropertyChanged(nameof(GraphicRenderingMode));
-
-            CheckForUnsavedChanges();
-        }
-
-        [RelayCommand]
-        private void Save()
-        {
-            MainConfiguration.Default.Theme = CurrentTheme == "System" ? (int)CelerTheme.Auto : CurrentTheme == "Light" ? (int)CelerTheme.Light : (int)CelerTheme.Dark;
-            MainConfiguration.Default.EnableRounding = EnableRounding;
-            MainConfiguration.Default.SaveSidebarCompactMode = SaveSidebarCompactMode;
-            MainConfiguration.Default.AutoStartup = StartWithWindows;
-            MainConfiguration.Default.CloseShouldMinimize = CloseShouldMinimize;
-            MainConfiguration.Default.CLEANENGINE_ExportLog = EnableExportCleaningLog;
-            MainConfiguration.Default.GraphicRenderingMode = GraphicRenderingMode == "Auto" ? (int)CelerRenderMode.Auto : GraphicRenderingMode == "Hardware" ? (int)CelerRenderMode.PreferHardware : (int)CelerRenderMode.PreferSoftware;
-            var sc = new StringCollection();
-            foreach (var p in Paths)
-                sc.Add(p);
-            MainConfiguration.Default.CLEANENGINE_CustomPaths = sc;
-
-            if (MainConfiguration.Default.AutoStartup)
-            {
-                UserLand.SetAutoStartup();
-            }
-            else
-                UserLand.RemoveAutoStartup();
-
-            MainConfiguration.Default.Save();
-
-            StoreInitialValues();
-            CheckForUnsavedChanges();
-        }
-
-        [RelayCommand(CanExecute = nameof(CanApply))]
-        private void Apply()
-        {
-            Save();
-        }
-
-        private bool CanApply() => HasUnsavedChanges;
-
-        [RelayCommand]
-        private void Ok()
-        {
-            if (HasUnsavedChanges)
-            {
-                Save();
-            }
-            CloseWindowAction?.Invoke();
-        }
-
-        [RelayCommand]
-        private async Task CancelAsync()
-        {
-            if (HasUnsavedChanges)
-            {
-                if (ShowDialogAsync == null)
-                {
-                    CloseWindowAction?.Invoke();
-                    return;
-                }
-
-                var result = await ShowDialogAsync(
-                    "Unsaved Changes",
-                    "You have unsaved changes. Would you like to save them before closing?",
-                    MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Warning
-                );
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    Save();
-                    CloseWindowAction?.Invoke();
-                }
-                else if (result == MessageBoxResult.No)
-                {
-                    RevertChanges();
-                    CloseWindowAction?.Invoke();
-                }
-            }
-            else
-            {
-                CloseWindowAction?.Invoke();
-            }
-        }
-
-        public async Task<bool> HandleWindowCloseRequestAsync()
-        {
-            if (HasUnsavedChanges)
-            {
-                if (ShowDialogAsync == null)
-                {
-                    return false;
-                }
-
-                var result = await ShowDialogAsync(
-                    "Unsaved Changes",
-                    "You have unsaved changes. Would you like to save them before closing?",
-                    MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Warning
-                );
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    Save();
-                    return true;
-                }
-                else if (result == MessageBoxResult.No)
-                {
-                    RevertChanges();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        [RelayCommand]
-        private void PickAndAddPath()
-        {
-            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog
-            {
-                Description = "Choose a path to add",
-                UseDescriptionForTitle = true,
-                ShowNewFolderButton = true,
-            };
-
-            if (dialog.ShowDialog() == true && !Paths.Contains(dialog.SelectedPath))
-            {
-                Paths.Add(dialog.SelectedPath);
-            }
-        }
-
-        [RelayCommand]
-        private void RemovePath(string? pathToRemove)
-        {
-            if (pathToRemove != null && Paths.Contains(pathToRemove))
-            {
-                Paths.Remove(pathToRemove);
-            }
-        }
-
-        [RelayCommand]
-        private void ResetAppData()
-        {
-            if (ShowDialogAsync == null)
-            {
-                return;
-            }
-            var result = ShowDialogAsync(
-                "Celer System",
-                "Would you like to close Celer and reset it's settings and data?",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning
-            ).Result;
-            if (result == MessageBoxResult.Yes)
-            {
-                MainConfiguration.Default.Reset();
-                MainConfiguration.Default.Save();
-                File.Delete("batteryreport.xml");
-                File.Delete("signatures.json");
-                File.Delete("dxdiag.xml");
-                System.Windows.Application.Current.Shutdown();
-            }
+            OnPropertyChanged(nameof(CurrentViewTitle));
         }
     }
 }

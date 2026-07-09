@@ -1,5 +1,6 @@
 ﻿using ByteSizeLib;
 using Celer.Properties;
+using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -46,9 +47,13 @@ namespace Celer.Views.Pages.Settings
         [ObservableProperty]
         public partial string BuildType { get; set; } = "Unknown";
 
+        private readonly SettingsNavigation _settingsNavigation;
 
-        public SettingsAdvancedViewModel()
+
+        public SettingsAdvancedViewModel(SettingsNavigation settingsNavigation)
         {
+            _settingsNavigation = settingsNavigation;
+            _settingsNavigation.PageTitle = "Advanced";
             _timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)

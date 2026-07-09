@@ -159,22 +159,5 @@ namespace Celer.Views.Windows
 
             return (version.Major >= 10 && version.Build >= 22000);
         }
-
-        private async void Window_Closing(object sender, CancelEventArgs e)
-        {
-            if (_viewModel == null || e.Cancel)
-            {
-                return;
-            }
-
-            if (IsVisible)
-            {
-                bool canClose = await _viewModel.HandleWindowCloseRequestAsync();
-                if (!canClose)
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
     }
 }

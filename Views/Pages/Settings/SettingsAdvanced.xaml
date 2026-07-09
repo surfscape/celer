@@ -11,10 +11,8 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid RowDefinitions="auto auto auto auto">
-        <TextBlock Margin="0,0,0,16" Style="{StaticResource TitleTextBlockStyle}">Advanced</TextBlock>
+    <Grid RowDefinitions="auto auto auto">
         <Border
-            Grid.Row="1"
             Margin="0,0,0,4"
             Padding="16,16"
             Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
@@ -52,9 +50,8 @@
                     SelectedItem="{Binding PoolingRate}" />
             </Grid>
         </Border>
-
         <Border
-            Grid.Row="2"
+            Grid.Row="1"
             Margin="0,0,0,4"
             Padding="16,16"
             Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
@@ -94,7 +91,7 @@
         </Border>
         <co:ComplexExpander
             Title="Debug Information"
-            Grid.Row="3"
+            Grid.Row="2"
             Icon="Code">
             <StackPanel>
                 <TextBlock

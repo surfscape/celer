@@ -1,9 +1,13 @@
 ﻿using Celer.Views.Pages.Settings;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Celer.Services
 {
-    public class SettingsNavigation
+    public partial class SettingsNavigation : ObservableObject
     {
+        [ObservableProperty]
+        public partial string PageTitle { get; set; } = "Settings";
+
         private SettingsBaseViewModel _currentViewModel;
         public SettingsBaseViewModel CurrentViewModel
         {
