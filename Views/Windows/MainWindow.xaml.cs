@@ -3,7 +3,6 @@ using Celer.Utilities;
 using Celer.ViewModels;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 
