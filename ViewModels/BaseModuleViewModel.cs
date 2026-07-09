@@ -18,15 +18,15 @@ namespace Celer.ViewModels
         /// Property to define the max width of a module (either auto to fill the window or limit to the default 1100px)
         /// </summary>
         [ObservableProperty]
-        public partial string ApperanceUserViewport { get; set; }
+        public partial string AppearanceUserViewport { get; set; }
 
 
         public BaseModuleViewModel()
         {
-            ApperanceUserViewport = MainConfiguration.Default.ViewFillContent ? "auto" : "980";
+            AppearanceUserViewport = MainConfiguration.Default.ViewFillContent ? "auto" : "980";
             WeakReferenceMessenger.Default.Register<ViewportChangedMessage>(this, (r, m) =>
             {
-                ApperanceUserViewport = m.Value ? "auto" : "980";
+                AppearanceUserViewport = m.Value ? "auto" : "980";
             });
         }
     }
