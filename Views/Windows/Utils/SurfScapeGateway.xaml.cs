@@ -106,7 +106,6 @@ namespace Celer.Views.Windows.Utils
                     }
                     CurrentTask = "Starting hardware services...";
                     await SetDxdiag();
-                    GenerateBatteryReport();
                 }
                 catch (Exception e)
                 {
@@ -184,6 +183,7 @@ namespace Celer.Views.Windows.Utils
                 });
             }
 
+            /*
             private void GenerateBatteryReport()
             {
                 var psi = new ProcessStartInfo
@@ -196,6 +196,7 @@ namespace Celer.Views.Windows.Utils
                 CurrentTask = "Getting battery information...";
                 Process.Start(psi)?.WaitForExit();
             }
+            */
         }
     }
 }
