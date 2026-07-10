@@ -137,14 +137,14 @@
                 MaxWidth="980"
                 Padding="16,0,0,0">
                 <Grid>
-                    <ScrollViewer Focusable="False" VerticalScrollBarVisibility="Auto">
-                        <ContentControl Margin="0,0,16,16" Content="{Binding CurrentViewModel}">
+                    <ScrollViewer Focusable="False" VerticalScrollBarVisibility="Auto" Margin="0,0,5,5">
+                        <ContentControl Margin="0,0,22,16" Content="{Binding CurrentViewModel}">
                             <ContentControl.Resources>
                                 <DataTemplate DataType="{x:Type pages:SettingsShellViewModel}">
                                     <pages:SettingsShell />
                                 </DataTemplate>
-                                <DataTemplate DataType="{x:Type pages:SettingsGeneralViewModel}">
-                                    <pages:SettingsGeneral />
+                                <DataTemplate DataType="{x:Type pages:SettingsInterfaceViewModel}">
+                                    <pages:SettingsInterface />
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type pages:SettingsAdvancedViewModel}">
                                     <pages:SettingsAdvanced />

@@ -10,21 +10,23 @@
     d:DataContext="{d:DesignInstance Type=local:SettingsShellViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    
     mc:Ignorable="d">
     <Grid
         Height="auto"
         VerticalAlignment="Top"
+        
         ScrollViewer.VerticalScrollBarVisibility="Visible">
         <StackPanel Height="auto" VerticalAlignment="Top">
             <uc:SettingCategoryButton
                 Title="General preferences"
-                Command="{Binding NavigateToGeneralCommand}"
                 Description="TBA"
                 Icon="Settings" />
             <uc:SettingCategoryButton
                 Title="User interface &amp; presentation"
                 Margin="0,4,0,0"
-                Description="Change theme and how elements and values are presented"
+                Command="{Binding NavigateToInterfaceCommand}"
+                Description="Change the theme and how elements and values are presented"
                 Icon="Palette" />
             <TextBlock Margin="0,16,0,8" Style="{StaticResource BodyStrongTextBlockStyle}">Module Settings</TextBlock>
             <uc:SettingCategoryButton
