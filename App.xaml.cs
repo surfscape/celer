@@ -125,7 +125,7 @@ public partial class App : Application
             services.AddSingleton<SettingsViewModel>();
             services.AddTransient<SettingsBaseViewModel>();
             services.AddTransient<SettingsShellViewModel>();
-            services.AddTransient<SettingsGeneralViewModel>();
+            services.AddTransient<SettingsInterfaceViewModel>();
             services.AddTransient<SettingsAdvancedViewModel>();
 
             // usercontrols themselves (and other views that need access to the services)
