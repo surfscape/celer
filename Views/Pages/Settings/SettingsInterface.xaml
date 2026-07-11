@@ -17,10 +17,10 @@
                 Description="Change the current color scheme of the app, or use the system's theme"
                 Icon="Palette">
                 <ComboBox
-                            Grid.Column="1"
-                            MinWidth="170"
-                            ItemsSource="{Binding Themes}"
-                            SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
+                    Grid.Column="1"
+                    MinWidth="170"
+                    ItemsSource="{Binding Themes}"
+                    SelectedItem="{Binding CurrentTheme, Mode=TwoWay}" />
             </uc:CelerOption>
             <uc:CelerOption
                 Title="Stretch view content to window"
@@ -35,36 +35,14 @@
                 Title="Round values"
                 Description="Allow rounding of double and float values. Some values may not respect this preference"
                 Icon="DecimalsArrowLeft">
-                <CheckBox
-                    IsChecked="{Binding EnableRounding}"
-                    Style="{StaticResource SwitchCheckBoxStyle}"/>
+                <CheckBox IsChecked="{Binding EnableRounding}" Style="{StaticResource SwitchCheckBoxStyle}" />
             </uc:CelerOption>
             <uc:CelerOption
                 Title="Save sidebar compact state"
                 Description="By default Celer will perserve the last sidebar state when relaunching. This will disable that feature"
                 Icon="PanelLeftDashed">
-                <CheckBox
-                    IsChecked="{Binding SaveSidebarCompactMode}"
-                    Style="{StaticResource SwitchCheckBoxStyle}"/>
+                <CheckBox IsChecked="{Binding SaveSidebarCompactMode}" Style="{StaticResource SwitchCheckBoxStyle}" />
             </uc:CelerOption>
-            <TextBlock Margin="0,12,0,12" Style="{DynamicResource Heading1}">Startup</TextBlock>
-            <Border
-                Padding="12"
-                Background="{DynamicResource ControlFillColorDefaultBrush}"
-                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
-                BorderThickness="1"
-                CornerRadius="4">
-                <StackPanel>
-                    <CheckBox IsChecked="{Binding StartWithWindows}" ToolTip="Start Celer minimized when Windows starts">Start with Windows</CheckBox>
-                    <CheckBox IsChecked="{Binding CloseShouldMinimize}" ToolTip="Closing will make Celer go into the icon tray">Close should minimize to the icon tray</CheckBox>
-                </StackPanel>
-            </Border>
-            <TextBlock
-                Margin="0,12,0,4"
-                Style="{DynamicResource Heading2}"
-                Visibility="Collapsed">
-                Dashboard
-            </TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>

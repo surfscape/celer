@@ -382,7 +382,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="Transparent" />
                             <Setter TargetName="ToggleBorder" Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-                            <Setter TargetName="ToggleEllipse" Property="Fill" Value="Black" />
+                            <Setter TargetName="ToggleEllipse" Property="Fill" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>

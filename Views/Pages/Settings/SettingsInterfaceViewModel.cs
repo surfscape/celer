@@ -1,8 +1,10 @@
-﻿using Celer.Properties;
+﻿using Celer.Models.Preferences;
+using Celer.Properties;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using System.Collections.ObjectModel;
 
 namespace Celer.Views.Pages.Settings
 {
@@ -36,6 +38,16 @@ namespace Celer.Views.Pages.Settings
         partial void OnSaveSidebarCompactModeChanged(bool value)
         {
             MainConfiguration.Default.SaveSidebarCompactMode = value;
+            MainConfiguration.Default.Save();
+        }
+        public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
+
+        [ObservableProperty]
+        public partial string CurrentTheme { get; set; } = MainConfiguration.Default.Theme == (int)CelerTheme.Auto ? "System" : MainConfiguration.Default.Theme == (int)CelerTheme.Light ? "Light" : "Dark";
+
+        partial void OnCurrentThemeChanged(string value)
+        {
+            MainConfiguration.Default.Theme = CurrentTheme == "System" ? (int)CelerTheme.Auto : CurrentTheme == "Light" ? (int)CelerTheme.Light : (int)CelerTheme.Dark;
             MainConfiguration.Default.Save();
         }
 
