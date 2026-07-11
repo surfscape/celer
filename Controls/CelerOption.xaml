@@ -41,7 +41,7 @@
                     Style="{DynamicResource BodyTextBlockStyle}"
                     Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </StackPanel>
-            <ContentPresenter Grid.Column="2" Content="{Binding ContentPresenter, ElementName=Root}" />
+            <ContentPresenter Grid.Column="2" Content="{Binding ContentPresenter, ElementName=Root}" VerticalAlignment="Stretch" />
         </Grid>
     </Border>
 </UserControl>

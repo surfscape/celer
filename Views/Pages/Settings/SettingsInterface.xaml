@@ -29,6 +29,7 @@
                 <CheckBox
                     IsChecked="{Binding EnableFillContent}"
                     Style="{StaticResource SwitchCheckBoxStyle}"
+                    VerticalAlignment="Stretch"
                     ToolTip="When enabled, content will expand to fill the window size." />
             </uc:CelerOption>
             <uc:CelerOption
