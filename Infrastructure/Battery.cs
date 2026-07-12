@@ -153,7 +153,7 @@ namespace Celer.Infrastructure
                 return  TimeSpan.Zero;
 
             } else
-                return TimeSpan.FromMinutes(rawMinutes);
+                return TimeSpan.FromMinutes(rawMinutes / 2); // TODO: the returned values seems exagerated
         }
 
         public void Dispose()
