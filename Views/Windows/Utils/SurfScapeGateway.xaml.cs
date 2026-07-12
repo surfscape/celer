@@ -74,8 +74,8 @@ namespace Celer.Views.Windows.Utils
             // Retrieved 2025-11-12, License - CC BY-SA 4.0
 
             var hwnd = new WindowInteropHelper(this).Handle;
-            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
-
+            int v = SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+            Debug.WriteLine(v);
             await _viewModel.InitializeAsync();
         }
 
@@ -83,7 +83,7 @@ namespace Celer.Views.Windows.Utils
         {
             public required Action IsDone { get; set; }
             [ObservableProperty]
-            private string currentTask = string.Empty;
+            public partial string CurrentTask { get; set; } = string.Empty;
 
             private bool hasOfflineDb = false;
 
