@@ -12,7 +12,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Border
-        Margin="0,0,0,4"
+        Margin="0,4"
         Padding="16,16"
         Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -25,12 +25,20 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <iconPacks:PackIconLucide
+                x:Name="iconEl"
                 Width="20"
                 Height="20"
                 Margin="0,0,16,0"
                 VerticalAlignment="Center"
                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 Kind="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <Image
+                x:Name="imageEl"
+                Width="20"
+                Height="20"
+                Margin="0,0,16,0"
+                VerticalAlignment="Center"
+                Source="{Binding Image, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             <StackPanel Grid.Column="1">
                 <TextBlock
                     Margin="0,0,0,2"
@@ -41,7 +49,10 @@
                     Style="{DynamicResource BodyTextBlockStyle}"
                     Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </StackPanel>
-            <ContentPresenter Grid.Column="2" Content="{Binding ContentPresenter, ElementName=Root}" VerticalAlignment="Stretch" />
+            <ContentPresenter
+                Grid.Column="2"
+                VerticalAlignment="Stretch"
+                Content="{Binding ContentPresenter, ElementName=Root}" />
         </Grid>
     </Border>
 </UserControl>

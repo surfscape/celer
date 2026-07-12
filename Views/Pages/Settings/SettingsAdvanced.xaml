@@ -7,106 +7,63 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Celer.Controls"
     d:DataContext="{d:DesignInstance Type=local:SettingsAdvancedViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid RowDefinitions="auto auto auto">
-        <Border
-            Margin="0,0,0,4"
-            Padding="16,16"
-            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="6">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <iconPacks:PackIconLucide
-                    Width="20"
-                    Height="20"
-                    Margin="0,0,16,0"
-                    VerticalAlignment="Center"
-                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                    Kind="Timer" />
-                <StackPanel Grid.Column="1">
-                    <TextBlock
-                        Margin="0,0,0,2"
-                        Style="{DynamicResource BodyStrongTextBlockStyle}"
-                        Text="Polling Rate" />
-                    <TextBlock
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Style="{DynamicResource BodyTextBlockStyle}"
-                        Text="How much time Celer takes to refresh information" />
-                </StackPanel>
+        <StackPanel>
+            <uc:CelerOption
+                Title="Polling Rate"
+                Description="How much time Celer takes to refresh information"
+                Icon="Timer">
                 <ComboBox
                     Grid.Column="2"
                     MinWidth="165"
                     DisplayMemberPath="Key"
                     ItemsSource="{Binding PollingOptions}"
                     SelectedItem="{Binding PoolingRate}" />
-            </Grid>
-        </Border>
-        <Border
-            Grid.Row="1"
-            Margin="0,0,0,4"
-            Padding="16,16"
-            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="6">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <iconPacks:PackIconLucide
-                    Width="20"
-                    Height="20"
-                    Margin="0,0,16,0"
-                    VerticalAlignment="Center"
-                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                    Kind="Gpu" />
-                <StackPanel Grid.Column="1">
-                    <TextBlock
-                        Margin="0,0,0,2"
-                        Style="{DynamicResource BodyStrongTextBlockStyle}"
-                        Text="Rendering Mode" />
-                    <TextBlock
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Style="{DynamicResource BodyTextBlockStyle}"
-                        Text="Choose what graphic rendering mode to use" />
-                </StackPanel>
+            </uc:CelerOption>
+            <uc:CelerOption
+                Title="Rendering Mode"
+                Description="Choose what graphic rendering mode to use"
+                Icon="Gpu">
                 <ComboBox
                     Grid.Column="2"
                     MinWidth="165"
                     VerticalAlignment="Center"
                     ItemsSource="{Binding RenderingModes}"
                     SelectedIndex="{Binding GraphicRenderingMode, Mode=TwoWay}" />
-            </Grid>
-        </Border>
-        <co:ComplexExpander
-            Title="Debug Information"
-            Grid.Row="2"
-            Icon="Code">
-            <StackPanel>
-                <TextBlock
-                    Margin="0,4,30,0"
-                    VerticalAlignment="Center"
-                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{Binding ProcessMemory, StringFormat=Process memory: {0:#}}" />
-                <TextBlock
-                    Margin="0,4,30,0"
-                    VerticalAlignment="Center"
-                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{Binding BuildType, StringFormat=Build type: {0}}" />
-            </StackPanel>
-        </co:ComplexExpander>
+            </uc:CelerOption>
+            <uc:CelerOption
+                Title="Reset Celer configurations"
+                Description="Reset application settings to the default, Celer will then launch as if it was just installed"
+                Icon="Settings2">
+                <Button BorderBrush="Transparent" Foreground="{DynamicResource SystemFillColorCriticalBrush}" Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}">
+                    Reset
+                </Button>
+            </uc:CelerOption>
+            <uc:ComplexExpander
+                Title="Debug Information"
+                Grid.Row="2"
+                Margin="0,12,0,0"
+                Icon="Code">
+                <StackPanel>
+                    <TextBlock
+                        Margin="0,4,30,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{Binding ProcessMemory, StringFormat=Process memory: {0:#}}" />
+                    <TextBlock
+                        Margin="0,4,30,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{Binding BuildType, StringFormat=Build type: {0}}" />
+                </StackPanel>
+            </uc:ComplexExpander>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -1,4 +1,6 @@
-﻿using Celer.ViewModels;
+﻿using Celer.Services;
+using Celer.ViewModels;
+using Celer.Views.Pages.Settings;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
@@ -12,10 +14,14 @@ namespace Celer.Views.Windows
     public partial class Settings : Window
     {
         private readonly SettingsViewModel _viewModel;
+        private readonly SettingsNavigation _settingsNavigation;
+        private readonly SettingsShellViewModel _settingsShellViewModel;
 
-        public Settings(SettingsViewModel viewModel)
+        public Settings(SettingsViewModel viewModel, SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellView)
         {
             _viewModel = viewModel;
+            _settingsNavigation = settingsNavigation;
+            _settingsShellViewModel = settingsShellView;
             DataContext = _viewModel;
             InitializeComponent();
             viewModel.CloseWindowAction = Close;
@@ -121,6 +127,13 @@ namespace Celer.Views.Windows
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            _settingsNavigation.CurrentViewModel = _settingsShellViewModel;
+            e.Cancel = false;
         }
 
         private NonClientFrameEdges GetPrefferedNonClientFrameEdges()

@@ -16,6 +16,12 @@ namespace Celer.Views.Pages.Settings
         }
 
         [RelayCommand]
+        private void NavigateToGeneral()
+        {
+            _settingsNavigation.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsGeneralViewModel>();
+        }
+
+        [RelayCommand]
         private void NavigateToInterface()
         {
             _settingsNavigation.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsInterfaceViewModel>();

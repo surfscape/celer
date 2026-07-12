@@ -3,6 +3,7 @@ using Metalama.Patterns.Wpf;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 
 namespace Celer.Controls
@@ -13,21 +14,27 @@ namespace Celer.Controls
     [ContentProperty(nameof(ContentPresenter))]
     public partial class CelerOption : UserControl
     {
+        public CelerOption() => InitializeComponent();
+
         [DependencyProperty]
         public PackIconLucideKind Icon { get; set; } = PackIconLucideKind.Paperclip;
 
         [DependencyProperty]
-        public string Title { get; set; } = "Option title";
-
+        public ImageSource Image { get; set; }
 
         [DependencyProperty]
-        public string? Description { get; set; } = null;
+        public string Title { get; set; } = "Option title";
+
+        [DependencyProperty]
+        public string Description { get; set; } = "Description";
 
         [DependencyProperty]
         public object ContentPresenter { get; set; }
-        public CelerOption()
+
+
+        public void OnImageChanged()
         {
-            InitializeComponent();
+            iconEl.Visibility = Visibility.Collapsed;
         }
     }
 }
