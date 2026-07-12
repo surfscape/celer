@@ -74,7 +74,7 @@
                             Command="{Binding GoBackCommand}"
                             IsEnabled="{Binding CanGoBack}"
                             Style="{DynamicResource TransparentButton}"
-                            ToolTip="Go back to the previous screen"
+                            ToolTip="Back"
                             Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <iconPacks:PackIconLucide

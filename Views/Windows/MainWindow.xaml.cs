@@ -2,7 +2,10 @@
 using Celer.Utilities;
 using Celer.ViewModels;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 
@@ -43,8 +46,9 @@ public partial class MainWindow : Window
         _menuViewModel = new QCMenuViewModel();
         QCMenu.DataContext = _menuViewModel;
         traybarMenu.LeftClickCommand = _menuViewModel.QCOpenAppCommand;
-
     }
+
+
 
     private void UpdateMainWindowVisuals()
     {
