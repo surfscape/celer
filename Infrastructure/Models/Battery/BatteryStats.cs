@@ -28,6 +28,12 @@ namespace Celer.Infrastructure.Models.Battery
         [ObservableProperty]
         private int fullDesignCapacity = 0;
 
+        [ObservableProperty]
+        private int health = 0;
+
+        [ObservableProperty]
+        private int remainingChargeCapacityPercentage = 0;
+
         public BatteryStats(bool isCharging, bool isPower, int percentage, TimeSpan estimatedRunTime,
                             int remainingFullCapacity, int remainingChargeCapacity, int cycleCount, int fullDesignCapacity)
         {
@@ -39,15 +45,8 @@ namespace Celer.Infrastructure.Models.Battery
             RemainingChargeCapacity = remainingChargeCapacity;
             CycleCount = cycleCount;
             FullDesignCapacity = fullDesignCapacity;
-        }
-
-        public int Health
-        {
-            get
-            {
-                if (FullDesignCapacity == 0) return 0;
-                return (RemainingFullCapacity * 100) / FullDesignCapacity;
-            }
+            Health = (RemainingFullCapacity * 100) / FullDesignCapacity;
+            RemainingChargeCapacityPercentage = (int)((double)RemainingChargeCapacity / FullDesignCapacity * 100);
         }
     }
 }

@@ -88,11 +88,7 @@
                                         Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="0">
-                                        <ProgressBar.ToolTip>
-                                            <ToolTip Content="{Binding BatteryStats.RemainingChargeCapacity}" ContentStringFormat="{}{0}WH" />
-                                        </ProgressBar.ToolTip>
-                                    </ProgressBar>
+                                        Value="0" />
                                     <ProgressBar
                                         Height="16"
                                         Margin="0,0,8,0"
@@ -102,11 +98,7 @@
                                         Foreground="{DynamicResource SystemFillColorSuccessBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="{Binding BatteryHealthPercentage}">
-                                        <ProgressBar.ToolTip>
-                                            <ToolTip Content="{Binding BatteryStats.RemainingChargeCapacity}" ContentStringFormat="{}{0}mWh" />
-                                        </ProgressBar.ToolTip>
-                                    </ProgressBar>
+                                        Value="{Binding BatteryStats.Health}" />
                                     <ProgressBar
                                         Height="16"
                                         Margin="0,0,8,0"
@@ -116,23 +108,16 @@
                                         Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="{Binding BatteryStats.RemainingFullCapacity}">
-                                        <ProgressBar.ToolTip>
-                                            <ToolTip Content="{Binding RemainingCapacity}" ContentStringFormat="{}{0}mWh" />
-                                        </ProgressBar.ToolTip>
-                                    </ProgressBar>
+                                        Value="{Binding BatteryStats.RemainingChargeCapacityPercentage}" />
                                 </Grid>
-
-
                             </Grid>
                         </Border>
                     </Grid>
-
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <StackPanel Margin="0,0,24,0" Orientation="Horizontal">
-
                             <iconPacks:PackIconLucide
                                 Width="20"
+                                Height="20"
                                 Margin="0,0,8,0"
                                 VerticalAlignment="Center"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -160,7 +145,7 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding ChargedCapacityD, StringFormat='{}{0:F3} Wh'}"
+                                Text="{Binding BatteryStats.RemainingChargeCapacity, StringFormat='{}{0} mWh'}"
                                 ToolTip="Current charged capacity" />
                         </StackPanel>
                         <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
@@ -173,7 +158,7 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding RemainingCapacityD, StringFormat='{}{0:F3} Wh'}"
+                                Text="{Binding BatteryStats.RemainingFullCapacity, StringFormat='{}{0} mWh'}"
                                 ToolTip="Full charge capacity" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -186,8 +171,8 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding FactoryCapacityD, StringFormat='{}{0} Wh'}"
-                                ToolTip="Original charged capacity" />
+                                Text="{Binding BatteryStats.FullDesignCapacity, StringFormat='{}{0} mWh'}"
+                                ToolTip="Original capacity" />
                         </StackPanel>
 
                     </StackPanel>
@@ -291,7 +276,7 @@
                                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                 Style="{StaticResource BodyTextBlockStyle}"
                                                 TextWrapping="Wrap">
-                                                Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a system with dual boot it's recommended to disable this feature.
+                                                Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a dual boot system, it's recommended to disable this feature.
                                             </TextBlock>
                                         </StackPanel>
                                     </CheckBox.Content>
@@ -306,7 +291,7 @@
                                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                 Style="{StaticResource BodyTextBlockStyle}"
                                                 TextWrapping="Wrap">
-                                                Saves the current state of the system into the drive when the PC shuts down and resumes to the last state when logged back in. It can cause issues when dual booting with Linux.
+                                                Saves the current state of the system into disk when the PC shuts down and resumes when logged back in. It can cause issues when dual booting with Linux.
                                             </TextBlock>
                                         </StackPanel>
                                     </CheckBox.Content>
