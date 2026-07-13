@@ -27,6 +27,19 @@ namespace Celer.Views.Pages.Settings
         }
 
         [ObservableProperty]
+        public partial bool EnableSurfScapeGateway { get; set; } = MainConfiguration.Default.EnableSurfScapeGateway;
+
+        partial void OnEnableSurfScapeGatewayChanged(bool value)
+        {
+            MainConfiguration.Default.EnableSurfScapeGateway = value;
+            if (!value) { 
+                MainConfiguration.Default.EnableAutoSurfScapeGateway = value;
+                UpdateGatewayLaunch = value;
+            }
+            MainConfiguration.Default.Save();
+        }
+
+        [ObservableProperty]
         public partial bool UpdateGatewayLaunch { get; set; } = MainConfiguration.Default.EnableAutoSurfScapeGateway;
 
         partial void OnUpdateGatewayLaunchChanged(bool value)

@@ -225,5 +225,17 @@ namespace Celer.Properties {
                 this["GeneralPollingRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableSurfScapeGateway {
+            get {
+                return ((bool)(this["EnableSurfScapeGateway"]));
+            }
+            set {
+                this["EnableSurfScapeGateway"] = value;
+            }
+        }
     }
 }

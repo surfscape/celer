@@ -35,12 +35,22 @@
             </uc:CelerOption>
             <TextBlock Margin="0,8" Style="{StaticResource BodyStrongTextBlockStyle}">Network</TextBlock>
             <uc:CelerOption
+                Title="Enable SurfScape Gateway Services"
+                Description="Enable SurfScape Gatway Services, these provide updates to various components of Celer without requiring to update the entire app"
+                Image="/Resources/Assets/gateway_icon.png">
+                <CheckBox
+                    VerticalAlignment="Stretch"
+                    IsChecked="{Binding EnableSurfScapeGateway}"
+                    Style="{StaticResource SwitchCheckBoxStyle}" />
+            </uc:CelerOption>
+            <uc:CelerOption
                 Title="Update SurfScape Gateway on launch"
                 Description="Update Celer's signatures through the internet automatically on launch"
                 Image="/Resources/Assets/gateway_icon.png">
                 <CheckBox
                     VerticalAlignment="Stretch"
                     IsChecked="{Binding UpdateGatewayLaunch}"
+                    IsEnabled="{Binding EnableSurfScapeGateway}"
                     Style="{StaticResource SwitchCheckBoxStyle}" />
             </uc:CelerOption>
             <TextBlock Margin="0,4,0,0" FontSize="14">
