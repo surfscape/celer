@@ -469,7 +469,7 @@
         <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
     </UserControl.Resources>
     <Menu x:Name="AppMenu">
-        <MenuItem Padding="3,0" ToolTip="Open App Menu">
+        <MenuItem Padding="4,0" ToolTip="Open App Menu">
             <MenuItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconLucide
@@ -478,7 +478,7 @@
                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                         Kind="Menu" />
                     <TextBlock
-                        Margin="8,0,4,0"
+                        Margin="8,0,0,0"
                         FontSize="13"
                         LineHeight="13"
                         LineStackingStrategy="BlockLineHeight">

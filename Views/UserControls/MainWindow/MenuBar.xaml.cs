@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
+
 namespace Celer.Views.UserControls.MainWindow
 {
     /// <summary>
