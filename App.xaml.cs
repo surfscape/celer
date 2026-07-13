@@ -132,10 +132,10 @@ public partial class App : Application
             // usercontrols themselves (and other views that need access to the services)
             services.AddSingleton<MenuBar>();
             services.AddSingleton<Dashboard>();
-            services.AddSingleton<Limpeza>();
+            services.AddSingleton<Cleaning>();
             services.AddSingleton<Optimization>();
             services.AddTransient<MemoryManagement>();
-            services.AddTransient<Views.UserControls.MainApp.OptimizationViews.Battery>();
+            services.AddTransient<Battery>();
             services.AddTransient<Video>();
             services.AddTransient<Sensors>();
             services.AddSingleton<Maintenance>();

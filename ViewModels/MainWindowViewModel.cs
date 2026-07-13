@@ -51,7 +51,7 @@ namespace Celer.ViewModels
             TabsModule =
         [
             new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<Dashboard>(), VerticalScrollMode = ScrollBarVisibility.Disabled  },
-            new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<Limpeza>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
+            new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<Cleaning>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
             new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<Optimization>() },
             new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<Maintenance>() },
             new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<Privacidade>() }

@@ -4,13 +4,13 @@ using System.Windows.Controls;
 namespace Celer.Views.UserControls.MainApp
 {
     /// <summary>
-    /// Interaction logic for Limpeza.xaml
+    /// Interaction logic for Cleaning.xaml
     /// </summary>
-    public partial class Limpeza : UserControl
+    public partial class Cleaning : UserControl
     {
         private readonly CleanEngine _viewModel;
 
-        public Limpeza(CleanEngine viewModel)
+        public Cleaning(CleanEngine viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
