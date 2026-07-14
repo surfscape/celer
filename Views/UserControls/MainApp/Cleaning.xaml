@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
     </UserControl.Resources>
     <Grid VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -108,13 +109,15 @@
                             Margin="0,0,0,8"
                             Foreground="{StaticResource TextFillColorSecondaryBrush}"
                             Style="{DynamicResource CaptionTextBlockStyle}"
-                            Text="{Binding TotalFreedText, StringFormat=Space freed: {0}}" />
+                            Text="{Binding TotalFreedText, StringFormat=Space freed: {0}}"
+                            Visibility="{Binding TotalFreedText, Converter={StaticResource EmptyToVisibilityConverter}, ConverterParameter=Hidden}" />
                         <Button
                             Grid.Row="1"
-                            HorizontalAlignment="Center"
+                            HorizontalAlignment="Right"
                             Command="{Binding CleanCommand}"
                             Content="Start Cleaning"
-                            IsEnabled="{Binding CanClean}" />
+                            IsEnabled="{Binding CanClean}"
+                            Style="{DynamicResource AccentButtonStyle}" />
                     </Grid>
                 </Grid>
             </Border>

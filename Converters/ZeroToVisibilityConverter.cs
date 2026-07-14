@@ -12,6 +12,12 @@ namespace Celer.Converters
 
             bool invert = (bool.TryParse(parameter.ToString(), out bool p));
 
+            if(parameter.ToString() == "Hidden")
+            {
+                return zeroValue > 0 ? Visibility.Visible : Visibility.Hidden;
+            }
+            
+
             return (zeroValue > 0, invert) switch
             {
                 (true, false) => Visibility.Visible,
