@@ -99,4 +99,7 @@
 			<LastGenOutput>Signatures.Designer.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Views\Components\" />
+	</ItemGroup>
 </Project>

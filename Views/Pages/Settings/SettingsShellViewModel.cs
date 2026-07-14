@@ -28,6 +28,13 @@ namespace Celer.Views.Pages.Settings
         }
 
         [RelayCommand]
+        private void NavigateToCleaning()
+        {
+            _settingsNavigation.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsModuleCleaningViewModel>();
+        }
+
+
+        [RelayCommand]
         private void NavigateToAdvanced()
         {
             _settingsNavigation.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsAdvancedViewModel>();

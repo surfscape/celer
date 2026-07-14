@@ -149,6 +149,9 @@
                                 <DataTemplate DataType="{x:Type pages:SettingsInterfaceViewModel}">
                                     <pages:SettingsInterface />
                                 </DataTemplate>
+                                <DataTemplate DataType="{x:Type pages:SettingsModuleCleaningViewModel}">
+                                    <pages:SettingsModuleCleaning />
+                                </DataTemplate>
                                 <DataTemplate DataType="{x:Type pages:SettingsAdvancedViewModel}">
                                     <pages:SettingsAdvanced />
                                 </DataTemplate>
