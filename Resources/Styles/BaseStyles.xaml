@@ -91,7 +91,7 @@
                                     MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=UserContentSize}"
                                     Margin="16,16,16,0"
                                     HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Stretch"
                                     Content="{TemplateBinding SelectedContent}"
                                     ContentSource="Header"
                                     ContentTemplate="{TemplateBinding SelectedContentTemplate}"
