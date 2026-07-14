@@ -161,7 +161,6 @@
                             <Style TargetType="{x:Type iconPacks:PackIconLucide}">
                                 <Setter Property="Width" Value="15" />
                                 <Setter Property="Height" Value="15" />
-
                             </Style>
                         </local:CompactTabControl.Resources>
                         <local:CompactTabControl.ContentTemplate>
@@ -205,8 +204,10 @@
             <!--  Quick Center  -->
             <tb:TaskbarIcon
                 x:Name="traybarMenu"
-                d:DataContext="{d:DesignInstance Type=viewmodels:QCMenuViewModel}"
+                DataContext="{Binding MenuViewModel}"
                 IconSource="/Resources/Assets/app.ico"
+                LeftClickCommand="{Binding QCOpenAppCommand}"
+                NoLeftClickDelay="True"
                 ToolTipText="Celer">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu x:Name="QCMenu">

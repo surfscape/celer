@@ -14,6 +14,7 @@ namespace Celer.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        public QCMenuViewModel MenuViewModel { get; } = new QCMenuViewModel();
 
         [ObservableProperty]
         private int selectedTabIndex = 0;
@@ -127,9 +128,11 @@ namespace Celer.ViewModels
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
                 Application.Current.MainWindow.Show();
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
-            }
-            Application.Current.MainWindow.Activate();
-            
+                Application.Current.MainWindow.Activate();
+            } else
+                Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+
+
         }
     }
 }

@@ -2,10 +2,7 @@
 using Celer.Utilities;
 using Celer.ViewModels;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 
@@ -17,7 +14,7 @@ namespace Celer.Views.Windows;
 public partial class MainWindow : Window
 {
     private readonly MainWindowViewModel _viewModel;
-    private readonly QCMenuViewModel _menuViewModel;
+
     public MainWindow(MainWindowViewModel viewModel)
     {
         _viewModel = viewModel;
@@ -43,9 +40,6 @@ public partial class MainWindow : Window
         Deactivated += (s, e) => UpdateMainWindowVisuals();
 
         DataContext = _viewModel;
-        _menuViewModel = new QCMenuViewModel();
-        QCMenu.DataContext = _menuViewModel;
-        traybarMenu.LeftClickCommand = _menuViewModel.QCOpenAppCommand;
     }
 
 
