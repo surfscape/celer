@@ -1,7 +1,8 @@
-﻿namespace Celer.Services.OpsecEngine.Helpers
+﻿using System.Diagnostics;
+using System.Text;
+
+namespace Celer.Services.OpsecEngine.Helpers
 {
-    using System.Diagnostics;
-    using System.Text;
 
     public static class DefenderHelper
     {
@@ -41,7 +42,7 @@
         private static async Task<bool> RunPowerShellCheckAsync(
             string command,
             bool invert = false,
-            string expectedValue = ""
+            string expectedValue = null
         )
         {
             using var process = new Process
@@ -68,12 +69,9 @@
                 if (expectedValue is not null)
                     return result == expectedValue;
 
-                if (bool.TryParse(result, out bool boolResult))
-                    return invert ? !boolResult : boolResult;
-
-                if (int.TryParse(result, out int intResult))
-                    return invert ? intResult == 0 : intResult != 0;
-
+                if (bool.TryParse(result, out bool expectedResult))
+                    return invert ? !expectedResult : expectedResult;
+                
                 return false;
             }
             catch (ArgumentException ex)
