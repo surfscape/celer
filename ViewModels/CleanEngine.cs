@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
+using Path = System.IO.Path;
 
 namespace Celer.ViewModels
 {
@@ -19,18 +20,19 @@ namespace Celer.ViewModels
         private ObservableCollection<CleanupCategory> categories = [];
 
         [ObservableProperty]
-        private string totalFreedText = string.Empty;
+        public partial string TotalFreedText { get; set; } = string.Empty;
 
         [ObservableProperty]
-        private object? selectedItem;
+        public partial object? SelectedItem { get; set; }
 
         [ObservableProperty]
-        private bool canClean = AppGlobals.EnableCleanEngine;
+        public partial bool CanClean { get; set; } = AppGlobals.EnableCleanEngine;
 
         private bool hasRan;
 
         public class LogBook()
         {
+            public DateTime LogDate { get; set; } = new DateTime();
             public string LogEntry { get; set; } = string.Empty;
             public Brush LogColor { get; set; } = (Brush)Application.Current.FindResource("TextFillColorPrimaryBrush");
         }
@@ -61,7 +63,7 @@ namespace Celer.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogEntries.Add(
-                    new LogBook { LogEntry = message, LogColor = foreground }
+                    new LogBook {LogDate = DateTime.Now, LogEntry = message, LogColor = foreground }
                 );
             });
         }
@@ -166,6 +168,7 @@ namespace Celer.ViewModels
                     "At least one item has to be checked to start cleaning",
                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
+                SaveLog();
                 return;
             }
 
@@ -196,6 +199,7 @@ namespace Celer.ViewModels
                         + string.Join("\n", toClose),
                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
+                SaveLog();
                 return;
             }
 
@@ -304,6 +308,7 @@ namespace Celer.ViewModels
                     LogEntries.Add(
                         new LogBook
                         {
+                            LogDate = new DateTime(),
                             LogEntry = line,
                             LogColor = new SolidColorBrush(Colors.Green),
                         }
@@ -313,6 +318,21 @@ namespace Celer.ViewModels
             TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
             hasRan = true;
             AppGlobals.EnableCleanEngine = true;
+            SaveLog();
+        }
+
+
+        public void SaveLog()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "WriteLines.txt")))
+                {
+                foreach (LogBook logBook in LogEntries)
+                {
+                    outputFile.WriteLine($"{logBook.LogDate}: {logBook.LogEntry}");
+                }
+            }
         }
 
         /// <summary>
