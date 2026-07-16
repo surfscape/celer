@@ -139,7 +139,7 @@
     <value>Not found</value>
   </data>
   <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
-    <value>Automatically update signatures when starting Celer</value>
+    <value>Automatically update signatures on launch</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
     <value>I've read and accept the Terms of Use and</value>
@@ -151,7 +151,7 @@
     <value>Celer is a toolbox for Windows 10/11 with the purpose of giving you control over Windows, once again.</value>
   </data>
   <data name="Onboarding_WelcomeTitle" xml:space="preserve">
-    <value>Welcome to Celer</value>
+    <value>Welcome to Celer!</value>
   </data>
   <data name="Onboarding_WindowTitle" xml:space="preserve">
     <value>Setup</value>

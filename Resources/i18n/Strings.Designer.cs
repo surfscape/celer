@@ -124,7 +124,7 @@ namespace Celer.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automatically update signatures when starting Celer.
+        ///   Looks up a localized string similar to Automatically update signatures on launch.
         /// </summary>
         public static string Onboarding_AutoDownloadsCheckboxLabel {
             get {
@@ -160,7 +160,7 @@ namespace Celer.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Celer.
+        ///   Looks up a localized string similar to Welcome to Celer!.
         /// </summary>
         public static string Onboarding_WelcomeTitle {
             get {
