@@ -2,8 +2,12 @@
 using Celer.Properties;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace Celer.Views.Pages.Settings
@@ -69,9 +73,29 @@ namespace Celer.Views.Pages.Settings
 
         }
 
+
         private void UpdateDebugInfo()
         {
             ProcessMemory = ByteSize.FromBytes(GC.GetTotalMemory(true)).ToString();
         }
+
+        [RelayCommand]
+        private static void ResetAppConfiguration()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to reset Celer's configuration and restart it?", "Celer Configuration Manager", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    MainConfiguration.Default.Reset();
+                    WeakReferenceMessenger.Default.Send(new TriggerApplicationClosureMessage(true));
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
+            }
+        }
+
+        public class TriggerApplicationClosureMessage(bool value) : ValueChangedMessage<bool>(value){}
     }
 }

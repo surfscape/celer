@@ -38,9 +38,13 @@
             </uc:CelerOption>
             <uc:CelerOption
                 Title="Reset Celer configurations"
-                Description="Reset application settings to the default, Celer will then launch as if it was just installed"
+                Description="Reset application settings to the default and relaunch Celer as if it was just installed"
                 Icon="Settings2">
-                <Button BorderBrush="Transparent" Foreground="{DynamicResource SystemFillColorCriticalBrush}" Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}">
+                <Button
+                    Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}"
+                    BorderBrush="Transparent"
+                    Command="{Binding ResetAppConfigurationCommand}"
+                    Foreground="{DynamicResource SystemFillColorCriticalBrush}">
                     Reset
                 </Button>
             </uc:CelerOption>

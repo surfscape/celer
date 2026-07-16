@@ -11,6 +11,7 @@ using Celer.Views.UserControls.MainApp.OptimizationViews;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Win32;
@@ -19,7 +20,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Threading;
+using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer;
 
@@ -29,7 +30,6 @@ namespace Celer;
 public partial class App : Application
 {
     public static IHost? AppHost { get; private set; }
-
     private Mutex? _singleInstanceMutex;
 
     public App()
@@ -38,6 +38,12 @@ public partial class App : Application
         if (Environment.OSVersion.Version.Build <= 26000)
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
+        WeakReferenceMessenger.Default.Register<TriggerApplicationClosureMessage>(this, (r, m) =>
+        {
+            if(Environment.ProcessPath is not null)
+                Process.Start(Environment.ProcessPath, "--disableMutexProtection");
+            Current.Shutdown();
+        });
     }
 
     private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -49,8 +55,6 @@ public partial class App : Application
                 break;
         }
     }
-
-
     private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
     {
         SetFluentTheme();
@@ -186,6 +190,7 @@ public partial class App : Application
 
         base.OnStartup(e);
     }
+
 
     protected override async void OnExit(ExitEventArgs e)
     {
