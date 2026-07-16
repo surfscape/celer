@@ -1,5 +1,6 @@
 ﻿using ByteSizeLib;
 using Celer.Models;
+using Celer.Properties;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -32,7 +33,7 @@ namespace Celer.ViewModels
 
         public class LogBook()
         {
-            public DateTime LogDate { get; set; } = new DateTime();
+            public DateTime LogDate { get; set; } = DateTime.Now;
             public string LogEntry { get; set; } = string.Empty;
             public Brush LogColor { get; set; } = (Brush)Application.Current.FindResource("TextFillColorPrimaryBrush");
         }
@@ -63,7 +64,7 @@ namespace Celer.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogEntries.Add(
-                    new LogBook {LogDate = DateTime.Now, LogEntry = message, LogColor = foreground }
+                    new LogBook { LogDate = DateTime.Now, LogEntry = message, LogColor = foreground }
                 );
             });
         }
@@ -308,7 +309,7 @@ namespace Celer.ViewModels
                     LogEntries.Add(
                         new LogBook
                         {
-                            LogDate = new DateTime(),
+                            LogDate = DateTime.Now,
                             LogEntry = line,
                             LogColor = new SolidColorBrush(Colors.Green),
                         }
@@ -324,14 +325,21 @@ namespace Celer.ViewModels
 
         public void SaveLog()
         {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            
-                using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "WriteLines.txt")))
-                {
+            if (MainConfiguration.Default.CLEANENGINE_ExportLog)
+            {
+                string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string logFileName = "CelerCleaningLog.txt";
+                LogEntries.Add(
+                            new LogBook
+                            {
+                                LogDate = DateTime.Now,
+                                LogEntry = $"Saved to log file: {logFilePath}\\{logFileName}",
+                                LogColor = new SolidColorBrush(Colors.Green),
+                            }
+                        );
+                using StreamWriter outputFile = new(Path.Combine(logFilePath, logFileName));
                 foreach (LogBook logBook in LogEntries)
-                {
                     outputFile.WriteLine($"{logBook.LogDate}: {logBook.LogEntry}");
-                }
             }
         }
 

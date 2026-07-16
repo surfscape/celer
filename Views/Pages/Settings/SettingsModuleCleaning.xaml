@@ -54,21 +54,24 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
-                    <ListBox
-                        x:Name="pathsListBox"
-                        Margin="0,12"
-                        ItemsSource="{Binding Paths}" />
-                    <TextBlock
-                        Margin="0,24"
-                        HorizontalAlignment="Center"
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Text="No folders or files defined"
-                        Visibility="{Binding Paths.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=true}" />
+                    <StackPanel Margin="0,24">
+                        <ListBox x:Name="pathsListBox" ItemsSource="{Binding Paths}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="No folders or files defined"
+                            Visibility="{Binding Paths.Count, Converter={StaticResource ZeroToVisibilityConverter}, ConverterParameter=true}" />
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button
                             Margin="0,0,8,0"
                             Command="{Binding PickAndAddPathCommand}"
-                            Content="Add new folder/file" />
+                            Content="Add new folder" />
+                        <Button
+                            Margin="0,0,8,0"
+                            Command="{Binding PickAndAddFileCommand}"
+                            Content="Add new file" />
                         <Button
                             Command="{Binding RemovePathCommand}"
                             CommandParameter="{Binding SelectedItem, ElementName=pathsListBox}"

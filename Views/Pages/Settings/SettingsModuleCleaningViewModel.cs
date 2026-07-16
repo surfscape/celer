@@ -2,6 +2,7 @@
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,8 +16,7 @@ namespace Celer.Views.Pages.Settings
         [ObservableProperty]
         public partial bool EnableExportCleaningLog { get; set; } = MainConfiguration.Default.CLEANENGINE_ExportLog;
 
-
-        public void OnEnableExportCleaningLog(bool value)
+        partial void OnEnableExportCleaningLogChanged(bool value)
         {
             MainConfiguration.Default.CLEANENGINE_ExportLog = value;
             MainConfiguration.Default.Save();
@@ -34,7 +34,25 @@ namespace Celer.Views.Pages.Settings
                 Debug.WriteLine($"Collection changed! Action: {e.Action}");
             };
 }
-            [RelayCommand]
+
+        [RelayCommand]
+        private void PickAndAddFile()
+        {
+            var dialog = new OpenFileDialog
+            {   Title = "Choose a path to add",
+            };
+
+            if (dialog.ShowDialog() == true && !Paths.Contains(dialog.FileName))
+            {
+                Paths.Add(dialog.FileName);
+
+            }
+        }
+
+
+
+
+        [RelayCommand]
         private void PickAndAddPath()
         {
             var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog
@@ -50,8 +68,6 @@ namespace Celer.Views.Pages.Settings
                 
             }
         }
-
-        
 
         [RelayCommand]
         private void RemovePath(string? pathToRemove)
