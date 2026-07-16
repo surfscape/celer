@@ -99,7 +99,7 @@ namespace Celer.Views.Windows.Utils
             {
                 try
                 {
-                    if (MainConfiguration.Default.EnableAutoSurfScapeGateway || !windowTriggered)
+                    if (!MainConfiguration.Default.EnableSurfScapeGateway || MainConfiguration.Default.EnableAutoSurfScapeGateway || !windowTriggered)
                     {
                         await Task.Delay(200);
                         await SurfScapeWebServices();
@@ -118,7 +118,7 @@ namespace Celer.Views.Windows.Utils
             {
                 CurrentTask = "Checking for an internet connection...";
                 bool isOnline = UserLand.IsInternetAvailable();
-                if (isOnline)
+                if (isOnline && MainConfiguration.Default.EnableSurfScapeGateway)
                 {
                     CurrentTask = "Downloading cleaning signatures...";
                     bool success = await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
@@ -182,21 +182,6 @@ namespace Celer.Views.Windows.Utils
                     }
                 });
             }
-
-            /*
-            private void GenerateBatteryReport()
-            {
-                var psi = new ProcessStartInfo
-                {
-                    FileName = "powercfg",
-                    Arguments = $"/BATTERYREPORT /OUTPUT \"batteryreport.xml\" /XML",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                };
-                CurrentTask = "Getting battery information...";
-                Process.Start(psi)?.WaitForExit();
-            }
-            */
         }
     }
 }

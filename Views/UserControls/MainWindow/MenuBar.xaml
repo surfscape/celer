@@ -206,6 +206,7 @@
                     <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
+
                     <Setter Property="Foreground">
                         <Setter.Value>
                             <SolidColorBrush Color="{DynamicResource TextFillColorDisabled}" />
@@ -294,11 +295,7 @@
                     <Setter TargetName="CheckBoxIcon" Property="Text" Value="{StaticResource MenuItemCheckedGlyph}" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource TextFillColorDisabled}" />
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Opacity" Value="0.5" />
                 </Trigger>
                 <Trigger Property="InputGestureText" Value="">
                     <Setter TargetName="InputGestureText" Property="Visibility" Value="Collapsed" />
@@ -519,7 +516,10 @@
                         <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="MonitorCheck" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Click="CheckUpdates_Click" Header="_Check Updates">
+                <MenuItem
+                    x:Name="GatewayMenuItem"
+                    Click="CheckUpdates_Click"
+                    Header="_Check Updates">
                     <MenuItem.Icon>
                         <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="RefreshCw" />
                     </MenuItem.Icon>

@@ -1,8 +1,10 @@
-﻿using Celer.Views.Windows;
+﻿using Celer.Properties;
+using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +27,15 @@ namespace Celer.Views.UserControls.MainWindow
             _serviceProvider = serviceProvider;
             NavigationMenu.DataContext = _menuBarNavigation;
             AppMenu.DataContext = new AboutDataContext(this);
+            MainConfiguration.Default.PropertyChanged += ChangeMenu;
+            GatewayMenuItem.IsEnabled = MainConfiguration.Default.EnableSurfScapeGateway;
         }
+
+        private void ChangeMenu(object? sender, PropertyChangedEventArgs e)
+        {
+            GatewayMenuItem.IsEnabled = MainConfiguration.Default.EnableSurfScapeGateway;
+        }
+
 
         public partial class AboutDataContext : ObservableObject
         {
