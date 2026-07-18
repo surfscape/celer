@@ -28,7 +28,6 @@
                 x:Name="iconEl"
                 Width="20"
                 Height="20"
-                Margin="0,0,16,0"
                 VerticalAlignment="Center"
                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 Kind="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
@@ -36,17 +35,19 @@
                 x:Name="imageEl"
                 Width="20"
                 Height="20"
-                Margin="0,0,16,0"
                 VerticalAlignment="Center"
                 Source="{Binding Image, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0">
                 <TextBlock
                     Margin="0,0,0,2"
+                    VerticalAlignment="Center"
                     Style="{DynamicResource BodyStrongTextBlockStyle}"
                     Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 <TextBlock
+                    VerticalAlignment="Center"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     Style="{DynamicResource BodyTextBlockStyle}"
+                    x:Name="descriptionEl"
                     Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </StackPanel>
             <ContentPresenter

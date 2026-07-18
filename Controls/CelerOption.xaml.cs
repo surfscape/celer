@@ -14,8 +14,7 @@ namespace Celer.Controls
     [ContentProperty(nameof(ContentPresenter))]
     public partial class CelerOption : UserControl
     {
-        public CelerOption() => InitializeComponent();
-
+        
         [DependencyProperty]
         public PackIconLucideKind Icon { get; set; } = PackIconLucideKind.Paperclip;
 
@@ -26,15 +25,31 @@ namespace Celer.Controls
         public string Title { get; set; } = "Option title";
 
         [DependencyProperty]
-        public string Description { get; set; } = "Description";
+        public string Description { get; set; }
 
         [DependencyProperty]
         public object ContentPresenter { get; set; }
 
-
         public void OnImageChanged()
         {
             iconEl.Visibility = Visibility.Collapsed;
+        }
+
+        public void OnDescriptionChanged(string value)
+        {
+            if (value == "" || value is null)
+                descriptionEl.Visibility = Visibility.Collapsed;
+        }
+
+        public CelerOption()
+        {
+            InitializeComponent();
+            Loaded += (s, e) =>
+            {
+                descriptionEl.Visibility = string.IsNullOrEmpty(Description)
+    ? Visibility.Collapsed
+    : Visibility.Visible;
+            };
         }
     }
 }
