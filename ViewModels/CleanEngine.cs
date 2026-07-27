@@ -1,9 +1,11 @@
 ﻿using ByteSizeLib;
 using Celer.Models;
+using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
+using static Celer.Views.Pages.Settings.SettingsModuleCleaningViewModel;
 using Path = System.IO.Path;
 
 namespace Celer.ViewModels
@@ -27,7 +30,7 @@ namespace Celer.ViewModels
         public partial object? SelectedItem { get; set; }
 
         [ObservableProperty]
-        public partial bool CanClean { get; set; } = AppGlobals.EnableCleanEngine;
+        public partial bool CanClean { get; set; } = false;
 
         private bool hasRan;
 
@@ -42,21 +45,11 @@ namespace Celer.ViewModels
 
         public CleanEngine()
         {
-            AppGlobals.EnableCleanEngineChanged += AppGlobals_EnableCleanEngineChanged;
-        }
-
-        private void AppGlobals_EnableCleanEngineChanged(object? sender, EventArgs e)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
+            WeakReferenceMessenger.Default.Register<TriggerCleaningSignaturesUpdate>(this, (r, m) =>
             {
-                CanClean = AppGlobals.EnableCleanEngine;
-            });
-        }
-
-        partial void OnCanCleanChanged(bool oldValue, bool newValue)
-        {
-            if (newValue != oldValue)
+                CanClean = m.Value;
                 LoadJson();
+            });
         }
 
         private void AddLog(string message, Brush foreground)
@@ -79,7 +72,7 @@ namespace Celer.ViewModels
                     "Signatures not found. Update them through the Tools menu and click Check Updates",
                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
-                AppGlobals.EnableCleanEngine = false;
+                CanClean = false;
                 return;
             }
             try
@@ -95,7 +88,7 @@ namespace Celer.ViewModels
             catch (Exception e)
             {
                 AddLog($"An error occurred when loading the signaturs: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
-                AppGlobals.EnableCleanEngine = false;
+                CanClean = false;
             }
         }
 
@@ -108,12 +101,6 @@ namespace Celer.ViewModels
                 foreach (var item in cat.Value.EnumerateArray())
                 {
                     var name = item.GetProperty("name").GetString();
-                    var action = item.GetProperty("action");
-                    var type = action.GetProperty("type").GetString();
-                    var path = action.GetProperty("path").GetString();
-                    var patterns = action.TryGetProperty("patterns", out var patArray)
-                        ? patArray.EnumerateArray().Select(p => p.GetString()!).ToList()
-                        : [];
 
                     var requiredProcesses = new List<RequiredProcess>();
                     if (item.TryGetProperty("requiredProcesses", out var reqProcArray))
@@ -129,6 +116,14 @@ namespace Celer.ViewModels
                             );
                         }
                     }
+                    var actions = new List<Action>();
+                    if (item.TryGetProperty("actions", out var actionArray))
+                    {
+                        foreach (var action in actionArray.EnumerateArray())
+                            actions.Add(CreateAction(action));
+                    } else if (item.TryGetProperty("action", out var action)) {
+                            actions.Add(CreateAction(action));
+                    }
 
                     items.Add(
                         new CleanupItem
@@ -137,12 +132,7 @@ namespace Celer.ViewModels
                             Description = item.TryGetProperty("description", out JsonElement desc)
                                 ? desc.GetString() ?? string.Empty
                                 : string.Empty,
-                            Actions = new Action
-                            {
-                                Type = type!,
-                                Path = path,
-                                Patterns = patterns,
-                            },
+                            Actions = actions,
                             RequiredProcesses = requiredProcesses,
                             IsChecked = false,
                         }
@@ -150,6 +140,83 @@ namespace Celer.ViewModels
                 }
                 Categories.Add(new CleanupCategory { Name = cat.Name, Items = items });
             }
+            var specialItems = new ObservableCollection<CleanupItem>();
+            var customPathsFiles = new ObservableCollection<string>(MainConfiguration.Default.CLEANENGINE_CustomPaths?.Cast<string>() ?? []);
+            if (customPathsFiles.Count > 0)
+                specialItems.Add(new CleanupItem
+                {
+                    Name = "User Defined Files & Folders",
+                    Description = "Delete files and folders added to the custom paths of the cleaning module settings page",
+                    Actions = GetUserCustomFilesAndFolders(customPathsFiles),
+                    IsChecked = false,
+                });
+            specialItems.Add(new CleanupItem
+            {
+                Name = "Disk Cleanup",
+                Description= "Runs disk cleanup on the Windows drive and removes left over Windows Update packages",
+                Actions = [new() { Type = ActionType.Command, Command = "cleanmgr.exe /d C: /VERYLOWDISK" }],
+                IsChecked = false,
+            });
+            Categories.Add(
+                    new CleanupCategory { Name = "Special", Items = specialItems }
+            );
+        }
+
+        public static Action CreateAction(JsonElement action)
+        {
+            ActionType actionType = ActionType.Empty;
+            if (action.GetProperty("type").ValueKind == JsonValueKind.String)
+                actionType = GetActionTypeFromLegacyType(action.GetProperty("type").GetString()!);
+            else
+                actionType = (ActionType)action.GetProperty("type").GetInt16();
+
+            return new Action
+            {
+                Type = actionType,
+                Path = action.GetProperty("path").GetString(),
+                Patterns = action.TryGetProperty("patterns", out var patArray)
+                            ? patArray.EnumerateArray().Select(p => p.GetString()!).ToList()
+                            : [],
+            };
+        }
+
+        /// <summary>
+        /// Receives the old action type in string and returns it's counterpart in the new enum format. This is to keep compatibility with cleaning signatures that use the old string to dictate action types, it's recommended to use the new int format
+        /// </summary>
+        /// <param name="stringType">The action type in the old string format</param>
+        /// <returns>The enum counterpart of the string action type</returns>
+        public static ActionType GetActionTypeFromLegacyType(string stringType)
+        {
+            return stringType switch
+            {
+                "folder-content" => ActionType.FolderContent,
+                "file" => ActionType.File,
+                "content-pattern" => ActionType.ContentPattern,
+                "command" => ActionType.Command,
+                _ => ActionType.Empty,
+            };
+        }
+        private static List<Action> GetUserCustomFilesAndFolders(ObservableCollection<string> paths)
+        {
+            var actionList = new List<Action>();
+            foreach (var item in paths)
+            {
+                FileAttributes attr = File.GetAttributes($@"{item}");
+
+                if (attr.HasFlag(FileAttributes.Directory))
+                    actionList.Add(new Action
+                    {
+                        Type = ActionType.FolderContent,
+                        Path = item,
+                    });
+                else
+                    actionList.Add(new Action
+                    {
+                        Type = ActionType.File,
+                        Path = item,
+                    });
+            }
+            return actionList;
         }
 
         [RelayCommand]
@@ -209,7 +276,7 @@ namespace Celer.ViewModels
 
             await Task.Run(async () =>
             {
-                AppGlobals.EnableCleanEngine = false;
+                CanClean = false;
                 AddLog(
                     "Starting Celer Cleaning Engine...",
                     (Brush)Application.Current.FindResource("SystemFillColorCautionBrush")
@@ -218,82 +285,123 @@ namespace Celer.ViewModels
                 foreach (var item in selectedItems)
                 {
                     long freed = 0;
-                    if (item.Actions.Type == "folder-content")
+                    foreach (var action in item.Actions)
                     {
-                        string resolvedPath = Environment.ExpandEnvironmentVariables(
-                            item.Actions.Path!
-                        );
-                        try
+                        if (action.Type == ActionType.FolderContent)
                         {
-                            if (Directory.Exists(resolvedPath))
+                            string resolvedPath = Environment.ExpandEnvironmentVariables(
+                                action.Path!
+                            );
+                            try
                             {
-                                DeleteFolderContent(resolvedPath, ref freed, item.Name);
-                                Interlocked.Add(ref totalFreed, freed);
+                                if (Directory.Exists(resolvedPath))
+                                {
+                                    DeleteFolderContent(resolvedPath, ref freed, item.Name);
+                                    Interlocked.Add(ref totalFreed, freed);
+                                }
+                                else
+                                {
+                                    AddLog(
+                                        $"The folder {resolvedPath} does not exist or is invalid",
+                                        (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+                                    );
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
                                 AddLog(
-                                    $"The folder {resolvedPath} does not exist or is invalid",
+                                    $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}",
                                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                 );
                             }
+                            continue;
                         }
-                        catch (Exception ex)
+
+                        if (action.Type == ActionType.ContentPattern)
                         {
-                            AddLog(
-                                $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}",
-                                (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+                            string processHelper = string.Empty;
+                            string resolvedPath = Environment.ExpandEnvironmentVariables(
+                                action.Path!
                             );
-                        }
-                        continue;
-                    }
-
-                    if (item.Actions.Type == "content-pattern")
-                    {
-                        string processHelper = string.Empty;
-                        string resolvedPath = Environment.ExpandEnvironmentVariables(
-                            item.Actions.Path!
-                        );
-                        try
-                        {
-                            if (Directory.Exists(resolvedPath))
+                            try
                             {
-                                foreach (var proc in item.RequiredProcesses ?? [])
+                                if (Directory.Exists(resolvedPath))
                                 {
-                                    if (proc.CanTerminate && proc.Name == "explorer.exe")
+                                    foreach (var proc in item.RequiredProcesses ?? [])
                                     {
-                                        processHelper = proc.Name;
-                                        Processes.KillExplorer();
-                                        await Task.Delay(300);
+                                        if (proc.CanTerminate && proc.Name == "explorer.exe")
+                                        {
+                                            processHelper = proc.Name;
+                                            Processes.KillExplorer();
+                                            await Task.Delay(300);
+                                        }
                                     }
-                                }
-                                DeleteFilesWithPatterns(
-                                    resolvedPath,
-                                    item.Actions.Patterns!,
-                                    ref freed,
-                                    item.Name
-                                );
+                                    DeleteFilesWithPatterns(
+                                        resolvedPath,
+                                        action.Patterns!,
+                                        ref freed,
+                                        item.Name
+                                    );
 
-                                Interlocked.Add(ref totalFreed, freed);
-                                if (processHelper == "explorer.exe")
-                                    Processes.StartExplorer();
+                                    Interlocked.Add(ref totalFreed, freed);
+                                    if (processHelper == "explorer.exe")
+                                        Processes.StartExplorer();
+                                }
+                                else
+                                {
+                                    AddLog(
+                                       $"The folder {resolvedPath} does not exist or is invalid",
+                                       (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+                                   );
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
                                 AddLog(
-                                   $"The folder {resolvedPath} does not exist or is invalid",
-                                   (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
-                               );
+                                    $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}",
+                                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+                                );
                             }
+                            continue;
                         }
-                        catch (Exception ex)
+                        if(action.Type == ActionType.Command && action.Command is not null)
                         {
-                            AddLog(
-                                $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}",
-                                (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
-                            );
+                            long freeSpace = 0;
+                            var cDrive = new DriveInfo("C");
+                            AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                            try
+                            {
+                                var startInfo = new ProcessStartInfo("powershell.exe", $"{action.Command}")
+                                {
+                                    RedirectStandardOutput = true,
+                                    CreateNoWindow = true,
+                                    StandardOutputEncoding = Encoding.UTF8
+                                };
+
+                                using var process = new Process() { StartInfo = startInfo };
+                                process.Start();
+                                process.WaitForExit();
+
+                                if (action.Command.Contains("cleanmgr", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    Thread.Sleep(2000);
+                                    while (Process.GetProcessesByName("cleanmgr").Length > 0)
+                                    {
+                                        Thread.Sleep(1000);
+                                    }
+                                }
+                            }
+                            catch (Exception e) {
+                                AddLog($"Failed to run the command: {action.Command}\n{e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+                            }
+                            finally
+                            {
+                                long finalFreeSpace = cDrive.TotalFreeSpace;
+                                long spaceFreed = Math.Max(0, finalFreeSpace - freeSpace);
+                            }
+                            Interlocked.Add(ref totalFreed, freeSpace);
+                            continue;
                         }
-                        continue;
                     }
                     Interlocked.Add(ref totalFreed, freed);
                 }
@@ -318,10 +426,9 @@ namespace Celer.ViewModels
             });
             TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
             hasRan = true;
-            AppGlobals.EnableCleanEngine = true;
+            CanClean = true;
             SaveLog();
         }
-
 
         public void SaveLog()
         {
@@ -390,10 +497,6 @@ namespace Celer.ViewModels
                     );
                 }
             }
-            AddLog(
-                $"The task: {task} was terminated successfully",
-                (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush")
-            );
         }
 
         public void DeleteFilesWithPatterns(
@@ -425,21 +528,18 @@ namespace Celer.ViewModels
                     }
                 }
             }
-            AddLog(
-                $"The task: {task} was terminated successfully",
-                (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush")
-            );
+
         }
 
         public partial class CleanupItem : ObservableObject
         {
             public required string Name { get; set; }
             public string Description { get; set; } = string.Empty;
-            public required Action Actions { get; set; }
+            public required List<Action> Actions { get; set; }
             public List<RequiredProcess>? RequiredProcesses { get; set; }
 
             [ObservableProperty]
-            private bool isChecked;
+            public partial bool IsChecked { get; set; } = false;
         }
 
         public class RequiredProcess
@@ -448,10 +548,20 @@ namespace Celer.ViewModels
             public bool CanTerminate { get; set; }
         }
 
+        public enum ActionType
+        {
+            FolderContent,
+            File,
+            ContentPattern,
+            Command,
+            Empty
+        }
+
         public class Action
         {
-            public required string Type { get; set; }
+            public required ActionType Type { get; set; }
             public string? Path { get; set; }
+            public string? Command { get; set; }
             public List<string>? Patterns { get; set; }
         }
 

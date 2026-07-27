@@ -3,11 +3,13 @@ using Celer.Properties;
 using Celer.Services;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using static Celer.Views.Pages.Settings.SettingsModuleCleaningViewModel;
 
 namespace Celer.Views.Windows.Utils
 {
@@ -124,7 +126,7 @@ namespace Celer.Views.Windows.Utils
                     bool success = await CleaningSignatureManager.TryDownloadCleaningSignaturesAsync();
                     if (success)
                     {
-                        AppGlobals.EnableCleanEngine = true;
+                        WeakReferenceMessenger.Default.Send(new TriggerCleaningSignaturesUpdate(true));
                         CurrentTask = "Signatures updated";
                     }
                     else
@@ -146,7 +148,7 @@ namespace Celer.Views.Windows.Utils
             public void SetOfflineDatabase()
             {
                 hasOfflineDb = CleaningSignatureManager.HasLocalDatabase();
-                AppGlobals.EnableCleanEngine = hasOfflineDb;
+                WeakReferenceMessenger.Default.Send(new TriggerCleaningSignaturesUpdate(hasOfflineDb));
             }
 
             private async Task SetDxdiag()

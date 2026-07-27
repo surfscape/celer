@@ -2,10 +2,11 @@
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace Celer.Views.Pages.Settings
 {
@@ -29,11 +30,19 @@ namespace Celer.Views.Pages.Settings
         {
             _settingsNavigation = settingsNavigation;
             _settingsNavigation.PageTitle = "Cleaning options";
-            Paths.CollectionChanged += (s, e) =>
-            {
-                Debug.WriteLine($"Collection changed! Action: {e.Action}");
-            };
-}
+            Paths.CollectionChanged += OnPathsCollectionChanged;
+        }
+
+        private void OnPathsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            var stringCollection = new StringCollection();
+
+            if (Paths != null && Paths.Any())
+                stringCollection.AddRange(Paths.ToArray());
+
+            MainConfiguration.Default.CLEANENGINE_CustomPaths = stringCollection;
+            MainConfiguration.Default.Save();
+        }
 
         [RelayCommand]
         private void PickAndAddFile()
@@ -45,12 +54,9 @@ namespace Celer.Views.Pages.Settings
             if (dialog.ShowDialog() == true && !Paths.Contains(dialog.FileName))
             {
                 Paths.Add(dialog.FileName);
-
+                WeakReferenceMessenger.Default.Send(new TriggerCleaningSignaturesUpdate(true));
             }
         }
-
-
-
 
         [RelayCommand]
         private void PickAndAddPath()
@@ -65,7 +71,7 @@ namespace Celer.Views.Pages.Settings
             if (dialog.ShowDialog() == true && !Paths.Contains(dialog.SelectedPath))
             {
                 Paths.Add(dialog.SelectedPath);
-                
+                WeakReferenceMessenger.Default.Send(new TriggerCleaningSignaturesUpdate(true));
             }
         }
 
@@ -78,6 +84,6 @@ namespace Celer.Views.Pages.Settings
             }
         }
 
-
+        public class TriggerCleaningSignaturesUpdate(bool value) : ValueChangedMessage<bool>(value) { }
     }
 }
