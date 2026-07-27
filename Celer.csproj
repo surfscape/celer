@@ -39,7 +39,6 @@
 	<ItemGroup>
 		<Resource Include="Resources\Assets\app.ico" />
 		<Resource Include="Resources\Assets\celer_256.png" />
-		<Resource Include="Resources\Assets\fluent_heart.png" />
 		<Resource Include="Resources\Assets\gateway_icon.png" />
 	</ItemGroup>
 	<ItemGroup>
