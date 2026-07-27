@@ -237,5 +237,17 @@ namespace Celer.Properties {
                 this["EnableSurfScapeGateway"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableQuickCenter {
+            get {
+                return ((bool)(this["EnableQuickCenter"]));
+            }
+            set {
+                this["EnableQuickCenter"] = value;
+            }
+        }
     }
 }

@@ -27,17 +27,29 @@ namespace Celer.Views.Pages.Settings
         }
 
         [ObservableProperty]
+        public partial bool EnableQuickCenter { get; set; } = MainConfiguration.Default.EnableQuickCenter;
+
+
+        partial void OnEnableQuickCenterChanged(bool value)
+        {
+            MainConfiguration.Default.EnableQuickCenter = value;
+            MainConfiguration.Default.Save();
+        }
+
+        [ObservableProperty]
         public partial bool EnableSurfScapeGateway { get; set; } = MainConfiguration.Default.EnableSurfScapeGateway;
 
         partial void OnEnableSurfScapeGatewayChanged(bool value)
         {
             MainConfiguration.Default.EnableSurfScapeGateway = value;
-            if (!value) { 
+            if (!value)
+            {
                 MainConfiguration.Default.EnableAutoSurfScapeGateway = value;
                 UpdateGatewayLaunch = value;
             }
             MainConfiguration.Default.Save();
         }
+
 
         [ObservableProperty]
         public partial bool UpdateGatewayLaunch { get; set; } = MainConfiguration.Default.EnableAutoSurfScapeGateway;

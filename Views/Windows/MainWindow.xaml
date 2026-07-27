@@ -206,12 +206,12 @@
                 x:Name="traybarMenu"
                 DataContext="{Binding MenuViewModel}"
                 IconSource="/Resources/Assets/app.ico"
-                LeftClickCommand="{Binding QCOpenAppCommand}"
+                LeftClickCommand="{Binding QCOpenQuickCenterCommand}"
                 NoLeftClickDelay="True"
                 ToolTipText="Celer">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu x:Name="QCMenu">
-                        <MenuItem Command="{Binding QCOpenAppCommand}" Header="Show Celer" />
+                        <MenuItem Command="{Binding QCOpenAppCommand}" x:Name="ToggleMainWindowMenu" Header="Hide Celer" />
                         <!-- TODO
                         <MenuItem Header="Power Plans">
                             <MenuItem Header="Balanced" IsCheckable="True"></MenuItem>

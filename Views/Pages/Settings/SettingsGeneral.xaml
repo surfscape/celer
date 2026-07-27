@@ -15,10 +15,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Margin="0,0,0,8" Style="{StaticResource BodyStrongTextBlockStyle}">Startup</TextBlock>
-            <uc:CelerOption
-                Title="Start with Windows"
-                Description="Start Celer with Windows. This enables access to Celer Quick Center available in the system tray"
-                Icon="Power">
+            <uc:CelerOption Title="Start with Windows" Icon="Power">
                 <CheckBox
                     VerticalAlignment="Stretch"
                     IsChecked="{Binding StartWithWindows}"
@@ -26,11 +23,21 @@
             </uc:CelerOption>
             <uc:CelerOption
                 Title="Close should minimize"
-                Description="Celer will minimize to the system tray instead of closing all together"
+                Description="Celer will minimize to the system tray instead of fully closing"
                 Icon="Minimize">
                 <CheckBox
                     VerticalAlignment="Stretch"
                     IsChecked="{Binding CloseShouldMinimize}"
+                    Style="{StaticResource SwitchCheckBoxStyle}" />
+            </uc:CelerOption>
+            <TextBlock Margin="0,8" Style="{StaticResource BodyStrongTextBlockStyle}">System Tray</TextBlock>
+            <uc:CelerOption
+                Title="Quick Center"
+                Description="Enable Celer Quick Center which allows you to check various system informationa and actions right from the system tray"
+                Icon="LayoutDashboard">
+                <CheckBox
+                    VerticalAlignment="Stretch"
+                    IsChecked="{Binding EnableQuickCenter}"
                     Style="{StaticResource SwitchCheckBoxStyle}" />
             </uc:CelerOption>
             <TextBlock Margin="0,8" Style="{StaticResource BodyStrongTextBlockStyle}">Network</TextBlock>

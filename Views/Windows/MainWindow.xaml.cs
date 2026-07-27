@@ -1,10 +1,13 @@
 ﻿using Celer.Properties;
 using Celer.Utilities;
 using Celer.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shell;
+using static Celer.ViewModels.QCMenuViewModel;
+using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer.Views.Windows;
 
@@ -20,7 +23,6 @@ public partial class MainWindow : Window
         _viewModel = viewModel;
         IsVisibleChanged += new DependencyPropertyChangedEventHandler(CheckVisibility);
         InitializeComponent();
-
 
         WindowChrome.SetWindowChrome(
             this,
@@ -40,6 +42,14 @@ public partial class MainWindow : Window
         Deactivated += (s, e) => UpdateMainWindowVisuals();
 
         DataContext = _viewModel;
+        WeakReferenceMessenger.Default.Register<WindowVisibleMessage>(this, (r, m) =>
+        {
+            if(m.Value)
+            {
+                ToggleMainWindowMenu.Header = "Hide Celer";
+            } else 
+                ToggleMainWindowMenu.Header = "Show Celer"; 
+        });
     }
 
 
@@ -182,7 +192,6 @@ public partial class MainWindow : Window
         {
             e.Cancel = true;
             Visibility = Visibility.Collapsed;
-            DataContext = null;
             ProcessPowerManager.Enable();
         }
         else

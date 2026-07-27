@@ -1,14 +1,19 @@
 ﻿using Celer.Models;
+using Celer.Properties;
 using Celer.Services;
 using Celer.Views.UserControls.MainApp;
 using Celer.Views.UserControls.MainWindow;
+using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer.ViewModels
 {
@@ -29,7 +34,7 @@ namespace Celer.ViewModels
         private bool canGoBack;
 
         [ObservableProperty]
-        private ObservableCollection<TabModule> tabsModule;
+        public partial ObservableCollection<TabModule> TabsModule { get; set; }
 
         [ObservableProperty]
         private UserControl menuBarControl;
@@ -117,22 +122,55 @@ namespace Celer.ViewModels
         }
 
         [RelayCommand]
+        public static void QCOpenQuickCenter()
+        {
+
+            if (MainConfiguration.Default.EnableQuickCenter)
+            {
+                var quickCenter = new QuickCenter();
+                quickCenter.Show();
+                quickCenter.Activate();
+            }
+        }
+
+        [RelayCommand]
         public static void QCOpenApp()
         {
-            if (Application.Current.MainWindow.DataContext == null)
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null) return;
+            if (mainWindow.Visibility != Visibility.Visible || mainWindow.WindowState == WindowState.Minimized)
             {
-                Application.Current.MainWindow.DataContext = App.AppHost.Services.GetService<MainWindowViewModel>();
+                if (mainWindow.Visibility != Visibility.Visible)
+                {
+                    mainWindow.Show();
+                }
+
+                if (mainWindow.WindowState == WindowState.Minimized)
+                {
+                    mainWindow.WindowState = WindowState.Normal;
+                }
+                mainWindow.Activate();
+                mainWindow.Topmost = true;
+                mainWindow.Topmost = false;
+                mainWindow.Focus();
+                WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
             }
-            if(!Application.Current.MainWindow.IsVisible)
+            else
             {
-                Application.Current.MainWindow.Visibility = Visibility.Visible;
-                Application.Current.MainWindow.Show();
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
-                Application.Current.MainWindow.Activate();
-            } else
-                Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+                mainWindow.Hide();
+                mainWindow.WindowState = WindowState.Minimized;
+                mainWindow.Visibility = Visibility.Collapsed;
+                WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
+                var windows = Application.Current.Windows;
+                foreach (Window win in windows)
+                {
+                    if (win is not MainWindow)
+                        win.Close();
+                }
 
-
+            }
         }
+
+        public class WindowVisibleMessage(bool value) : ValueChangedMessage<bool>(value) { }
     }
 }
