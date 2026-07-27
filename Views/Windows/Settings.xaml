@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Celer.Models"
     xmlns:pages="clr-namespace:Celer.Views.Pages.Settings"
+    xmlns:utils="clr-namespace:Celer.Utilities"
     xmlns:uc="clr-namespace:Celer.Controls"
     xmlns:vm="clr-namespace:Celer.ViewModels"
     Title="Preferences"
@@ -137,7 +138,8 @@
                     <ScrollViewer
                         Margin="0,0,5,5"
                         Focusable="False"
-                        VerticalScrollBarVisibility="Auto">
+                        VerticalScrollBarVisibility="Auto"
+                        utils:ScrollUtilities.SmoothScroll="True">
                         <ContentControl
                             MaxWidth="980"
                             Margin="16"
