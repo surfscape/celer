@@ -20,7 +20,7 @@
     MinHeight="500"
     d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-    ShowInTaskbar="True"
+    ShowInTaskbar="False"
     Style="{StaticResource {x:Type Window}}"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
