@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Celer.Views.Pages.Settings
 {
-   public partial class SettingsGeneralViewModel : SettingsBaseViewModel
+    public partial class SettingsGeneralViewModel : SettingsBaseViewModel
     {
         private readonly SettingsNavigation _settingsNavigation;
 

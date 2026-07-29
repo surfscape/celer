@@ -1,7 +1,6 @@
 ﻿using Celer.Models.Preferences;
 using Celer.Properties;
 using Celer.Services;
-using Celer.Utilities;
 using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
@@ -42,7 +41,7 @@ public partial class App : Application
         MainConfiguration.Default.PropertyChanged += OnSettingsChanged;
         WeakReferenceMessenger.Default.Register<TriggerApplicationClosureMessage>(this, (r, m) =>
         {
-            if(Environment.ProcessPath is not null)
+            if (Environment.ProcessPath is not null)
                 Process.Start(Environment.ProcessPath, "--disableMutexProtection");
             Current.Shutdown();
         });
@@ -87,7 +86,7 @@ public partial class App : Application
         {
             if ((Current.ThemeMode == ThemeMode.System && IsLightLegacyTheme()) || Current.ThemeMode == ThemeMode.Light)
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
-            else 
+            else
                 Current.Resources["WindowBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
         }
     }

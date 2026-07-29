@@ -1,6 +1,4 @@
 ﻿using ByteSizeLib;
-using Celer.Models;
-using Celer.Models.SystemInfo;
 using Celer.Properties;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -119,8 +117,10 @@ namespace Celer.ViewModels
                     {
                         foreach (var action in actionArray.EnumerateArray())
                             actions.Add(CreateAction(action));
-                    } else if (item.TryGetProperty("action", out var action)) {
-                            actions.Add(CreateAction(action));
+                    }
+                    else if (item.TryGetProperty("action", out var action))
+                    {
+                        actions.Add(CreateAction(action));
                     }
 
                     items.Add(
@@ -151,7 +151,7 @@ namespace Celer.ViewModels
             specialItems.Add(new CleanupItem
             {
                 Name = "Disk Cleanup",
-                Description= "Runs disk cleanup on the Windows drive and removes left over Windows Update packages",
+                Description = "Runs disk cleanup on the Windows drive and removes left over Windows Update packages",
                 Actions = [new() { Type = ActionType.Command, Command = "cleanmgr.exe /d C: /VERYLOWDISK" }],
                 IsChecked = false,
             });
@@ -362,7 +362,7 @@ namespace Celer.ViewModels
                             }
                             continue;
                         }
-                        if(action.Type == ActionType.Command && action.Command is not null)
+                        if (action.Type == ActionType.Command && action.Command is not null)
                         {
                             long freeSpace = 0;
                             var cDrive = new DriveInfo("C");
@@ -389,7 +389,8 @@ namespace Celer.ViewModels
                                     }
                                 }
                             }
-                            catch (Exception e) {
+                            catch (Exception e)
+                            {
                                 AddLog($"Failed to run the command: {action.Command}\n{e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                             }
                             finally

@@ -1,8 +1,6 @@
 ﻿using Celer.Services;
 using Celer.Views.Pages.Settings;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
 
 namespace Celer.ViewModels
 {
@@ -27,9 +25,12 @@ namespace Celer.ViewModels
         [RelayCommand]
         private void GoBack()
         {
-            if (_settingsNavigation.CurrentViewModel == _settingsShellViewModel) {
+            if (_settingsNavigation.CurrentViewModel == _settingsShellViewModel)
+            {
                 CloseWindowAction?.Invoke();
-            } else { 
+            }
+            else
+            {
                 _settingsNavigation.CurrentViewModel = _settingsShellViewModel;
                 _settingsNavigation.PageTitle = "Settings";
                 OnCurrentViewModelChanged();

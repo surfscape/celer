@@ -5,13 +5,14 @@ namespace Celer.Utilities
     public class Localization
     {
         public readonly static Dictionary<string, string> languages = new()
-        { 
+        {
             { "en", "English (UK)" },
             { "pt", "Português (Portugal)" }
         };
 
 
-        public static string GetCurrentLangugageByValue(string key) {
+        public static string GetCurrentLangugageByValue(string key)
+        {
             return languages.TryGetValue(key, out string? value) ? value : "en";
         }
 

@@ -33,7 +33,7 @@ namespace Celer.Views.Pages.Settings
             MainConfiguration.Default.Save();
         }
 
-        public ObservableCollection<string> RenderingModes { get; } = ["Auto (Default)", "Hardware", "Software only" ];
+        public ObservableCollection<string> RenderingModes { get; } = ["Auto (Default)", "Hardware", "Software only"];
 
         [ObservableProperty]
         public partial int GraphicRenderingMode { get; set; } = MainConfiguration.Default.GraphicRenderingMode;
@@ -68,7 +68,7 @@ namespace Celer.Views.Pages.Settings
             // Posted by Egor Novikov
             // Retrieved 2026-07-06, License - CC BY-SA 4.0
             var assemblyConfigurationAttribute = typeof(SettingsAdvancedViewModel).Assembly.GetCustomAttribute<AssemblyConfigurationAttribute>();
-            if(assemblyConfigurationAttribute is not null && assemblyConfigurationAttribute.Configuration is not null)
+            if (assemblyConfigurationAttribute is not null && assemblyConfigurationAttribute.Configuration is not null)
                 BuildType = assemblyConfigurationAttribute.Configuration;
 
         }
@@ -96,6 +96,6 @@ namespace Celer.Views.Pages.Settings
             }
         }
 
-        public class TriggerApplicationClosureMessage(bool value) : ValueChangedMessage<bool>(value){}
+        public class TriggerApplicationClosureMessage(bool value) : ValueChangedMessage<bool>(value) { }
     }
 }

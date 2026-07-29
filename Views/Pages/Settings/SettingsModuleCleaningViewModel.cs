@@ -24,7 +24,7 @@ namespace Celer.Views.Pages.Settings
         }
 
         [ObservableProperty]
-        public partial ObservableCollection<string> Paths { get; set; } = new ObservableCollection<string>(MainConfiguration.Default.CLEANENGINE_CustomPaths?.Cast<string>() ?? [] );
+        public partial ObservableCollection<string> Paths { get; set; } = new ObservableCollection<string>(MainConfiguration.Default.CLEANENGINE_CustomPaths?.Cast<string>() ?? []);
 
         public SettingsModuleCleaningViewModel(SettingsNavigation settingsNavigation)
         {
@@ -48,7 +48,8 @@ namespace Celer.Views.Pages.Settings
         private void PickAndAddFile()
         {
             var dialog = new OpenFileDialog
-            {   Title = "Choose a path to add",
+            {
+                Title = "Choose a path to add",
             };
 
             if (dialog.ShowDialog() == true && !Paths.Contains(dialog.FileName))

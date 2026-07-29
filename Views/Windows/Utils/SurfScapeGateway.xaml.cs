@@ -1,5 +1,4 @@
-﻿using Celer.Models;
-using Celer.Properties;
+﻿using Celer.Properties;
 using Celer.Services;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -156,29 +155,29 @@ namespace Celer.Views.Windows.Utils
                 await Task.Run(async () =>
                 {
                     string dxdiagPath = "dxdiag.xml";
-                        try
+                    try
+                    {
+                        using var proc = new Process
                         {
-                            using var proc = new Process
+                            StartInfo = new ProcessStartInfo
                             {
-                                StartInfo = new ProcessStartInfo
-                                {
-                                    FileName = "dxdiag.exe",
-                                    Arguments = "/x dxdiag.xml",
-                                    UseShellExecute = true,
-                                    CreateNoWindow = true,
-                                },
-                            };
-                            proc.Start();
-                            while (!File.Exists(dxdiagPath))
-                            {
-                                await Task.Delay(500);
-                            }
-                        }
-                        catch (Exception ex)
+                                FileName = "dxdiag.exe",
+                                Arguments = "/x dxdiag.xml",
+                                UseShellExecute = true,
+                                CreateNoWindow = true,
+                            },
+                        };
+                        proc.Start();
+                        while (!File.Exists(dxdiagPath))
                         {
-                            CurrentTask = "Error when running dxdiag! " + ex.Message;
-                            Debug.WriteLine("dxdiag failed: " + ex.Message);
+                            await Task.Delay(500);
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        CurrentTask = "Error when running dxdiag! " + ex.Message;
+                        Debug.WriteLine("dxdiag failed: " + ex.Message);
+                    }
                 });
             }
         }

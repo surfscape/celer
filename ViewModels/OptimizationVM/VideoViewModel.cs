@@ -108,14 +108,14 @@ namespace Celer.ViewModels.OptimizationVM
                 }
                 catch (FormatException e)
                 {
-                    
+
                     Debug.WriteLine(e.Message);
                 }
-                catch(OverflowException e)
+                catch (OverflowException e)
                 {
                     Debug.WriteLine(e.Message);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
                 }

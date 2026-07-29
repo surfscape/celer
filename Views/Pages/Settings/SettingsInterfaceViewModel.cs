@@ -16,7 +16,7 @@ namespace Celer.Views.Pages.Settings
         private readonly SettingsNavigation _settingsNavigation;
 
         [ObservableProperty]
-        public partial Dictionary<string,string> Languages { get; set; } = Localization.languages;
+        public partial Dictionary<string, string> Languages { get; set; } = Localization.languages;
 
         [ObservableProperty]
         public partial string CurrentLanguage { get; set; } = Localization.GetLanguageValueFromPreference();

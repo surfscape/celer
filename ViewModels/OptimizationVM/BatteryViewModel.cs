@@ -84,7 +84,7 @@ namespace Celer.ViewModels.OptimizationVM
                 if (hasBattery) _updateTimer.Start();
             }
         }
-        
+
         [RelayCommand]
         private void ApplyPowerPlan()
         {
@@ -94,10 +94,11 @@ namespace Celer.ViewModels.OptimizationVM
 
         private void UpdateBatteryInfo()
         {
-            if (batteryService is not null) { 
+            if (batteryService is not null)
+            {
                 batteryService.Update();
                 BatteryStats = batteryService.BatteryStats;
-        }
+            }
         }
 
 

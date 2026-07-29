@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer.ViewModels
 {

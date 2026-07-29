@@ -71,7 +71,7 @@ namespace Celer.Services.OpsecEngine.Helpers
 
                 if (bool.TryParse(result, out bool expectedResult))
                     return invert ? !expectedResult : expectedResult;
-                
+
                 return false;
             }
             catch (ArgumentException ex)

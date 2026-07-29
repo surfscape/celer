@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.Http;
 using System.Net.NetworkInformation;
 
 namespace Celer.Services

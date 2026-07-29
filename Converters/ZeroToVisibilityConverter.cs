@@ -8,16 +8,16 @@ namespace Celer.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int zeroValue = (value is int b)? b : 0;
+            int zeroValue = (value is int b) ? b : 0;
             bool invert = false;
-            if(parameter is not null)
+            if (parameter is not null)
                 invert = (bool.TryParse(parameter.ToString(), out bool p));
-            
-            if(parameter is not null && parameter.ToString() == "Hidden")
+
+            if (parameter is not null && parameter.ToString() == "Hidden")
             {
                 return zeroValue > 0 ? Visibility.Visible : Visibility.Hidden;
             }
-            
+
 
             return (zeroValue > 0, invert) switch
             {

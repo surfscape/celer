@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Celer.Infrastructure.Models.Battery;
 using Microsoft.Management.Infrastructure;
-using Celer.Infrastructure.Models.Battery;
+using System.Diagnostics;
 
 namespace Celer.Infrastructure
 {
@@ -149,10 +149,12 @@ namespace Celer.Infrastructure
         {
             using var batteryEstimatedRunTime = _session.QueryInstances(BatteryClassesNamespace, "WQL", $"SELECT EstimatedRuntime FROM {BatteryRuntimeClass}").FirstOrDefault();
             uint rawMinutes = batteryEstimatedRunTime is not null ? Convert.ToUInt32(batteryEstimatedRunTime.CimInstanceProperties["EstimatedRuntime"].Value) : 0;
-            if (rawMinutes == 0 || rawMinutes > 71582787 || (GetBatteryStatus() == 2 || GetBatteryStatus() == 6)) {
-                return  TimeSpan.Zero;
+            if (rawMinutes == 0 || rawMinutes > 71582787 || (GetBatteryStatus() == 2 || GetBatteryStatus() == 6))
+            {
+                return TimeSpan.Zero;
 
-            } else
+            }
+            else
                 return TimeSpan.FromMinutes(rawMinutes / 2); // TODO: the returned values seems exagerated
         }
 

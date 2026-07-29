@@ -11,7 +11,7 @@ namespace Celer.Views.Windows
     public partial class Dialog : Window
     {
         public MessageBoxResult Result { get; private set; } = MessageBoxResult.None;
-        public Dialog(string message, string title,string[]? buttonLabels, MessageBoxButtons buttons)
+        public Dialog(string message, string title, string[]? buttonLabels, MessageBoxButtons buttons)
         {
             InitializeComponent();
             WindowChrome.SetWindowChrome(
@@ -31,15 +31,18 @@ namespace Celer.Views.Windows
             MessageText.Text = message;
             CancelButton.Visibility = (buttons is 0 or (MessageBoxButtons)4) ? Visibility.Collapsed : Visibility.Visible;
             NoButton.Visibility = (buttons is 0 or (MessageBoxButtons)1) ? Visibility.Collapsed : Visibility.Visible;
-            if (NoButton.Visibility == Visibility.Collapsed || CancelButton.Visibility == Visibility.Collapsed) {
+            if (NoButton.Visibility == Visibility.Collapsed || CancelButton.Visibility == Visibility.Collapsed)
+            {
                 ButtonGrid.ColumnDefinitions.RemoveAt(2);
-                if(NoButton.Visibility == Visibility.Visible)
+                if (NoButton.Visibility == Visibility.Visible)
                     NoButton.Margin = new Thickness(0);
-            } else if (NoButton.Visibility == Visibility.Collapsed || CancelButton.Visibility == Visibility.Collapsed) {
+            }
+            else if (NoButton.Visibility == Visibility.Collapsed || CancelButton.Visibility == Visibility.Collapsed)
+            {
                 ButtonGrid.ColumnDefinitions.RemoveAt(1);
                 ButtonGrid.ColumnDefinitions.RemoveAt(2);
             }
-            if(buttonLabels is not null)
+            if (buttonLabels is not null)
                 switch (buttonLabels.Length)
                 {
                     case 1:
@@ -92,7 +95,7 @@ namespace Celer.Views.Windows
         }
         public static MessageBoxResult Show(string title, string message, string[]? buttonLabels, MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel)
         {
-            var msgBox = new Dialog(title, message, buttonLabels ,buttons);
+            var msgBox = new Dialog(title, message, buttonLabels, buttons);
 
             if (System.Windows.Application.Current != null)
             {
@@ -101,7 +104,7 @@ namespace Celer.Views.Windows
                     .FirstOrDefault(w => w.IsActive)
                     ?? System.Windows.Application.Current.MainWindow;
             }
-            
+
             msgBox.ShowDialog();
             return msgBox.Result;
         }
@@ -109,7 +112,7 @@ namespace Celer.Views.Windows
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
-            if(Result == MessageBoxResult.None)
+            if (Result == MessageBoxResult.None)
                 Result = MessageBoxResult.Cancel;
             e.Cancel = false;
         }

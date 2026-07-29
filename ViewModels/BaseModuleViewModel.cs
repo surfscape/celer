@@ -2,12 +2,11 @@
 using Celer.Views.Pages.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using System.ComponentModel;
 
 namespace Celer.ViewModels
 {
     public partial class BaseModuleViewModel : ObservableObject
-    { 
+    {
         /// <summary>
         /// Property that tracks the current loading progress of the module's view module
         /// </summary>

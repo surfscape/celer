@@ -2,7 +2,7 @@
 
 namespace Celer.Infrastructure.Models.Battery
 {
-    public class BatteryInfo(bool Availability, string Brand, string Model, int SerialNumber, string DeviceID,int FullDesignCapacity) : ObservableObject
+    public class BatteryInfo(bool Availability, string Brand, string Model, int SerialNumber, string DeviceID, int FullDesignCapacity) : ObservableObject
     {
         public bool Available = Availability;
         public string Brand = Brand;

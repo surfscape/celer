@@ -14,7 +14,7 @@ namespace Celer.Controls
     [ContentProperty(nameof(ContentPresenter))]
     public partial class CelerOption : UserControl
     {
-        
+
         [DependencyProperty]
         public PackIconLucideKind Icon { get; set; } = PackIconLucideKind.Paperclip;
 

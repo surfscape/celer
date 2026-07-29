@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shell;
 using static Celer.ViewModels.QCMenuViewModel;
-using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer.Views.Windows;
 
@@ -44,11 +43,12 @@ public partial class MainWindow : Window
         DataContext = _viewModel;
         WeakReferenceMessenger.Default.Register<WindowVisibleMessage>(this, (r, m) =>
         {
-            if(m.Value)
+            if (m.Value)
             {
                 ToggleMainWindowMenu.Header = "Hide Celer";
-            } else 
-                ToggleMainWindowMenu.Header = "Show Celer"; 
+            }
+            else
+                ToggleMainWindowMenu.Header = "Show Celer";
         });
     }
 
