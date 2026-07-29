@@ -32,8 +32,6 @@ namespace Celer.ViewModels
         [ObservableProperty]
         public partial bool CanClean { get; set; } = false;
 
-        private bool hasRan;
-
         public class LogBook()
         {
             public DateTime LogDate { get; set; } = DateTime.Now;
@@ -425,7 +423,6 @@ namespace Celer.ViewModels
                 }
             });
             TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
-            hasRan = true;
             CanClean = true;
             SaveLog();
         }
