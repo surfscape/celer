@@ -441,7 +441,7 @@ namespace Celer.ViewModels
                                 LogColor = new SolidColorBrush(Colors.Green),
                             }
                         );
-                using StreamWriter outputFile = new(Path.Combine(logFilePath, logFileName));
+                using StreamWriter outputFile = new(Path.Join(logFilePath, logFileName));
                 foreach (LogBook logBook in LogEntries)
                     outputFile.WriteLine($"{logBook.LogDate}: {logBook.LogEntry}");
             }
