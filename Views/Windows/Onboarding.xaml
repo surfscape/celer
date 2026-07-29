@@ -9,8 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Celer.Resources.i18n"
     Title="{x:Static resx:Strings.Onboarding_WindowTitle}"
-    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Width="800"
+    d:DataContext="{d:DesignInstance Type=local:OnboardingViewModel}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Icon="/Resources/Assets/app.ico"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -32,8 +33,8 @@
                     <StackPanel>
                         <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Strings.Onboarding_WelcomeTitle}" />
                         <TextBlock
-                            Margin="0,4,0,8"
                             MaxWidth="400"
+                            Margin="0,4,0,8"
                             HorizontalAlignment="Left"
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource Subheading}"
@@ -45,7 +46,7 @@
                         Width="64"
                         Margin="16,0,0,0"
                         RenderOptions.BitmapScalingMode="HighQuality"
-                        Source="/Resources/Assets/app.ico" />
+                        Source="/Resources/Assets/celer_256.png" />
                 </Grid>
                 <TextBlock
                     Margin="0,0,0,10"
@@ -100,7 +101,23 @@
                                 Privacy Policy
                             </Hyperlink></TextBlock>
                     </CheckBox>
-                    <TextBlock  FontSize="16" FontWeight="SemiBold" Margin="0,10,0,6">Features</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="0,10,0,6"
+                            FontSize="16"
+                            FontWeight="SemiBold">
+                            Features
+                        </TextBlock>
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="13"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            LineHeight="26"
+                            LineStackingStrategy="BlockLineHeight">
+                            (can be later changed in the settings)
+                        </TextBlock>
+                    </StackPanel>
                     <CheckBox IsChecked="{Binding AutoUpdates}">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -113,7 +130,7 @@
                                 Margin="8,0,0,0"
                                 VerticalAlignment="Bottom"
                                 Background="Transparent"
-                                ToolTip="Update Celer's signatures when starting up without manually updating them from the Tools menu.">
+                                ToolTip="Update signatures when Celer is launching up without the need of manually updating them from the Tools menu.">
                                 <iconPacks:PackIconLucide
                                     Width="14"
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
@@ -127,13 +144,13 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" Text="Start with WIndows" />
+                            <TextBlock Margin="0" Text="Auto start with Windows" />
                             <StackPanel
                                 Grid.Column="1"
                                 Margin="8,0,0,0"
                                 VerticalAlignment="Bottom"
                                 Background="Transparent"
-                                ToolTip="Allow Celer to run on startup with Windows, this will also allow you to use Celer's Quick Launch feature">
+                                ToolTip="Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray.">
                                 <iconPacks:PackIconLucide
                                     Width="14"
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
