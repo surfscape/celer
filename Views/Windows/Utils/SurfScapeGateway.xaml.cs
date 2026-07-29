@@ -156,8 +156,6 @@ namespace Celer.Views.Windows.Utils
                 await Task.Run(async () =>
                 {
                     string dxdiagPath = "dxdiag.xml";
-                    if (!File.Exists(dxdiagPath))
-                    {
                         try
                         {
                             using var proc = new Process
@@ -181,7 +179,6 @@ namespace Celer.Views.Windows.Utils
                             CurrentTask = "Error when running dxdiag! " + ex.Message;
                             Debug.WriteLine("dxdiag failed: " + ex.Message);
                         }
-                    }
                 });
             }
         }
