@@ -1,20 +1,53 @@
 ﻿using Celer.Models.Preferences;
 using Celer.Properties;
 using Celer.Services;
+using Celer.Utilities;
+using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
+using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer.Views.Pages.Settings
 {
     public partial class SettingsInterfaceViewModel : SettingsBaseViewModel
     {
         private readonly SettingsNavigation _settingsNavigation;
-        
+
+        [ObservableProperty]
+        public partial Dictionary<string,string> Languages { get; set; } = Localization.languages;
+
+        [ObservableProperty]
+        public partial string CurrentLanguage { get; set; } = Localization.GetLanguageValueFromPreference();
+
+        private bool _isRevertingLanguage = false;
+
+        partial void OnCurrentLanguageChanged(string value)
+        {
+            if (_isRevertingLanguage)
+                return;
+            System.Windows.MessageBoxResult result = Dialog.Show("To change the language you have to restart the app. Would you like to restart now?", "Celer Configuration Manager", ["Restart"]);
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {
+                Localization.SetApplicationLanguage(CurrentLanguage);
+                WeakReferenceMessenger.Default.Send(new TriggerApplicationClosureMessage(true));
+            }
+            else if (result == System.Windows.MessageBoxResult.No)
+                Localization.SetApplicationLanguage(CurrentLanguage);
+            else
+            {
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _isRevertingLanguage = true;
+                    CurrentLanguage = Localization.GetLanguageValueFromPreference();
+                    _isRevertingLanguage = false;
+                }));
+            }
+        }
+
         [ObservableProperty]
         public partial bool EnableFillContent { get; set; } = MainConfiguration.Default.ViewFillContent;
-
 
         partial void OnEnableFillContentChanged(bool value)
         {

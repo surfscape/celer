@@ -76,16 +76,16 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Signatures.settings</DependentUpon>
 		</Compile>
-		<Compile Update="Resources\i18n\Strings.Designer.cs">
+		<Compile Update="Resources\Resource.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
-			<DependentUpon>Strings.resx</DependentUpon>
+			<DependentUpon>Resource.resx</DependentUpon>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Update="Resources\i18n\Strings.resx">
+		<EmbeddedResource Update="Resources\Resource.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
+			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
@@ -99,6 +99,7 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="Resources\i18n\" />
 	  <Folder Include="Views\Components\" />
 	</ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Celer.Models.Preferences;
 using Celer.Properties;
 using Celer.Services;
+using Celer.Utilities;
 using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -44,6 +46,16 @@ public partial class App : Application
                 Process.Start(Environment.ProcessPath, "--disableMutexProtection");
             Current.Shutdown();
         });
+        string langKey = MainConfiguration.Default.Language;
+        if (string.IsNullOrEmpty(langKey))
+        {
+            langKey = "en";
+        }
+        var culture = new CultureInfo(langKey);
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 
     private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)

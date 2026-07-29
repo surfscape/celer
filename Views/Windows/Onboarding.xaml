@@ -7,8 +7,8 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resx="clr-namespace:Celer.Resources.i18n"
-    Title="{x:Static resx:Strings.Onboarding_WindowTitle}"
+    xmlns:resx="clr-namespace:Celer.Resources"
+    Title="{x:Static resx:Resource.Onboarding_WindowTitle}"
     Width="800"
     d:DataContext="{d:DesignInstance Type=local:OnboardingViewModel}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -31,14 +31,14 @@
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Strings.Onboarding_WelcomeTitle}" />
+                        <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Resource.Onboarding_WelcomeTitle}" />
                         <TextBlock
                             MaxWidth="400"
                             Margin="0,4,0,8"
                             HorizontalAlignment="Left"
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource Subheading}"
-                            Text="{x:Static resx:Strings.Onboarding_WelcomeIntroduction}"
+                            Text="{x:Static resx:Resource.Onboarding_WelcomeIntroduction}"
                             TextWrapping="Wrap" />
                     </StackPanel>
                     <Image
@@ -51,7 +51,7 @@
                 <TextBlock
                     Margin="0,0,0,10"
                     Style="{StaticResource Heading2}"
-                    Text="{x:Static resx:Strings.Onboarding_LegalTitle}" />
+                    Text="{x:Static resx:Resource.Onboarding_LegalTitle}" />
                 <Border
                     Margin="0,0,0,8"
                     Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
@@ -93,7 +93,7 @@
                 <StackPanel x:Name="OnboardingOptions">
                     <CheckBox VerticalAlignment="Stretch" IsChecked="{Binding AcceptTerms}">
                         <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom">
-                            <Run Text="{x:Static resx:Strings.Onboarding_LegalCheckboxLabel}" />
+                            <Run Text="{x:Static resx:Resource.Onboarding_LegalCheckboxLabel}" />
                             <Hyperlink
                                 custom:HyperlinkExtensions.IsExternal="True"
                                 Foreground="{DynamicResource AccentFillColorDefaultBrush}"
@@ -124,7 +124,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" Text="{x:Static resx:Strings.Onboarding_AutoDownloadsCheckboxLabel}" />
+                            <TextBlock Margin="0" Text="{x:Static resx:Resource.Onboarding_AutoDownloadsCheckboxLabel}" />
                             <StackPanel
                                 Grid.Column="1"
                                 Margin="8,0,0,0"

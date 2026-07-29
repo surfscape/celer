@@ -13,6 +13,17 @@
     <Grid>
         <StackPanel>
             <uc:CelerOption
+                Title="Language"
+                Description="Change the current language"
+                Icon="Languages">
+                <ComboBox
+                    Grid.Column="1"
+                    MinWidth="170"
+                    ItemsSource="{Binding Languages.Values}"
+                    SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}" />
+            </uc:CelerOption>
+            <TextBlock Text="{Binding CurrentLanguage}" />
+            <uc:CelerOption
                 Title="Application Theme"
                 Description="Change the current color scheme of the app, or use the system's theme"
                 Icon="Palette">
@@ -27,9 +38,9 @@
                 Description="Allows the view content to stretch to the Window width instead of being limited to 980px"
                 Icon="Expand">
                 <CheckBox
+                    VerticalAlignment="Stretch"
                     IsChecked="{Binding EnableFillContent}"
                     Style="{StaticResource SwitchCheckBoxStyle}"
-                    VerticalAlignment="Stretch"
                     ToolTip="When enabled, content will expand to fill the window size." />
             </uc:CelerOption>
             <uc:CelerOption

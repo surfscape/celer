@@ -1,4 +1,4 @@
-﻿using Celer.Resources.i18n;
+﻿using Celer.Resources;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
@@ -20,7 +20,7 @@ namespace Celer.Views.Windows.Utils
         private string? name;
 
         [ObservableProperty]
-        private string message = Strings.WaitMessage;
+        private string message = Resource.WaitMessage;
 
         [ObservableProperty]
         private CheckStatus status = CheckStatus.Pending;
@@ -63,7 +63,7 @@ namespace Celer.Views.Windows.Utils
             await PerformCheck(Checks[4], () => CheckCommandExistsAsync("winget.exe"));
             await PerformCheck(Checks[5], CheckStoreInstalledAsync);
 
-            StartCheckButton.Content = Strings.AmbientChecker_DoneLabel;
+            StartCheckButton.Content = Resource.AmbientChecker_DoneLabel;
         }
 
         private async Task PerformCheck(CheckItem item, Func<Task<(bool, string)>> checkFunction)
@@ -101,7 +101,7 @@ namespace Celer.Views.Windows.Utils
                         }
                     }
                 }
-                return (false, Strings.NotFound);
+                return (false, Resource.NotFound);
             });
         }
 
@@ -125,9 +125,9 @@ namespace Celer.Views.Windows.Utils
 
                 if (process.ExitCode == 0 && !string.IsNullOrWhiteSpace(output))
                 {
-                    return (true, Strings.Available);
+                    return (true, Resource.Available);
                 }
-                return (false, Strings.NotFound);
+                return (false, Resource.NotFound);
             }
         }
         private async Task<(bool, string)> CheckStoreInstalledAsync()
@@ -150,9 +150,9 @@ namespace Celer.Views.Windows.Utils
 
                 if (!string.IsNullOrWhiteSpace(output))
                 {
-                    return (true, Strings.Installed);
+                    return (true, Resource.Installed);
                 }
-                return (false, Strings.NotFound);
+                return (false, Resource.NotFound);
             }
         }
     }
