@@ -5,9 +5,9 @@ using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OptimizationVM;
 using Celer.Views.Pages.Settings;
-using Celer.Views.UserControls.MainApp;
-using Celer.Views.UserControls.MainApp.MaintenanceViews;
-using Celer.Views.UserControls.MainApp.OptimizationViews;
+using Celer.Views.Pages.Modules;
+using Celer.Views.Pages.Modules.Maintenance;
+using Celer.Views.Pages.Modules.Optimization;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
@@ -22,6 +22,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
+using Celer.Views.Pages.Modules.Opsec;
+using Celer.ViewModels.OpsecVM;
 
 namespace Celer;
 
@@ -119,10 +121,10 @@ public partial class App : Application
         (context, services) =>
         {
             // register main services, these include services that are used across the application and the main window
-            services.AddTransient<SurfScapeGateway>();
-            services.AddSingleton<MainWindow>();
             services.AddSingleton<NavigationService>();
             services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<MainWindow>();
+            services.AddTransient<SurfScapeGateway>();
             services.AddSingleton<SettingsNavigation>();
 
             // viewmodels for the user controls and other views
@@ -137,6 +139,7 @@ public partial class App : Application
             services.AddSingleton<MaintenanceViewModel>();
             services.AddSingleton<RepairViewModel>();
             services.AddTransient<NetworkViewModel>();
+            services.AddTransient<OverviewViewModel>();
             services.AddSingleton<SettingsViewModel>();
             services.AddTransient<SettingsBaseViewModel>();
             services.AddTransient<SettingsShellViewModel>();
@@ -146,18 +149,7 @@ public partial class App : Application
             services.AddTransient<SettingsAdvancedViewModel>();
 
             // usercontrols themselves (and other views that need access to the services)
-            services.AddSingleton<MenuBar>();
-            services.AddSingleton<Dashboard>();
-            services.AddSingleton<Cleaning>();
-            services.AddSingleton<Optimization>();
-            services.AddTransient<MemoryManagement>();
-            services.AddTransient<Battery>();
-            services.AddTransient<Video>();
-            services.AddTransient<Sensors>();
-            services.AddSingleton<Maintenance>();
-            services.AddTransient<Repair>();
-            services.AddTransient<Network>();
-            services.AddSingleton<Privacidade>();
+            services.AddSingleton<MenuBar>();           
             services.AddTransient<Settings>();
         }
     )

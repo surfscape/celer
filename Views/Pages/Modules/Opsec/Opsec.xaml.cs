@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp
+namespace Celer.Views.Pages.Modules.Opsec
 {
     /// <summary>
     /// Interaction logic for Privacidade.xaml
     /// </summary>
-    public partial class Privacidade : UserControl
+    public partial class Opsec : UserControl
     {
-        public Privacidade()
+        public Opsec()
         {
             InitializeComponent();
         }

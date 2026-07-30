@@ -1,20 +1,17 @@
 ﻿using Celer.ViewModels;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp
+namespace Celer.Views.Pages.Modules
 {
     /// <summary>
     /// Interaction logic for Cleaning.xaml
     /// </summary>
     public partial class Cleaning : UserControl
     {
-        private readonly CleanEngine _viewModel;
 
-        public Cleaning(CleanEngine viewModel)
+        public Cleaning()
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            DataContext = _viewModel;
             LogListBox.Items.MoveCurrentToLast();
             LogListBox.ScrollIntoView(LogListBox.Items.CurrentItem);
         }

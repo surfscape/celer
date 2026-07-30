@@ -1,7 +1,11 @@
 ﻿using Celer.Models;
 using Celer.Properties;
 using Celer.Services;
-using Celer.Views.UserControls.MainApp;
+using Celer.ViewModels.OpsecVM;
+using Celer.Views.Pages.Modules;
+using Celer.Views.Pages.Modules.Maintenance;
+using Celer.Views.Pages.Modules.Opsec;
+using Celer.Views.Pages.Modules.Optimization;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,13 +58,13 @@ namespace Celer.ViewModels
             _navigationService.NavigationChanged += OnNavigationChanged;
             MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
             TabsModule =
-        [
-            new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<Dashboard>(), VerticalScrollMode = ScrollBarVisibility.Disabled  },
-            new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<Cleaning>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
-            new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<Optimization>() },
-            new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<Maintenance>() },
-            new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<Privacidade>() }
-        ];
+                [
+                    new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<DashboardViewModel>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
+        new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<CleanEngine>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
+        new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<OptimizationViewModel>() },
+        new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<MaintenanceViewModel>() },
+        new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<OverviewViewModel>() }
+                ];
         }
 
         private void OnCompactModeChanged(object sender, bool isCompact)
@@ -121,52 +125,45 @@ namespace Celer.ViewModels
         }
 
         [RelayCommand]
-        public static void QCOpenQuickCenter()
-        {
-
-            if (MainConfiguration.Default.EnableQuickCenter)
-            {
-                var quickCenter = new QuickCenter();
-                quickCenter.Show();
-                quickCenter.Activate();
-            }
-        }
-
-        [RelayCommand]
         public static void QCOpenApp()
         {
             var mainWindow = Application.Current.MainWindow;
-            if (mainWindow == null) return;
-            if (mainWindow.Visibility != Visibility.Visible || mainWindow.WindowState == WindowState.Minimized)
-            {
-                if (mainWindow.Visibility != Visibility.Visible)
+            if (MainConfiguration.Default.EnableQuickCenter) {
+                var quickCenter = new QuickCenter();
+                quickCenter.Show();
+                quickCenter.Activate();
+            } else {
+                if (mainWindow == null) return;
+                if (mainWindow.Visibility != Visibility.Visible || mainWindow.WindowState == WindowState.Minimized)
                 {
-                    mainWindow.Show();
-                }
+                    if (mainWindow.Visibility != Visibility.Visible)
+                    {
+                        mainWindow.Show();
+                    }
 
-                if (mainWindow.WindowState == WindowState.Minimized)
-                {
-                    mainWindow.WindowState = WindowState.Normal;
+                    if (mainWindow.WindowState == WindowState.Minimized)
+                    {
+                        mainWindow.WindowState = WindowState.Normal;
+                    }
+                    mainWindow.Activate();
+                    mainWindow.Topmost = true;
+                    mainWindow.Topmost = false;
+                    mainWindow.Focus();
+                    WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
                 }
-                mainWindow.Activate();
-                mainWindow.Topmost = true;
-                mainWindow.Topmost = false;
-                mainWindow.Focus();
-                WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
-            }
-            else
-            {
-                mainWindow.Hide();
-                mainWindow.WindowState = WindowState.Minimized;
-                mainWindow.Visibility = Visibility.Collapsed;
-                WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
-                var windows = Application.Current.Windows;
-                foreach (Window win in windows)
+                else
                 {
-                    if (win is not MainWindow)
-                        win.Close();
+                    mainWindow.Hide();
+                    mainWindow.WindowState = WindowState.Minimized;
+                    mainWindow.Visibility = Visibility.Collapsed;
+                    WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
+                    var windows = Application.Current.Windows;
+                    foreach (Window win in windows)
+                    {
+                        if (win is not MainWindow)
+                            win.Close();
+                    }
                 }
-
             }
         }
 

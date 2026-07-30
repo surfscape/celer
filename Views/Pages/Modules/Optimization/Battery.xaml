@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Celer.Views.UserControls.MainApp.OptimizationViews.Battery"
+    x:Class="Celer.Views.Pages.Modules.Optimization.Battery"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Optimization="clr-namespace:Celer.ViewModels.OptimizationVM"
@@ -9,7 +9,7 @@
     xmlns:convertersBat="clr-namespace:Celer.Converters.Battery"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:Celer.Views.UserControls.MainApp.OptimizationViews"
+    xmlns:local="clr-namespace:Celer.Views.Pages.Modules.Optimization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:Background="white"
     d:DataContext="{d:DesignInstance Type=Optimization:BatteryViewModel}"

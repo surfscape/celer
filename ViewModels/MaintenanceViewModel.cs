@@ -1,6 +1,7 @@
 ﻿using Celer.Models;
 using Celer.Services;
-using Celer.Views.UserControls.MainApp.MaintenanceViews;
+using Celer.ViewModels.MaintenanceVM;
+using Celer.Views.Pages.Modules.Maintenance;
 
 namespace Celer.ViewModels
 {
@@ -11,17 +12,16 @@ namespace Celer.ViewModels
         protected override Dictionary<string, NavigationSubView> SubViews => _views;
 
         public MaintenanceViewModel(
-
             NavigationService navigationService,
-            Repair repairView,
-            Network networkView
+            RepairViewModel repairViewModel,
+            NetworkViewModel networkViewModel
         )
             : base(navigationService, "Maintenance")
         {
             _views = new Dictionary<string, NavigationSubView>
             {
-                { "Repair", new NavigationSubView("System Repair", "Run the official system repair utilities to check & repair erros in the disk/image",repairView) },
-                { "Network", new NavigationSubView("Network Manager", "Check your network connection and change DNS system-wide", networkView) },
+                { "Repair", new NavigationSubView("System Repair", "Run the official system repair utilities to check & repair erros in the disk/image",repairViewModel) },
+                { "Network", new NavigationSubView("Network Manager", "Check your network connection and change DNS system-wide", networkViewModel) },
             };
         }
     }

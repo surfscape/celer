@@ -1,7 +1,8 @@
-﻿using Celer.ViewModels.OpsecVM;
+﻿using Celer.ViewModels;
+using Celer.ViewModels.OpsecVM;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.OpsecViews
+namespace Celer.Views.Pages.Modules.Opsec
 {
     /// <summary>
     /// Interaction logic for Overview.xaml
@@ -11,7 +12,6 @@ namespace Celer.Views.UserControls.MainApp.OpsecViews
         public Overview()
         {
             InitializeComponent();
-            DataContext = new OverviewViewModel();
         }
     }
 }

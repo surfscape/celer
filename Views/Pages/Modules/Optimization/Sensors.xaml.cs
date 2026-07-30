@@ -3,43 +3,40 @@ using Celer.ViewModels.OptimizationVM;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.OptimizationViews
+namespace Celer.Views.Pages.Modules.Optimization
 {
     /// <summary>
     /// Interaction logic for Sensors.xaml
     /// </summary>
     public partial class Sensors : UserControl, INavigationAware
     {
-        private readonly SensorViewModel _viewModel;
-
-        public Sensors(SensorViewModel viewModel)
+        public Sensors()
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            DataContext = _viewModel;
             Loaded += Sensors_Loaded;
         }
 
         private async void Sensors_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Yield();
-            if (_viewModel.IsLoading)
+            if (DataContext is SensorViewModel viewModel && viewModel.IsLoading)
             {
-                await _viewModel.Initialize();
+                await viewModel.Initialize();
             }
         }
 
         public async Task OnNavigatedTo()
         {
-            if (!_viewModel.IsLoading)
+            if (DataContext is SensorViewModel viewModel && !viewModel.IsLoading)
             {
-                await _viewModel.StartTimer();
+                await viewModel.StartTimer();
             }
         }
 
         public async Task OnNavigatedFrom()
         {
-            await _viewModel.StopTimer();
+            if (DataContext is SensorViewModel viewModel)
+                await viewModel.StopTimer();
         }
     }
 }

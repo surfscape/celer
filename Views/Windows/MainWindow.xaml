@@ -10,8 +10,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Celer.Models"
     xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
-    xmlns:uc="clr-namespace:Celer.Views.UserControls.MainApp"
+    xmlns:uc="clr-namespace:Celer.Views.Pages.Modules"
+    xmlns:ucMa="clr-namespace:Celer.Views.Pages.Modules.Maintenance"
+    xmlns:ucOp="clr-namespace:Celer.Views.Pages.Modules.Optimization"
+    xmlns:ucOs="clr-namespace:Celer.Views.Pages.Modules.Opsec"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    xmlns:viewmodelsOpsec="clr-namespace:Celer.ViewModels.OpsecVM"
     Title="Celer"
     Width="980"
     Height="640"
@@ -25,6 +29,21 @@
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:MenuStateToolTipConverter x:Key="MenuStateToolTipConverter" />
+        <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
+            <uc:Dashboard />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:CleanEngine}">
+            <uc:Cleaning />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:OptimizationViewModel}">
+            <ucOp:Optimization />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:MaintenanceViewModel}">
+            <ucMa:Maintenance />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodelsOpsec:OverviewViewModel}">
+            <ucOs:Opsec />
+        </DataTemplate>
     </Window.Resources>
     <Border
         x:Name="HighContrastBorder"
@@ -170,7 +189,6 @@
                                         <TranslateTransform Y="20" />
                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
-
                                 <DataTemplate.Triggers>
                                     <EventTrigger RoutedEvent="Binding.TargetUpdated" SourceName="AnimatedContent">
                                         <BeginStoryboard>
@@ -206,12 +224,15 @@
                 x:Name="traybarMenu"
                 DataContext="{Binding MenuViewModel}"
                 IconSource="/Resources/Assets/app.ico"
-                LeftClickCommand="{Binding QCOpenQuickCenterCommand}"
+                LeftClickCommand="{Binding QCOpenAppCommand}"
                 NoLeftClickDelay="True"
                 ToolTipText="Celer">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu x:Name="QCMenu">
-                        <MenuItem Command="{Binding QCOpenAppCommand}" x:Name="ToggleMainWindowMenu" Header="Hide Celer" />
+                        <MenuItem
+                            x:Name="ToggleMainWindowMenu"
+                            Command="{Binding QCOpenAppCommand}"
+                            Header="Hide Celer" />
                         <!-- TODO
                         <MenuItem Header="Power Plans">
                             <MenuItem Header="Balanced" IsCheckable="True"></MenuItem>

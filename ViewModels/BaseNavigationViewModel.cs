@@ -3,7 +3,6 @@ using Celer.Models;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Controls;
 
 namespace Celer.ViewModels
 {
@@ -17,7 +16,7 @@ namespace Celer.ViewModels
         [ObservableProperty]
         private NavigationSubView? currentSubView;
 
-        public UserControl? CurrentView => CurrentSubView?.Control;
+        public ObservableObject? CurrentView => CurrentSubView?.Control;
         public string? CurrentViewName => CurrentSubView?.Name;
 
         public string? CurrentViewDescription => CurrentSubView?.Description;

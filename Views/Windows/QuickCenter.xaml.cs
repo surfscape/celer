@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -10,7 +11,7 @@ namespace Celer.Views.Windows
     /// Interaction logic for QuickCenter.xaml
     /// </summary>
     // TODO: QuickCenter Window code is pretty ugly and was cobbled up together from various StackOverflow answers but I have the intention to cleaned it up
-    public partial class QuickCenter : Window
+    public partial class QuickCenter : Window, IDisposable
     {
         // Source - https://stackoverflow.com/a/958980
         // Posted by Joe White, modified by community. See post 'Timeline' for change history
@@ -23,6 +24,10 @@ namespace Celer.Views.Windows
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        private readonly EventHandler? _stateChangedHandler;
+        private readonly EventHandler? _activatedHandler;
+        private readonly EventHandler? _deactivatedHandler;
+        private readonly RoutedEventHandler? _loadedHandler;
 
         public QuickCenter()
         {
@@ -38,10 +43,30 @@ namespace Celer.Views.Windows
                 NonClientFrameEdges = GetPrefferedNonClientFrameEdges()
             });
 
-            StateChanged += (s, e) => UpdateMainWindowVisuals();
-            Activated += (s, e) => UpdateMainWindowVisuals();
-            Deactivated += (s, e) => Close();
-            Loaded += (s, e) => HideCloseButton();
+            _stateChangedHandler = (s, e) => UpdateMainWindowVisuals();
+            _activatedHandler = (s, e) => UpdateMainWindowVisuals();
+            _deactivatedHandler = (s, e) => Close();
+            _loadedHandler = (s, e) => HideCloseButton();
+
+            StateChanged += _stateChangedHandler;
+            Activated += _activatedHandler;
+            Deactivated += _deactivatedHandler;
+            Loaded += _loadedHandler;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            StateChanged -= _stateChangedHandler;
+            Activated -= _activatedHandler;
+            Deactivated -= _deactivatedHandler;
+            Loaded -= _loadedHandler;
+            GC.SuppressFinalize(this);
         }
 
         private void HideCloseButton()

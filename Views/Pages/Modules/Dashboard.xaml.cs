@@ -2,32 +2,27 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp
+namespace Celer.Views.Pages.Modules
 {
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
     public partial class Dashboard : UserControl
     {
-        private readonly DashboardViewModel _viewModel;
-
-        public Dashboard(DashboardViewModel viewModel)
+        public Dashboard()
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            DataContext = _viewModel;
             Loaded += Dashboard_Loaded;
-
         }
 
         private async void Dashboard_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Yield();
-            if (_viewModel.IsLoading)
-            {
-                await _viewModel.InitializeAsync();
-            }
 
+            if (DataContext is DashboardViewModel viewModel && viewModel.IsLoading)
+            {
+                await viewModel.InitializeAsync();
+            }
         }
     }
 }

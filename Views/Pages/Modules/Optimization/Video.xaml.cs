@@ -3,43 +3,40 @@ using Celer.ViewModels.OptimizationVM;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Celer.Views.UserControls.MainApp.OptimizationViews
+namespace Celer.Views.Pages.Modules.Optimization
 {
     /// <summary>
     /// Interaction logic for Video.xaml
     /// </summary>
     public partial class Video : UserControl, INavigationAware
     {
-        private readonly VideoViewModel _viewModel;
-
-        public Video(VideoViewModel viewModel)
+        public Video()
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            DataContext = _viewModel;
             Loaded += Video_Loaded;
         }
 
         private async void Video_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Yield();
-            if (_viewModel.IsLoading)
+            if (DataContext is VideoViewModel viewModel && viewModel.IsLoading)
             {
-                await _viewModel.Initialize();
+                await viewModel.Initialize();
             }
         }
 
         public async Task OnNavigatedTo()
         {
-            if (!_viewModel.IsLoading)
+            if (DataContext is VideoViewModel viewModel && !viewModel.IsLoading)
             {
-                await _viewModel.StartTimerAsync();
+                await viewModel.StartTimerAsync();
             }
         }
 
         public async Task OnNavigatedFrom()
         {
-            await _viewModel.StopTimerAsync();
+            if(DataContext is VideoViewModel viewModel)
+            await viewModel.StopTimerAsync();
         }
     }
 }

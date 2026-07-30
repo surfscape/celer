@@ -37,8 +37,8 @@ public partial class MainWindow : Window
         );
 
         StateChanged += (s, e) => UpdateMainWindowVisuals();
-        Activated += (s, e) => UpdateMainWindowVisuals();
-        Deactivated += (s, e) => UpdateMainWindowVisuals();
+        Activated += (s, e) => OnActivated();
+        Deactivated += (s, e) => OnDeactivated();
 
         DataContext = _viewModel;
         WeakReferenceMessenger.Default.Register<WindowVisibleMessage>(this, (r, m) =>
@@ -52,7 +52,17 @@ public partial class MainWindow : Window
         });
     }
 
+    private void OnActivated()
+    {
+        UpdateMainWindowVisuals();
+        ProcessPowerManager.Disable();
+    }
 
+    private void OnDeactivated()
+    {
+        UpdateMainWindowVisuals();
+        ProcessPowerManager.Enable();
+    }
 
     private void UpdateMainWindowVisuals()
     {

@@ -13,30 +13,21 @@
     <UserControl.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ElementName=Root}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Border>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource Heading1}"
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource Heading1}"
                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                            Text="{Binding ViewLabel, ElementName=Root}" />
-                <TextBlock FontSize="15"
+            <TextBlock FontSize="15"
                            Grid.Row="1"
                            Margin="0,-4,0,16"
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            Text="{Binding ViewDescription, ElementName=Root}" />
-            </Grid>
-        </Border>
-        <Border Padding="0,8,0,16" Grid.Row="1">
-            <ContentControl Content="{Binding CurrentView, ElementName=Root}" />
-        </Border>
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>
