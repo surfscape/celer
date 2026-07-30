@@ -78,7 +78,7 @@ namespace Celer.ViewModels
             {
                 AddLog($"An error occurred when loading the signatures: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                 CanClean = false;
-            }
+            } 
         }
 
         private void ParseJson(string json)
@@ -151,6 +151,7 @@ namespace Celer.ViewModels
             Categories.Add(
                     new CleanupCategory { Name = "Special", Items = specialItems }
             );
+            AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
         }
 
         public static Action CreateAction(JsonElement action)
@@ -395,6 +396,7 @@ namespace Celer.ViewModels
                             continue;
                         }
                     }
+                    AddLog($"Task {item.Name} has finished", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                     Interlocked.Add(ref totalFreed, freed);
                 }
             });
