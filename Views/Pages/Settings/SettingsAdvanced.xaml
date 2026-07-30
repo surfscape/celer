@@ -15,7 +15,7 @@
     <Grid RowDefinitions="auto auto auto">
         <StackPanel>
             <uc:CelerOption
-                Title="Polling Rate"
+                Title="Polling rate"
                 Description="How much time Celer takes to refresh information"
                 Icon="Timer">
                 <ComboBox
@@ -26,7 +26,7 @@
                     SelectedItem="{Binding PoolingRate}" />
             </uc:CelerOption>
             <uc:CelerOption
-                Title="Rendering Mode"
+                Title="Rendering mode"
                 Description="Choose what graphic rendering mode to use"
                 Icon="Gpu">
                 <ComboBox

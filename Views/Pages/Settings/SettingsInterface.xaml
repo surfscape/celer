@@ -24,7 +24,7 @@
             </uc:CelerOption>
             <TextBlock Text="{Binding CurrentLanguage}" />
             <uc:CelerOption
-                Title="Application Theme"
+                Title="Application theme"
                 Description="Change the current color scheme of the app, or use the system's theme"
                 Icon="Palette">
                 <ComboBox
