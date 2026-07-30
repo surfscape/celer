@@ -102,4 +102,12 @@
 	  <Folder Include="Resources\i18n\" />
 	  <Folder Include="Views\Components\" />
 	</ItemGroup>
+	<Target Name="DownloadSignatures" BeforeTargets="BeforeBuild">
+		<DownloadFile SourceUrl="https://raw.githubusercontent.com/surfscape/gateway/refs/heads/main/src/celer/signatures/cleaning.json" DestinationFolder="$(MSBuildProjectDirectory)\Resources\Signatures" DestinationFileName="cleaning.json" SkipUnchangedFiles="true" />
+	</Target>
+	<ItemGroup>
+		<Resource Include="Resources\Signatures\cleaning.json">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
 </Project>

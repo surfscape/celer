@@ -403,3 +403,6 @@ FodyWeavers.xsd
 
 # NSIS output
 CelerSetup.exe
+
+# Gateway Local Signatures
+Resources/Signatures

@@ -21,7 +21,6 @@ namespace Celer.Views.Windows.Utils
         // Source - https://stackoverflow.com/a
         // Posted by Joe White, modified by community.
         // Retrieved 2025-11-12, License - CC BY-SA 4.0
-
         // Hides the titlebar close button
 
         private const int GWL_STYLE = -16;
@@ -35,11 +34,11 @@ namespace Celer.Views.Windows.Utils
         private readonly MainWindow _mainWindow;
 
         /// <summary>
-        /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, they can still trigger when gateway is ran manually.
+        /// Used to determine whether the window was triggered on startup or not. This is to make sure that if the user has disabled auto updates, they can still trigger them when gateway is ran manually.
         /// </summary>
         public bool MainWindowTrigger { get; set; } = false;
         /// <summary>
-        /// When true hides the main window. Used when gateway is ran during startup and if "Starting with Windows" is enabled.
+        /// Hides the main window when true. Used when gateway is ran during startup and when Celer is launched with the '--silent' flag.
         /// </summary>
         public bool SilentStartup { get; set; } = false;
 
@@ -73,7 +72,6 @@ namespace Celer.Views.Windows.Utils
             // Source - https://stackoverflow.com/a
             // Posted by Joe White, modified by community. See post 'Timeline' for change history
             // Retrieved 2025-11-12, License - CC BY-SA 4.0
-
             var hwnd = new WindowInteropHelper(this).Handle;
             int v = SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
             Debug.WriteLine(v);
@@ -130,13 +128,16 @@ namespace Celer.Views.Windows.Utils
                     }
                     else
                     {
-                        CurrentTask = "Service down. Trying to get local signatures.";
+                        CurrentTask = "Service down. Trying to get local signatures...";
                         SetOfflineDatabase();
+                        CurrentTask = hasOfflineDb
+                            ? "Found local signatures"
+                            : "No local signatures found, cleaning has been disabled";
                     }
                 }
                 else
                 {
-                    CurrentTask = "No internet. Searching for local signatures...";
+                    CurrentTask = "Offline. Searching for local signatures...";
                     SetOfflineDatabase();
                     CurrentTask = hasOfflineDb
                         ? "Found local signatures"
@@ -146,7 +147,7 @@ namespace Celer.Views.Windows.Utils
 
             public void SetOfflineDatabase()
             {
-                hasOfflineDb = CleaningSignatureManager.HasLocalDatabase();
+                hasOfflineDb = CleaningSignatureManager.HasLocalDatabase() || CleaningSignatureManager.HasInternalDatabase();
                 WeakReferenceMessenger.Default.Send(new TriggerCleaningSignaturesUpdate(hasOfflineDb));
             }
 

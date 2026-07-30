@@ -17,6 +17,7 @@
         <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
     </UserControl.Resources>
     <StackPanel>
+
         <uc:CelerOption
             Title="Export cleaning log"
             Description="Celer will export a .txt log of the cleaning process"
@@ -24,6 +25,15 @@
             <CheckBox
                 VerticalAlignment="Stretch"
                 IsChecked="{Binding EnableExportCleaningLog}"
+                Style="{StaticResource SwitchCheckBoxStyle}" />
+        </uc:CelerOption>
+        <uc:CelerOption
+            Title="Prefer internal signatures"
+            Description="By default Celer will check for local signatures, however as a fallback Celer ships it's own cleaning signatures, these are only updated when Celer itself is updated but you can force using them."
+            Icon="Database">
+            <CheckBox
+                VerticalAlignment="Stretch"
+                IsChecked="{Binding EnablePreferInternalSignatures}"
                 Style="{StaticResource SwitchCheckBoxStyle}" />
         </uc:CelerOption>
         <Border

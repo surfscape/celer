@@ -261,5 +261,17 @@ namespace Celer.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CLEANENGINE_PreferInternalSignatures {
+            get {
+                return ((bool)(this["CLEANENGINE_PreferInternalSignatures"]));
+            }
+            set {
+                this["CLEANENGINE_PreferInternalSignatures"] = value;
+            }
+        }
     }
 }

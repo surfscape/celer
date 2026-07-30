@@ -1,5 +1,6 @@
 ﻿using ByteSizeLib;
 using Celer.Properties;
+using Celer.Services;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -44,7 +45,7 @@ namespace Celer.ViewModels
             WeakReferenceMessenger.Default.Register<TriggerCleaningSignaturesUpdate>(this, (r, m) =>
             {
                 CanClean = m.Value;
-                LoadJson();
+                LoadSignatures();
             });
         }
 
@@ -58,32 +59,24 @@ namespace Celer.ViewModels
             });
         }
 
-        private void LoadJson()
+        private void LoadSignatures()
         {
             Categories.Clear();
-            const string path = "signatures.json";
-            if (!File.Exists(path))
-            {
-                AddLog(
-                    "Signatures not found. Update them through the Tools menu and click Check Updates",
-                    (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
-                );
-                CanClean = false;
-                return;
-            }
             try
             {
                 AddLog(
                     "Loading signatures...",
                     (Brush)Application.Current.FindResource("SystemFillColorAttentionBrush")
                 );
-                var json = File.ReadAllText(path);
-                ParseJson(json);
-                AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                if (CleaningSignatureManager.GetSignatures() != string.Empty)
+                    ParseJson(CleaningSignatureManager.GetSignatures());
+                else
+                    CanClean = false;
+                
             }
             catch (Exception e)
             {
-                AddLog($"An error occurred when loading the signaturs: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+                AddLog($"An error occurred when loading the signatures: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                 CanClean = false;
             }
         }

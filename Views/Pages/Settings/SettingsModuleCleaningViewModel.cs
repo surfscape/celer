@@ -24,6 +24,15 @@ namespace Celer.Views.Pages.Settings
         }
 
         [ObservableProperty]
+        public partial bool EnablePreferInternalSignatures { get; set; } = MainConfiguration.Default.CLEANENGINE_PreferInternalSignatures;
+
+        partial void OnEnablePreferInternalSignaturesChanged(bool value)
+        {
+            MainConfiguration.Default.CLEANENGINE_PreferInternalSignatures = value;
+            MainConfiguration.Default.Save();
+        }
+
+        [ObservableProperty]
         public partial ObservableCollection<string> Paths { get; set; } = new ObservableCollection<string>(MainConfiguration.Default.CLEANENGINE_CustomPaths?.Cast<string>() ?? []);
 
         public SettingsModuleCleaningViewModel(SettingsNavigation settingsNavigation)
