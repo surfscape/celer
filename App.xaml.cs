@@ -196,6 +196,7 @@ public partial class App : Application
             await AppHost.StopAsync();
             AppHost.Dispose();
         }
+        _singleInstanceMutex?.ReleaseMutex();
         base.OnExit(e);
     }
 }
