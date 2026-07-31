@@ -6,13 +6,13 @@ namespace Celer.Services
 {
     public static class NetworkHelper
     {
-        public static async Task<bool> HasNetworkAdapters()
+        public static bool HasNetworkAdapters()
         {
             return NetworkInterface.GetAllNetworkInterfaces()
                 .Any(ni => ni.OperationalStatus == OperationalStatus.Up);
         }
 
-        public static async Task<bool> IsConnected()
+        public static bool IsConnected()
         {
             return NetworkInterface.GetIsNetworkAvailable();
         }
@@ -22,8 +22,7 @@ namespace Celer.Services
             try
             {
                 using var pinger = new Ping();
-                //using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(3) };
-                var result = await pinger.SendPingAsync("8.8.8.8");
+                var result = await pinger.SendPingAsync("8.8.8.8"); // TODO: add the ability to change the DNS server
                 return result.Status.Equals(IPStatus.Success);
             }
             catch (PingException ex)
@@ -60,7 +59,6 @@ namespace Celer.Services
                 foreach (var ni in interfaces)
                 {
                     string name = ni.Name;
-
 
                     string command = $"Set-DnsClientServerAddress -InterfaceAlias \"{name}\" -ServerAddresses \"{dns}\"";
 
