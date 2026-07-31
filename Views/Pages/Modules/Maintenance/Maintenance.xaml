@@ -11,6 +11,7 @@
     xmlns:subviews="clr-namespace:Celer.Views.Pages.Modules.Maintenance"
     xmlns:subviewsViewModels="clr-namespace:Celer.ViewModels.MaintenanceVM"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MaintenanceViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -20,56 +21,64 @@
     <Border>
         <StackPanel>
             <local1:ModuleHeader
-                CurrentView="{Binding CurrentView}"
                 ViewDescription="{Binding CurrentViewDescription}"
-                ViewLabel="{Binding CurrentViewName}" />
-            <Border Margin="0,16,0,0">
-                <ContentControl Content="{Binding CurrentView.Content}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type viewmodels:MaintenanceViewModel}">
-                            <StackPanel>
-                                <Grid Margin="0,0,0,16">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock
-                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                        Style="{StaticResource Heading1}"
-                                        Text="Maintenance" />
-                                    <TextBlock
-                                        Grid.Row="1"
-                                        Margin="0,-4,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="15"
-                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        Text="Tools to verify and fix the system" />
-                                </Grid>
-                                <UniformGrid Margin="-10,-5,0,0" Columns="1">
-                                    <local1:ModuleButton
-                                        Description="Run the official system repair utilities to check &amp; repair erros in the disk/image"
-                                        Icon="Wrench"
-                                        Label="System Repair"
-                                        NavigateCommand="{Binding NavigateCommand}"
-                                        NavigateTo="Repair" />
-                                    <local1:ModuleButton
-                                        Description="Check your network connection and change DNS system-wide"
-                                        Icon="Network"
-                                        Label="Network Manager"
-                                        NavigateCommand="{Binding NavigateCommand}"
-                                        NavigateTo="Network" />
-                                </UniformGrid>
-                            </StackPanel>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type subviewsViewModels:RepairViewModel}">
-                            <subviews:Repair />
-                        </DataTemplate>
+                ViewLabel="{Binding CurrentViewName}"
+                Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}" />
+            <Border>
+                <Grid>
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                        <DataTemplate DataType="{x:Type subviewsViewModels:NetworkViewModel}">
-                            <subviews:Network />
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Style="{StaticResource Heading1}"
+                                Text="Maintenance" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,-4,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="Tools to verify and fix the system" />
+                        </Grid>
+
+                        <StackPanel Grid.Row="1">
+                            <UniformGrid Margin="-10,-5,0,0" Columns="1">
+                                <local1:ModuleButton
+                                    Description="Run the official system repair utilities to check &amp; repair erros in the disk/image"
+                                    Icon="Wrench"
+                                    Label="System Repair"
+                                    NavigateCommand="{Binding NavigateCommand}"
+                                    NavigateTo="Repair" />
+                                <local1:ModuleButton
+                                    Description="Check your network connection and change DNS system-wide"
+                                    Icon="Network"
+                                    Label="Network Manager"
+                                    NavigateCommand="{Binding NavigateCommand}"
+                                    NavigateTo="Network" />
+                            </UniformGrid>
+                        </StackPanel>
+                    </Grid>
+                    <ContentControl Content="{Binding CurrentView}" Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type subviewsViewModels:RepairViewModel}">
+                                <subviews:Repair />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type subviewsViewModels:NetworkViewModel}">
+                                <subviews:Network />
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </Grid>
             </Border>
         </StackPanel>
     </Border>
