@@ -358,8 +358,8 @@ namespace Celer.ViewModels
                         }
                         if (action.Type == ActionType.Command && action.Command is not null)
                         {
-                            long freeSpace = 0;
                             var cDrive = new DriveInfo("C");
+                            long freeSpace = cDrive.TotalFreeSpace;
                             AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                             try
                             {
@@ -377,10 +377,9 @@ namespace Celer.ViewModels
                                 if (action.Command.Contains("cleanmgr", StringComparison.OrdinalIgnoreCase))
                                 {
                                     Thread.Sleep(2000);
+                                    // Cleanmgr launches it's own process which we don't have control over and as such we have to track if it's process is running or not to track it's lifecycle
                                     while (Process.GetProcessesByName("cleanmgr").Length > 0)
-                                    {
                                         Thread.Sleep(1000);
-                                    }
                                 }
                             }
                             catch (Exception e)
@@ -431,25 +430,6 @@ namespace Celer.ViewModels
         {
             var dir = new DirectoryInfo(resolvedPath);
             long folderSize = 0;
-            foreach (var file in dir.GetFiles("*", SearchOption.AllDirectories))
-            {
-                try
-                {
-                    folderSize += file.Length;
-                    file.Attributes = FileAttributes.Normal;
-                    file.Delete();
-                   AddLog($"Deleted the file: {file.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
-                }
-                catch (Exception ex)
-                {
-                    folderSize -= file.Length;
-                   AddLog(
-                        $"Exception when deleting file {file.FullName}: {ex.Message}",
-                        (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
-                    );
-                }
-            }
-
             foreach (
                 var subDir in dir.GetDirectories("*", SearchOption.AllDirectories)
                     .OrderByDescending(d => d.FullName.Length)
