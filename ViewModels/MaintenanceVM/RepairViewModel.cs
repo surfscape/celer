@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace Celer.ViewModels.MaintenanceVM
 {
+    // TODO: Repair currently has a lot of issues with tracking progress and output and will be reworked in the futures
     public partial class RepairViewModel : ObservableObject
     {
         public ObservableCollection<RepairStep> RepairSteps { get; } =
