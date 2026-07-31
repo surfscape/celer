@@ -1,1 +1,26 @@
-﻿
+# Normalise everything by default; check out CRLF since this is a Windows-only project
+* text=auto eol=crlf
+
+# Explicit for the main source types
+*.cs      text eol=crlf diff=csharp
+*.xaml    text eol=crlf
+*.csproj  text eol=crlf
+*.sln     text eol=crlf
+*.slnx    text eol=crlf
+*.props   text eol=crlf
+*.targets text eol=crlf
+*.json    text eol=crlf
+*.md      text eol=crlf
+*.yml     text eol=crlf
+*.resx    text eol=crlf
+*.nsi     text eol=crlf
+*.manifest text eol=crlf
+*.settings text eol=crlf
+
+# Binaries — never touch
+*.png  binary
+*.ico  binary
+*.jpg  binary
+*.db   binary
+*.snk  binary
+*.exe  binary
