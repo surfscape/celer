@@ -1,5 +1,6 @@
 ﻿using Celer.Interfaces;
 using Celer.Models.SystemInfo;
+using Celer.Properties;
 using Celer.Services.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -13,23 +14,16 @@ namespace Celer.ViewModels.OptimizationVM
         private readonly MemoryMonitorService _monitorService = new();
         private readonly DispatcherTimer _updateTimer = new()
         {
-            Interval = TimeSpan.FromSeconds(1),
+            Interval = TimeSpan.FromSeconds(MainConfiguration.Default.GeneralPollingRate),
         };
 
         [ObservableProperty]
-        private bool isLoading = true;
+        public partial bool IsLoading { get; set; } = true;
 
         [ObservableProperty]
-        private MemoryInfo? memory;
+        public partial MemoryInfo? Memory { get; set; }
 
         public ObservableCollection<RamSlotInfo> Slots { get; } = [];
-
-        public async Task Initialize()
-        {
-            UpdateMemoryInfo(false);
-            _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);
-            _updateTimer.Start();
-        }
 
         private void UpdateMemoryInfo(bool continous)
         {
@@ -48,11 +42,10 @@ namespace Celer.ViewModels.OptimizationVM
 
         public async Task OnNavigatedTo()
         {
-            if (!_updateTimer.IsEnabled)
-            {
-                UpdateMemoryInfo(false);
-                _updateTimer.Start();
-            }
+            UpdateMemoryInfo(false);
+            _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);
+            _updateTimer.Start();
+            IsLoading = true;
         }
 
         public async Task OnNavigatedFrom()
