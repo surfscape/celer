@@ -9,41 +9,41 @@ using System.Windows.Forms;
 namespace Celer.Services.Memory
 {
     public partial class MemoryMonitorService : IDisposable
-    {
-
-        private readonly double _totalMemory;
-        private readonly float _memorySpeed;
+    { 
+        private readonly float _memorySpeed; 
         private readonly List<RamSlotInfo> _ramSlots;
+
+        private static readonly Lazy<Regex> _slotPatternRegex =
+            new(() => new Regex(@"(\d+)", RegexOptions.Compiled));
 
         public MemoryMonitorService()
         {
-            _totalMemory = GetTotalMemory();
-            _memorySpeed = GetMemorySpeed();
-            _ramSlots = GetRamSlotInfo();
+            try
+            {
+                _memorySpeed = GetMemorySpeed();
+                _ramSlots = GetRamSlotInfo();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initializing MemoryMonitorService: {ex.Message}");
+                _memorySpeed = 0;
+                _ramSlots = new List<RamSlotInfo>();
+            }
         }
+
         public MemoryInfo GetMemoryInfo()
         {
-            var (virtualTotal, virtualUsed) = GetVirtualMemory();
-
+            var (totalMB, usedMB, virtualTotal, virtualUsed) = GetMemory();
 
             return new MemoryInfo
             {
-                UsedMemoryMB = GetUsedMemoryMB(),
-                TotalMemoryMB = Math.Round(_totalMemory),
+                UsedMemoryMB = usedMB,
+                TotalMemoryMB = totalMB,
                 SpeedMHz = _memorySpeed,
                 VirtualUsedMB = MainConfiguration.Default.EnableRounding ? (int)virtualUsed : Math.Round(virtualUsed, 3),
                 VirtualTotalMB = virtualTotal,
                 Slots = _ramSlots,
             };
-        }
-
-        // TODO implement a try-catch block since this can throw an exception if the PerformanceCounter is broken on the machine
-        private static float GetUsedMemoryMB()
-        {
-            using var availableMBCounter = new PerformanceCounter("Memory", "Available MBytes");
-            float availableMB = availableMBCounter.NextValue();
-            double totalMB = GetTotalMemory();
-            return (float)(totalMB - availableMB);
         }
 
         public static int GetMemorySpeed()
@@ -105,7 +105,7 @@ namespace Celer.Services.Memory
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
-        public static (double TotalMB, double UsedMB) GetVirtualMemory()
+        public static (double TotalMB, double UsedMB, double TotalVMB, double UsedVMB) GetMemory()
         {
             var memStatus = new MEMORYSTATUSEX();
             memStatus.RefreshLength();
@@ -113,14 +113,15 @@ namespace Celer.Services.Memory
             if (GlobalMemoryStatusEx(ref memStatus))
             {
                 const double bytesInMB = 1024.0 * 1024.0;
+                double totalMB = memStatus.ullTotalPhys / bytesInMB;
+                double usedMB = (memStatus.ullTotalPhys - memStatus.ullAvailPhys) / bytesInMB;
+                double totalVMB = memStatus.ullTotalPageFile / bytesInMB;
+                double usedVMB = (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / bytesInMB;
 
-                double totalMB = memStatus.ullTotalPageFile / bytesInMB;
-                double usedMB = (memStatus.ullTotalPageFile - memStatus.ullAvailPageFile) / bytesInMB;
-
-                return (Math.Round(totalMB, 2), Math.Round(usedMB, 2));
+                return (Math.Round(totalMB, 2), Math.Round(usedMB, 2), Math.Round(totalVMB, 2), Math.Round(usedVMB, 2));
             }
 
-            return (0, 0);
+            return (0, 0, 0, 0);
         }
 
         public static List<RamSlotInfo> GetRamSlotInfo()
@@ -274,8 +275,6 @@ namespace Celer.Services.Memory
         /// <returns></returns>
         private static int ParseSlotNumber(string deviceLocator, string bankLabel)
         {
-            string S_SLOT_PATTERN = @"(\d+)";
-
             string stringToParse = !string.IsNullOrWhiteSpace(deviceLocator)
                 ? deviceLocator
                 : bankLabel;
@@ -285,7 +284,7 @@ namespace Celer.Services.Memory
                 return -1;
             }
 
-            MatchCollection matches = Regex.Matches(stringToParse, S_SLOT_PATTERN);
+            MatchCollection matches = _slotPatternRegex.Value.Matches(stringToParse);
             if (matches.Count > 0)
             {
                 string numStr = matches[^1].Groups[1].Value;
