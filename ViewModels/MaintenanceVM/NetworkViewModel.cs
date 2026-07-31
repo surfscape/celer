@@ -41,8 +41,8 @@ namespace Celer.ViewModels.MaintenanceVM
         [RelayCommand]
         private async Task TestNetwork()
         {
-            AdaptersFound = await NetworkHelper.HasNetworkAdapters() ? "Found" : "None";
-            ConnectionStatus = await NetworkHelper.IsConnected() ? "Active" : "No connection";
+            AdaptersFound =  NetworkHelper.HasNetworkAdapters() ? "Found" : "None";
+            ConnectionStatus = NetworkHelper.IsConnected() ? "Active" : "No connection";
             InternetConnectionStatus = await NetworkHelper.HasInternetAccess() ? "Access" : "No access";
         }
 
