@@ -11,8 +11,10 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Celer.ViewModels
 {
@@ -61,6 +63,35 @@ namespace Celer.ViewModels
                     new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<MaintenanceViewModel>(), NavigationKey = NavigationTabKey.Maintenance },
                     new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<OverviewViewModel>(), NavigationKey = NavigationTabKey.PrivacySecurity }
                 ];
+            foreach (var module in TabsModule)
+            {
+                if (module.Content is not null)
+                    _navigationService.RegisterTab(module.NavigationKey, module.Content);
+            }
+
+            Application.Current.Dispatcher.InvokeAsync(
+                () => RequestNavigation(TabsModule[SelectedTabIndex].NavigationKey),
+                DispatcherPriority.Loaded);
+        }
+
+        private void RequestNavigation(NavigationTabKey tabKey)
+        {
+            Application.Current.Dispatcher.InvokeAsync(async () =>
+            {
+                try
+                {
+                    // Resolved here rather than at queue time: an explicit Navigate(tab, subview)
+                    // sets SelectedTabIndex first, so this callback is queued before the subview
+                    // has been pushed. Reading it now sees the settled state and the guard in
+                    // NavigateInternal turns this into a no-op instead of resetting to Main.
+                    var innerView = _navigationService.GetInnerViewForTab(tabKey);
+                    await _navigationService.NavigateInternal(tabKey, innerView);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Navigation to {tabKey} failed: {ex}");
+                }
+            });
         }
 
         private void OnCompactModeChanged(object? sender, bool isCompact)
@@ -79,13 +110,14 @@ namespace Celer.ViewModels
         }
         partial void OnSelectedTabIndexChanged(int value)
         {
-            var tab = TabsModule[value];
-            var tabKey = tab.NavigationKey;
+            if (value < 0 || value >= TabsModule.Count)
+                return;
+
+            var tabKey = TabsModule[value].NavigationKey;
             if (tabKey == default)
                 return;
 
-            var innerView = _navigationService.GetInnerViewForTab(tabKey);
-            Task.Run(() => _navigationService.NavigateInternal(tabKey, innerView));
+            RequestNavigation(tabKey);
         }
 
         [RelayCommand]
@@ -165,7 +197,6 @@ namespace Celer.ViewModels
                 }
             }
         }
-
         public class WindowVisibleMessage(bool value) : ValueChangedMessage<bool>(value) { }
     }
 }

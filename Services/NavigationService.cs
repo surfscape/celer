@@ -1,16 +1,54 @@
-﻿using Celer.Models;
+﻿using Celer.Interfaces;
+using Celer.Models;
 using Celer.Properties;
 
 namespace Celer.Services
 {
+    /// <summary>
+    /// Singleton service that manages navigation between tabs and corresponding subviews. It tracks the current history stack, registered tab viewmodels and views, and provides lifecycle callbacks to viewmodels implementing <see cref="INavigationAware"/>.
+    /// </summary>
     public class NavigationService
     {
-        private readonly Dictionary<NavigationTabKey, Func<string?, Task>> _handlers = new();
-        private readonly Dictionary<NavigationTabKey, Stack<string?>> _tabStacks = new();
+        /// <summary>
+        /// Callbacks used to switch the active subview of a tab. Only for tabs that host subviews
+        /// (see <see cref="ViewModels.BaseNavigationViewModel"/>) register here.
+        /// </summary>
+        private readonly Dictionary<NavigationTabKey, Func<string?, Task>> _subviewHosts = [];
 
-        public void Register(NavigationTabKey tabKey, Func<string?, Task> handler)
+        /// <summary>
+        /// The viewmodel backing each tab. Any of these implementing <see cref="INavigationAware"/>
+        /// receive tab level lifecycle callbacks independently of whether they host subviews.
+        /// </summary>
+        private readonly Dictionary<NavigationTabKey, object> _tabViewModels = [];
+
+        private readonly Dictionary<NavigationTabKey, Stack<string?>> _tabStacks = [];
+
+        private NavigationTabKey? _activeTab;
+        private string? _activeInnerView;
+        private bool _hasActivated;
+
+        /// <summary>
+        /// Registers a tab's viewmodel so it can take part in the navigation lifecycle.
+        /// </summary>
+        public void RegisterTab(NavigationTabKey tabKey, object viewModel)
         {
-            _handlers[tabKey] = handler;
+            _tabViewModels[tabKey] = viewModel;
+
+            if (!_tabStacks.ContainsKey(tabKey))
+            {
+                var stack = new Stack<string?>();
+                stack.Push(null);
+                _tabStacks[tabKey] = stack;
+            }
+        }
+
+        /// <summary>
+        /// Registers the callback used to switch subviews within a tab. Only tabs that actually
+        /// have subviews need this; tab level lifecycle is handled by <see cref="RegisterTab"/>.
+        /// </summary>
+        public void RegisterSubviewHost(NavigationTabKey tabKey, Func<string?, Task> handler)
+        {
+            _subviewHosts[tabKey] = handler;
             if (!_tabStacks.ContainsKey(tabKey))
                 _tabStacks[tabKey] = new Stack<string?>();
             _tabStacks[tabKey].Clear();
@@ -81,40 +119,54 @@ namespace Celer.Services
 
         public async Task NavigateInternal(NavigationTabKey tabKey, string? innerViewName = null)
         {
-            if (!_tabStacks.ContainsKey(tabKey))
-                _tabStacks[tabKey] = new Stack<string?>();
+            string? targetInner =
+                string.IsNullOrEmpty(innerViewName) || innerViewName == "Main" ? null : innerViewName;
 
-            if (string.IsNullOrEmpty(innerViewName) || innerViewName == "Main")
+            if (_hasActivated && _activeTab == tabKey && _activeInnerView == targetInner)
+                return;
+
+            if (!_tabStacks.TryGetValue(tabKey, out var stack))
+                _tabStacks[tabKey] = stack = new Stack<string?>();
+
+            if (targetInner is null)
             {
-                _tabStacks[tabKey].Clear();
-                _tabStacks[tabKey].Push(null);
+                stack.Clear();
+                stack.Push(null);
             }
-            else
+            else if (stack.Count == 0 || stack.Peek() != targetInner)
             {
-                var stack = _tabStacks[tabKey];
-                if (stack.Count == 0 || stack.Peek() != innerViewName)
-                {
-                    stack.Push(innerViewName);
-                }
+                stack.Push(targetInner);
             }
-            var previousTab = CurrentTab;
-            if (previousTab != null && previousTab != tabKey)
-            {
-                if (_handlers.TryGetValue(previousTab.Value, out var prevHandler))
-                {
-                    await prevHandler(null);
-                }
-            }
+
+            if (_activeTab is { } previousTab && previousTab != tabKey)
+                await NotifyNavigatedFrom(previousTab);
+
+            bool tabChanged = _activeTab != tabKey;
 
             CurrentTab = tabKey;
+            _activeTab = tabKey;
+            _activeInnerView = stack.Count > 0 ? stack.Peek() : null;
+            _hasActivated = true;
 
-            var currentInner = _tabStacks[tabKey].Count > 0 ? _tabStacks[tabKey].Peek() : null;
-            NavigationChanged?.Invoke(CurrentTab, currentInner);
+            NavigationChanged?.Invoke(CurrentTab, _activeInnerView);
 
-            if (_handlers.TryGetValue(tabKey, out var handler))
-            {
-                await handler(currentInner);
-            }
+            if (_subviewHosts.TryGetValue(tabKey, out var host))
+                await host(_activeInnerView);
+
+            if (tabChanged)
+                await NotifyNavigatedTo(tabKey);
+        }
+
+        private async Task NotifyNavigatedTo(NavigationTabKey tabKey)
+        {
+            if (_tabViewModels.TryGetValue(tabKey, out var vm) && vm is INavigationAware aware)
+                await aware.OnNavigatedTo();
+        }
+
+        private async Task NotifyNavigatedFrom(NavigationTabKey tabKey)
+        {
+            if (_tabViewModels.TryGetValue(tabKey, out var vm) && vm is INavigationAware aware)
+                await aware.OnNavigatedFrom();
         }
 
         public Task BackToParent()
@@ -129,15 +181,16 @@ namespace Celer.Services
             if (stack.Count > 1)
                 stack.Pop();
 
-            var parent = stack.Peek();
-
             var tab = CurrentTab.Value;
-            var currentInner = parent;
+            var currentInner = stack.Peek();
+
+            _activeInnerView = currentInner;
+
             NavigationChanged?.Invoke(tab, currentInner);
 
-            if (_handlers.TryGetValue(tab, out var handler))
+            if (_subviewHosts.TryGetValue(tab, out var host))
             {
-                return handler(currentInner);
+                return host(currentInner);
             }
 
             return Task.CompletedTask;

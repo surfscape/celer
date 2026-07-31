@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace Celer.ViewModels
 {
-    public abstract partial class BaseNavigationViewModel : ObservableObject
+    /// <summary>
+    /// Base class for tab viewmodels that host subviews. It is responsible only for switching
+    /// the active subview and for that subview's lifecycle; tab level lifecycle is driven by
+    /// <see cref="NavigationService"/> through <see cref="INavigationAware"/>.
+    /// </summary>
+    public abstract partial class BaseNavigationViewModel : ObservableObject, INavigationAware
     {
         private readonly NavigationService _navigationService;
         private readonly NavigationTabKey _navigationKey;
@@ -31,7 +36,7 @@ namespace Celer.ViewModels
             _navigationService = navigationService;
             _navigationKey = navigationKey;
             _serviceProvider = serviceProvider;
-            _navigationService.Register(navigationKey, NavigateTo);
+            _navigationService.RegisterSubviewHost(navigationKey, NavigateTo);
         }
 
         [RelayCommand]
@@ -40,28 +45,20 @@ namespace Celer.ViewModels
         [RelayCommand]
         public async Task BackToMain() => await _navigationService.Navigate(_navigationKey, "Main");
 
-        public async Task NavigateTo(string viewKey)
+        /// <summary>
+        /// Switches the active subview. Invoked by <see cref="NavigationService"/>; a null or
+        /// "Main" key clears the subview and shows the tab's root content.
+        /// </summary>
+        public async Task NavigateTo(string? viewKey)
         {
-            if (currentView is INavigationAware previousNav)
-            {
-                await previousNav.OnNavigatedFrom();
-            }
-
-            if (currentView is IDisposable d)
-                d.Dispose();
+            await TearDownCurrentViewAsync();
 
             if (string.IsNullOrEmpty(viewKey) || viewKey == "Main")
-            {
-                _currentDescriptor = null;
-                CurrentView = null;
-                OnPropertyChanged(nameof(CurrentViewName));
-                OnPropertyChanged(nameof(CurrentViewDescription));
                 return;
-            }
 
             if (SubViews.TryGetValue(viewKey, out var descriptor))
             {
-                var vm = (ObservableObject?)_serviceProvider.GetService(descriptor.ViewModelType) ?? (ObservableObject?)_serviceProvider.GetRequiredService(descriptor.ViewModelType);
+                var vm = (ObservableObject)_serviceProvider.GetRequiredService(descriptor.ViewModelType);
                 _currentDescriptor = descriptor;
                 CurrentView = vm;
                 OnPropertyChanged(nameof(CurrentViewName));
@@ -70,6 +67,34 @@ namespace Celer.ViewModels
                 if (vm is INavigationAware newNav)
                     await newNav.OnNavigatedTo();
             }
+        }
+
+        /// <summary>
+        /// The tab itself became active. The subview was already restored by
+        /// <see cref="NavigateTo"/>, so there is nothing further to do here.
+        /// </summary>
+        public Task OnNavigatedTo() => Task.CompletedTask;
+
+        /// <summary>
+        /// The tab is being left, so release the active subview.
+        /// </summary>
+        public Task OnNavigatedFrom() => TearDownCurrentViewAsync();
+
+        private async Task TearDownCurrentViewAsync()
+        {
+            if (CurrentView is null)
+                return;
+
+            if (CurrentView is INavigationAware previousNav)
+                await previousNav.OnNavigatedFrom();
+
+            if (CurrentView is IDisposable disposable)
+                disposable.Dispose();
+
+            _currentDescriptor = null;
+            CurrentView = null;
+            OnPropertyChanged(nameof(CurrentViewName));
+            OnPropertyChanged(nameof(CurrentViewDescription));
         }
     }
 }

@@ -12,11 +12,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Windows.Threading;
+using Celer.Interfaces;
 
 namespace Celer.ViewModels;
 
-public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
+public partial class DashboardViewModel : BaseModuleViewModel, INavigationAware
 {
+    private bool _hasInitialized = false;
     private readonly NavigationService _navigationService;
     private readonly MemoryMonitorService _memoryService;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromMilliseconds(MainConfiguration.Default.GeneralPollingRate) };
@@ -44,38 +46,6 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
         _navigationService = navigationService;
         _memoryService = new MemoryMonitorService();
         _timer.Tick += async (s, e) => await UpdateSystemDataAsync();
-    }
-
-    public async Task InitializeAsync()
-    {
-        try
-        {
-            await Task.Run(() =>
-            {
-                var mem = _memoryService.GetMemoryInfo();
-                TotalMemory = mem.TotalMemoryMB;
-
-                _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-                _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
-                _cpuCounter.NextValue();
-                _availableMemoryCounter.NextValue();
-
-                InitGpuCounters();
-
-                if (!_wmiInitialized)
-                {
-                    WindowsVersion = GetWindowsVersion();
-                    PostTime = GetPostTime();
-                    LoadCpuInfo();
-                    LoadGpuInfo();
-                    _wmiInitialized = true;
-                }
-            });
-
-            GetDriveInfo();
-        }
-        catch (Exception ex) { Debug.WriteLine($"Failed to initialize: {ex.Message}"); }
-        finally { IsLoading = false; _timer.Start(); }
     }
 
     private async Task UpdateSystemDataAsync()
@@ -269,12 +239,43 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
     [RelayCommand]
     private void NavigateToOptimization(string view) => _navigationService.Navigate(NavigationTabKey.Optimization, view);
 
-    public void Dispose()
+    public async Task OnNavigatedTo() {
+        if(!_hasInitialized) { 
+        try
+        {
+            await Task.Run(() =>
+            {
+                var mem = _memoryService.GetMemoryInfo();
+                TotalMemory = mem.TotalMemoryMB;
+
+                _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                _availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
+                _cpuCounter.NextValue();
+                _availableMemoryCounter.NextValue();
+
+                InitGpuCounters();
+
+                if (!_wmiInitialized)
+                {
+                    WindowsVersion = GetWindowsVersion();
+                    PostTime = GetPostTime();
+                    LoadCpuInfo();
+                    LoadGpuInfo();
+                    _wmiInitialized = true;
+                }
+            });
+
+            GetDriveInfo();
+        }
+        catch (Exception ex) { Debug.WriteLine($"Failed to initialize: {ex.Message}"); }
+        finally { IsLoading = false; _timer.Start(); _hasInitialized = true; }
+        } else
+        {
+            _timer.Start();
+        }
+    }
+    public async Task OnNavigatedFrom()
     {
         _timer.Stop();
-        _cpuCounter?.Dispose();
-        _availableMemoryCounter?.Dispose();
-        _gpuCounters?.ForEach(c => c.Dispose());
-        GC.SuppressFinalize(this);
     }
 }
