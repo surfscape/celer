@@ -105,14 +105,12 @@ public partial class App : Application
         // closes celer if another instance is already running
         if (!e.Args.Contains("--disableMutexProtection"))
         {
-            using (_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew))
-            {
-                if (!createdNew)
-                {
+            _singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew);
+            if (!createdNew) {
                     _singleInstanceMutex.Dispose();
                     _singleInstanceMutex = null;
                     Shutdown();
-                }
+                    return;
             }
         }
 
