@@ -269,8 +269,7 @@ namespace Celer.ViewModels
                 SaveLog();
                 return;
             }
-
-            StringBuilder log = new();
+ 
             long totalFreed = 0;
 
             await Task.Run(async () =>
@@ -283,7 +282,6 @@ namespace Celer.ViewModels
 
                 foreach (var item in selectedItems)
                 {
-                    long freed = 0;
                     foreach (var action in item.Actions)
                     {
                         if (action.Type == ActionType.FolderContent)
@@ -295,8 +293,7 @@ namespace Celer.ViewModels
                             {
                                 if (Directory.Exists(resolvedPath))
                                 {
-                                    freed += DeleteFolderContent(resolvedPath);
-                                    Interlocked.Add(ref totalFreed, freed);
+                                    totalFreed += DeleteFolderContent(resolvedPath);
                                 }
                                 else
                                 {
@@ -335,12 +332,10 @@ namespace Celer.ViewModels
                                             await Task.Delay(300);
                                         }
                                     }
-                                    freed += DeleteFilesWithPatterns(
+                                    totalFreed += DeleteFilesWithPatterns(
                                         resolvedPath,
                                         action.Patterns!
                                     );
-
-                                    Interlocked.Add(ref totalFreed, freed);
                                     if (processHelper == "explorer.exe")
                                         Processes.StartExplorer();
                                 }
@@ -365,7 +360,7 @@ namespace Celer.ViewModels
                         {
                             long freeSpace = 0;
                             var cDrive = new DriveInfo("C");
-                           AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                            AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                             try
                             {
                                 var startInfo = new ProcessStartInfo("powershell.exe", $"-Command {action.Command}")
@@ -395,32 +390,12 @@ namespace Celer.ViewModels
                             finally
                             {
                                 long finalFreeSpace = cDrive.TotalFreeSpace;
-                                long spaceFreed = Math.Max(0, finalFreeSpace - freeSpace);
+                                totalFreed += Math.Max(0, finalFreeSpace - freeSpace);
                             }
-                            Interlocked.Add(ref totalFreed, freeSpace);
                             continue;
                         }
                     }
                     AddLog($"Task {item.Name} has finished", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
-                    Interlocked.Add(ref totalFreed, freed);
-                }
-            });
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                foreach (
-                    var line in log.ToString()
-                        .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
-                )
-                {
-                    LogEntries.Add(
-                        new LogBook
-                        {
-                            LogDate = DateTime.Now,
-                            LogEntry = line,
-                            LogColor = new SolidColorBrush(Colors.Green),
-                        }
-                    );
                 }
             });
             TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
