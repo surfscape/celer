@@ -1,4 +1,5 @@
 ﻿using Celer.Infrastructure.Models.Battery;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Management.Infrastructure;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -8,11 +9,12 @@ namespace Celer.Infrastructure.Battery;
 /// <summary>
 /// Represents an individual battery device containing both static and dynamic information
 /// </summary>
-public class BatteryDevice(string instanceId, BatteryInfo staticData)
+public partial class BatteryDevice(string instanceId, BatteryInfo staticData) : ObservableObject
 {
-    public string InstanceId { get; } = instanceId;
+    public string InstanceId { get; } = instanceId;   
     public BatteryInfo StaticData { get; } = staticData;
-    public BatteryStats? Stats { get; set; }
+    [ObservableProperty]
+    public partial BatteryStats? Stats { get; set; }
 }
 
 /// <summary>
