@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Celer.Utilities;
 
 /// <summary>
-/// Class that provides both bubble event support and smooth scrolling
+/// Class that provides both bubble event and smooth scrolling support for WPF ScrollViewer
 /// </summary>
 // Most of this class was made with information from https://stackoverflow.com/questions/1033841/is-it-possible-to-implement-smooth-scroll-in-a-wpf-listview and in regards to bubble event that was taken from https://stackoverflow.com/questions/14348517/child-elements-of-scrollviewer-preventing-scrolling-with-mouse-wheel
 // There was some help from an local LLM to improve the scroll detection between mouse and touchpad since I'm not that great with math and physics 
