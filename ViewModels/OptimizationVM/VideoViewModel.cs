@@ -11,7 +11,7 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class VideoViewModel : ObservableObject
+    public partial class VideoViewModel : ObservableObject, IDisposable
     {
         [ObservableProperty]
         private bool isLoading = true;
@@ -178,7 +178,6 @@ namespace Celer.ViewModels.OptimizationVM
         private void UpdateGpuSensors()
         {
             gpu.Accept(new GpuMonitor());
-
             foreach (
                 var hw in gpu.Hardware.Where(h =>
                     h.HardwareType == HardwareType.GpuNvidia
@@ -187,8 +186,6 @@ namespace Celer.ViewModels.OptimizationVM
                 )
             )
             {
-                hw.Update();
-
                 var matchedGpu = Gpus.FirstOrDefault(g =>
                     hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase)
                     || g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase)
@@ -213,8 +210,7 @@ namespace Celer.ViewModels.OptimizationVM
                     }
                 }
             }
-
-            gpu.Close();
+            
         }
 
         public async Task StartTimerAsync()
@@ -230,6 +226,13 @@ namespace Celer.ViewModels.OptimizationVM
         {
             _gpuUpdateTimer.Stop();
             await Task.Run(() => gpu.Close());
+        }
+
+        public void Dispose()
+        {
+            _gpuUpdateTimer.Stop();
+            gpu.Close();
+            GC.SuppressFinalize(this);
         }
 
         public partial class GpuInfo : ObservableObject
