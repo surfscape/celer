@@ -1,4 +1,5 @@
 ﻿using Celer.Infrastructure.Battery;
+using Celer.Interfaces;
 using Celer.Properties;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,7 +10,7 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class BatteryViewModel : ObservableObject
+    public partial class BatteryViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         public partial bool IsLoading { get; set; } = true;
@@ -57,33 +58,6 @@ namespace Celer.ViewModels.OptimizationVM
             _updateTimer.Tick += (_, _) => UpdateBatteryInfo();
         }
 
-        public async Task Initialize()
-        {
-            try
-            {
-                if (powerPlanService is not null)
-                {
-                    PowerPlans = new ObservableCollection<Services.Energy.PowerPlan>(powerPlanService.GetAllPowerPlans());
-                    SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
-                }
-                UpdateBatteryInfo();
-                IsFastBootEnabled = IsFastStartupEnabled();
-            }
-            catch (ArgumentNullException e)
-            {
-                Debug.WriteLine($"ArgumentNullExpection failed to load BatteryViewModel: ${e.Message}");
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Exception while trying to initialize BatteryViewModel: ${e.Message}");
-            }
-            finally
-            {
-                IsLoading = false;
-                if (HasBattery) _updateTimer.Start();
-            }
-        }
-
         [RelayCommand]
         private void ApplyPowerPlan()
         {
@@ -124,6 +98,42 @@ namespace Celer.ViewModels.OptimizationVM
         {
             // TODO: Implement Hibernation
             return true;
+        }
+
+        public async Task OnNavigatedTo() {
+            if (!_updateTimer.IsEnabled) { 
+            try
+            {
+                if (powerPlanService is not null)
+                {
+                    PowerPlans = new ObservableCollection<Services.Energy.PowerPlan>(powerPlanService.GetAllPowerPlans());
+                    SelectedPowerPlan = powerPlanService.GetActivePowerPlan();
+                }
+                UpdateBatteryInfo();
+                IsFastBootEnabled = IsFastStartupEnabled();
+            }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine($"ArgumentNullExpection failed to load BatteryViewModel: ${e.Message}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception while trying to initialize BatteryViewModel: ${e.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+                if (HasBattery) _updateTimer.Start();
+            }
+            } else
+            {
+                _updateTimer.Start();
+            }
+        }
+
+        public async Task OnNavigatedFrom()
+        {
+            _updateTimer.Stop();
         }
     }
 }
