@@ -44,7 +44,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
     </Style>
     <Style x:Key="HeadingIcon" TargetType="{x:Type iconPacks:PackIconLucide}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBlock}}, Path=Name}" Value="Heading2">
                 <Setter Property="Width" Value="20" />
@@ -127,7 +127,7 @@
                                             VerticalAlignment="Center"
                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Kind="{Binding Icon}"
-                                            SnapsToDevicePixels="True"
+                                            UseLayoutRounding="True"
                                             Visibility="Visible" />
                                         <TextBlock
                                             x:Name="Text"
@@ -239,8 +239,8 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
                             RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Button.IsDefaulted" Value="true">
@@ -290,8 +290,8 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
                             RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Button.IsDefaulted" Value="true">

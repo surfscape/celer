@@ -19,12 +19,6 @@
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="Background"
                         Value="{DynamicResource WindowBackground}"></Setter>
-
-            </Style>
-            <Style TargetType="UIElement">
-                <Setter Property="RenderOptions.CachingHint"
-                        Value="Cache" />
-                <Setter Property="SnapsToDevicePixels" Value="true"></Setter>            
             </Style>
             <Style TargetType="StackPanel">
                 <Setter Property="UseLayoutRounding"
