@@ -32,7 +32,17 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel Margin="0,0,0,16" Visibility="{Binding BatteryStaticData.Available, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Margin="0,0,0,16" Visibility="{Binding HasBattery, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel
+                    MaxWidth="250"
+                    Margin="0,-70,0,0"
+                    HorizontalAlignment="Right">
+                    <TextBlock Margin="0,0,0,8" Foreground="{DynamicResource TextFillColorSecondaryBrush}">Active Battery</TextBlock>
+                    <ComboBox
+                        DisplayMemberPath="InstanceId"
+                        ItemsSource="{Binding Batteries}"
+                        SelectedItem="{Binding CurrentBattery}" />
+                </StackPanel>
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
@@ -46,12 +56,12 @@
                             Margin="0,0,16,0"
                             VerticalAlignment="Center"
                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                            Kind="{Binding BatteryStats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
+                            Kind="{Binding CurrentBattery.Stats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
                         <TextBlock
                             Margin="0"
                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             Style="{StaticResource TitleLargeTextBlockStyle}"
-                            Text="{Binding BatteryStats.Percentage, StringFormat={}{0}%}" />
+                            Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
                     </StackPanel>
 
                     <Grid Margin="0,8">
@@ -60,18 +70,16 @@
                                 <Setter Property="Margin" Value="0,0,16,0" />
                             </Style>
                         </Grid.Resources>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-
                         <StackPanel Grid.Column="0">
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding BatteryStats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
+                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding CurrentBattery.Stats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
                             <TextBlock
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding BatteryStats.EstimatedRunTime, StringFormat='Remaining Time: {0:g}'}"
-                                Visibility="{Binding BatteryStats.IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
+                                Text="{Binding CurrentBattery.Stats.EstimatedRunTime, StringFormat='Remaining Time: {0:g}'}"
+                                Visibility="{Binding CurrentBattery.Stats.IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
                         </StackPanel>
                         <Border Grid.Column="1" CornerRadius="8">
                             <Grid Grid.Row="1">
@@ -98,7 +106,7 @@
                                         Foreground="{DynamicResource SystemFillColorSuccessBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="{Binding BatteryStats.Health}" />
+                                        Value="{Binding CurrentBattery.Stats.Health}" />
                                     <ProgressBar
                                         Height="16"
                                         Margin="0,0,8,0"
@@ -108,7 +116,7 @@
                                         Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="{Binding BatteryStats.RemainingChargeCapacityPercentage}" />
+                                        Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
                                 </Grid>
                             </Grid>
                         </Border>
@@ -125,7 +133,7 @@
                             <TextBlock
                                 Margin="0,0,0,2"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding BatteryStats.Health, StringFormat='{}{0}%'}"
+                                Text="{Binding CurrentBattery.Stats.Health, StringFormat='{}{0}%'}"
                                 ToolTip="Battery Health" />
                         </StackPanel>
 
@@ -145,7 +153,7 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding BatteryStats.RemainingChargeCapacity, StringFormat='{}{0} mWh'}"
+                                Text="{Binding CurrentBattery.Stats.RemainingChargeCapacity, StringFormat='{}{0} mWh'}"
                                 ToolTip="Current charged capacity" />
                         </StackPanel>
                         <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
@@ -158,7 +166,7 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding BatteryStats.RemainingFullCapacity, StringFormat='{}{0} mWh'}"
+                                Text="{Binding CurrentBattery.Stats.RemainingFullCapacity, StringFormat='{}{0} mWh'}"
                                 ToolTip="Full charge capacity" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -171,7 +179,7 @@
                             <TextBlock
                                 Margin="0"
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                Text="{Binding BatteryStats.FullDesignCapacity, StringFormat='{}{0} mWh'}"
+                                Text="{Binding CurrentBattery.StaticData.FullDesignCapacity, StringFormat='{}{0} mWh'}"
                                 ToolTip="Original capacity" />
                         </StackPanel>
 
@@ -216,14 +224,6 @@
                                     ItemsSource="{Binding PowerPlans}"
                                     SelectedValue="{Binding SelectedPowerPlan.Name, Mode=TwoWay}"
                                     SelectedValuePath="Name" />
-                                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                    <Button
-                                        Margin="8,0,8,0"
-                                        Command="{Binding ApplyPowerPlanCommand}"
-                                        Content="Apply"
-                                        Style="{DynamicResource AccentButtonStyle}" />
-                                    <Button Command="{Binding InstallPlansCommand}" Content="Install More Plans" />
-                                </StackPanel>
                             </Grid>
                             <Border
                                 Margin="0,12"
