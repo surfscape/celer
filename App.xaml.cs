@@ -157,29 +157,25 @@ public partial class App : Application
         bool hasUserDoneSetup = MainConfiguration.Default.HasUserDoneSetup;
         if (AppHost is not null)
         {
+            if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferHardware || MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.Auto)
+                RenderOptions.ProcessRenderMode = RenderMode.Default;
+            else if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferSoftware)
+                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+            SetFluentTheme();
+            LegacyTheme();
             if (!e.Args.Contains("--silent") && hasUserDoneSetup)
             {
-                SetFluentTheme();
-                LegacyTheme();
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.ShowDialog();
-                if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferHardware || MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.Auto)
-                    RenderOptions.ProcessRenderMode = RenderMode.Default;
-                else if (MainConfiguration.Default.GraphicRenderingMode == (int)CelerRenderMode.PreferSoftware)
-                    RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
             else if (!e.Args.Contains("--silent") && !hasUserDoneSetup)
             {
-                SetFluentTheme();
-                LegacyTheme();
                 var onboardingWindow = new Onboarding();
                 onboardingWindow.Show();
             }
             else if (e.Args.Contains("--silent"))
             {
-                SetFluentTheme();
-                LegacyTheme();
                 var surfScapeGateway = AppHost.Services.GetRequiredService<SurfScapeGateway>();
                 surfScapeGateway.MainWindowTrigger = true;
                 surfScapeGateway.SilentStartup = true;
@@ -201,7 +197,6 @@ public partial class App : Application
         {
             await AppHost.StopAsync();
             AppHost.Dispose();
-            base.OnExit(e);
         }
         base.OnExit(e);
     }
