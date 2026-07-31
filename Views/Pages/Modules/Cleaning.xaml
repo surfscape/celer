@@ -11,7 +11,6 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:CleanEngine}"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
     </UserControl.Resources>
     <Grid VerticalAlignment="Stretch">
@@ -89,9 +88,9 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        Visibility="Collapsed"
                         VirtualizingStackPanel.IsVirtualizing="True"
-                        VirtualizingStackPanel.ScrollUnit="Pixel">
+                        VirtualizingStackPanel.ScrollUnit="Pixel"
+                        Visibility="Collapsed">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Focusable" Value="False" />
