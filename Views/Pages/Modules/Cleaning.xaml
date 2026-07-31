@@ -89,8 +89,9 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         ScrollViewer.ScrollChanged="ScrollViewer_OnScrollChanged"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        VirtualizingPanel.IsVirtualizing="True"
-                        VirtualizingPanel.ScrollUnit="Pixel">
+                        Visibility="Collapsed"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Focusable" Value="False" />
