@@ -49,6 +49,13 @@ namespace Celer.ViewModels
             });
         }
 
+
+        /* TODO: Current implementation of log contains heavy performance issues and will be replaced with a better implementation.
+            There's two issues, the log collection does not have a limit and thus depending on the tasks it will grow huge and start weighting on the UI thread to render all the log items.
+            Second issue is that there's no delay so the logs are sent directly to the UI which in cases where a lof of operations are running it will spam the dispatcher.
+            One plan is to have two seperate logging systems, one for the UI that tracks: signature loading, exceptions, and started/finished tasks which should reduce the amount of logs sent to the UI.
+            The second logging system will be internal and log everything so that it can then be saved into a log file for debugging purposes.
+        */
         private void AddLog(string message, Brush foreground)
         {
             Application.Current.Dispatcher.Invoke(() =>
