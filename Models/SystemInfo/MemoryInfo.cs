@@ -2,7 +2,7 @@
 {
     public class MemoryInfo
     {
-        public float UsedMemoryMB { get; set; }
+        public double UsedMemoryMB { get; set; }
         public double TotalMemoryMB { get; set; }
         public double VirtualUsedMB { get; set; }
         public double VirtualTotalMB { get; set; }

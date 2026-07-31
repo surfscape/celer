@@ -1,4 +1,5 @@
-﻿using Celer.Models.Sensors;
+﻿using Celer.Interfaces;
+using Celer.Models.Sensors;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class SensorViewModel : ObservableObject
+    public partial class SensorViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         private bool isLoading = true;
@@ -24,28 +25,6 @@ namespace Celer.ViewModels.OptimizationVM
         };
 
         private readonly DispatcherTimer _updateTimer = new() { Interval = TimeSpan.FromSeconds(1) };
-
-        public async Task Initialize()
-        {
-            try
-            {
-                await Task.Run(() =>
-                {
-                    _computer.Open();
-                    LoadSensors();
-                });
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Failed to initialize LHM sensors: ${e.Message}");
-            }
-            finally
-            {
-                IsLoading = false;
-                _updateTimer.Tick += (_, _) => Update();
-                _updateTimer.Start();
-            }
-        }
 
         private void LoadSensors()
         {
@@ -73,26 +52,33 @@ namespace Celer.ViewModels.OptimizationVM
                 category.Update();
         }
 
-        public async Task StartTimer()
+        public async Task OnNavigatedTo()
         {
-            if (!_updateTimer.IsEnabled)
+            try
             {
                 await Task.Run(() =>
                 {
                     _computer.Open();
                     LoadSensors();
                 });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Failed to initialize LHM sensors: ${e.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+                _updateTimer.Tick += (_, _) => Update();
                 _updateTimer.Start();
             }
         }
 
-        public async Task StopTimer()
+        public async Task OnNavigatedFrom()
         {
             _updateTimer.Stop();
-            await Task.Run(() =>
-            {
-                _computer.Close();
-            });
+            await Task.Run(() => _computer.Close());
+
         }
     }
 }

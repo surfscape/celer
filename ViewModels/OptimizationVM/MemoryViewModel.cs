@@ -1,4 +1,5 @@
-﻿using Celer.Models.SystemInfo;
+﻿using Celer.Interfaces;
+using Celer.Models.SystemInfo;
 using Celer.Services.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class MemoryViewModel : ObservableObject
+    public partial class MemoryViewModel : ObservableObject, INavigationAware
     {
         private readonly MemoryMonitorService _monitorService = new();
         private readonly DispatcherTimer _updateTimer = new()
@@ -43,6 +44,21 @@ namespace Celer.ViewModels.OptimizationVM
                         Slots.Add(slot);
                 });
             }
+        }
+
+        public async Task OnNavigatedTo()
+        {
+            if (!_updateTimer.IsEnabled)
+            {
+                UpdateMemoryInfo(false);
+                _updateTimer.Start();
+            }
+        }
+
+        public async Task OnNavigatedFrom()
+        {
+            _updateTimer.Stop();
+            await Task.Run(() => _monitorService.Dispose());
         }
     }
 }

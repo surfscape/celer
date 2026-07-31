@@ -22,7 +22,6 @@ namespace Celer.ViewModels
         )
         : base(navigationService, NavigationTabKey.Optimization, serviceProvider)
         {
-            // No-op patch: ensure PowerPlans descriptor present
             _views = new Dictionary<string, SubviewDescriptor>
             {
                 { "Battery", new SubviewDescriptor { Id = "Battery", Name = "Power Manager", Description = "Check the state of your computer battery, and change system power plans", ViewModelType = typeof(BatteryViewModel) } },
