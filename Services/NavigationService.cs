@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Celer.Models;
 using Celer.Properties;
-using Celer.Models;
 
 namespace Celer.Services
 {
@@ -98,6 +95,14 @@ namespace Celer.Services
                 if (stack.Count == 0 || stack.Peek() != innerViewName)
                 {
                     stack.Push(innerViewName);
+                }
+            }
+            var previousTab = CurrentTab;
+            if (previousTab != null && previousTab != tabKey)
+            {
+                if (_handlers.TryGetValue(previousTab.Value, out var prevHandler))
+                {
+                    await prevHandler(null);
                 }
             }
 
