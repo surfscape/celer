@@ -20,10 +20,8 @@ namespace Celer.Converters
                 }
                 else
                 {
-                    // FIX: change GB to MB 
-                    return rounding ? $"{mb:F0} GB" : $"{mb:F2} GB";
+                    return rounding ? $"{mb:F0} MB" : $"{mb:F2} MB";
                 }
-          ;
             }
 
             return value;
