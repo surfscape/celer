@@ -14,7 +14,7 @@ namespace Celer.ViewModels.OptimizationVM
         private readonly MemoryMonitorService _monitorService = new();
         private readonly DispatcherTimer _updateTimer = new()
         {
-            Interval = TimeSpan.FromSeconds(MainConfiguration.Default.GeneralPollingRate),
+            Interval = TimeSpan.FromMilliseconds(MainConfiguration.Default.GeneralPollingRate),
         };
 
         [ObservableProperty]
@@ -45,13 +45,12 @@ namespace Celer.ViewModels.OptimizationVM
             UpdateMemoryInfo(false);
             _updateTimer.Tick += (_, _) => UpdateMemoryInfo(true);
             _updateTimer.Start();
-            IsLoading = true;
+            IsLoading = false;
         }
 
         public async Task OnNavigatedFrom()
         {
             _updateTimer.Stop();
-            await Task.Run(() => _monitorService.Dispose());
         }
     }
 }
