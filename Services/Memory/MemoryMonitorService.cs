@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Celer.Services.Memory
 {
-    public partial class MemoryMonitorService : IDisposable
+    public partial class MemoryMonitorService
     { 
         private readonly float _memorySpeed; 
         private readonly List<RamSlotInfo> _ramSlots;
@@ -61,26 +61,6 @@ namespace Celer.Services.Memory
             catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to retrieve memory speed from WMI\n ${ex.Message}");
-            }
-            return 0;
-        }
-        public static double GetTotalMemory()
-        {
-            try
-            {
-                using var searcher = new ManagementObjectSearcher(
-                    "SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem"
-                );
-                using var collection = searcher.Get();
-                foreach (var item in collection)
-                {
-                    var result = (ulong)item["TotalVisibleMemorySize"];
-                    return MainConfiguration.Default.EnableRounding ? (int)Math.Floor((result / 1024.0)) : result / 1024.0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error getting total memory: {ex.Message}");
             }
             return 0;
         }
@@ -339,7 +319,7 @@ namespace Celer.Services.Memory
             return id switch
             {
                 0 => "Not Supported",
-                1 => "Outro",
+                1 => "Other",
                 2 => "SIP",
                 3 => "DIP",
                 4 => "ZIP",
@@ -364,11 +344,6 @@ namespace Celer.Services.Memory
                 23 => "LGA",
                 _ => $"Uknown ({id})",
             };
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }
