@@ -1,4 +1,5 @@
-﻿using Celer.Services;
+﻿using Celer.Interfaces;
+using Celer.Services;
 using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LibreHardwareMonitor.Hardware;
@@ -11,7 +12,7 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class VideoViewModel : ObservableObject, IDisposable
+    public partial class VideoViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         private bool isLoading = true;
@@ -32,24 +33,6 @@ namespace Celer.ViewModels.OptimizationVM
         public VideoViewModel()
         {
             _gpuUpdateTimer.Tick += (s, e) => UpdateGpuSensors();
-        }
-
-        public async Task Initialize()
-        {
-            try
-            {
-                gpu.Open();
-                await LoadGpusAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-            finally
-            {
-                IsLoading = false;
-                _gpuUpdateTimer.Start();
-            }
         }
 
         private async Task LoadGpusAsync()
@@ -213,26 +196,31 @@ namespace Celer.ViewModels.OptimizationVM
             
         }
 
-        public async Task StartTimerAsync()
+        public async Task OnNavigatedTo()
         {
             if (!_gpuUpdateTimer.IsEnabled)
             {
-                await LoadGpusAsync();
-                _gpuUpdateTimer.Start();
+                try
+                {
+                    gpu.Open();
+                    await LoadGpusAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
+                finally
+                {
+                    IsLoading = false;
+                    _gpuUpdateTimer.Start();
+                }                
             }
         }
 
-        public async Task StopTimerAsync()
+        public async Task OnNavigatedFrom()
         {
             _gpuUpdateTimer.Stop();
             await Task.Run(() => gpu.Close());
-        }
-
-        public void Dispose()
-        {
-            _gpuUpdateTimer.Stop();
-            gpu.Close();
-            GC.SuppressFinalize(this);
         }
 
         public partial class GpuInfo : ObservableObject
