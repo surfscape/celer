@@ -1,30 +1,34 @@
 ﻿using Celer.Models;
 using Celer.Services;
 using Celer.ViewModels.OptimizationVM;
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Celer.ViewModels
 {
-    public partial class OptimizationViewModel : BaseNavigationViewModel
+    public partial class OptimizationViewModel : BaseNavigationViewModel 
     {
-        private readonly Dictionary<string, NavigationSubView> _views;
+        private readonly Dictionary<string, SubviewDescriptor> _views;
 
-        protected override Dictionary<string, NavigationSubView> SubViews => _views;
+        protected override Dictionary<string, SubviewDescriptor> SubViews => _views;
 
         public OptimizationViewModel(
             NavigationService navigationService,
-            MemoryViewModel memoryViewModel,
-            SensorViewModel sensorsViewModel,
-            BatteryViewModel batteryViewModel,
-            VideoViewModel videoViewModel
+            IServiceProvider serviceProvider
         )
-            : base(navigationService, "Optimization")
+        : base(navigationService, NavigationTabKey.Optimization, serviceProvider)
         {
-            _views = new Dictionary<string, NavigationSubView>
+            // No-op patch: ensure PowerPlans descriptor present
+            _views = new Dictionary<string, SubviewDescriptor>
             {
-                { "Battery", new NavigationSubView("Power Manager", "Check the state of your computer battery, and change system power plans", batteryViewModel) },
-                { "Memory", new NavigationSubView("Memory Manager", "Check, clean, and configure memory behaviour", memoryViewModel) },
-                { "Video", new NavigationSubView("Video Manager", "GPU and DWM settings", videoViewModel) },
-                { "Sensors", new NavigationSubView("Sensors", "View your system sensors in real-time", sensorsViewModel) },
+                { "Battery", new SubviewDescriptor { Id = "Battery", Name = "Power Manager", Description = "Check the state of your computer battery, and change system power plans", ViewModelType = typeof(BatteryViewModel) } },
+                { "Memory", new SubviewDescriptor { Id = "Memory", Name = "Memory Manager", Description = "Check, clean, and configure memory behaviour", ViewModelType = typeof(MemoryViewModel) } },
+                { "Video", new SubviewDescriptor { Id = "Video", Name = "Video Manager", Description = "GPU and DWM settings", ViewModelType = typeof(VideoViewModel) } },
+                { "Sensors", new SubviewDescriptor { Id = "Sensors", Name = "Sensors", Description = "View your system sensors in real-time", ViewModelType = typeof(SensorViewModel) } },
             };
         }
     }

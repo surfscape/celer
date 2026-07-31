@@ -9,4 +9,5 @@ public class TabModule
     public PackIconLucideKind Icon { get; set; } = PackIconLucideKind.House;
     public object? Content { get; set; }
     public ScrollBarVisibility VerticalScrollMode { get; set; } = ScrollBarVisibility.Auto;
+    public NavigationTabKey NavigationKey { get; set; } = NavigationTabKey.Dashboard;
 }

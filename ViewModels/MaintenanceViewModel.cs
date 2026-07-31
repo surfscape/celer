@@ -7,21 +7,20 @@ namespace Celer.ViewModels
 {
     public partial class MaintenanceViewModel : BaseNavigationViewModel
     {
-        private readonly Dictionary<string, NavigationSubView> _views;
+        private readonly Dictionary<string, SubviewDescriptor> _views;
 
-        protected override Dictionary<string, NavigationSubView> SubViews => _views;
+        protected override Dictionary<string, SubviewDescriptor> SubViews => _views;
 
         public MaintenanceViewModel(
             NavigationService navigationService,
-            RepairViewModel repairViewModel,
-            NetworkViewModel networkViewModel
+            IServiceProvider serviceProvider
         )
-            : base(navigationService, "Maintenance")
+            : base(navigationService, NavigationTabKey.Maintenance, serviceProvider)
         {
-            _views = new Dictionary<string, NavigationSubView>
+            _views = new Dictionary<string, SubviewDescriptor>
             {
-                { "Repair", new NavigationSubView("System Repair", "Run the official system repair utilities to check & repair erros in the disk/image",repairViewModel) },
-                { "Network", new NavigationSubView("Network Manager", "Check your network connection and change DNS system-wide", networkViewModel) },
+                { "Repair", new SubviewDescriptor { Id = "Repair", Name = "System Repair", Description = "Run the official system repair utilities to check & repair erros in the disk/image", ViewModelType = typeof(RepairViewModel) } },
+                { "Network", new SubviewDescriptor { Id = "Network", Name = "Network Manager", Description = "Check your network connection and change DNS system-wide", ViewModelType = typeof(NetworkViewModel) } },
             };
         }
     }

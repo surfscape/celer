@@ -1,4 +1,5 @@
 ﻿using Celer.Models.SystemInfo;
+using Celer.Models;
 using Celer.Properties;
 using Celer.Services;
 using Celer.Services.Memory;
@@ -127,8 +128,8 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
             foreach (var process in processes)
             {
                 try { totalThreads += process.Threads.Count; }
-                catch { /* Access Denied */ }
-                finally { process.Dispose(); } // CRUCIAL: Prevent handle leaks
+                catch { }
+                finally { process.Dispose(); }
             }
 
             ProcessCount = _cachedProcessCount;
@@ -147,12 +148,11 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
                 .Select(name => new PerformanceCounter("GPU Engine", "Utilization Percentage", name))
                 .ToList();
 
-            _gpuCounters.ForEach(c => c.NextValue()); // Warmup
+            _gpuCounters.ForEach(c => c.NextValue());
         }
         catch (Exception ex) { Debug.WriteLine($"Error init GPU counters: {ex.Message}"); }
     }
 
-    // --- System Data Loaders ---
     private static string GetWindowsVersion()
     {
         try
@@ -238,7 +238,7 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
                 }
             }
         }
-        catch { /* Fallback below */ }
+        catch {}
 
         GpuDirectXVersion = "N/A";
     }
@@ -267,7 +267,7 @@ public partial class DashboardViewModel : BaseModuleViewModel, IDisposable
     }
 
     [RelayCommand]
-    private void NavigateToOptimization(string view) => _navigationService.Navigate("Optimization", view);
+    private void NavigateToOptimization(string view) => _navigationService.Navigate(NavigationTabKey.Optimization, view);
 
     public void Dispose()
     {

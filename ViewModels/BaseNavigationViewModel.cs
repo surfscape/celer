@@ -1,63 +1,75 @@
-﻿using Celer.Interfaces;
+using Celer.Interfaces;
 using Celer.Models;
 using Celer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Celer.ViewModels
 {
     public abstract partial class BaseNavigationViewModel : ObservableObject
     {
         private readonly NavigationService _navigationService;
-        private readonly string _navigationKey;
+        private readonly NavigationTabKey _navigationKey;
+        private readonly IServiceProvider _serviceProvider;
 
-        protected abstract Dictionary<string, NavigationSubView> SubViews { get; }
+        protected abstract Dictionary<string, SubviewDescriptor> SubViews { get; }
 
         [ObservableProperty]
-        private NavigationSubView? currentSubView;
+        private ObservableObject? currentView;
 
-        public ObservableObject? CurrentView => CurrentSubView?.Control;
-        public string? CurrentViewName => CurrentSubView?.Name;
+        private SubviewDescriptor? _currentDescriptor;
 
-        public string? CurrentViewDescription => CurrentSubView?.Description;
+        public string? CurrentViewName => _currentDescriptor?.Name;
+        public string? CurrentViewDescription => _currentDescriptor?.Description;
 
-        protected BaseNavigationViewModel(NavigationService navigationService, string navigationKey)
+        protected BaseNavigationViewModel(NavigationService navigationService, NavigationTabKey navigationKey, IServiceProvider serviceProvider)
         {
             _navigationService = navigationService;
             _navigationKey = navigationKey;
+            _serviceProvider = serviceProvider;
             _navigationService.Register(navigationKey, NavigateTo);
         }
 
         [RelayCommand]
-        public void Navigate(string viewKey) => _navigationService.Navigate(_navigationKey, viewKey);
+        public async Task Navigate(string viewKey) => await _navigationService.Navigate(_navigationKey, viewKey);
 
         [RelayCommand]
-        public void BackToMain() => _navigationService.Navigate(_navigationKey, "Main");
+        public async Task BackToMain() => await _navigationService.Navigate(_navigationKey, "Main");
 
-        public void NavigateTo(string viewKey)
+        public async Task NavigateTo(string viewKey)
         {
-            if (CurrentSubView?.Control is INavigationAware previousNav)
-                previousNav.OnNavigatedFrom();
+            if (currentView is INavigationAware previousNav)
+            {
+                await previousNav.OnNavigatedFrom();
+            }
+
+            if (currentView is IDisposable d)
+                d.Dispose();
 
             if (string.IsNullOrEmpty(viewKey) || viewKey == "Main")
             {
-                CurrentSubView = null;
+                _currentDescriptor = null;
+                CurrentView = null;
+                OnPropertyChanged(nameof(CurrentViewName));
+                OnPropertyChanged(nameof(CurrentViewDescription));
                 return;
             }
 
-            if (SubViews.TryGetValue(viewKey, out var newSubView))
+            if (SubViews.TryGetValue(viewKey, out var descriptor))
             {
-                CurrentSubView = newSubView;
-                if (newSubView.Control is INavigationAware newNav)
-                    newNav.OnNavigatedTo();
-            }
-        }
+                var vm = (ObservableObject?)_serviceProvider.GetService(descriptor.ViewModelType) ?? (ObservableObject?)_serviceProvider.GetRequiredService(descriptor.ViewModelType);
+                _currentDescriptor = descriptor;
+                CurrentView = vm;
+                OnPropertyChanged(nameof(CurrentViewName));
+                OnPropertyChanged(nameof(CurrentViewDescription));
 
-        partial void OnCurrentSubViewChanged(NavigationSubView? value)
-        {
-            OnPropertyChanged(nameof(CurrentView));
-            OnPropertyChanged(nameof(CurrentViewName));
-            OnPropertyChanged(nameof(CurrentViewDescription));
+                if (vm is INavigationAware newNav)
+                    await newNav.OnNavigatedTo();
+            }
         }
     }
 }

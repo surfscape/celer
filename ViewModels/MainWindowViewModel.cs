@@ -15,6 +15,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -59,11 +61,11 @@ namespace Celer.ViewModels
             MenuBarControl = _serviceProvider.GetRequiredService<MenuBar>();
             TabsModule =
                 [
-                    new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<DashboardViewModel>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
-        new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<CleanEngine>(), VerticalScrollMode = ScrollBarVisibility.Disabled },
-        new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<OptimizationViewModel>() },
-        new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<MaintenanceViewModel>() },
-        new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<OverviewViewModel>() }
+                    new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<DashboardViewModel>(), VerticalScrollMode = ScrollBarVisibility.Disabled, NavigationKey = NavigationTabKey.Dashboard },
+                    new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<CleanEngine>(), VerticalScrollMode = ScrollBarVisibility.Disabled, NavigationKey = NavigationTabKey.Cleaning },
+                    new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<OptimizationViewModel>(), NavigationKey = NavigationTabKey.Optimization },
+                    new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<MaintenanceViewModel>(), NavigationKey = NavigationTabKey.Maintenance },
+                    new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<OverviewViewModel>(), NavigationKey = NavigationTabKey.PrivacySecurity }
                 ];
         }
 
@@ -72,29 +74,32 @@ namespace Celer.ViewModels
             TabControlCompactMode = isCompact;
         }
 
-        private void NavigateTo(string tabName, string subview)
+        private async Task NavigateTo(NavigationTabKey tabKey, string? subview)
         {
-            var tab = TabsModule.FirstOrDefault(tbId => tbId.Title == tabName);
+            var tab = TabsModule.FirstOrDefault(tb => tb.NavigationKey == tabKey);
             if (tab != null)
             {
                 SelectedTabIndex = TabsModule.IndexOf(tab);
-                _navigationService.NavigateInternal(tabName, subview);
+                await _navigationService.NavigateInternal(tabKey, subview);
             }
         }
         partial void OnSelectedTabIndexChanged(int value)
         {
-            var tabName = TabsModule[value].Title != null ? TabsModule[value].Title : TabsModule[0].Title;
-            if (string.IsNullOrEmpty(tabName))
+            var tab = TabsModule[value];
+            var tabKey = tab.NavigationKey;
+            if (tabKey == default)
                 return;
 
-            var innerView = _navigationService.GetInnerViewForTab(tabName);
-            _navigationService.NavigateInternal(tabName, innerView);
+            var innerView = _navigationService.GetInnerViewForTab(tabKey);
+            _navigationService.NavigateInternal(tabKey, innerView);
         }
 
         [RelayCommand]
-        private void NavigateToTab(string tab)
+        private async Task NavigateToTab(string tab)
         {
-            _navigationService.Navigate(tab);
+            var found = TabsModule.FirstOrDefault(t => t.Title == tab);
+            if (found != null)
+                await _navigationService.Navigate(found.NavigationKey);
         }
 
         [RelayCommand]
@@ -111,7 +116,7 @@ namespace Celer.ViewModels
             _navigationService.BackToParent();
         }
 
-        private void OnNavigationChanged(string? tab, string? innerView)
+        private void OnNavigationChanged(NavigationTabKey? tab, string? innerView)
         {
             CanGoBack = !string.IsNullOrEmpty(innerView) && !string.Equals(innerView, "Main", StringComparison.Ordinal);
         }

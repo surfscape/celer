@@ -1,8 +1,9 @@
-﻿using Celer.Infrastructure;
+﻿using Celer.Infrastructure.Battery;
 using Celer.Infrastructure.Models.Battery;
 using Celer.Properties;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Celer.Models;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ namespace Celer.ViewModels.OptimizationVM
 {
     public partial class BatteryViewModel : ObservableObject
     {
+        private readonly Services.NavigationService? _navigationService;
         [ObservableProperty]
         public partial bool IsLoading { get; set; } = true;
 
@@ -41,8 +43,9 @@ namespace Celer.ViewModels.OptimizationVM
         [ObservableProperty]
         public partial bool IsLegacyPowerPlansEnabled { get; set; } = MainConfiguration.Default.EnableLegacyPowerPlans;
 
-        public BatteryViewModel()
+        public BatteryViewModel(Services.NavigationService navigationService)
         {
+            _navigationService = navigationService;
             if (MainConfiguration.Default.EnableLegacyPowerPlans)
                 powerPlanService = new Services.Energy.PowerPlanService();
             _updateTimer.Tick += (_, _) => UpdateBatteryInfo();
@@ -58,7 +61,7 @@ namespace Celer.ViewModels.OptimizationVM
                     if (batteryService is not null)
                     {
                         hasBattery = true;
-                        BatteryStaticData = batteryService.BatteryStaticData;
+                        BatteryStaticData = batteryService.Batteries.FirstOrDefault().StaticData;
                     }
                     fastBootDetected = IsFastStartupEnabled();
                 });
@@ -92,12 +95,21 @@ namespace Celer.ViewModels.OptimizationVM
                 powerPlanService.SetActivePowerPlan(SelectedPowerPlan.GUID);
         }
 
+        /*[RelayCommand]
+        private async Task OpenPowerPlans()
+        {
+            if (_navigationService != null)
+            {
+                await _navigationService.Navigate(NavigationTabKey.Optimization, "PowerPlans");
+            }
+        }*/
+
         private void UpdateBatteryInfo()
         {
             if (batteryService is not null)
             {
                 batteryService.Update();
-                BatteryStats = batteryService.BatteryStats;
+                BatteryStats = batteryService.Batteries.FirstOrDefault().Stats;
             }
         }
 
