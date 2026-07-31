@@ -174,7 +174,7 @@ namespace Celer.Services.Memory
                         }
 
                         string manufacturer = obj["Manufacturer"] is not null ? Convert.ToString(obj["Manufacturer"])!.Trim() : "Unknown";
-                        string model = obj["PartNumber"] is not null ? Convert.ToString(obj["Manufacturer"])!.Trim() : "Unknown";
+                        string model = obj["PartNumber"] is not null ? Convert.ToString(obj["PartNumber"])!.Trim() : "Unknown";
 
                         occupiedSlotsByParsedLabel[parsedSlotId] = new RamSlotInfo
                         {
