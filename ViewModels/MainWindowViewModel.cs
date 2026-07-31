@@ -2,10 +2,6 @@
 using Celer.Properties;
 using Celer.Services;
 using Celer.ViewModels.OpsecVM;
-using Celer.Views.Pages.Modules;
-using Celer.Views.Pages.Modules.Maintenance;
-using Celer.Views.Pages.Modules.Opsec;
-using Celer.Views.Pages.Modules.Optimization;
 using Celer.Views.UserControls.MainWindow;
 using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,8 +11,6 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -69,7 +63,7 @@ namespace Celer.ViewModels
                 ];
         }
 
-        private void OnCompactModeChanged(object sender, bool isCompact)
+        private void OnCompactModeChanged(object? sender, bool isCompact)
         {
             TabControlCompactMode = isCompact;
         }
@@ -91,7 +85,7 @@ namespace Celer.ViewModels
                 return;
 
             var innerView = _navigationService.GetInnerViewForTab(tabKey);
-            _navigationService.NavigateInternal(tabKey, innerView);
+            Task.Run(() => _navigationService.NavigateInternal(tabKey, innerView));
         }
 
         [RelayCommand]
