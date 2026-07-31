@@ -64,7 +64,7 @@ namespace Celer.ViewModels
             Categories.Clear();
             try
             {
-                AddLog(
+               AddLog(
                     "Loading signatures...",
                     (Brush)Application.Current.FindResource("SystemFillColorAttentionBrush")
                 );
@@ -72,13 +72,13 @@ namespace Celer.ViewModels
                     ParseJson(CleaningSignatureManager.GetSignatures());
                 else
                     CanClean = false;
-                
+
             }
             catch (Exception e)
             {
-                AddLog($"An error occurred when loading the signatures: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+               AddLog($"An error occurred when loading the signatures: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                 CanClean = false;
-            } 
+            }
         }
 
         private void ParseJson(string json)
@@ -151,7 +151,7 @@ namespace Celer.ViewModels
             Categories.Add(
                     new CleanupCategory { Name = "Special", Items = specialItems }
             );
-            AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+           AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
         }
 
         public static Action CreateAction(JsonElement action)
@@ -224,7 +224,7 @@ namespace Celer.ViewModels
 
             if (selectedItems.Count == 0)
             {
-                AddLog(
+               AddLog(
                     "At least one item has to be checked to start cleaning",
                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                 );
@@ -254,7 +254,7 @@ namespace Celer.ViewModels
 
             if (toClose.Count > 0)
             {
-                AddLog(
+               AddLog(
                     "The following application have to be closed to proceed with the cleaning process:\n"
                         + string.Join("\n", toClose),
                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
@@ -269,7 +269,7 @@ namespace Celer.ViewModels
             await Task.Run(async () =>
             {
                 CanClean = false;
-                AddLog(
+               AddLog(
                     "Starting Celer Cleaning Engine...",
                     (Brush)Application.Current.FindResource("SystemFillColorCautionBrush")
                 );
@@ -288,12 +288,12 @@ namespace Celer.ViewModels
                             {
                                 if (Directory.Exists(resolvedPath))
                                 {
-                                    DeleteFolderContent(resolvedPath, ref freed, item.Name);
+                                    freed += DeleteFolderContent(resolvedPath);
                                     Interlocked.Add(ref totalFreed, freed);
                                 }
                                 else
                                 {
-                                    AddLog(
+                                   AddLog(
                                         $"The folder {resolvedPath} does not exist or is invalid",
                                         (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                     );
@@ -301,7 +301,7 @@ namespace Celer.ViewModels
                             }
                             catch (Exception ex)
                             {
-                                AddLog(
+                               AddLog(
                                     $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}",
                                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                 );
@@ -328,11 +328,9 @@ namespace Celer.ViewModels
                                             await Task.Delay(300);
                                         }
                                     }
-                                    DeleteFilesWithPatterns(
+                                    freed += DeleteFilesWithPatterns(
                                         resolvedPath,
-                                        action.Patterns!,
-                                        ref freed,
-                                        item.Name
+                                        action.Patterns!
                                     );
 
                                     Interlocked.Add(ref totalFreed, freed);
@@ -341,7 +339,7 @@ namespace Celer.ViewModels
                                 }
                                 else
                                 {
-                                    AddLog(
+                                   AddLog(
                                        $"The folder {resolvedPath} does not exist or is invalid",
                                        (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                    );
@@ -349,7 +347,7 @@ namespace Celer.ViewModels
                             }
                             catch (Exception ex)
                             {
-                                AddLog(
+                               AddLog(
                                     $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}",
                                     (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                                 );
@@ -360,14 +358,14 @@ namespace Celer.ViewModels
                         {
                             long freeSpace = 0;
                             var cDrive = new DriveInfo("C");
-                            AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                           AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                             try
                             {
-                                var startInfo = new ProcessStartInfo("powershell.exe", $"{action.Command}")
+                                var startInfo = new ProcessStartInfo("powershell.exe", $"-Command {action.Command}")
                                 {
-                                    RedirectStandardOutput = true,
+                                    RedirectStandardOutput = false, // currently the only command supported is cleanmgr which does not output anything to the console
                                     CreateNoWindow = true,
-                                    StandardOutputEncoding = Encoding.UTF8
+                                    //StandardOutputEncoding = Encoding.UTF8
                                 };
 
                                 using var process = new Process() { StartInfo = startInfo };
@@ -385,7 +383,7 @@ namespace Celer.ViewModels
                             }
                             catch (Exception e)
                             {
-                                AddLog($"Failed to run the command: {action.Command}\n{e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+                               AddLog($"Failed to run the command: {action.Command}\n{e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
                             }
                             finally
                             {
@@ -447,24 +445,23 @@ namespace Celer.ViewModels
         /// Deletes all files and folders in a specified directory recursively.
         /// </summary>
         /// <param name="resolvedPath">The path of the directory that we want to delete the contents of</param>
-        /// <param name="freed">To increment the total space saved</param>
-        /// <param name="task">The name of the current task we are executing</param>
-        public void DeleteFolderContent(string resolvedPath, ref long freed, string task)
+        public long DeleteFolderContent(string resolvedPath)
         {
             var dir = new DirectoryInfo(resolvedPath);
-
+            long folderSize = 0;
             foreach (var file in dir.GetFiles("*", SearchOption.AllDirectories))
             {
                 try
                 {
-                    freed += file.Length;
+                    folderSize += file.Length;
                     file.Attributes = FileAttributes.Normal;
                     file.Delete();
-                    AddLog($"Deleted the file: {file.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                   AddLog($"Deleted the file: {file.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                 }
                 catch (Exception ex)
                 {
-                    AddLog(
+                    folderSize -= file.Length;
+                   AddLog(
                         $"Exception when deleting file {file.FullName}: {ex.Message}",
                         (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                     );
@@ -480,48 +477,49 @@ namespace Celer.ViewModels
                 {
                     subDir.Attributes = FileAttributes.Normal;
                     subDir.Delete(true);
-                    AddLog($"Deleted folder {subDir.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                   AddLog($"Deleted folder {subDir.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                 }
                 catch (Exception ex)
                 {
-                    AddLog(
+                   AddLog(
                         $"Exception when deleting folder {subDir.FullName}: {ex.Message}",
                         (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                     );
                 }
             }
+            return folderSize;
         }
 
-        public void DeleteFilesWithPatterns(
+        public long DeleteFilesWithPatterns(
             string resolvedPath,
-            List<string> patterns,
-            ref long freed,
-            string task
+            List<string> patterns
         )
         {
+            long fileSize = 0;
             foreach (var pattern in patterns)
             {
                 var files = Directory.GetFiles(resolvedPath, pattern, SearchOption.AllDirectories);
                 foreach (var file in files)
                 {
+                    var fileInfo = new FileInfo(file);
                     try
                     {
-                        var fileInfo = new FileInfo(file);
-                        freed += fileInfo.Length;
+                        fileSize += fileInfo.Length;
                         fileInfo.Attributes = FileAttributes.Normal;
                         fileInfo.Delete();
-                        AddLog($"Deleted the file {file}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+                       AddLog($"Deleted the file {file}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
                     }
                     catch (Exception ex)
                     {
-                        AddLog(
+                        fileSize -= fileInfo.Length;
+                       AddLog(
                             $"Exception when deleting file {file}: {ex.Message}",
                             (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
                         );
                     }
                 }
             }
-
+            return fileSize;
         }
 
         public partial class CleanupItem : ObservableObject
