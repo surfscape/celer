@@ -102,11 +102,105 @@
                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                 Kind="ArrowLeft" />
                         </Button>
-                        <ContentControl
+                        <Menu
+                            x:Name="AppMenu"
                             Margin="4,0,0,0"
-                            Content="{Binding MenuBarControl}"
-                            Focusable="False"
-                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                            <MenuItem Padding="4,0" ToolTip="{x:Static resx:Resource.MainWindow_MenuTooltip}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconLucide
+                                            Width="13"
+                                            Height="13"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            Kind="Menu" />
+                                        <TextBlock
+                                            Margin="8,0,0,0"
+                                            FontSize="13"
+                                            LineHeight="13"
+                                            LineStackingStrategy="BlockLineHeight"
+                                            Text="{x:Static resx:Resource.Menu}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                                <MenuItem
+                                    Command="{Binding OpenWindowCommand}"
+                                    CommandParameter="Settings"
+                                    Header="{x:Static resx:Resource.Menu_Settings}">
+                                    <MenuItem.Icon>
+                                        <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="Settings" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="NavigationMenu" Header="_View">
+                                    <MenuItem
+                                        Command="{Binding NavigateToTabCommand}"
+                                        CommandParameter="Dashboard"
+                                        Header="{x:Static resx:Resource.Menu_View_Dashboard}" />
+                                    <MenuItem
+                                        Command="{Binding NavigateToTabCommand}"
+                                        CommandParameter="Cleaning"
+                                        Header="{x:Static resx:Resource.Menu_View_Cleaning}" />
+                                    <MenuItem
+                                        Command="{Binding NavigateToTabCommand}"
+                                        CommandParameter="Optimization"
+                                        Header="{x:Static resx:Resource.Menu_View_Optimization}" />
+                                    <MenuItem
+                                        Command="{Binding NavigateToTabCommand}"
+                                        CommandParameter="Maintenance"
+                                        Header="{x:Static resx:Resource.Menu_View_Maintenance}" />
+                                    <MenuItem
+                                        Command="{Binding NavigateToTabCommand}"
+                                        CommandParameter="Privacy &amp; Security"
+                                        Header="{x:Static resx:Resource.Menu_View_Opsec}" />
+                                </MenuItem>
+                                <MenuItem Header="{x:Static resx:Resource.Menu_Tools}">
+                                    <MenuItem
+                                        Command="{Binding OpenWindowCommand}"
+                                        CommandParameter="Ambient"
+                                        Header="{x:Static resx:Resource.Menu_AmbientChecker}">
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="MonitorCheck" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem x:Name="GatewayMenuItem" Header="_Check Updates">
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="RefreshCw" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                                <MenuItem Header="_Help">
+                                    <MenuItem
+                                        Command="{Binding OpenLinkCommand}"
+                                        CommandParameter="https://ko-fi.com/reduxflakes"
+                                        Header="_Donate">
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="HandHeart" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding OpenLinkCommand}"
+                                        CommandParameter="https://surfscape.eu/about/support"
+                                        Header="_Support">
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="LifeBuoy" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding OpenLinkCommand}"
+                                        CommandParameter="https://github.com/surfscape/celer/issues"
+                                        Header="_Report Issues" />
+                                    <Separator />
+                                    <MenuItem
+                                        Command="{Binding OpenWindowCommand}"
+                                        CommandParameter="About"
+                                        Header="_About">
+                                        <MenuItem.Icon>
+                                            <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="Info" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                                <MenuItem Command="{Binding CloseAppCommand}" Header="_Exit" />
+                            </MenuItem>
+                        </Menu>
                     </StackPanel>
                     <TextBlock
                         Grid.Column="1"

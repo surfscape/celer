@@ -7,35 +7,28 @@
     ThemeMode="System">
     <Application.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="WindowBackground"
-                             Color="Transparent"></SolidColorBrush>
+            <SolidColorBrush x:Key="WindowBackground" Color="Transparent" />
             <Style TargetType="Window">
-                <Setter Property="RenderOptions.ClearTypeHint"
-                        Value="Auto" />
-                <Setter Property="TextOptions.TextFormattingMode"
-                        Value="Ideal"></Setter>
-                <Setter Property="TextOptions.TextRenderingMode"
-                        Value="ClearType"></Setter>
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Auto" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
                 <Setter Property="FontFamily" Value="Segoe UI" />
-                <Setter Property="Background"
-                        Value="{DynamicResource WindowBackground}"></Setter>
+                <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
             </Style>
             <Style TargetType="StackPanel">
-                <Setter Property="UseLayoutRounding"
-                        Value="true"></Setter>
+                <Setter Property="UseLayoutRounding" Value="true" />
             </Style>
             <Style TargetType="Border">
-                <Setter Property="UseLayoutRounding"
-                        Value="true"></Setter>
+                <Setter Property="UseLayoutRounding" Value="true" />
             </Style>
             <Style TargetType="Grid">
-                <Setter Property="UseLayoutRounding"
-                        Value="true"></Setter>
+                <Setter Property="UseLayoutRounding" Value="true" />
             </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/BaseStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Override.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Menu.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
