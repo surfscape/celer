@@ -61,6 +61,15 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ambient Checker.
+        /// </summary>
+        public static string AmbientChecker {
+            get {
+                return ResourceManager.GetString("AmbientChecker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run a small check to see what system tools are currently available for Celer..
         /// </summary>
         public static string AmbientChecker_Description {
@@ -88,15 +97,6 @@ namespace Celer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ambient Checker.
-        /// </summary>
-        public static string AmbientChecker_Title {
-            get {
-                return ResourceManager.GetString("AmbientChecker_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Available.
         /// </summary>
         public static string Available {
@@ -106,11 +106,200 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking for an internet connection.
+        /// </summary>
+        public static string GatewayTask_CheckInternetConnection {
+            get {
+                return ResourceManager.GetString("GatewayTask_CheckInternetConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t retrieve signatures. Trying to get local signatures instead..
+        /// </summary>
+        public static string GatewayTask_CheckLocalSignatures {
+            get {
+                return ResourceManager.GetString("GatewayTask_CheckLocalSignatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signatures updated.
+        /// </summary>
+        public static string GatewayTask_CleaningSignaturesUpdated {
+            get {
+                return ResourceManager.GetString("GatewayTask_CleaningSignaturesUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No signatures found, cleaning has been disabled..
+        /// </summary>
+        public static string GatewayTask_DisableCleaning {
+            get {
+                return ResourceManager.GetString("GatewayTask_DisableCleaning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading cleaning signatures.
+        /// </summary>
+        public static string GatewayTask_DownloadCleaningSignatures {
+            get {
+                return ResourceManager.GetString("GatewayTask_DownloadCleaningSignatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to run dxDiag.
+        /// </summary>
+        public static string GatewayTask_FailDxDiag {
+            get {
+                return ResourceManager.GetString("GatewayTask_FailDxDiag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found local signatures.
+        /// </summary>
+        public static string GatewayTask_FoundLocalSignatures {
+            get {
+                return ResourceManager.GetString("GatewayTask_FoundLocalSignatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting Celer.
+        /// </summary>
+        public static string GatewayTask_StartCeler {
+            get {
+                return ResourceManager.GetString("GatewayTask_StartCeler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting hardware services.
+        /// </summary>
+        public static string GatewayTask_StartHardwareServices {
+            get {
+                return ResourceManager.GetString("GatewayTask_StartHardwareServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
         public static string Installed {
             get {
                 return ResourceManager.GetString("Installed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string MainWindow_GoBackTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow_GoBackTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open App Menu.
+        /// </summary>
+        public static string MainWindow_MenuTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow_MenuTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string Menu {
+            get {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Ambient Checker.
+        /// </summary>
+        public static string Menu_AmbientChecker {
+            get {
+                return ResourceManager.GetString("Menu_AmbientChecker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Preferences.
+        /// </summary>
+        public static string Menu_Settings {
+            get {
+                return ResourceManager.GetString("Menu_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Tools.
+        /// </summary>
+        public static string Menu_Tools {
+            get {
+                return ResourceManager.GetString("Menu_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _View.
+        /// </summary>
+        public static string Menu_View {
+            get {
+                return ResourceManager.GetString("Menu_View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Cleaning.
+        /// </summary>
+        public static string Menu_View_Cleaning {
+            get {
+                return ResourceManager.GetString("Menu_View_Cleaning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Dashboard.
+        /// </summary>
+        public static string Menu_View_Dashboard {
+            get {
+                return ResourceManager.GetString("Menu_View_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Maintenance.
+        /// </summary>
+        public static string Menu_View_Maintenance {
+            get {
+                return ResourceManager.GetString("Menu_View_Maintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Privacy &amp; Security.
+        /// </summary>
+        public static string Menu_View_Opsec {
+            get {
+                return ResourceManager.GetString("Menu_View_Opsec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Optimization.
+        /// </summary>
+        public static string Menu_View_Optimization {
+            get {
+                return ResourceManager.GetString("Menu_View_Optimization", resourceCulture);
             }
         }
         
@@ -133,7 +322,52 @@ namespace Celer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I&apos;ve read and accept the Terms of Use and.
+        ///   Looks up a localized string similar to Update signatures when Celer is launching up without the need of manually updating them from the Tools menu..
+        /// </summary>
+        public static string Onboarding_AutoDownloadsCheckboxTooltip {
+            get {
+                return ResourceManager.GetString("Onboarding_AutoDownloadsCheckboxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto start with Windows.
+        /// </summary>
+        public static string Onboarding_AutoStartupCheckboxLabel {
+            get {
+                return ResourceManager.GetString("Onboarding_AutoStartupCheckboxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray..
+        /// </summary>
+        public static string Onboarding_AutoStartupCheckboxTooltip {
+            get {
+                return ResourceManager.GetString("Onboarding_AutoStartupCheckboxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (can be later changed in the settings).
+        /// </summary>
+        public static string Onboarding_FeaturesSubheading {
+            get {
+                return ResourceManager.GetString("Onboarding_FeaturesSubheading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Features.
+        /// </summary>
+        public static string Onboarding_FeaturesTitle {
+            get {
+                return ResourceManager.GetString("Onboarding_FeaturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I&apos;ve read and accept the {0} and {1}..
         /// </summary>
         public static string Onboarding_LegalCheckboxLabel {
             get {
@@ -174,6 +408,33 @@ namespace Celer.Resources {
         public static string Onboarding_WindowTitle {
             get {
                 return ResourceManager.GetString("Onboarding_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        public static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms of Use.
+        /// </summary>
+        public static string TermsOfUse {
+            get {
+                return ResourceManager.GetString("TermsOfUse", resourceCulture);
             }
         }
         

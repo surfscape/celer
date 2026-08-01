@@ -126,7 +126,11 @@
   <data name="AmbientChecker_StartLabel" xml:space="preserve">
     <value>Start Verification</value>
   </data>
-  <data name="AmbientChecker_Title" xml:space="preserve">
+  <data name="Menu_AmbientChecker" xml:space="preserve">
+    <value>_Ambient Checker</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="AmbientChecker" xml:space="preserve">
     <value>Ambient Checker</value>
   </data>
   <data name="Available" xml:space="preserve">
@@ -142,7 +146,9 @@
     <value>Automatically update signatures on launch</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
-    <value>I've read and accept the Terms of Use and</value>
+    <value>I've read and accept the {0} and {1}.</value>
+    <comment>{0} - TermsOfUse key
+{1} - PrivacyPolicy key</comment>
   </data>
   <data name="Onboarding_LegalTitle" xml:space="preserve">
     <value>Terms of Use</value>
@@ -158,5 +164,97 @@
   </data>
   <data name="WaitMessage" xml:space="preserve">
     <value>Waiting...</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Onboarding_FeaturesTitle" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
+    <value>(can be later changed in the settings)</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxTooltip" xml:space="preserve">
+    <value>Update signatures when Celer is launching up without the need of manually updating them from the Tools menu.</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
+    <value>Auto start with Windows</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
+    <value>Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray.</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GatewayTask_StartCeler" xml:space="preserve">
+    <value>Starting Celer</value>
+  </data>
+  <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
+    <value>Starting hardware services</value>
+  </data>
+  <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
+    <value>Checking for an internet connection</value>
+  </data>
+  <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
+    <value>Downloading cleaning signatures</value>
+  </data>
+  <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
+    <value>Signatures updated</value>
+  </data>
+  <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
+    <value>Couldn't retrieve signatures. Trying to get local signatures instead.</value>
+  </data>
+  <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
+    <value>Found local signatures</value>
+  </data>
+  <data name="GatewayTask_DisableCleaning" xml:space="preserve">
+    <value>No signatures found, cleaning has been disabled.</value>
+  </data>
+  <data name="GatewayTask_FailDxDiag" xml:space="preserve">
+    <value>Failed to run dxDiag</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MainWindow_GoBackTooltip" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MainWindow_MenuTooltip" xml:space="preserve">
+    <value>Open App Menu</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>_Preferences</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_View</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Dashboard" xml:space="preserve">
+    <value>_Dashboard</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Cleaning" xml:space="preserve">
+    <value>_Cleaning</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Optimization" xml:space="preserve">
+    <value>_Optimization</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Maintenance" xml:space="preserve">
+    <value>_Maintenance</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Opsec" xml:space="preserve">
+    <value>_Privacy &amp; Security</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>_Tools</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
   </data>
 </root>

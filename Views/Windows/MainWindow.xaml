@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Utilities"
-    xmlns:mainwindow="clr-namespace:Celer.Views.UserControls.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Celer.Models"
+    xmlns:resx="clr-namespace:Celer.Resources"
     xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
     xmlns:uc="clr-namespace:Celer.Views.Pages.Modules"
     xmlns:ucMa="clr-namespace:Celer.Views.Pages.Modules.Maintenance"
@@ -93,7 +93,7 @@
                             Command="{Binding GoBackCommand}"
                             IsEnabled="{Binding CanGoBack}"
                             Style="{DynamicResource TransparentButton}"
-                            ToolTip="Back"
+                            ToolTip="{x:Static resx:Resource.MainWindow_GoBackTooltip}"
                             Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <iconPacks:PackIconLucide

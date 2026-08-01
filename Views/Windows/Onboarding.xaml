@@ -86,37 +86,30 @@
                             <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap">Celer does not collect or transmit personal data with or without the user's consent.</TextBlock>
                             <TextBlock Style="{StaticResource Heading}">6. Changes to the Terms</TextBlock>
                             <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap">SurfScape reserves the right to modify these Terms of Use at any time. Whenever this occurs, a new version will be made available within the application. Continued use after changes constitutes acceptance of the updated terms.</TextBlock>
-
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
                 <StackPanel x:Name="OnboardingOptions">
                     <CheckBox VerticalAlignment="Stretch" IsChecked="{Binding AcceptTerms}">
-                        <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom">
-                            <Run Text="{x:Static resx:Resource.Onboarding_LegalCheckboxLabel}" />
-                            <Hyperlink
-                                custom:HyperlinkExtensions.IsExternal="True"
-                                Foreground="{DynamicResource AccentFillColorDefaultBrush}"
-                                NavigateUri="https://surfscape.eu/projects/celer/legal/privacy/">
-                                Privacy Policy
-                            </Hyperlink></TextBlock>
+                        <TextBlock
+                            x:Name="AcceptLegalCheckbox"
+                            Margin="0,0,0,0"
+                            VerticalAlignment="Bottom" />
                     </CheckBox>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
                             Margin="0,10,0,6"
                             FontSize="16"
-                            FontWeight="SemiBold">
-                            Features
-                        </TextBlock>
+                            FontWeight="SemiBold"
+                            Text="{x:Static resx:Resource.Onboarding_FeaturesTitle}" />
                         <TextBlock
                             Margin="8,0,0,0"
                             VerticalAlignment="Center"
                             FontSize="13"
                             Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                             LineHeight="26"
-                            LineStackingStrategy="BlockLineHeight">
-                            (can be later changed in the settings)
-                        </TextBlock>
+                            LineStackingStrategy="BlockLineHeight"
+                            Text="{x:Static resx:Resource.Onboarding_FeaturesSubheading}" />
                     </StackPanel>
                     <CheckBox IsChecked="{Binding AutoUpdates}">
                         <Grid VerticalAlignment="Center">
@@ -130,7 +123,7 @@
                                 Margin="8,0,0,0"
                                 VerticalAlignment="Bottom"
                                 Background="Transparent"
-                                ToolTip="Update signatures when Celer is launching up without the need of manually updating them from the Tools menu.">
+                                ToolTip="{x:Static resx:Resource.Onboarding_AutoDownloadsCheckboxTooltip}">
                                 <iconPacks:PackIconLucide
                                     Width="14"
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
@@ -144,13 +137,13 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" Text="Auto start with Windows" />
+                            <TextBlock Margin="0" Text="{x:Static resx:Resource.Onboarding_AutoStartupCheckboxLabel}" />
                             <StackPanel
                                 Grid.Column="1"
                                 Margin="8,0,0,0"
                                 VerticalAlignment="Bottom"
                                 Background="Transparent"
-                                ToolTip="Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray.">
+                                ToolTip="{x:Static resx:Resource.Onboarding_AutoStartupCheckboxTooltip}">
                                 <iconPacks:PackIconLucide
                                     Width="14"
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
@@ -162,10 +155,9 @@
                         MinWidth="140"
                         HorizontalAlignment="Right"
                         Command="{Binding StartCommand}"
+                        Content="{x:Static resx:Resource.Start}"
                         IsEnabled="{Binding AcceptTerms}"
-                        Style="{DynamicResource AccentButtonStyle}">
-                        Start
-                    </Button>
+                        Style="{DynamicResource AccentButtonStyle}" />
                 </StackPanel>
             </StackPanel>
         </Border>

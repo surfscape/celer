@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Celer.Views.Windows.Utils"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Celer.Resources"
-    Title="{x:Static resx:Resource.AmbientChecker_Title}"
+    Title="{x:Static resx:Resource.AmbientChecker}"
     Width="600"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
@@ -20,7 +20,7 @@
     </Window.Resources>
     <Border Padding="15">
         <StackPanel>
-            <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Resource.AmbientChecker_Title}" />
+            <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Resource.AmbientChecker}" />
             <TextBlock
                 Margin="0,-4,0,16"
                 FontSize="15"
