@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AmbientChecker_Description" xml:space="preserve">
-    <value>Execute uma pequena verificação para ver quais ferramentas de sistema estão disponíveis atualmente para o Celer.</value>
+    <value>Run a small check to see what system tools are currently available for Celer.</value>
   </data>
   <data name="AmbientChecker_DoneLabel" xml:space="preserve">
-    <value>Verificação completa!</value>
+    <value>Verification Done!</value>
   </data>
   <data name="AmbientChecker_StartLabel" xml:space="preserve">
-    <value>Iniciar Verificação</value>
+    <value>Start Verification</value>
   </data>
   <data name="AmbientChecker_Title" xml:space="preserve">
-    <value>Verificação de Ambiente</value>
+    <value>Ambient Checker</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>Disponível</value>
+    <value>Available</value>
   </data>
   <data name="Installed" xml:space="preserve">
-    <value>Instalado</value>
+    <value>Installed</value>
   </data>
   <data name="NotFound" xml:space="preserve">
-    <value>Não encontrado</value>
+    <value>Not found</value>
   </data>
   <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
-    <value>Atualizar assinaturas automaticamente ao iniciar</value>
+    <value>Automatically update signatures on launch</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
-    <value>Eu li e aceito os Termos de Uso e</value>
+    <value>I've read and accept the Terms of Use and</value>
   </data>
   <data name="Onboarding_LegalTitle" xml:space="preserve">
-    <value>Termos de Utilização</value>
+    <value>Terms of Use</value>
   </data>
   <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
-    <value>Celer é uma caixa de ferramentas para Windows 10/11 para lhe dar controle sobre o Windows, outra vez.</value>
+    <value>Celer is a toolbox for Windows 10/11 with the purpose of giving you control over Windows, once again.</value>
   </data>
   <data name="Onboarding_WelcomeTitle" xml:space="preserve">
-    <value>Bem-vindo(a) ao Celer!</value>
+    <value>Welcome to Celer!</value>
   </data>
   <data name="Onboarding_WindowTitle" xml:space="preserve">
-    <value>Configuração Inicial</value>
+    <value>Setup</value>
   </data>
   <data name="WaitMessage" xml:space="preserve">
-    <value>Em espera...</value>
+    <value>Waiting...</value>
   </data>
 </root>
