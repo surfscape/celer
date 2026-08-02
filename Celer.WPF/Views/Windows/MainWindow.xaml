@@ -14,6 +14,7 @@
     xmlns:ucMa="clr-namespace:Celer.Views.Pages.Modules.Maintenance"
     xmlns:ucOp="clr-namespace:Celer.Views.Pages.Modules.Optimization"
     xmlns:ucOs="clr-namespace:Celer.Views.Pages.Modules.Opsec"
+    xmlns:ucSo="clr-namespace:Celer.Views.Pages.Modules.Software"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     xmlns:viewmodelsOpsec="clr-namespace:Celer.ViewModels.OpsecVM"
     Title="Celer"
@@ -37,6 +38,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:OptimizationViewModel}">
             <ucOp:Optimization />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SoftwareViewModel}">
+            <ucSo:Software />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:MaintenanceViewModel}">
             <ucMa:Maintenance />
@@ -105,6 +109,7 @@
                         <Menu
                             x:Name="AppMenu"
                             Margin="4,0,0,0"
+                            FontSize="14"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <MenuItem Padding="4,0" ToolTip="{x:Static resx:Resource.MainWindow_MenuTooltip}">
                                 <MenuItem.Header>
@@ -161,7 +166,11 @@
                                             <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="MonitorCheck" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem x:Name="GatewayMenuItem" Header="_Check Updates">
+                                    <MenuItem
+                                        Command="{Binding OpenWindowCommand}"
+                                        CommandParameter="Update"
+                                        Header="_Check Updates"
+                                        IsEnabled="{Binding CanTriggerUpdate}">
                                         <MenuItem.Icon>
                                             <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="RefreshCw" />
                                         </MenuItem.Icon>
@@ -325,7 +334,7 @@
                     <ContextMenu x:Name="QCMenu">
                         <MenuItem
                             x:Name="ToggleMainWindowMenu"
-                            Command="{Binding QCOpenAppCommand}"
+                            Command="{Binding QCToogleWindowCommand}"
                             Header="Hide Celer" />
                         <!-- TODO
                         <MenuItem Header="Power Plans">

@@ -19,7 +19,10 @@
     </UserControl.Resources>
     <Border>
         <StackPanel>
-            <local1:ModuleHeader ViewDescription="{Binding CurrentViewDescription}" ViewLabel="{Binding CurrentViewName}" Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}" />
+            <local1:ModuleHeader
+                ViewDescription="{Binding CurrentViewDescription}"
+                ViewLabel="{Binding CurrentViewName}"
+                Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}}" />
             <Border>
                 <Grid>
                     <Grid Visibility="{Binding CurrentView, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=invert}">

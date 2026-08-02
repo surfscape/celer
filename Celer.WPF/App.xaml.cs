@@ -5,6 +5,7 @@ using Celer.ViewModels;
 using Celer.ViewModels.MaintenanceVM;
 using Celer.ViewModels.OpsecVM;
 using Celer.ViewModels.OptimizationVM;
+using Celer.ViewModels.SoftwareVM;
 using Celer.Views.Pages.Settings;
 using Celer.Views.Windows;
 using Celer.Views.Windows.Utils;
@@ -117,6 +118,7 @@ public partial class App : Application
 			// register main services, these include services that are used across the application and the main window
 			services.AddSingleton<NavigationService>();
 			services.AddSingleton<MainWindowViewModel>();
+			services.AddSingleton<QuickCenterViewModel>();
 			services.AddSingleton<MainWindow>();
 			services.AddTransient<SurfScapeGateway>();
 			services.AddSingleton<SettingsNavigation>();
@@ -130,6 +132,8 @@ public partial class App : Application
 			services.AddTransient<BatteryViewModel>();
 			services.AddTransient<VideoViewModel>();
 			services.AddTransient<SensorViewModel>();
+			services.AddTransient<SoftwareViewModel>();
+			services.AddTransient<PackageManagerViewModel>();
 			services.AddSingleton<MaintenanceViewModel>();
 			services.AddSingleton<RepairViewModel>();
 			services.AddTransient<NetworkViewModel>();

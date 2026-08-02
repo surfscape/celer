@@ -196,7 +196,6 @@
                 <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-
                 <Setter Property="Foreground">
                     <Setter.Value>
                         <SolidColorBrush Color="{DynamicResource TextFillColorDisabled}" />
@@ -321,7 +320,6 @@
                         VerticalAlignment="Center"
                         Content="{TemplateBinding Icon}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-
                     <ContentPresenter
                         x:Name="HeaderHost"
                         Grid.Column="1"
@@ -329,11 +327,10 @@
                         ContentSource="Header"
                         RecognizesAccessKey="True"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-
                     <Grid Grid.Column="2">
                         <TextBlock
                             x:Name="Chevron"
-                            Margin="0,3,0,0"
+                            Margin="12,2,0,0"
                             VerticalAlignment="Center"
                             FontFamily="{DynamicResource SymbolThemeFontFamily}"
                             FontSize="{TemplateBinding FontSize}"
@@ -435,6 +432,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>

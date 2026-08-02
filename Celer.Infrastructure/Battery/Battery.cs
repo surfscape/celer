@@ -11,7 +11,7 @@ namespace Celer.Infrastructure.Battery;
 /// </summary>
 public partial class BatteryDevice(string instanceId, BatteryInfo staticData) : ObservableObject
 {
-    public string InstanceId { get; } = instanceId;   
+    public string InstanceId { get; } = instanceId;
     public BatteryInfo StaticData { get; } = staticData;
     [ObservableProperty]
     public partial BatteryStats? Stats { get; set; }

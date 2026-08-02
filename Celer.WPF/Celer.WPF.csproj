@@ -63,6 +63,9 @@
 		<PackageReference Include="Vanara.PInvoke.DXGI" Version="5.0.5" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\Celer.Infrastructure\Celer.Infrastructure.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<SplashScreen Include="Resources\Assets\splashscreen.png" />
 	</ItemGroup>
 	<ItemGroup>

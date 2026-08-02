@@ -16,24 +16,29 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using static Celer.Views.Pages.Settings.SettingsGeneralViewModel;
 
 namespace Celer.ViewModels
 {
 	public partial class MainWindowViewModel : ObservableObject
 	{
-		public QCMenuViewModel MenuViewModel { get; } = new QCMenuViewModel();
+		[ObservableProperty]
+		public partial QCMenuViewModel MenuViewModel { get; set; }
 
 		[ObservableProperty]
-		private int selectedTabIndex = 0;
+		public partial int SelectedTabIndex { get; set; } = 0;
 
 		[ObservableProperty]
-		private bool tabControlCompactMode;
+		public partial bool TabControlCompactMode { get; set; }
 
 		[ObservableProperty]
-		private bool isCompact = false;
+		public partial bool IsCompact { get; set; } = false;
 
 		[ObservableProperty]
-		private bool canGoBack;
+		public partial bool CanGoBack { get; set; }
+
+		[ObservableProperty]
+		public partial bool CanTriggerUpdate { get; set; } = MainConfiguration.Default.EnableSurfScapeGateway;
 
 		[ObservableProperty]
 		public partial ObservableCollection<TabModule> TabsModule { get; set; }
@@ -49,14 +54,20 @@ namespace Celer.ViewModels
 			_navigationService = navigationService;
 			_navigationService.NavigateTo = NavigateTo;
 			_serviceProvider = serviceProvider;
-			TabControlCompactMode = _navigationService.CompactMode;
 			_navigationService.CompactModeChanged += OnCompactModeChanged;
 			_navigationService.NavigationChanged += OnNavigationChanged;
+			TabControlCompactMode = _navigationService.CompactMode;
+			WeakReferenceMessenger.Default.Register<SurfScapeGatewayChangedMessage>(this, (r, m) =>
+			{
+				CanTriggerUpdate = m.Value;
+			});
+			MenuViewModel = new QCMenuViewModel(_serviceProvider.GetRequiredService<QuickCenterViewModel>());
 			TabsModule =
 				[
 					new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<DashboardViewModel>(), VerticalScrollMode = ScrollBarVisibility.Disabled, NavigationKey = NavigationTabKey.Dashboard },
 					new() { Title = "Cleaning", Icon = PackIconLucideKind.Trash, Content = _serviceProvider.GetRequiredService<CleanEngine>(), VerticalScrollMode = ScrollBarVisibility.Disabled, NavigationKey = NavigationTabKey.Cleaning },
 					new() { Title = "Optimization", Icon = PackIconLucideKind.Rocket, Content = _serviceProvider.GetRequiredService<OptimizationViewModel>(), NavigationKey = NavigationTabKey.Optimization },
+					new() { Title = "Software", Icon = PackIconLucideKind.Package, Content = _serviceProvider.GetRequiredService<SoftwareViewModel>(), NavigationKey = NavigationTabKey.Software },
 					new() { Title = "Maintenance", Icon = PackIconLucideKind.Wrench, Content = _serviceProvider.GetRequiredService<MaintenanceViewModel>(), NavigationKey = NavigationTabKey.Maintenance },
 					new() { Title = "Privacy & Security", Icon = PackIconLucideKind.Shield, Content = _serviceProvider.GetRequiredService<OverviewViewModel>(), NavigationKey = NavigationTabKey.PrivacySecurity }
 				];
@@ -77,10 +88,6 @@ namespace Celer.ViewModels
 			{
 				try
 				{
-					// Resolved here rather than at queue time: an explicit Navigate(tab, subview)
-					// sets SelectedTabIndex first, so this callback is queued before the subview
-					// has been pushed. Reading it now sees the settled state and the guard in
-					// NavigateInternal turns this into a no-op instead of resetting to Main.
 					var innerView = _navigationService.GetInnerViewForTab(tabKey);
 					await _navigationService.NavigateInternal(tabKey, innerView);
 				}
@@ -160,6 +167,8 @@ namespace Celer.ViewModels
 					OpenWindow<Settings>(); break;
 				case "Ambient":
 					OpenWindow<AmbientChecker>(); break;
+				case "Update":
+					OpenWindow<SurfScapeGateway>(); break;
 				case "About":
 					OpenWindow<AboutWindow>(); break;
 			}
@@ -183,7 +192,7 @@ namespace Celer.ViewModels
 				if (existing.WindowState == WindowState.Minimized)
 					existing.WindowState = WindowState.Normal;
 
-				existing.Show();        // covers the hidden case
+				existing.ShowDialog();
 				existing.Activate();
 				return;
 			}
@@ -194,9 +203,10 @@ namespace Celer.ViewModels
 			if (owner is not null && owner != window && owner.IsVisible)
 				window.Owner = owner;
 
-			window.Show();
+			window.ShowDialog();
 		}
-		public partial class QCMenuViewModel : ObservableObject
+
+		public partial class QCMenuViewModel(QuickCenterViewModel quickCenterViewModel) : ObservableObject
 		{
 			[RelayCommand]
 			private static void QCExitApp()
@@ -205,49 +215,54 @@ namespace Celer.ViewModels
 			}
 
 			[RelayCommand]
-			public static void QCOpenApp()
+			public static void QCToogleWindow()
 			{
 				var mainWindow = Application.Current.MainWindow;
+				if (mainWindow == null) return;
+				if (mainWindow.Visibility != Visibility.Visible || mainWindow.WindowState == WindowState.Minimized)
+				{
+					if (mainWindow.Visibility != Visibility.Visible)
+					{
+						mainWindow.Show();
+					}
+
+					if (mainWindow.WindowState == WindowState.Minimized)
+					{
+						mainWindow.WindowState = WindowState.Normal;
+					}
+					mainWindow.Activate();
+					mainWindow.Topmost = true;
+					mainWindow.Topmost = false;
+					mainWindow.Focus();
+					WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
+				}
+				else
+				{
+					mainWindow.Hide();
+					mainWindow.WindowState = WindowState.Minimized;
+					mainWindow.Visibility = Visibility.Collapsed;
+					WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
+					var windows = Application.Current.Windows;
+					foreach (Window win in windows)
+					{
+						if (win is not MainWindow)
+							win.Close();
+					}
+				}
+			}
+
+			[RelayCommand]
+			public void QCOpenApp()
+			{
+
 				if (MainConfiguration.Default.EnableQuickCenter)
 				{
-					var quickCenter = new QuickCenter();
+					var quickCenter = new QuickCenter(quickCenterViewModel);
 					quickCenter.Show();
 					quickCenter.Activate();
 				}
 				else
-				{
-					if (mainWindow == null) return;
-					if (mainWindow.Visibility != Visibility.Visible || mainWindow.WindowState == WindowState.Minimized)
-					{
-						if (mainWindow.Visibility != Visibility.Visible)
-						{
-							mainWindow.Show();
-						}
-
-						if (mainWindow.WindowState == WindowState.Minimized)
-						{
-							mainWindow.WindowState = WindowState.Normal;
-						}
-						mainWindow.Activate();
-						mainWindow.Topmost = true;
-						mainWindow.Topmost = false;
-						mainWindow.Focus();
-						WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
-					}
-					else
-					{
-						mainWindow.Hide();
-						mainWindow.WindowState = WindowState.Minimized;
-						mainWindow.Visibility = Visibility.Collapsed;
-						WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
-						var windows = Application.Current.Windows;
-						foreach (Window win in windows)
-						{
-							if (win is not MainWindow)
-								win.Close();
-						}
-					}
-				}
+					QCToogleWindow();
 			}
 		}
 		public class WindowVisibleMessage(bool value) : ValueChangedMessage<bool>(value) { }

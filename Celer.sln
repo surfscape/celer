@@ -3,24 +3,44 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celer", "Celer.csproj", "{648EA86E-31C0-43E2-A53C-AAA548E16B2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celer.WPF", "Celer.WPF\Celer.WPF.csproj", "{648EA86E-31C0-43E2-A53C-AAA548E16B2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celer.Infrastructure", "Celer.Infrastructure\Celer.Infrastructure.csproj", "{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x64.ActiveCfg = Debug|x64
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x64.Build.0 = Debug|x64
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Debug|x86.Build.0 = Debug|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x64.ActiveCfg = Release|x64
 		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x64.Build.0 = Release|x64
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{648EA86E-31C0-43E2-A53C-AAA548E16B2B}.Release|x86.Build.0 = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|x64.Build.0 = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Debug|x86.Build.0 = Debug|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|x64.ActiveCfg = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|x64.Build.0 = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|x86.ActiveCfg = Release|Any CPU
+		{91AFD84C-BA45-4528-BF12-3EFE1EF8333B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
