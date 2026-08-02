@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AmbientChecker_Description" xml:space="preserve">
+    <value>Run a small check to see what system tools are currently available for Celer.</value>
+  </data>
+  <data name="AmbientChecker_DoneLabel" xml:space="preserve">
+    <value>Verification Done!</value>
+  </data>
+  <data name="AmbientChecker_StartLabel" xml:space="preserve">
+    <value>Start Verification</value>
+  </data>
+  <data name="Menu_AmbientChecker" xml:space="preserve">
+    <value>_Ambient Checker</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="AmbientChecker" xml:space="preserve">
+    <value>Ambient Checker</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
+    <value>Automatically update signatures on launch</value>
+  </data>
+  <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
+    <value>I've read and accept the {0} and {1}.</value>
+    <comment>{0} - TermsOfUse key
+{1} - PrivacyPolicy key</comment>
+  </data>
+  <data name="Onboarding_LegalTitle" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
+    <value>Celer is a toolbox for Windows 10/11 with the purpose of giving you control over Windows, once again.</value>
+  </data>
+  <data name="Onboarding_WelcomeTitle" xml:space="preserve">
+    <value>Welcome to Celer!</value>
+  </data>
+  <data name="Onboarding_WindowTitle" xml:space="preserve">
+    <value>Setup</value>
+  </data>
+  <data name="WaitMessage" xml:space="preserve">
+    <value>Waiting...</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Onboarding_FeaturesTitle" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
+    <value>(can be later changed in the settings)</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxTooltip" xml:space="preserve">
+    <value>Update signatures when Celer is launching up without the need of manually updating them from the Tools menu.</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
+    <value>Auto start with Windows</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
+    <value>Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray.</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GatewayTask_StartCeler" xml:space="preserve">
+    <value>Starting Celer</value>
+  </data>
+  <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
+    <value>Starting hardware services</value>
+  </data>
+  <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
+    <value>Checking for an internet connection</value>
+  </data>
+  <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
+    <value>Downloading cleaning signatures</value>
+  </data>
+  <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
+    <value>Signatures updated</value>
+  </data>
+  <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
+    <value>Couldn't retrieve signatures. Trying to get local signatures instead.</value>
+  </data>
+  <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
+    <value>Found local signatures</value>
+  </data>
+  <data name="GatewayTask_DisableCleaning" xml:space="preserve">
+    <value>No signatures found, cleaning has been disabled.</value>
+  </data>
+  <data name="GatewayTask_FailDxDiag" xml:space="preserve">
+    <value>Failed to run dxDiag</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MainWindow_GoBackTooltip" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MainWindow_MenuTooltip" xml:space="preserve">
+    <value>Open App Menu</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>_Preferences</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_View</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Dashboard" xml:space="preserve">
+    <value>_Dashboard</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Cleaning" xml:space="preserve">
+    <value>_Cleaning</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Optimization" xml:space="preserve">
+    <value>_Optimization</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Maintenance" xml:space="preserve">
+    <value>_Maintenance</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Opsec" xml:space="preserve">
+    <value>_Privacy &amp; Security</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>_Tools</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+</root>
