@@ -15,6 +15,7 @@ namespace Celer.Utilities
 	[TemplatePart(Name = PartMinButton, Type = typeof(Button))]
 	[TemplatePart(Name = PartMaxButton, Type = typeof(Button))]
 	[TemplatePart(Name = PartCloseButton, Type = typeof(Button))]
+	[TemplatePart(Name = PartTitle, Type = typeof(TextBlock))]
 	public partial class BaseWindow : Window
 	{
 		[DependencyProperty]
@@ -26,9 +27,18 @@ namespace Celer.Utilities
 		[DependencyProperty]
 		public object? TitleBarMenu { get; set; }
 
+		[DependencyProperty]
+		public object? WindowTitle { get; set; }
+
 		void OnIsWindowControlsVisibleChanged()
 		{
 			ApplyCaptionStyle();
+		}
+
+		void OnWindowTitleChanged(object value)
+		{
+			if (value is not null)
+				_title?.Visibility = Visibility.Collapsed;
 		}
 
 		private const string PartMainGrid = "PART_MainGrid";
@@ -36,12 +46,14 @@ namespace Celer.Utilities
 		private const string PartMinButton = "PART_MinButton";
 		private const string PartMaxButton = "PART_MaxButton";
 		private const string PartCloseButton = "PART_CloseButton";
+		private const string PartTitle = "PART_Title";
 
 		private Grid? _mainGrid;
 		private Border? _highContrastBorder;
 		private Button? _minButton;
 		private Button? _maxButton;
 		private Button? _closeButton;
+		private TextBlock? _title;
 
 		private static bool SystemDrawsCaption => !IsBackdropDisabled() && IsBackdropSupported() && !SystemParameters.HighContrast;
 
@@ -123,10 +135,13 @@ namespace Celer.Utilities
 			_minButton = GetTemplateChild(PartMinButton) as Button;
 			_maxButton = GetTemplateChild(PartMaxButton) as Button;
 			_closeButton = GetTemplateChild(PartCloseButton) as Button;
+			_title = GetTemplateChild(PartTitle) as TextBlock;
 
 			_minButton?.Click += (_, _) => SystemCommands.MinimizeWindow(this);
 			_maxButton?.Click += (_, _) => ToggleMaximize();
 			_closeButton?.Click += (_, _) => Close();
+			_title?.Text = Title;
+			_title?.Visibility = WindowTitle is not null ? Visibility.Collapsed : Visibility.Visible;
 			UpdateWindowVisuals();
 		}
 
@@ -136,7 +151,7 @@ namespace Celer.Utilities
 			_mainGrid.Margin = default;
 			if (WindowState == WindowState.Maximized)
 			{
-				_mainGrid.Margin = SystemParameters.HighContrast ? new Thickness(0, 8, 0, 0) : new Thickness(4, 8, 4, 8);
+				_mainGrid.Margin = SystemParameters.HighContrast ? new Thickness(0, 8, 0, 0) : new Thickness(4, 8, 4, 4);
 			}
 			UpdateTitleBarButtonsVisibility();
 			if (SystemParameters.HighContrast == true)
@@ -149,7 +164,7 @@ namespace Celer.Utilities
 			{
 				_highContrastBorder.BorderBrush = Brushes.Transparent;
 				_highContrastBorder.BorderThickness = new Thickness(0);
-				_highContrastBorder.Margin = new Thickness(0);
+				_highContrastBorder.Margin = new Thickness(0, 0, 0, -4);
 			}
 
 			if (IsWindows11OrGreater())

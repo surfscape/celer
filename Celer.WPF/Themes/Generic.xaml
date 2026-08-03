@@ -35,11 +35,17 @@
                                     Content="{TemplateBinding TitleBarMenu}"
                                     WindowChrome.IsHitTestVisibleInChrome="True" />
                                 <TextBlock
+                                    x:Name="PART_Title"
                                     Grid.Column="2"
                                     Margin="8,0,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="13"
                                     Text="{TemplateBinding Title}" />
+                                <ContentPresenter
+                                    Grid.Column="2"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding WindowTitle}" />
                                 <UniformGrid
                                     Grid.Column="3"
                                     VerticalAlignment="Top"
