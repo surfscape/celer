@@ -244,7 +244,10 @@ namespace Celer.ViewModels
 				using (process)
 				{
 					try { runningProcs.Add(process.ProcessName); }
-					catch (InvalidOperationException) { /* exited between enumeration and read */ }
+					catch (InvalidOperationException e)
+					{
+						Debug.WriteLine($"Failed to retrieve process: {e.Message}");
+					}
 				}
 			}
 
