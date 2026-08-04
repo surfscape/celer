@@ -40,22 +40,25 @@
                                     Margin="8,0,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="13"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                     Text="{TemplateBinding Title}" />
                                 <ContentPresenter
                                     Grid.Column="2"
                                     Margin="8,0,0,0"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding WindowTitle}" />
-                                <UniformGrid
+                                <Grid
                                     Grid.Column="3"
                                     VerticalAlignment="Top"
-                                    Columns="3">
+                                    ColumnDefinitions="auto,auto,auto"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Button
                                         x:Name="PART_MinButton"
                                         Padding="18,12"
                                         local:ButtonHelper.CornerRadius="0"
                                         Focusable="False"
-                                        Style="{DynamicResource TransparentButton}">
+                                        Style="{DynamicResource TransparentButton}"
+                                        Visibility="Collapsed">
                                         <TextBlock
                                             FontFamily="Segoe Fluent Icons"
                                             FontSize="10"
@@ -64,11 +67,12 @@
                                     </Button>
                                     <Button
                                         x:Name="PART_MaxButton"
+                                        Grid.Column="1"
                                         Padding="18,12"
                                         local:ButtonHelper.CornerRadius="0"
                                         Focusable="False"
-                                        IsEnabled="{Binding IsEnabled, ElementName=MaximizeButton}"
-                                        Style="{DynamicResource TransparentButton}">
+                                        Style="{DynamicResource TransparentButton}"
+                                        Visibility="Collapsed">
                                         <TextBlock
                                             FontFamily="Segoe Fluent Icons"
                                             FontSize="10"
@@ -77,18 +81,20 @@
                                     </Button>
                                     <Button
                                         x:Name="PART_CloseButton"
+                                        Grid.Column="2"
                                         Padding="18,12"
                                         local:ButtonHelper.BackgroundHover="#C42B1C"
                                         local:ButtonHelper.CornerRadius="0"
                                         Focusable="False"
-                                        Style="{DynamicResource TransparentButton}">
+                                        Style="{DynamicResource TransparentButton}"
+                                        Visibility="Collapsed">
                                         <TextBlock
                                             FontFamily="Segoe Fluent Icons"
                                             FontSize="10"
                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="&#xE8BB;" />
                                     </Button>
-                                </UniformGrid>
+                                </Grid>
                             </Grid>
                             <ContentPresenter Grid.Row="1" />
                         </Grid>
