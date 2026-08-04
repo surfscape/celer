@@ -1,14 +1,15 @@
-﻿<Window
+﻿<utils:BaseWindow
     x:Class="Celer.Views.Windows.AboutWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="clr-namespace:Celer.Utilities"
     Title="About"
     ResizeMode="NoResize"
+    ShowInTaskbar="False"
     SizeToContent="WidthAndHeight"
-    Style="{StaticResource {x:Type Window}}"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Border Padding="16">
@@ -44,7 +45,7 @@
                     TextAlignment="Center">
                     Special thanks to:
                 </TextBlock>
-                <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"><Hyperlink NavigateUri="https://surfscape.eu/" RequestNavigate="Hyperlink_RequestNavigate">Flixin</Hyperlink>
+                <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/">Flixin</Hyperlink>
                     for feedback and testing</TextBlock>
             </StackPanel>
             <WrapPanel Margin="0,12,0,0">
@@ -53,9 +54,9 @@
                         <Setter Property="Margin" Value="0,0,16,0" />
                     </Style>
                 </WrapPanel.Resources>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.eu/" RequestNavigate="Hyperlink_RequestNavigate">SurfScape Website</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink NavigateUri="https://surfscape.eu/projects/celer" RequestNavigate="Hyperlink_RequestNavigate">Celer Homepage</Hyperlink></TextBlock>
-                <TextBlock Margin="0"><Hyperlink NavigateUri="https://surfscape.eu/community/" RequestNavigate="Hyperlink_RequestNavigate">Support</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/">SurfScape Website</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/projects/celer">Celer Homepage</Hyperlink></TextBlock>
+                <TextBlock Margin="0"><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/community/">Support</Hyperlink></TextBlock>
             </WrapPanel>
             <TextBlock
                 Margin="0,16,0,0"
@@ -66,4 +67,4 @@
             </TextBlock>
         </StackPanel>
     </Border>
-</Window>
+</utils:BaseWindow>

@@ -109,8 +109,11 @@ namespace Celer.Utilities
 				if (IsBackdropDisabled() || !IsBackdropSupported() ||
 						SystemParameters.HighContrast == true)
 				{
-					_minButton.Visibility = Visibility.Visible;
-					_maxButton.Visibility = Visibility.Visible;
+					if (ResizeMode != ResizeMode.NoResize)
+					{
+						_minButton.Visibility = Visibility.Visible;
+						_maxButton.Visibility = Visibility.Visible;
+					}
 					_closeButton.Visibility = Visibility.Visible;
 				}
 				else
