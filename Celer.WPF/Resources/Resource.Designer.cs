@@ -304,6 +304,15 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Software.
+        /// </summary>
+        public static string Menu_View_Software {
+            get {
+                return ResourceManager.GetString("Menu_View_Software", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not found.
         /// </summary>
         public static string NotFound {

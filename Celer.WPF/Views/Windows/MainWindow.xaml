@@ -125,6 +125,10 @@
                         Header="{x:Static resx:Resource.Menu_View_Optimization}" />
                     <MenuItem
                         Command="{Binding NavigateToTabCommand}"
+                        CommandParameter="Software"
+                        Header="{x:Static resx:Resource.Menu_View_Software}" />
+                    <MenuItem
+                        Command="{Binding NavigateToTabCommand}"
                         CommandParameter="Maintenance"
                         Header="{x:Static resx:Resource.Menu_View_Maintenance}" />
                     <MenuItem
@@ -162,7 +166,7 @@
                     </MenuItem>
                     <MenuItem
                         Command="{Binding OpenLinkCommand}"
-                        CommandParameter="https://surfscape.eu/about/support"
+                        CommandParameter="https://surfscape.eu/support"
                         Header="_Support">
                         <MenuItem.Icon>
                             <iconPacks:PackIconLucide Foreground="{DynamicResource TextFillColorSecondaryBrush}" Kind="LifeBuoy" />
