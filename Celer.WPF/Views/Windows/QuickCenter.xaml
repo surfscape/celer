@@ -1,4 +1,4 @@
-﻿<Window
+﻿<utils:BaseWindow
     x:Class="Celer.Views.Windows.QuickCenter"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,102 +7,78 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="clr-namespace:Celer.Utilities"
     Title="QuickCenter"
     Width="400"
     Height="500"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    IsWindowControlsVisible="False"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     mc:Ignorable="d">
-    <Window.Resources>
+    <utils:BaseWindow.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         <converters:InvertBoolean x:Key="InvertBool" />
-    </Window.Resources>
-    <Border
-        x:Name="HighContrastBorder"
-        Padding="4,0,4,4"
-        VerticalAlignment="Stretch"
-        BorderBrush="Transparent">
-        <Grid x:Name="MainGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    </utils:BaseWindow.Resources>
+    <Grid RowDefinitions="*,auto">
+        <StackPanel VerticalAlignment="Stretch" Margin="16">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0,0,0,6" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding DeleteTempFilesCommand}" IsEnabled="{Binding IsCleaning, Converter={StaticResource InvertBool}}">Delete Temporary Files</Button>
+            <StackPanel Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVisConverter}}">
+                <ProgressBar Maximum="{Binding TempFiles}" Value="{Binding TempFilesCleaned}" />
                 <TextBlock
-                    Grid.Column="1"
-                    Margin="12"
-                    VerticalAlignment="Center"
-                    AutomationProperties.HeadingLevel="Level1"
-                    Style="{StaticResource Heading2}"
-                    Text="Celer Quick Center" />
-            </Grid>
-            <Border Grid.Row="1" Padding="16,8,16,0">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="0,0,0,6" />
-                        </Style>
-                    </StackPanel.Resources>
-                    <Button Command="{Binding DeleteTempFilesCommand}" IsEnabled="{Binding IsCleaning, Converter={StaticResource InvertBool}}">Delete Temporary Files</Button>
-                    <StackPanel Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVisConverter}}">
-                        <ProgressBar Maximum="{Binding TempFiles}" Value="{Binding TempFilesCleaned}" />
-                        <TextBlock
-                            Margin="0,4"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="{Binding TempFilesCleaned, StringFormat=Cleaned {0}MB}" />
-                    </StackPanel>
-                    <Button
-                        Margin="0"
-                        Command="{Binding EmptyRecycleBinCommand}"
-                        IsEnabled="{Binding CanRecycleBin}">
-                        Empty Recycle Bin
-                    </Button>
-                    <StackPanel Visibility="{Binding IsRecycleBin, Converter={StaticResource BoolToVisConverter}}">
-                        <ProgressBar Maximum="{Binding RecycleTotalSize}" Value="{Binding RecycleCleaned}" />
-                        <TextBlock
-                            Margin="0,4"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="{Binding RecycleCleaned, StringFormat=Cleaned {0}MB}" />
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-            <Border
-                Grid.Row="2"
-                Padding="8"
-                Background="{DynamicResource LayerFillColorDefaultBrush}"
-                BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
-                BorderThickness="0,1,0,0">
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button
-                        Padding="8"
-                        Style="{DynamicResource TransparentButton}"
-                        ToolTip="Settings">
-                        <iconPacks:PackIconLucide
-                            Width="16"
-                            Height="16"
-                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                            Kind="Settings" />
-                    </Button>
-                    <Button
-                        Margin="8,0,0,0"
-                        Padding="8"
-                        Style="{DynamicResource TransparentButton}"
-                        ToolTip="Close Celer">
-                        <iconPacks:PackIconLucide
-                            Width="16"
-                            Height="16"
-                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                            Kind="CircleX" />
-                    </Button>
-                </StackPanel>
-            </Border>
-        </Grid>
-    </Border>
-</Window>
+                    Margin="0,4"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Text="{Binding TempFilesCleaned, StringFormat=Cleaned {0}MB}" />
+            </StackPanel>
+            <Button
+                Margin="0"
+                Command="{Binding EmptyRecycleBinCommand}"
+                IsEnabled="{Binding CanRecycleBin}">
+                Empty Recycle Bin
+            </Button>
+            <StackPanel Visibility="{Binding IsRecycleBin, Converter={StaticResource BoolToVisConverter}}">
+                <ProgressBar Maximum="{Binding RecycleTotalSize}" Value="{Binding RecycleCleaned}" />
+                <TextBlock
+                    Margin="0,4"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Text="{Binding RecycleCleaned, StringFormat=Cleaned {0}MB}" />
+            </StackPanel>
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            Padding="8"
+            Background="{DynamicResource LayerFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
+            BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button
+                    Padding="8"
+                    Style="{DynamicResource TransparentButton}"
+                    ToolTip="Settings">
+                    <iconPacks:PackIconLucide
+                        Width="16"
+                        Height="16"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Kind="Settings" />
+                </Button>
+                <Button
+                    Margin="8"
+                    Padding="8"
+                    Style="{DynamicResource TransparentButton}"
+                    ToolTip="Close Celer">
+                    <iconPacks:PackIconLucide
+                        Width="16"
+                        Height="16"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Kind="CircleX" />
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</utils:BaseWindow>

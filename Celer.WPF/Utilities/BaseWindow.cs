@@ -145,6 +145,9 @@ namespace Celer.Utilities
 			_closeButton?.Click += (_, _) => Close();
 			_title?.Text = Title;
 			_title?.Visibility = WindowTitle is not null ? Visibility.Collapsed : Visibility.Visible;
+			if (IsWindowControlsVisible && (TitleBarMenu == null || NavigationControls == null))
+				_title?.Margin = new Thickness(12, 0, 0, 0);
+
 			UpdateWindowVisuals();
 		}
 

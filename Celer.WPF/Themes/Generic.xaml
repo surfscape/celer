@@ -41,6 +41,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="13"
                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    LineHeight="13"
+                                    LineStackingStrategy="BlockLineHeight"
                                     Text="{TemplateBinding Title}" />
                                 <ContentPresenter
                                     Grid.Column="2"

@@ -6,9 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Interop;
 using static Celer.Views.Pages.Settings.SettingsModuleCleaningViewModel;
 
 namespace Celer.Views.Windows.Utils
@@ -16,21 +14,8 @@ namespace Celer.Views.Windows.Utils
 	/// <summary>
 	/// Interaction logic for SurfScapeGateway, responsible for initializing hardware services and downloading cleaning signatures.
 	/// </summary>
-	public partial class SurfScapeGateway : Window
+	public partial class SurfScapeGateway : BaseWindow
 	{
-
-		// Source - https://stackoverflow.com/a
-		// Posted by Joe White, modified by community.
-		// Retrieved 2025-11-12, License - CC BY-SA 4.0
-		// Hides the titlebar close button
-
-		private const int GWL_STYLE = -16;
-		private const int WS_SYSMENU = 0x80000;
-		[LibraryImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
-		private static partial int GetWindowLong(IntPtr hWnd, int nIndex);
-		[LibraryImport("user32.dll", EntryPoint = "SetWindowLongA")]
-		private static partial int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
 		private readonly SurfScapeGatewayViewModel _viewModel;
 		private readonly MainWindow _mainWindow;
 
@@ -70,12 +55,6 @@ namespace Celer.Views.Windows.Utils
 
 		private async void SurfScapeGateway_Loaded(object sender, RoutedEventArgs e)
 		{
-			// Source - https://stackoverflow.com/a
-			// Posted by Joe White, modified by community. See post 'Timeline' for change history
-			// Retrieved 2025-11-12, License - CC BY-SA 4.0
-			var hwnd = new WindowInteropHelper(this).Handle;
-			int v = SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
-			Debug.WriteLine(v);
 			await _viewModel.InitializeAsync();
 		}
 

@@ -1,4 +1,4 @@
-﻿<Window
+﻿<utils:BaseWindow
     x:Class="Celer.Views.Windows.Onboarding"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Celer.Resources"
+    xmlns:utils="clr-namespace:Celer.Utilities"
     Title="{x:Static resx:Resource.Onboarding_WindowTitle}"
     Width="800"
     d:DataContext="{d:DesignInstance Type=local:OnboardingViewModel}"
@@ -58,7 +59,12 @@
                     BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
                     CornerRadius="4">
-                    <ScrollViewer MaxHeight="195" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer
+                        MaxHeight="195"
+                        utils:ScrollUtilities.SmoothScroll="True"
+                        VerticalScrollBarVisibility="Auto"
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.ScrollUnit="Pixel">
                         <StackPanel Margin="10,10,16,10">
                             <StackPanel.Resources>
                                 <Style
@@ -162,4 +168,4 @@
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</utils:BaseWindow>

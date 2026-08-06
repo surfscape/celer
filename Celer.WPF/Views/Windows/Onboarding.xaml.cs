@@ -4,37 +4,19 @@ using Celer.Views.Windows.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Navigation;
 
 namespace Celer.Views.Windows
 {
 	/// <summary>
 	/// Interaction logic for Onboarding.xaml
 	/// </summary>
-	public partial class Onboarding : Window
+	public partial class Onboarding : BaseWindow
 	{
 		public Onboarding()
 		{
 			InitializeComponent();
 			OnboardingOptions.DataContext = new OnboardingViewModel { OnCompleted = Close };
-			TextUtilities.SetLinkedText(AcceptLegalCheckbox, Resource.Onboarding_LegalCheckboxLabel, (Resource.TermsOfUse, "https://surfscape.eu/projects/celer/legal/terms/"), (Resource.PrivacyPolicy, "https://surfscape.eu/projects/celer/legal/privacy/"));
-		}
-
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			try
-			{
-				Process.Start(
-					new ProcessStartInfo { FileName = e.Uri.ToString(), UseShellExecute = true }
-				);
-			}
-			catch (Win32Exception ex)
-			{
-				Debug.WriteLine($"Failed to open link {ex.Message}");
-			}
+			TextUtilities.SetLinkedText(AcceptLegalCheckbox, Resource.Onboarding_LegalCheckboxLabel, (Resource.TermsOfUse, "https://surfscape.eu/celer/legal/terms/"), (Resource.PrivacyPolicy, "https://surfscape.eu/celer/legal/privacy/"));
 		}
 
 		public partial class OnboardingViewModel : ObservableObject
