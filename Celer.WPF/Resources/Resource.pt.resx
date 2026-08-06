@@ -257,4 +257,7 @@
     <value>_Tools</value>
     <comment>The underscore it required to support the AccessKey feature</comment>
   </data>
+  <data name="Menu_View_Software" xml:space="preserve">
+    <value>_Software</value>
+  </data>
 </root>
