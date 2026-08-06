@@ -423,9 +423,9 @@
                                 </StackPanel>
                             </Border>
                         </Popup>
-                        <UniformGrid Margin="0,4,0,0" Columns="2">
+                        <UniformGrid Margin="0,8,0,0" Columns="2">
                             <Button
-                                Margin="0,0,3,0"
+                                Margin="0,0,4,0"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding NavigateToOptimizationCommand}"
                                 CommandParameter="Battery">
@@ -439,7 +439,7 @@
                                 </StackPanel>
                             </Button>
                             <Button
-                                Margin="3,0,0,0"
+                                Margin="4,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding NavigateToOptimizationCommand}"
                                 CommandParameter="Video">
@@ -453,7 +453,7 @@
                                 </StackPanel>
                             </Button>
                             <Button
-                                Margin="0,6,3,0"
+                                Margin="0,6,4,0"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding NavigateToOptimizationCommand}"
                                 CommandParameter="Memory">
