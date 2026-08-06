@@ -45,8 +45,7 @@
                     TextAlignment="Center">
                     Special thanks to:
                 </TextBlock>
-                <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/">Flixin</Hyperlink>
-                    for feedback and testing</TextBlock>
+                <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}">Flixin for feedback and testing</TextBlock>
             </StackPanel>
             <WrapPanel Margin="0,12,0,0">
                 <WrapPanel.Resources>
@@ -55,8 +54,8 @@
                     </Style>
                 </WrapPanel.Resources>
                 <TextBlock><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/">SurfScape Website</Hyperlink></TextBlock>
-                <TextBlock><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/projects/celer">Celer Homepage</Hyperlink></TextBlock>
-                <TextBlock Margin="0"><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/community/">Support</Hyperlink></TextBlock>
+                <TextBlock><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/celer">Celer Homepage</Hyperlink></TextBlock>
+                <TextBlock Margin="0"><Hyperlink utils:HyperlinkExtensions.IsExternal="True" NavigateUri="https://surfscape.eu/support/">Support</Hyperlink></TextBlock>
             </WrapPanel>
             <TextBlock
                 Margin="0,16,0,0"
