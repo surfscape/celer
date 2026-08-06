@@ -1,0 +1,12 @@
+﻿SetProcessInformation
+GetCurrentProcess
+SetPriorityClass
+PROCESS_POWER_THROTTLING_STATE
+PROCESS_INFORMATION_CLASS
+GetWindowLong
+SetWindowLong
+SetWindowPos
+GetSystemMenu
+EnableMenuItem
+WINDOW_STYLE
+WINDOW_LONG_PTR_INDEX

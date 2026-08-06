@@ -1,0 +1,95 @@
+﻿<utils:BaseWindow
+    x:Class="Celer.Views.Windows.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="clr-namespace:Celer.Utilities"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:Celer.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Celer.Models"
+    xmlns:pages="clr-namespace:Celer.Views.Pages.Settings"
+    xmlns:uc="clr-namespace:Celer.Controls"
+    xmlns:utils="clr-namespace:Celer.Utilities"
+    xmlns:vm="clr-namespace:Celer.ViewModels"
+    Title="Preferences"
+    Width="860"
+    Height="550"
+    MinWidth="860"
+    MinHeight="500"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    ShowInTaskbar="False"
+    Style="{StaticResource {x:Type Window}}"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <utils:BaseWindow.Resources>
+        <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    </utils:BaseWindow.Resources>
+    <utils:BaseWindow.NavigationControls>
+        <StackPanel
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Button
+                Padding="14,11"
+                Command="{Binding GoBackCommand}"
+                Style="{DynamicResource TransparentButton}"
+                ToolTip="Go back to the previous screen"
+                WindowChrome.IsHitTestVisibleInChrome="True">
+                <iconPacks:PackIconLucide
+                    Width="12"
+                    Height="12"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Kind="ArrowLeft" />
+            </Button>
+        </StackPanel>
+    </utils:BaseWindow.NavigationControls>
+    <utils:BaseWindow.WindowTitle>
+        <TextBlock
+            Grid.Column="1"
+            Margin="8,0,0,0"
+            VerticalAlignment="Center"
+            AutomationProperties.HeadingLevel="Level1"
+            FontSize="18"
+            LineHeight="20"
+            LineStackingStrategy="BlockLineHeight"
+            Style="{StaticResource SubtitleTextBlockStyle}"
+            Text="{Binding CurrentViewTitle}" />
+    </utils:BaseWindow.WindowTitle>
+    <Border Grid.Row="1">
+        <Grid>
+            <ScrollViewer
+                Margin="0,0,5,5"
+                utils:ScrollUtilities.SmoothScroll="True"
+                Focusable="False"
+                VerticalScrollBarVisibility="Auto">
+                <ContentControl
+                    MaxWidth="980"
+                    Margin="16"
+                    Content="{Binding CurrentViewModel}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type pages:SettingsShellViewModel}">
+                            <pages:SettingsShell Margin="-4" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type pages:SettingsGeneralViewModel}">
+                            <pages:SettingsGeneral />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type pages:SettingsInterfaceViewModel}">
+                            <pages:SettingsInterface />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type pages:SettingsModuleCleaningViewModel}">
+                            <pages:SettingsModuleCleaning />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type pages:SettingsAdvancedViewModel}">
+                            <pages:SettingsAdvanced />
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</utils:BaseWindow>

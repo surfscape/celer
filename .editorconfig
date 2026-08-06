@@ -6,6 +6,8 @@ root = true
 
 # CS8601: Possible null reference assignment.
 dotnet_diagnostic.CS8601.severity = error
+# CS1998: This async method lacks 'await'
+dotnet_diagnostic.CS1998.severity = error
 
 #### Core EditorConfig Options ####
 

@@ -1,0 +1,112 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows10.0.18362.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>Resources\Assets\app.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<UseWindowsForms>False</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Platforms>x64;x86;AnyCPU</Platforms>
+		<Version>1.0.0-beta.3</Version>
+		<InformationalVersion>1.0.0-beta.3 "Orion"</InformationalVersion>
+		<PublisherName>SurfScape</PublisherName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<SelfContained>false</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<PublishReadyToRun>true</PublishReadyToRun>
+		<RootNamespace>Celer</RootNamespace>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);WPF0001</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Assets\app.ico" />
+		<Resource Include="Resources\Assets\celer_256.png" />
+		<Resource Include="Resources\Assets\gateway_icon.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ByteSize" Version="2.1.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="H.NotifyIcon" Version="2.4.1" />
+		<PackageReference Include="H.NotifyIcon.Wpf" Version="2.4.1" />
+		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Core" Version="6.2.1" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Lucide" Version="6.2.1" />
+		<PackageReference Include="MahApps.Metro.IconPacks.RemixIcon" Version="6.2.1" />
+		<PackageReference Include="Metalama.Patterns.Wpf" Version="2026.1.19" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
+		<PackageReference Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
+		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="SpacedGrid-WPF" Version="1.0.2" />
+		<PackageReference Include="System.Management" Version="10.0.9" />
+		<PackageReference Include="TaskScheduler" Version="2.12.2" />
+		<PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298" PrivateAssets="all" />
+		<PackageReference Include="Vanara.PInvoke.DXGI" Version="5.0.5" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Celer.Infrastructure\Celer.Infrastructure.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<SplashScreen Include="Resources\Assets\splashscreen.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\MainConfiguration.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MainConfiguration.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Signatures.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Signatures.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\Resource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resource.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Resource.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\MainConfiguration.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>MainConfiguration.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Properties\Signatures.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Signatures.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+	<Target Name="DownloadSignatures" BeforeTargets="BeforeBuild">
+		<DownloadFile SourceUrl="https://raw.githubusercontent.com/surfscape/gateway/refs/heads/main/src/celer/signatures/cleaning.json" DestinationFolder="$(MSBuildProjectDirectory)\Resources\Signatures" DestinationFileName="cleaning.json" SkipUnchangedFiles="true" />
+	</Target>
+	<ItemGroup>
+		<Resource Include="Resources\Signatures\cleaning.json">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+</Project>
