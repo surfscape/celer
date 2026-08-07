@@ -170,7 +170,7 @@ namespace Celer.Utilities
 			{
 				_highContrastBorder.BorderBrush = Brushes.Transparent;
 				_highContrastBorder.BorderThickness = new Thickness(0);
-				_highContrastBorder.Margin = new Thickness(0, 0, 0, -4);
+				_highContrastBorder.Margin = new Thickness(0, 0, 0, 0);
 			}
 
 			if (IsWindows11OrGreater())
