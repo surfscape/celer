@@ -19,7 +19,7 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
-        <Border Grid.Column="1" Padding="16,8,16,16">
+        <Border Grid.Column="1" Padding="16,0,16,16">
             <StackPanel>
                 <StackPanel.Resources>
                     <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
