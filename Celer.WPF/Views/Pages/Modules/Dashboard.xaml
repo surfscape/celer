@@ -11,6 +11,7 @@
     xmlns:local1="clr-namespace:Celer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sg="clr-namespace:SpacedGridControl;assembly=SpacedGridControl"
+    xmlns:utils="clr-namespace:Celer.Utilities"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}"
     d:Width="900"
@@ -341,7 +342,7 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Margin="16,16,16,4">
+                        <Grid Margin="16,16,16,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
@@ -360,19 +361,35 @@
                         </Grid>
                         <DockPanel Grid.Row="1">
                             <ListBox
-                                Margin="0,0,0,0"
+                                Margin="0,4,0,0"
                                 VerticalAlignment="Stretch"
                                 ItemTemplate="{StaticResource ItemTemplate}"
                                 ItemsSource="{Binding DiskData}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                VirtualizingPanel.IsVirtualizing="True"
                                 VirtualizingPanel.ScrollUnit="Pixel">
+                                <ListBox.Resources>
+                                    <Style TargetType="{x:Type ScrollViewer}">
+                                        <Style.Triggers>
+                                            <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
+                                                <Setter Property="Margin" Value="0,0,1,0"></Setter>
+                                                <Setter Property="{x:Static utils:ScrollUtilities.SmoothScrollProperty}" Value="True" />
+                                            </Trigger>
+                                            <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
+                                                <Setter Property="Margin" Value="0,0,14,0"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.Resources>
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">
                                         <Setter Property="Focusable" Value="False" />
                                         <Setter Property="IsHitTestVisible" Value="False" />
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="Margin" Value="10,0,10,10" />
+                                        <Setter Property="Margin" Value="14,-11,0,14" />
+                                        <Setter Property="Padding" Value="0,10,0,0" />
+
                                     </Style>
                                 </ListBox.ItemContainerStyle>
                             </ListBox>
@@ -389,40 +406,7 @@
                     BorderThickness="1"
                     CornerRadius="6">
                     <StackPanel Margin="0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
-                            <ToggleButton
-                                Name="PCheckBox"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                Content="&#xE70F;"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Visibility="Hidden" />
-                        </Grid>
-                        <Popup
-                            AllowsTransparency="True"
-                            HorizontalOffset="-4"
-                            IsOpen="{Binding ElementName=PCheckBox, Path=IsChecked}"
-                            Placement="Left"
-                            PlacementTarget="{Binding ElementName=PCheckBox}"
-                            PopupAnimation="Fade"
-                            StaysOpen="False">
-                            <Border
-                                MinWidth="170"
-                                Padding="12"
-                                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="1"
-                                CornerRadius="6">
-                                <StackPanel>
-                                    <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Customize</TextBlock>
-                                </StackPanel>
-                            </Border>
-                        </Popup>
+                        <TextBlock Style="{StaticResource Heading2}">Quick Center</TextBlock>
                         <UniformGrid Margin="0,8,0,0" Columns="2">
                             <Button
                                 Margin="0,0,4,0"
