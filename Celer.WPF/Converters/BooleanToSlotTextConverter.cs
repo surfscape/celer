@@ -3,23 +3,23 @@ using System.Windows.Data;
 
 namespace Celer.Converters
 {
-    public class BooleanToSlotTextConverter : IValueConverter
-    {
-        public object Convert(
-            object value,
-            Type targetType,
-            object parameter,
-            CultureInfo culture
-        ) => (bool)value ? "Slot Ocupado" : "Slot Vazio";
+	public class BooleanToSlotTextConverter : IValueConverter
+	{
+		public object Convert(
+			object value,
+			Type targetType,
+			object parameter,
+			CultureInfo culture
+		) => (bool)value ? "Slot occupied" : "Slot empty";
 
-        public object ConvertBack(
-            object value,
-            Type targetType,
-            object parameter,
-            CultureInfo culture
-        )
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public object ConvertBack(
+			object value,
+			Type targetType,
+			object parameter,
+			CultureInfo culture
+		)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
