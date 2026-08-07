@@ -10,3 +10,5 @@ GetSystemMenu
 EnableMenuItem
 WINDOW_STYLE
 WINDOW_LONG_PTR_INDEX
+PostMessage
+RegisterWindowMessage

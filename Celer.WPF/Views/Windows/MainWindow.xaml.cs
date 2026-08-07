@@ -4,6 +4,7 @@ using Celer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Interop;
 using static Celer.ViewModels.MainWindowViewModel;
 
 namespace Celer.Views.Windows;
@@ -46,6 +47,27 @@ public partial class MainWindow : BaseWindow
 	private static void OnDeactivated()
 	{
 		ProcessPowerManager.Enable();
+	}
+
+	protected override void OnSourceInitialized(EventArgs e)
+	{
+		base.OnSourceInitialized(e);
+		HwndSource? source = PresentationSource.FromVisual(this) as HwndSource;
+		source?.AddHook(WndProc);
+	}
+
+	private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+	{
+		if (msg == App.WH_SHOWME)
+		{
+			Show();
+			WindowState = WindowState.Normal;
+			Activate();
+			Topmost = true;
+			Topmost = false;
+			Focus();
+		}
+		return IntPtr.Zero;
 	}
 
 	void CheckVisibility(object sender, DependencyPropertyChangedEventArgs e)

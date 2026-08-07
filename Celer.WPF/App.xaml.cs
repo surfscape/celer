@@ -19,6 +19,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 using static Celer.Views.Pages.Settings.SettingsAdvancedViewModel;
 
 namespace Celer;
@@ -28,8 +30,10 @@ namespace Celer;
 /// </summary>
 public partial class App : Application
 {
-	public static IHost? AppHost { get; private set; }
+	private const uint HWND_BROADCAST = 0xffff;
+	public static readonly uint WH_SHOWME = PInvoke.RegisterWindowMessage("WM_SHOWME");
 	private Mutex? _singleInstanceMutex;
+	public static IHost? AppHost { get; private set; }
 
 	public App()
 	{
@@ -101,9 +105,10 @@ public partial class App : Application
 		// closes celer if another instance is already running
 		if (!e.Args.Contains("--disableMutexProtection"))
 		{
-			_singleInstanceMutex = new Mutex(true, "Celer", out bool createdNew);
-			if (!createdNew)
+			_singleInstanceMutex = new Mutex(true, "Celer");
+			if (!_singleInstanceMutex.WaitOne(TimeSpan.Zero, true))
 			{
+				PInvoke.PostMessage((HWND)HWND_BROADCAST, WH_SHOWME, 0, 0);
 				_singleInstanceMutex.Dispose();
 				_singleInstanceMutex = null;
 				Shutdown();
