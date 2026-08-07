@@ -20,9 +20,20 @@
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		<RootNamespace>Celer</RootNamespace>
+		<AssemblyTitle>Celer</AssemblyTitle>
+		<AssemblyProduct>Celer</AssemblyProduct>
 	</PropertyGroup>
 	<PropertyGroup>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
+		<StartupObject>Celer.App</StartupObject>
+		<AssemblyName>Celer</AssemblyName>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<Authors>SurfScape, ReduxFlakes</Authors>
+		<PackageIcon>celer_256.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/surfscape/celer</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://surfscape.eu/celer</PackageProjectUrl>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
@@ -36,6 +47,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="Resources\Assets\app.ico" />
 		<Resource Include="Resources\Assets\celer_256.png" />
@@ -99,6 +116,10 @@
 		<None Update="Properties\Signatures.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Signatures.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Resources\Assets\celer_256.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
 	<Target Name="DownloadSignatures" BeforeTargets="BeforeBuild">
