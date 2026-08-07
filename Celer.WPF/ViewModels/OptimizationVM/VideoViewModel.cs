@@ -12,236 +12,235 @@ using System.Windows.Threading;
 
 namespace Celer.ViewModels.OptimizationVM
 {
-    public partial class VideoViewModel : ObservableObject, INavigationAware
-    {
-        [ObservableProperty]
-        private bool isLoading = true;
+	public partial class VideoViewModel : ObservableObject, INavigationAware
+	{
+		[ObservableProperty]
+		private bool isLoading = true;
 
-        [ObservableProperty]
-        private ObservableCollection<GpuInfo> gpus = [];
+		[ObservableProperty]
+		private ObservableCollection<GpuInfo> gpus = [];
 
-        [ObservableProperty]
-        private GpuInfo? selectedGpu;
+		[ObservableProperty]
+		private GpuInfo? selectedGpu;
 
-        private readonly Computer gpu = new() { IsGpuEnabled = true };
+		private readonly Computer gpu = new() { IsGpuEnabled = true };
 
-        private readonly DispatcherTimer _gpuUpdateTimer = new()
-        {
-            Interval = TimeSpan.FromSeconds(1),
-        };
+		private readonly DispatcherTimer _gpuUpdateTimer = new()
+		{
+			Interval = TimeSpan.FromSeconds(1),
+		};
 
-        public VideoViewModel()
-        {
-            _gpuUpdateTimer.Tick += (s, e) => UpdateGpuSensors();
-        }
+		public VideoViewModel()
+		{
+			_gpuUpdateTimer.Tick += (s, e) => UpdateGpuSensors();
+		}
 
-        private async Task LoadGpusAsync()
-        {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                Gpus.Clear();
-            });
+		private async Task LoadGpusAsync()
+		{
+			await Application.Current.Dispatcher.InvokeAsync(() =>
+			{
+				Gpus.Clear();
+			});
 
-            var wmiGpus = await Task.Run(() => GetGpusFromWmi());
-            var dxDiagGpus = await Task.Run(() => ParseDxDiag());
+			var wmiGpus = await Task.Run(() => GetGpusFromWmi());
+			var dxDiagGpus = await Task.Run(() => ParseDxDiag());
 
-            foreach (var gpu in wmiGpus)
-            {
-                var dx = dxDiagGpus.FirstOrDefault(d =>
-                    gpu.Name.Contains(d.Name, StringComparison.OrdinalIgnoreCase)
-                );
+			foreach (var gpu in wmiGpus)
+			{
+				var dx = dxDiagGpus.FirstOrDefault(d =>
+					gpu.Name.Contains(d.Name, StringComparison.OrdinalIgnoreCase)
+				);
 
-                if (dx != null)
-                {
-                    gpu.DirectXVersion = dx.DirectXVersion;
-                    gpu.WddmVersion = dx.WddmVersion;
-                    gpu.IsWhqlLogoPresent = dx.IsWhqlLogoPresent;
-                    gpu.SupportsHDR = dx.SupportsHDR;
-                    gpu.SupportsParavirtualization = dx.SupportsParavirtualization;
-                }
+				if (dx != null)
+				{
+					gpu.DirectXVersion = dx.DirectXVersion;
+					gpu.WddmVersion = dx.WddmVersion;
+					gpu.IsWhqlLogoPresent = dx.IsWhqlLogoPresent;
+					gpu.SupportsHDR = dx.SupportsHDR;
+					gpu.SupportsParavirtualization = dx.SupportsParavirtualization;
+				}
 
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    Gpus.Add(gpu);
-                });
-            }
-            SelectedGpu = Gpus.FirstOrDefault();
-        }
+				await Application.Current.Dispatcher.InvokeAsync(() =>
+				{
+					Gpus.Add(gpu);
+				});
+			}
+			SelectedGpu = Gpus.FirstOrDefault();
+		}
 
-        private static List<GpuInfo> GetGpusFromWmi()
-        {
-            var result = new List<GpuInfo>();
+		private static List<GpuInfo> GetGpusFromWmi()
+		{
+			var result = new List<GpuInfo>();
 
-            using var searcher = new ManagementObjectSearcher(
-                "SELECT * FROM Win32_VideoController"
-            );
-            foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
-            {
-                var name = mo["Name"]?.ToString() ?? "Desconhecido";
-                var manufacturer = mo["AdapterCompatibility"]?.ToString() ?? "Desconhecido";
-                var totalMemory = (UInt32)(mo["AdapterRAM"] ?? 0);
+			using var searcher = new ManagementObjectSearcher(
+				"SELECT * FROM Win32_VideoController"
+			);
+			foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
+			{
+				var name = mo["Name"]?.ToString() ?? "Unknown";
+				var manufacturer = mo["AdapterCompatibility"]?.ToString() ?? "Unknown";
+				var totalMemory = (UInt32)(mo["AdapterRAM"] ?? 0);
 
-                UInt32? dedicated = null;
-                UInt32? shared = null;
+				UInt32? dedicated = null;
+				UInt32? shared = null;
 
-                try
-                {
-                    dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
-                    shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
-                }
-                catch (FormatException e)
-                {
+				try
+				{
+					dedicated = Convert.ToUInt32(mo["AdapterRAM"] ?? 0) / (1024 * 1024);
+					shared = Convert.ToUInt32(mo["SharedSystemMemory"] ?? 0) / (1024 * 1024);
+				}
+				catch (FormatException e)
+				{
 
-                    Debug.WriteLine(e.Message);
-                }
-                catch (OverflowException e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
+					Debug.WriteLine(e.Message);
+				}
+				catch (OverflowException e)
+				{
+					Debug.WriteLine(e.Message);
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(e.Message);
+				}
 
-                var gpuInfo = new GpuInfo
-                {
-                    Name = name,
-                    Manufacturer = manufacturer,
-                    DriverVersion = mo["DriverVersion"]?.ToString() ?? "0.0.0",
-                    MemoryTotalMb = totalMemory / (1024 * 1024),
-                    DedicatedMemoryMb = dedicated,
-                    SharedMemoryMb = shared,
-                    MemoryUsedMb = 0,
-                    AdapterType = mo["AdapterDACType"]?.ToString() ?? "Unknown",
-                };
+				var gpuInfo = new GpuInfo
+				{
+					Name = name,
+					Manufacturer = manufacturer,
+					DriverVersion = mo["DriverVersion"]?.ToString() ?? "0.0.0",
+					MemoryTotalMb = totalMemory / (1024 * 1024),
+					DedicatedMemoryMb = dedicated,
+					SharedMemoryMb = shared,
+					MemoryUsedMb = 0,
+					AdapterType = mo["AdapterDACType"]?.ToString() ?? "Unknown",
+				};
 
-                result.Add(gpuInfo);
-            }
+				result.Add(gpuInfo);
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        private static List<GpuInfo> ParseDxDiag()
-        {
-            var list = new List<GpuInfo>();
-            var path = "dxdiag.xml";
+		private static List<GpuInfo> ParseDxDiag()
+		{
+			var list = new List<GpuInfo>();
+			var path = "dxdiag.xml";
 
-            try
-            {
-                if (!File.Exists(path))
-                    return list;
+			try
+			{
+				if (!File.Exists(path))
+					return list;
 
-                var doc = File.ReadAllText(path);
+				var doc = File.ReadAllText(path);
 
-                list.Add(
-                    new GpuInfo
-                    {
-                        Name = XML.ExtractXmlValue(doc, "CardName"),
-                        DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
-                        WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
-                        IsWhqlLogoPresent =
-                            XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
-                        SupportsHDR =
-                            XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
-                        SupportsParavirtualization =
-                            XML.ExtractXmlValue(doc, "VirtualGPUSupport")
-                                ?.Contains("Paravirtualization") ?? false,
-                    }
-                );
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Error parsing dxDiag {e}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Debug.WriteLine(e);
-            }
+				list.Add(
+					new GpuInfo
+					{
+						Name = XML.ExtractXmlValue(doc, "CardName"),
+						DirectXVersion = XML.ExtractXmlValue(doc, "DDIVersion"),
+						WddmVersion = XML.ExtractXmlValue(doc, "DriverModel"),
+						IsWhqlLogoPresent =
+							XML.ExtractXmlValue(doc, "DriverWHQLLogo")?.Contains("Yes") ?? false,
+						SupportsHDR =
+							XML.ExtractXmlValue(doc, "HDRSupport")?.Contains("Supported") ?? false,
+						SupportsParavirtualization =
+							XML.ExtractXmlValue(doc, "VirtualGPUSupport")
+								?.Contains("Paravirtualization") ?? false,
+					}
+				);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
 
-            return list;
-        }
+			return list;
+		}
 
-        private void UpdateGpuSensors()
-        {
-            gpu.Accept(new GpuMonitor());
-            foreach (
-                var hw in gpu.Hardware.Where(h =>
-                    h.HardwareType == HardwareType.GpuNvidia
-                    || h.HardwareType == HardwareType.GpuAmd
-                    || h.HardwareType == HardwareType.GpuIntel
-                )
-            )
-            {
-                var matchedGpu = Gpus.FirstOrDefault(g =>
-                    hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase)
-                    || g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase)
-                );
+		private void UpdateGpuSensors()
+		{
+			gpu.Accept(new GpuMonitor());
+			foreach (
+				var hw in gpu.Hardware.Where(h =>
+					h.HardwareType == HardwareType.GpuNvidia
+					|| h.HardwareType == HardwareType.GpuAmd
+					|| h.HardwareType == HardwareType.GpuIntel
+				)
+			)
+			{
+				var matchedGpu = Gpus.FirstOrDefault(g =>
+					hw.Name.Contains(g.Name, StringComparison.OrdinalIgnoreCase)
+					|| g.Name.Contains(hw.Name, StringComparison.OrdinalIgnoreCase)
+				);
 
-                if (matchedGpu is null)
-                    continue;
+				if (matchedGpu is null)
+					continue;
 
-                foreach (var sensor in hw.Sensors)
-                {
-                    if (sensor.SensorType == SensorType.Load && sensor.Name == "GPU Core")
-                    {
-                        matchedGpu.GpuUsage = sensor.Value ?? 0;
-                    }
+				foreach (var sensor in hw.Sensors)
+				{
+					if (sensor.SensorType == SensorType.Load && sensor.Name == "GPU Core")
+					{
+						matchedGpu.GpuUsage = sensor.Value ?? 0;
+					}
 
-                    if (
-                        sensor.SensorType == SensorType.SmallData
-                        && sensor.Name.Contains("GPU Memory Used")
-                    )
-                    {
-                        matchedGpu.MemoryUsedMb = (ulong)(sensor.Value ?? 0);
-                    }
-                }
-            }
-            
-        }
+					if (
+						sensor.SensorType == SensorType.SmallData
+						&& sensor.Name.Contains("GPU Memory Used")
+					)
+					{
+						matchedGpu.MemoryUsedMb = (ulong)(sensor.Value ?? 0);
+					}
+				}
+			}
 
-        public async Task OnNavigatedTo()
-        {
-            if (!_gpuUpdateTimer.IsEnabled)
-            {
-                try
-                {
-                    gpu.Open();
-                    await LoadGpusAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
-                finally
-                {
-                    IsLoading = false;
-                    _gpuUpdateTimer.Start();
-                }                
-            }
-        }
+		}
 
-        public async Task OnNavigatedFrom()
-        {
-            _gpuUpdateTimer.Stop();
-            await Task.Run(() => gpu.Close());
-        }
+		public async Task OnNavigatedTo()
+		{
+			if (!_gpuUpdateTimer.IsEnabled)
+			{
+				try
+				{
+					gpu.Open();
+					await LoadGpusAsync();
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(e);
+				}
+				finally
+				{
+					IsLoading = false;
+					_gpuUpdateTimer.Start();
+				}
+			}
+		}
 
-        public partial class GpuInfo : ObservableObject
-        {
-            [ObservableProperty]
-            private float gpuUsage;
+		public async Task OnNavigatedFrom()
+		{
+			_gpuUpdateTimer.Stop();
+			await Task.Run(() => gpu.Close());
+		}
 
-            [ObservableProperty]
-            private ulong memoryUsedMb;
-            public string Name { get; set; } = "Unknown";
-            public string Manufacturer { get; set; } = "Unknown";
-            public string DriverVersion { get; set; } = "N/A";
-            public ulong MemoryTotalMb { get; set; }
-            public ulong? DedicatedMemoryMb { get; set; }
-            public ulong? SharedMemoryMb { get; set; }
-            public string? AdapterType { get; set; }
-            public string? DirectXVersion { get; set; }
-            public string? WddmVersion { get; set; }
-            public bool? IsWhqlLogoPresent { get; set; }
-            public bool? SupportsHDR { get; set; }
-            public bool? SupportsParavirtualization { get; set; }
-        }
-    }
+		public partial class GpuInfo : ObservableObject
+		{
+			[ObservableProperty]
+			private float gpuUsage;
+
+			[ObservableProperty]
+			private ulong memoryUsedMb;
+			public string Name { get; set; } = "Unknown";
+			public string Manufacturer { get; set; } = "Unknown";
+			public string DriverVersion { get; set; } = "N/A";
+			public ulong MemoryTotalMb { get; set; }
+			public ulong? DedicatedMemoryMb { get; set; }
+			public ulong? SharedMemoryMb { get; set; }
+			public string? AdapterType { get; set; }
+			public string? DirectXVersion { get; set; }
+			public string? WddmVersion { get; set; }
+			public bool? IsWhqlLogoPresent { get; set; }
+			public bool? SupportsHDR { get; set; }
+			public bool? SupportsParavirtualization { get; set; }
+		}
+	}
 }
