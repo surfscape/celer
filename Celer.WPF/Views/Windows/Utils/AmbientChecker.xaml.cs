@@ -76,10 +76,10 @@ namespace Celer.Views.Windows.Utils
 		{
 			return await Task.Run(() =>
 			{
-				string[] registryPaths = {
+				string[] registryPaths = [
 					@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
 					@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
-				};
+				];
 
 				foreach (var path in registryPaths)
 				{
@@ -89,13 +89,10 @@ namespace Celer.Views.Windows.Utils
 						{
 							foreach (string subkeyName in key.GetSubKeyNames())
 							{
-								using (RegistryKey? subkey = key.OpenSubKey(subkeyName))
-								{
-									if (subkey?.GetValue("DisplayName")?.ToString() == "Microsoft Edge")
-									{
-										return (true, $"Instalado (Versão: {subkey.GetValue("DisplayVersion")})");
-									}
-								}
+								using RegistryKey? subkey = key.OpenSubKey(subkeyName);
+								if (subkey?.GetValue("DisplayName")?.ToString() == "Microsoft Edge")
+									return (true, $"Installed (Version: {subkey.GetValue("DisplayVersion")})");
+
 							}
 						}
 					}
@@ -104,7 +101,7 @@ namespace Celer.Views.Windows.Utils
 			});
 		}
 
-		private async Task<(bool, string)> CheckCommandExistsAsync(string command)
+		private static async Task<(bool, string)> CheckCommandExistsAsync(string command)
 		{
 			var processStartInfo = new ProcessStartInfo
 			{
