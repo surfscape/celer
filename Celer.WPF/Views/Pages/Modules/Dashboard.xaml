@@ -70,7 +70,7 @@
             </Grid.RowDefinitions>
             <Border>
                 <StackPanel>
-                    <TextBlock FontWeight="Medium" Foreground="{DynamicResource TextFillColorTertiaryBrush}">Welcome to Celer</TextBlock>
+                    <TextBlock FontWeight="Medium" Foreground="{DynamicResource TextFillColorSecondaryBrush}">Welcome to Celer</TextBlock>
                     <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
                 </StackPanel>
             </Border>
@@ -373,11 +373,11 @@
                                     <Style TargetType="{x:Type ScrollViewer}">
                                         <Style.Triggers>
                                             <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
-                                                <Setter Property="Margin" Value="0,0,1,0"></Setter>
+                                                <Setter Property="Margin" Value="0,0,1,0" />
                                                 <Setter Property="{x:Static utils:ScrollUtilities.SmoothScrollProperty}" Value="True" />
                                             </Trigger>
                                             <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
-                                                <Setter Property="Margin" Value="0,0,14,0"></Setter>
+                                                <Setter Property="Margin" Value="0,0,14,0" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
