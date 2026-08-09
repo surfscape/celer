@@ -62,7 +62,7 @@
                                         Style="{DynamicResource TransparentButton}"
                                         Visibility="Collapsed">
                                         <TextBlock
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="Segoe MDL2 Assets"
                                             FontSize="10"
                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="&#xE921;" />
@@ -76,7 +76,7 @@
                                         Style="{DynamicResource TransparentButton}"
                                         Visibility="Collapsed">
                                         <TextBlock
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="Segoe MDL2 Assets"
                                             FontSize="10"
                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="&#xE922;" />
@@ -91,7 +91,7 @@
                                         Style="{DynamicResource TransparentButton}"
                                         Visibility="Collapsed">
                                         <TextBlock
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="Segoe MDL2 Assets"
                                             FontSize="10"
                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="&#xE8BB;" />

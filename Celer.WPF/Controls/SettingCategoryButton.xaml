@@ -47,7 +47,7 @@
             <TextBlock
                 Grid.Column="2"
                 VerticalAlignment="Center"
-                FontFamily="Segoe Fluent Icons"
+                FontFamily="Segoe MDL2 Assets"
                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 Text="&#xE76C;" />
         </Grid>
