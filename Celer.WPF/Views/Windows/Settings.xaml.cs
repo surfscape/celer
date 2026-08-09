@@ -1,7 +1,6 @@
-﻿using Celer.Services;
-using Celer.Utilities;
+﻿using Celer.Utilities;
 using Celer.ViewModels;
-using Celer.Views.Pages.Settings;
+using System.ComponentModel;
 
 namespace Celer.Views.Windows
 {
@@ -11,17 +10,18 @@ namespace Celer.Views.Windows
 	public partial class Settings : BaseWindow
 	{
 		private readonly SettingsViewModel _viewModel;
-		private readonly SettingsNavigation _settingsNavigation;
-		private readonly SettingsShellViewModel _settingsShellViewModel;
 
-		public Settings(SettingsViewModel viewModel, SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellView)
+		public Settings(SettingsViewModel viewModel)
 		{
 			_viewModel = viewModel;
-			_settingsNavigation = settingsNavigation;
-			_settingsShellViewModel = settingsShellView;
 			DataContext = _viewModel;
 			InitializeComponent();
 			viewModel.CloseWindowAction = Close;
+		}
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			base.OnClosing(e);
+			_viewModel.GoToShell();
 		}
 	}
 }

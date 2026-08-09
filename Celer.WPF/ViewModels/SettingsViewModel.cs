@@ -4,42 +4,52 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Celer.ViewModels
 {
-    public partial class SettingsViewModel : SettingsBaseViewModel
-    {
-        private readonly SettingsNavigation _settingsNavigation;
-        private readonly SettingsShellViewModel _settingsShellViewModel;
+	public partial class SettingsViewModel : SettingsBaseViewModel
+	{
+		private readonly SettingsNavigation _settingsNavigation;
+		private readonly SettingsShellViewModel _settingsShellViewModel;
 
-        public SettingsBaseViewModel CurrentViewModel => _settingsNavigation.CurrentViewModel;
-        public string CurrentViewTitle => _settingsNavigation.PageTitle;
-        public Action? CloseWindowAction { get; set; }
+		public SettingsBaseViewModel CurrentViewModel => _settingsNavigation.CurrentViewModel;
+		public string CurrentViewTitle => _settingsNavigation.PageTitle;
+		public Action? CloseWindowAction { get; set; }
 
-        public SettingsViewModel(SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellViewModel)
-        {
-            _settingsNavigation = settingsNavigation;
-            _settingsShellViewModel = settingsShellViewModel;
-            _settingsNavigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            _settingsNavigation.CurrentViewModel = settingsShellViewModel;
-        }
+		public SettingsViewModel(SettingsNavigation settingsNavigation, SettingsShellViewModel settingsShellViewModel)
+		{
+			_settingsNavigation = settingsNavigation;
+			_settingsShellViewModel = settingsShellViewModel;
+			_settingsNavigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
+			_settingsNavigation.CurrentViewModel = settingsShellViewModel;
+		}
 
 
-        [RelayCommand]
-        private void GoBack()
-        {
-            if (_settingsNavigation.CurrentViewModel == _settingsShellViewModel)
-            {
-                CloseWindowAction?.Invoke();
-            }
-            else
-            {
-                _settingsNavigation.CurrentViewModel = _settingsShellViewModel;
-                _settingsNavigation.PageTitle = "Settings";
-                OnCurrentViewModelChanged();
-            }
-        }
-        private void OnCurrentViewModelChanged()
-        {
-            OnPropertyChanged(nameof(CurrentViewModel));
-            OnPropertyChanged(nameof(CurrentViewTitle));
-        }
-    }
+		[RelayCommand]
+		private void GoBack()
+		{
+			if (_settingsNavigation.CurrentViewModel is SettingsShellViewModel)
+			{
+				CloseWindowAction?.Invoke();
+				return;
+			}
+			GoToShell();
+		}
+
+		public void GoToShell()
+		{
+			_settingsNavigation.CurrentViewModel = _settingsShellViewModel;
+			_settingsNavigation.PageTitle = "Settings";
+			OnCurrentViewModelChanged();
+		}
+
+		public void OnCurrentViewModelChanged()
+		{
+			OnPropertyChanged(nameof(CurrentViewModel));
+			OnPropertyChanged(nameof(CurrentViewTitle));
+		}
+
+		public override void Dispose()
+		{
+			_settingsNavigation.CurrentViewModelChanged -= OnCurrentViewModelChanged;
+			base.Dispose();
+		}
+	}
 }
