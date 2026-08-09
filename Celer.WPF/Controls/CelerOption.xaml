@@ -41,7 +41,7 @@
                 <TextBlock
                     Margin="0,0,0,2"
                     VerticalAlignment="Center"
-                    Style="{DynamicResource BodyStrongTextBlockStyle}"
+                    Style="{DynamicResource BodyTextBlockStyle}"
                     Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 <TextBlock
                     VerticalAlignment="Center"

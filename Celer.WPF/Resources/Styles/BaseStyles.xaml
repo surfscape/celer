@@ -133,7 +133,7 @@
                                             x:Name="Text"
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                             Text="{Binding Title}"
                                             Visibility="Visible" />
                                     </StackPanel>
