@@ -63,7 +63,7 @@
             <Border
                 Grid.Column="1"
                 Margin="0,0,0,16"
-                Padding="12"
+                Padding="12,12,0,12"
                 VerticalAlignment="Stretch"
                 Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -99,17 +99,34 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Foreground="{Binding LogColor}"
-                                    Text="{Binding LogEntry}"
-                                    TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding LogEntry}" TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontFamily" Value="Cascadia Mono" />
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="Margin" Value="0,0,12,0"></Setter>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding LogType}" Value="Success">
+                                                    <Setter Property="Foreground" Value="{DynamicResource SystemFillColorSuccessBrush}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding LogType}" Value="Caution">
+                                                    <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCautionBrush}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding LogType}" Value="Error">
+                                                    <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCriticalBrush}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Grid Grid.Row="2" RowDefinitions="auto auto">
+                    <Grid Grid.Row="2" RowDefinitions="auto auto" Margin="0,0,12,0">
                         <TextBlock
                             Margin="0,0,0,8"
-                            Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Style="{DynamicResource CaptionTextBlockStyle}"
                             Text="{Binding TotalFreedText, StringFormat=Space freed: {0}}"
                             Visibility="{Binding TotalFreedText, Converter={StaticResource EmptyToVisibilityConverter}, ConverterParameter=Hidden}" />

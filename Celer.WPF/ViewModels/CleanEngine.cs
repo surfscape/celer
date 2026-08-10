@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Media;
 using static Celer.Views.Pages.Settings.SettingsModuleCleaningViewModel;
 using Path = System.IO.Path;
 
@@ -34,7 +33,15 @@ namespace Celer.ViewModels
 		{
 			public DateTime LogDate { get; set; } = DateTime.Now;
 			public string LogEntry { get; set; } = string.Empty;
-			public Brush LogColor { get; set; } = (Brush)Application.Current.FindResource("TextFillColorPrimaryBrush");
+			public LogType LogType { get; set; } = LogType.Information;
+		}
+
+		public enum LogType
+		{
+			Information,
+			Success,
+			Caution,
+			Error
 		}
 
 		public ObservableCollection<LogBook> LogEntries { get; } = [];
@@ -55,12 +62,12 @@ namespace Celer.ViewModels
             One plan is to have two seperate logging systems, one for the UI that tracks: signature loading, exceptions, and started/finished tasks which should reduce the amount of logs sent to the UI.
             The second logging system will be internal and log everything so that it can then be saved into a log file for debugging purposes.
         */
-		private void AddLog(string message, Brush foreground)
+		private void AddLog(LogType type, string message)
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
 				LogEntries.Add(
-					new LogBook { LogDate = DateTime.Now, LogEntry = message, LogColor = foreground }
+					new LogBook { LogDate = DateTime.Now, LogEntry = message, LogType = type }
 				);
 			});
 		}
@@ -70,10 +77,7 @@ namespace Celer.ViewModels
 			Categories.Clear();
 			try
 			{
-				AddLog(
-					 "Loading signatures...",
-					 (Brush)Application.Current.FindResource("SystemFillColorAttentionBrush")
-				 );
+				AddLog(LogType.Information, "Loading signatures...");
 				if (CleaningSignatureManager.GetSignatures() != string.Empty)
 					ParseJson(CleaningSignatureManager.GetSignatures());
 				else
@@ -82,7 +86,7 @@ namespace Celer.ViewModels
 			}
 			catch (Exception e)
 			{
-				AddLog($"An error occurred when loading the signatures: {e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+				AddLog(LogType.Error, $"An error occurred when loading the signatures: {e.Message}");
 				CanClean = false;
 			}
 		}
@@ -157,7 +161,7 @@ namespace Celer.ViewModels
 			Categories.Add(
 					new CleanupCategory { Name = "Special", Items = specialItems }
 			);
-			AddLog("Signatures loaded sucessfully!", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+			AddLog(LogType.Success, "Signatures loaded sucessfully");
 		}
 
 		public static Action CreateAction(JsonElement action)
@@ -231,8 +235,8 @@ namespace Celer.ViewModels
 			if (selectedItems.Count == 0)
 			{
 				AddLog(
-					 "At least one item has to be checked to start cleaning",
-					 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+					 LogType.Caution,
+					 "At least one item has to be checked to start cleaning"
 				 );
 				SaveLog();
 				return;
@@ -266,11 +270,7 @@ namespace Celer.ViewModels
 
 			if (toClose.Count > 0)
 			{
-				AddLog(
-					 "The following application have to be closed to proceed with the cleaning process:\n"
-						 + string.Join("\n", toClose),
-					 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
-				 );
+				AddLog(LogType.Error, $"The following application have to be closed to proceed with the cleaning process:\n ${string.Join("\n", toClose)}");
 				SaveLog();
 				return;
 			}
@@ -280,10 +280,7 @@ namespace Celer.ViewModels
 			await Task.Run(async () =>
 			{
 				CanClean = false;
-				AddLog(
-					 "Starting Celer Cleaning Engine...",
-					 (Brush)Application.Current.FindResource("SystemFillColorCautionBrush")
-				 );
+				AddLog(LogType.Information, "Starting Celer Cleaning Engine...");
 
 				foreach (var item in selectedItems)
 				{
@@ -303,16 +300,16 @@ namespace Celer.ViewModels
 								else
 								{
 									AddLog(
-										 $"The folder {resolvedPath} does not exist or is invalid",
-										 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+										 LogType.Error,
+										 $"The folder {resolvedPath} does not exist or is invalid"
 									 );
 								}
 							}
 							catch (Exception ex)
 							{
 								AddLog(
-									 $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}",
-									 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+									 LogType.Error,
+									 $"Exception while trying to delete the folder {resolvedPath}: {ex.Message}"
 								 );
 							}
 							continue;
@@ -347,16 +344,16 @@ namespace Celer.ViewModels
 								else
 								{
 									AddLog(
-										$"The folder {resolvedPath} does not exist or is invalid",
-										(Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+										LogType.Error,
+										$"The folder {resolvedPath} does not exist or is invalid"
 									);
 								}
 							}
 							catch (Exception ex)
 							{
 								AddLog(
-									 $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}",
-									 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+									 LogType.Error,
+									 $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}"
 								 );
 							}
 							continue;
@@ -365,7 +362,7 @@ namespace Celer.ViewModels
 						{
 							var cDrive = new DriveInfo("C");
 							long freeSpace = cDrive.TotalFreeSpace;
-							AddLog($"Run command: {action.Command}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+							AddLog(LogType.Information, $"Running command: {action.Command}");
 							try
 							{
 								var startInfo = new ProcessStartInfo("powershell.exe", $"-Command {action.Command}")
@@ -389,7 +386,7 @@ namespace Celer.ViewModels
 							}
 							catch (Exception e)
 							{
-								AddLog($"Failed to run the command: {action.Command}\n{e.Message}", (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush"));
+								AddLog(LogType.Error, $"Failed to run the command \"{action.Command}\":\n{e.Message}");
 							}
 							finally
 							{
@@ -399,7 +396,7 @@ namespace Celer.ViewModels
 							continue;
 						}
 					}
-					AddLog($"Task {item.Name} has finished", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+					AddLog(LogType.Success, $"Task {item.Name} has finished");
 				}
 			});
 			TotalFreedText = ByteSize.FromBytes(totalFreed).ToString();
@@ -418,7 +415,7 @@ namespace Celer.ViewModels
 							{
 								LogDate = DateTime.Now,
 								LogEntry = $"Saved to log file: {logFilePath}\\{logFileName}",
-								LogColor = new SolidColorBrush(Colors.Green),
+								LogType = LogType.Success,
 							}
 						);
 				using StreamWriter outputFile = new(Path.Join(logFilePath, logFileName));
@@ -441,13 +438,13 @@ namespace Celer.ViewModels
 				{
 					subDir.Attributes = FileAttributes.Normal;
 					subDir.Delete(true);
-					AddLog($"Deleted folder {subDir.FullName}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+					AddLog(LogType.Success, $"Deleted folder {subDir.FullName}");
 				}
 				catch (Exception ex)
 				{
 					AddLog(
-						 $"Exception when deleting folder {subDir.FullName}: {ex.Message}",
-						 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+						 LogType.Error,
+						 $"Exception when deleting folder {subDir.FullName}: {ex.Message}"
 					 );
 				}
 			}
@@ -471,14 +468,14 @@ namespace Celer.ViewModels
 						fileSize += fileInfo.Length;
 						fileInfo.Attributes = FileAttributes.Normal;
 						fileInfo.Delete();
-						AddLog($"Deleted the file {file}", (Brush)Application.Current.FindResource("SystemFillColorSuccessBrush"));
+						AddLog(LogType.Success, $"Deleted the file {file}");
 					}
 					catch (Exception ex)
 					{
 						fileSize -= fileInfo.Length;
 						AddLog(
-							 $"Exception when deleting file {file}: {ex.Message}",
-							 (Brush)Application.Current.FindResource("SystemFillColorCriticalBrush")
+							 LogType.Error,
+							 $"Exception when deleting file {file}: {ex.Message}"
 						 );
 					}
 				}
