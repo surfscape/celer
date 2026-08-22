@@ -3,14 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Celer.Converters"
+    xmlns:convertersBat="clr-namespace:Celer.Converters.Battery"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:Celer.Utilities"
+    xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     Title="QuickCenter"
     Width="400"
     Height="500"
+    d:DataContext="{d:DesignInstance Type=viewmodels:QuickCenterViewModel}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     IsWindowControlsVisible="False"
     ResizeMode="NoResize"
@@ -19,15 +22,28 @@
     <utils:BaseWindow.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         <converters:InvertBoolean x:Key="InvertBool" />
+        <convertersBat:ChargingConverter x:Key="ChargingConverter" />
+        <convertersBat:BatteryIconConverter x:Key="BatteryIconConverter" />
     </utils:BaseWindow.Resources>
     <Grid RowDefinitions="*,auto">
-        <StackPanel VerticalAlignment="Stretch" Margin="16">
-            <StackPanel.Resources>
-                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                    <Setter Property="Margin" Value="0,0,0,6" />
-                </Style>
-            </StackPanel.Resources>
+        <StackPanel Margin="16">
+            <Grid Margin="0,0,0,8" ColumnDefinitions="auto, *">
+                <iconPacks:PackIconLucide
+                    Width="42"
+                    Height="42"
+                    Margin="0,0,16,0"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                    Kind="{Binding CurrentBattery.Stats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
+                <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+                    <TextBlock
+                        Margin="0"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Style="{StaticResource TitleLargeTextBlockStyle}"
+                        Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
+                    <ProgressBar Maximum="100" Value="{Binding CurrentBattery.Stats.Percentage}" HorizontalAlignment="Stretch" />
+                </StackPanel>
+            </Grid>
             <Button Command="{Binding DeleteTempFilesCommand}" IsEnabled="{Binding IsCleaning, Converter={StaticResource InvertBool}}">Delete Temporary Files</Button>
             <StackPanel Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVisConverter}}">
                 <ProgressBar Maximum="{Binding TempFiles}" Value="{Binding TempFilesCleaned}" />

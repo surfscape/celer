@@ -23,7 +23,7 @@ namespace Celer.Views.Windows
 
 			_deactivatedHandler = (s, e) => Close();
 
-			Deactivated += _deactivatedHandler;
+			//Deactivated += _deactivatedHandler;
 
 		}
 
