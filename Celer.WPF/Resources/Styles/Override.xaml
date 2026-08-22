@@ -4,10 +4,89 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Utilities">
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
-    <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
-        <Setter Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-        <Setter Property="Background" Value="{DynamicResource ControlStrongFillColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="MinHeight" Value="4" />
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground" Value="{DynamicResource ProgressBarForeground}" />
+        <Setter Property="Background" Value="{DynamicResource ProgressBarBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ProgressBarBorderBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid x:Name="TemplateRoot">
+                        <Border
+                            x:Name="TrackBorder"
+                            Height="1"
+                            Margin="1,-1,1,0"
+                            VerticalAlignment="Center"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3" />
+                        <Rectangle x:Name="PART_Track" VerticalAlignment="Center" />
+                        <Grid
+                            x:Name="PART_Indicator"
+                            Height="3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{TemplateBinding BorderBrush}">
+                            <Rectangle
+                                x:Name="Indicator"
+                                Fill="{TemplateBinding Foreground}"
+                                RadiusX="3"
+                                RadiusY="3" />
+                            <Rectangle
+                                x:Name="Animation"
+                                Fill="{TemplateBinding Foreground}"
+                                RadiusX="3"
+                                RadiusY="3"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate" />
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Animation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.25" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.45" Value="0.25" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.25" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <PointAnimationUsingKeyFrames Storyboard.TargetName="Animation" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)">
+                                            <EasingPointKeyFrame KeyTime="0" Value="-0.5,0.5" />
+                                            <EasingPointKeyFrame KeyTime="0:0:0.45" Value="0.5,0.5" />
+                                            <EasingPointKeyFrame KeyTime="0:0:0.9" Value="1.5,0.5" />
+                                        </PointAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="TemplateRoot" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="Indicator" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource ProgressBarIndeterminateBorderBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource ProgressBarIndeterminateBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
