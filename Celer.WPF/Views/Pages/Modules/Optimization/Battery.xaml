@@ -63,7 +63,6 @@
                             Style="{StaticResource TitleLargeTextBlockStyle}"
                             Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
                     </StackPanel>
-
                     <Grid Margin="0,8">
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
@@ -81,45 +80,30 @@
                                 Text="{Binding CurrentBattery.Stats.EstimatedRunTime, StringFormat='Remaining Time: {0:g}'}"
                                 Visibility="{Binding CurrentBattery.Stats.IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
                         </StackPanel>
-                        <Border Grid.Column="1" CornerRadius="8">
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
 
-                                <Grid>
-                                    <ProgressBar
-                                        Height="16"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
-                                        Maximum="100"
-                                        Minimum="0"
-                                        Value="0" />
-                                    <ProgressBar
-                                        Height="16"
-                                        Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Panel.ZIndex="2"
-                                        Background="Transparent"
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid>
+                                <ProgressBar
+                                        Margin="0,0,8,0" 
                                         Foreground="{DynamicResource SystemFillColorSuccessBrush}"
                                         Maximum="100"
                                         Minimum="0"
                                         Value="{Binding CurrentBattery.Stats.Health}" />
-                                    <ProgressBar
-                                        Height="16"
+                                <ProgressBar
                                         Margin="0,0,8,0"
-                                        VerticalAlignment="Center"
-                                        Panel.ZIndex="3"
+                                        Panel.ZIndex="1"
                                         Background="Transparent"
                                         Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
                                         Maximum="100"
                                         Minimum="0"
                                         Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
-                                </Grid>
                             </Grid>
-                        </Border>
+                        </Grid>
                     </Grid>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <StackPanel Margin="0,0,24,0" Orientation="Horizontal">
