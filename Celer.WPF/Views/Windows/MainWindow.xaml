@@ -19,6 +19,7 @@
     xmlns:viewmodelsOpsec="clr-namespace:Celer.ViewModels.OpsecVM"
     Title="Celer"
     Height="642"
+    Width="980"
     MinWidth="980"
     MinHeight="642"
     d:Background="white"
