@@ -70,7 +70,19 @@ public partial class DashboardViewModel : BaseModuleViewModel, INavigationAware
 
 				if (_cpuCounter != null) CpuUsage = (float)Format(_cpuCounter.NextValue(), 1);
 
-				if (_gpuCounters != null) GpuGeneralUsage = (float)Format(_gpuCounters?.Sum(c => c.NextValue()) ?? 0, 1);
+
+				try
+				{
+					if (_gpuCounters != null) GpuGeneralUsage = (float)Format(_gpuCounters.Sum(c => c?.NextValue()) ?? 0, 1);
+				}
+				catch (InvalidOperationException e)
+				{
+					Debug.WriteLine(e.Message);
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(e.Message);
+				}
 
 				if (++_processUpdateCounter >= PROCESS_UPDATE_INTERVAL)
 				{
