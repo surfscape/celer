@@ -45,7 +45,6 @@
                     </StackPanel>
                     <StackPanel>
                         <ProgressBar
-                            MinHeight="8"
                             Margin="0,0,0,6"
                             Maximum="{Binding Size}"
                             Value="{Binding UsedSpace}" />

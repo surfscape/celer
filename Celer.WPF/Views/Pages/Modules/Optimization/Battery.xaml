@@ -89,19 +89,20 @@
 
                             <Grid>
                                 <ProgressBar
-                                        Margin="0,0,8,0" 
-                                        Foreground="{DynamicResource SystemFillColorSuccessBrush}"
-                                        Maximum="100"
-                                        Minimum="0"
-                                        Value="{Binding CurrentBattery.Stats.Health}" />
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource SystemFillColorSuccessBrush}"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding CurrentBattery.Stats.Health}" />
                                 <ProgressBar
-                                        Margin="0,0,8,0"
-                                        Panel.ZIndex="1"
-                                        Background="Transparent"
-                                        Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
-                                        Maximum="100"
-                                        Minimum="0"
-                                        Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
+                                    Margin="0,0,8,0"
+                                    Panel.ZIndex="1"
+                                    Background="Transparent"
+                                    Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
                             </Grid>
                         </Grid>
                     </Grid>

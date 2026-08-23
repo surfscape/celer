@@ -17,19 +17,19 @@
                         <Border
                             x:Name="TrackBorder"
                             Height="1"
-                            Margin="1,-1,1,0"
+                            Margin="1,0,1,0"
                             VerticalAlignment="Center"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3" />
-                        <Rectangle x:Name="PART_Track" VerticalAlignment="Center" />
+                            CornerRadius="1" />
+                        <Rectangle x:Name="PART_Track"  />
                         <Grid
                             x:Name="PART_Indicator"
                             Height="3"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Background="{TemplateBinding BorderBrush}">
+                            Background="Transparent">
                             <Rectangle
                                 x:Name="Indicator"
                                 Fill="{TemplateBinding Foreground}"
