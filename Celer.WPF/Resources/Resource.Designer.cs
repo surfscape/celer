@@ -106,6 +106,33 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugged in.
+        /// </summary>
+        public static string Battery_PluggedIn {
+            get {
+                return ResourceManager.GetString("Battery_PluggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On battery.
+        /// </summary>
+        public static string Battery_Unplugged {
+            get {
+                return ResourceManager.GetString("Battery_Unplugged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Celer.
+        /// </summary>
+        public static string CloseCeler {
+            get {
+                return ResourceManager.GetString("CloseCeler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checking for an internet connection.
         /// </summary>
         public static string GatewayTask_CheckInternetConnection {
@@ -426,6 +453,51 @@ namespace Celer.Resources {
         public static string PrivacyPolicy {
             get {
                 return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string QuickCenter_Actions {
+            get {
+                return ResourceManager.GetString("QuickCenter_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaning....
+        /// </summary>
+        public static string RecycleBinCleaning {
+            get {
+                return ResourceManager.GetString("RecycleBinCleaning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaned.
+        /// </summary>
+        public static string RecycleBinDone {
+            get {
+                return ResourceManager.GetString("RecycleBinDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recycle bin empty.
+        /// </summary>
+        public static string RecycleBinEmpty {
+            get {
+                return ResourceManager.GetString("RecycleBinEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty recycle bin.
+        /// </summary>
+        public static string RecycleBinReady {
+            get {
+                return ResourceManager.GetString("RecycleBinReady", resourceCulture);
             }
         }
         

@@ -20,11 +20,8 @@ namespace Celer.Views.Windows
 			_viewModel = viewModel;
 			InitializeComponent();
 			DataContext = _viewModel;
-
 			_deactivatedHandler = (s, e) => Close();
-
 			//Deactivated += _deactivatedHandler;
-
 		}
 
 		protected override void OnClosing(CancelEventArgs e)

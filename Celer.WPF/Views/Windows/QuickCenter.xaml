@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:Celer.Utilities"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
+    xmlns:resx="clr-namespace:Celer.Resources"
     Title="Quick Center"
     Width="400"
     Height="500"
@@ -53,7 +54,7 @@
                     <ProgressBar Maximum="100" Value="{Binding CurrentBattery.Stats.Percentage}" />
                 </StackPanel>
             </Grid>
-            <TextBlock Margin="0,16,0,8" Style="{DynamicResource BodyStrongTextBlockStyle}">Actions</TextBlock>
+            <TextBlock Margin="0,16,0,8" Style="{DynamicResource BodyStrongTextBlockStyle}" Text="{x:Static resx:Resource.QuickCenter_Actions}"></TextBlock>
             <Button
                 Margin="0"
                 HorizontalAlignment="Stretch"
@@ -61,7 +62,7 @@
                 Command="{Binding UserCleanRecycleBinCommand}"
                 IsEnabled="{Binding CanCleanRecycleBin}">
                 <StackPanel HorizontalAlignment="Stretch">
-                    <TextBlock HorizontalAlignment="Center">Empty Recycle Bin</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Text="{x:Static resx:Resource.RecycleBinEmpty}"></TextBlock>
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="12"
@@ -88,7 +89,7 @@
                     Padding="8"
                     Command="{Binding OpenSettingsCommand}"
                     Style="{DynamicResource TransparentButton}"
-                    ToolTip="Settings">
+                    ToolTip="{x:Static resx:Resource.Menu_Settings}">
                     <iconPacks:PackIconLucide
                         Width="16"
                         Height="16"
@@ -100,7 +101,7 @@
                     Padding="8"
                     Command="{Binding CloseCelerCommand}"
                     Style="{DynamicResource TransparentButton}"
-                    ToolTip="Close Celer">
+                    ToolTip="{x:Static resx:Resource.CloseCeler}">
                     <iconPacks:PackIconLucide
                         Width="16"
                         Height="16"

@@ -260,4 +260,28 @@
   <data name="Menu_View_Software" xml:space="preserve">
     <value>_Software</value>
   </data>
+  <data name="RecycleBinReady" xml:space="preserve">
+    <value>Empty recycle bin</value>
+  </data>
+  <data name="RecycleBinDone" xml:space="preserve">
+    <value>Cleaned</value>
+  </data>
+  <data name="RecycleBinCleaning" xml:space="preserve">
+    <value>Cleaning...</value>
+  </data>
+  <data name="RecycleBinEmpty" xml:space="preserve">
+    <value>Recycle bin empty</value>
+  </data>
+  <data name="Battery_PluggedIn" xml:space="preserve">
+    <value>Plugged in</value>
+  </data>
+  <data name="Battery_Unplugged" xml:space="preserve">
+    <value>On battery</value>
+  </data>
+  <data name="QuickCenter_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="CloseCeler" xml:space="preserve">
+    <value>Close Celer</value>
+  </data>
 </root>

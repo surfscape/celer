@@ -183,4 +183,19 @@
   <data name="Menu_Tools" xml:space="preserve">
     <value>_Ferramentas</value>
   </data>
+  <data name="RecycleBinReady" xml:space="preserve">
+    <value>Esvaziar reciclagem</value>
+  </data>
+  <data name="RecycleBinDone" xml:space="preserve">
+    <value>Limpo</value>
+  </data>
+  <data name="RecycleBinCleaning" xml:space="preserve">
+    <value>A limpar...</value>
+  </data>
+  <data name="RecycleBinEmpty" xml:space="preserve">
+    <value>Reciclagem vazia</value>
+  </data>
+  <data name="QuickCenter_Actions" xml:space="preserve">
+    <value>Ações</value>
+  </data>
 </root>

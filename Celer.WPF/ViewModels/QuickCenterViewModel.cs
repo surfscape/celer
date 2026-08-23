@@ -1,5 +1,6 @@
 ﻿using ByteSizeLib;
 using Celer.Infrastructure.Battery;
+using Celer.Resources;
 using Celer.Utilities;
 using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -44,6 +45,9 @@ namespace Celer.ViewModels
 		[ObservableProperty]
 		public partial double RecycleBinCleanedSize { get; set; }
 
+		[ObservableProperty]
+		public partial string RecycleBinActionLabel { get; set; } = Resource.RecycleBinEmpty;
+
 		partial void OnRecycleBinTotalSizeChanged(double value)
 		{
 			RecycleBinReadableSize = ByteSize.FromBytes(value).ToString();
@@ -62,7 +66,10 @@ namespace Celer.ViewModels
 			_updateTimer.Tick += (_, _) => UpdateBatteryInfo();
 			RecycleBinTotalSize = GetRecycleBinSize();
 			if (RecycleBinTotalSize > 0)
+			{
 				CanCleanRecycleBin = true;
+				RecycleBinActionLabel = Resource.RecycleBinReady;
+			}
 		}
 
 		private void UpdateBatteryInfo()
@@ -89,11 +96,12 @@ namespace Celer.ViewModels
 			IsCleaningRecycleBin = true;
 			Task.Run(() =>
 			{
+				RecycleBinActionLabel = Resource.RecycleBinCleaning;
 				CleanRecycleBin();
-				Thread.Sleep(5000);
 			});
 			IsCleaningRecycleBin = false;
 			CanCleanRecycleBin = false;
+			RecycleBinActionLabel = Resource.RecycleBinDone;
 		}
 
 		private void CleanRecycleBin()
@@ -118,7 +126,6 @@ namespace Celer.ViewModels
 		private void OpenSettings()
 		{
 			UserLand.OpenWindow<Settings>(_serviceProvider);
-
 		}
 
 		[RelayCommand]
