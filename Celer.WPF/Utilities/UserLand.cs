@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32.TaskScheduler;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32.TaskScheduler;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Windows;
@@ -59,6 +60,33 @@ namespace Celer.Utilities
 			);
 			ts.GetTask("Run Celer at Startup").Enabled = true;
 			Debug.WriteLine("Task created successfully!");
+		}
+
+		/// <summary>
+		/// Helper function that opens a specific window, prohibits opening another instance of it and has the ability to bring it to the foreground if already opened.
+		/// </summary>
+		/// <param name="T">Object of the desired window to open</param>
+		/// <param name="serviceProvider">An instance of a service provider that we retrieve the window from</param>
+		public static void OpenWindow<T>(IServiceProvider serviceProvider) where T : Window
+		{
+			var existing = Application.Current.Windows.OfType<T>().FirstOrDefault();
+			if (existing is not null)
+			{
+				if (existing.WindowState == WindowState.Minimized)
+					existing.WindowState = WindowState.Normal;
+
+				existing.ShowDialog();
+				existing.Activate();
+				return;
+			}
+
+			var window = serviceProvider.GetService<T>() ?? Activator.CreateInstance<T>();
+
+			var owner = Application.Current.MainWindow;
+			if (owner is not null && owner != window && owner.IsVisible)
+				window.Owner = owner;
+
+			window.ShowDialog();
 		}
 
 		// TODO: currently only disabled the task, I should check to see if I can actually delete the task

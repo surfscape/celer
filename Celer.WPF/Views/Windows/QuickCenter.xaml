@@ -45,9 +45,9 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Bottom"
-                            LineStackingStrategy="BlockLineHeight"
-                            LineHeight="48"
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            LineHeight="48"
+                            LineStackingStrategy="BlockLineHeight"
                             Text="{Binding CurrentBattery.Stats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
                     </Grid>
                     <ProgressBar Maximum="100" Value="{Binding CurrentBattery.Stats.Percentage}" />
@@ -86,6 +86,7 @@
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
                     Padding="8"
+                    Command="{Binding OpenSettingsCommand}"
                     Style="{DynamicResource TransparentButton}"
                     ToolTip="Settings">
                     <iconPacks:PackIconLucide

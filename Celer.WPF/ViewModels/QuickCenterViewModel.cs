@@ -1,5 +1,7 @@
 ﻿using ByteSizeLib;
 using Celer.Infrastructure.Battery;
+using Celer.Utilities;
+using Celer.Views.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
@@ -11,6 +13,7 @@ namespace Celer.ViewModels
 {
 	public partial class QuickCenterViewModel : ObservableObject
 	{
+		private readonly IServiceProvider _serviceProvider;
 		private readonly string recycleBinUserPath = $"C:\\$Recycle.Bin\\{WindowsIdentity.GetCurrent().User}\\";
 
 		private readonly Battery batteryService;
@@ -46,8 +49,9 @@ namespace Celer.ViewModels
 			RecycleBinReadableSize = ByteSize.FromBytes(value).ToString();
 		}
 
-		public QuickCenterViewModel()
+		public QuickCenterViewModel(IServiceProvider serviceProvider)
 		{
+			_serviceProvider = serviceProvider;
 			batteryService = new Battery();
 			batteryService.Update();
 			if (batteryService.Batteries.Count > 0)
@@ -109,9 +113,16 @@ namespace Celer.ViewModels
 			}
 		}
 
+		// Bottom bar commands
+		[RelayCommand]
+		private void OpenSettings()
+		{
+			UserLand.OpenWindow<Settings>(_serviceProvider);
+
+		}
 
 		[RelayCommand]
-		public static void CloseCeler()
+		private static void CloseCeler()
 		{
 			App.Current.Shutdown();
 		}

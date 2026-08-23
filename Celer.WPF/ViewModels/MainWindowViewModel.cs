@@ -164,13 +164,13 @@ namespace Celer.ViewModels
 			switch (window)
 			{
 				case "Settings":
-					OpenWindow<Settings>(); break;
+					UserLand.OpenWindow<Settings>(_serviceProvider); break;
 				case "Ambient":
-					OpenWindow<AmbientChecker>(); break;
+					UserLand.OpenWindow<AmbientChecker>(_serviceProvider); break;
 				case "Update":
-					OpenWindow<SurfScapeGateway>(); break;
+					UserLand.OpenWindow<SurfScapeGateway>(_serviceProvider); break;
 				case "About":
-					OpenWindow<AboutWindow>(); break;
+					UserLand.OpenWindow<AboutWindow>(_serviceProvider); break;
 			}
 		}
 
@@ -178,32 +178,6 @@ namespace Celer.ViewModels
 		private static void OpenLink(string url)
 		{
 			HyperlinkExtensions.OpenLink(url);
-		}
-
-		/// <summary>
-		/// Helper function that opens a specific window, prohibits opening another instance of it and has the ability to bring it to the foreground if already opened.
-		/// </summary>
-		/// <param name="window">Object of the desired window to open</param>
-		private void OpenWindow<T>() where T : Window
-		{
-			var existing = Application.Current.Windows.OfType<T>().FirstOrDefault();
-			if (existing is not null)
-			{
-				if (existing.WindowState == WindowState.Minimized)
-					existing.WindowState = WindowState.Normal;
-
-				existing.ShowDialog();
-				existing.Activate();
-				return;
-			}
-
-			var window = _serviceProvider.GetService<T>() ?? Activator.CreateInstance<T>();
-
-			var owner = Application.Current.MainWindow;
-			if (owner is not null && owner != window && owner.IsVisible)
-				window.Owner = owner;
-
-			window.ShowDialog();
 		}
 
 		public partial class QCMenuViewModel(QuickCenterViewModel quickCenterViewModel) : ObservableObject
