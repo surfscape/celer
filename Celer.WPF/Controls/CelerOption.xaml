@@ -37,17 +37,21 @@
                 Height="20"
                 VerticalAlignment="Center"
                 Source="{Binding Image, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0">
+            <StackPanel
+                Grid.Column="1"
+                Margin="16,0"
+                VerticalAlignment="Center">
                 <TextBlock
                     Margin="0,0,0,2"
                     VerticalAlignment="Center"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                     Style="{DynamicResource BodyTextBlockStyle}"
                     Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 <TextBlock
+                    x:Name="descriptionEl"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     Style="{DynamicResource BodyTextBlockStyle}"
-                    x:Name="descriptionEl"
                     Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </StackPanel>
             <ContentPresenter
