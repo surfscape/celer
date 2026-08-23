@@ -78,6 +78,7 @@ public partial class DashboardViewModel : BaseModuleViewModel, INavigationAware
 				catch (InvalidOperationException e)
 				{
 					Debug.WriteLine(e.Message);
+					InitGpuCounters();
 				}
 				catch (Exception e)
 				{
