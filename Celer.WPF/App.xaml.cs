@@ -137,6 +137,7 @@ public partial class App : Application
 			services.AddTransient<BatteryViewModel>();
 			services.AddTransient<VideoViewModel>();
 			services.AddTransient<SensorViewModel>();
+			services.AddTransient<SchedulingViewModel>();
 			services.AddTransient<SoftwareViewModel>();
 			services.AddTransient<PackageManagerViewModel>();
 			services.AddSingleton<MaintenanceViewModel>();

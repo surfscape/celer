@@ -75,6 +75,12 @@
                                     Label="Sensors"
                                     NavigateCommand="{Binding NavigateCommand}"
                                     NavigateTo="Sensors" />
+                                <local1:ModuleButton
+                                    Description="Change how Windows handles foreground and background priority and boosting"
+                                    Icon="Layers"
+                                    Label="Process Scheduling"
+                                    NavigateCommand="{Binding NavigateCommand}"
+                                    NavigateTo="Scheduling" />
                             </UniformGrid>
                         </StackPanel>
                     </Grid>
@@ -83,17 +89,17 @@
                             <DataTemplate DataType="{x:Type subviewsViewModels:BatteryViewModel}">
                                 <subviews:Battery />
                             </DataTemplate>
-
                             <DataTemplate DataType="{x:Type subviewsViewModels:MemoryViewModel}">
                                 <subviews:MemoryManagement />
                             </DataTemplate>
-
                             <DataTemplate DataType="{x:Type subviewsViewModels:VideoViewModel}">
                                 <subviews:Video />
                             </DataTemplate>
-
                             <DataTemplate DataType="{x:Type subviewsViewModels:SensorViewModel}">
                                 <subviews:Sensors />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type subviewsViewModels:SchedulingViewModel}">
+                                <subviews:Scheduling />
                             </DataTemplate>
                         </ContentControl.Resources>
                     </ContentControl>
