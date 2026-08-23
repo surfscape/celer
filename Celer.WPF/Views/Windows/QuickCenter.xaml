@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:Celer.Utilities"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
-    Title="QuickCenter"
+    Title="Quick Center"
     Width="400"
     Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:QuickCenterViewModel}"
@@ -35,36 +35,47 @@
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                     Kind="{Binding CurrentBattery.Stats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
-                <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
-                    <TextBlock
-                        Margin="0"
-                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                        Style="{StaticResource TitleLargeTextBlockStyle}"
-                        Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
-                    <ProgressBar Maximum="100" Value="{Binding CurrentBattery.Stats.Percentage}" HorizontalAlignment="Stretch" />
+                <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
+                    <Grid ColumnDefinitions="*, auto">
+                        <TextBlock
+                            Margin="0"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Style="{StaticResource TitleLargeTextBlockStyle}"
+                            Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            LineStackingStrategy="BlockLineHeight"
+                            LineHeight="48"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{Binding CurrentBattery.Stats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
+                    </Grid>
+                    <ProgressBar Maximum="100" Value="{Binding CurrentBattery.Stats.Percentage}" />
                 </StackPanel>
             </Grid>
-            <Button Command="{Binding DeleteTempFilesCommand}" IsEnabled="{Binding IsCleaning, Converter={StaticResource InvertBool}}">Delete Temporary Files</Button>
-            <StackPanel Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVisConverter}}">
-                <ProgressBar Maximum="{Binding TempFiles}" Value="{Binding TempFilesCleaned}" />
-                <TextBlock
-                    Margin="0,4"
-                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                    Text="{Binding TempFilesCleaned, StringFormat=Cleaned {0}MB}" />
-            </StackPanel>
+            <TextBlock Margin="0,16,0,8" Style="{DynamicResource BodyStrongTextBlockStyle}">Actions</TextBlock>
             <Button
                 Margin="0"
-                Command="{Binding EmptyRecycleBinCommand}"
-                IsEnabled="{Binding CanRecycleBin}">
-                Empty Recycle Bin
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Command="{Binding UserCleanRecycleBinCommand}"
+                IsEnabled="{Binding CanCleanRecycleBin}">
+                <StackPanel HorizontalAlignment="Stretch">
+                    <TextBlock HorizontalAlignment="Center">Empty Recycle Bin</TextBlock>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Text="{Binding RecycleBinReadableSize}"
+                        Visibility="{Binding CanCleanRecycleBin, Converter={StaticResource BoolToVisConverter}}" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Stretch"
+                        Maximum="{Binding RecycleBinTotalSize}"
+                        Visibility="{Binding IsCleaningRecycleBin, Converter={StaticResource BoolToVisConverter}}"
+                        Value="{Binding RecycleBinCleanedSize}" />
+                </StackPanel>
             </Button>
-            <StackPanel Visibility="{Binding IsRecycleBin, Converter={StaticResource BoolToVisConverter}}">
-                <ProgressBar Maximum="{Binding RecycleTotalSize}" Value="{Binding RecycleCleaned}" />
-                <TextBlock
-                    Margin="0,4"
-                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                    Text="{Binding RecycleCleaned, StringFormat=Cleaned {0}MB}" />
-            </StackPanel>
         </StackPanel>
         <Border
             Grid.Row="1"
@@ -86,6 +97,7 @@
                 <Button
                     Margin="8"
                     Padding="8"
+                    Command="{Binding CloseCelerCommand}"
                     Style="{DynamicResource TransparentButton}"
                     ToolTip="Close Celer">
                     <iconPacks:PackIconLucide
