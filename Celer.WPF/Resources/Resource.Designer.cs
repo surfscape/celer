@@ -133,6 +133,105 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh drives.
+        /// </summary>
+        public static string Dashboard_DrivesRefresh {
+            get {
+                return ResourceManager.GetString("Dashboard_DrivesRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drives.
+        /// </summary>
+        public static string Dashboard_DrivesTitle {
+            get {
+                return ResourceManager.GetString("Dashboard_DrivesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving system information....
+        /// </summary>
+        public static string Dashboard_LoadingMessage {
+            get {
+                return ResourceManager.GetString("Dashboard_LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Memory.
+        /// </summary>
+        public static string Dashboard_Memory {
+            get {
+                return ResourceManager.GetString("Dashboard_Memory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available.
+        /// </summary>
+        public static string Dashboard_MemoryAvailable {
+            get {
+                return ResourceManager.GetString("Dashboard_MemoryAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In use.
+        /// </summary>
+        public static string Dashboard_MemoryInUse {
+            get {
+                return ResourceManager.GetString("Dashboard_MemoryInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much time the system takes to post. A value over 70 seconds could mean a hardware issue/conflict..
+        /// </summary>
+        public static string Dashboard_PostTooltip {
+            get {
+                return ResourceManager.GetString("Dashboard_PostTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processes.
+        /// </summary>
+        public static string Dashboard_Processes {
+            get {
+                return ResourceManager.GetString("Dashboard_Processes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Threads.
+        /// </summary>
+        public static string Dashboard_Threads {
+            get {
+                return ResourceManager.GetString("Dashboard_Threads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Status.
+        /// </summary>
+        public static string Dashboard_Title {
+            get {
+                return ResourceManager.GetString("Dashboard_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Celer.
+        /// </summary>
+        public static string Dashboard_Welcome {
+            get {
+                return ResourceManager.GetString("Dashboard_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checking for an internet connection.
         /// </summary>
         public static string GatewayTask_CheckInternetConnection {
@@ -336,6 +435,33 @@ namespace Celer.Resources {
         public static string Menu_View_Software {
             get {
                 return ResourceManager.GetString("Menu_View_Software", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Memory Manager.
+        /// </summary>
+        public static string Modules_MemoryManager {
+            get {
+                return ResourceManager.GetString("Modules_MemoryManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Manager.
+        /// </summary>
+        public static string Modules_PowerManager {
+            get {
+                return ResourceManager.GetString("Modules_PowerManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Manager.
+        /// </summary>
+        public static string Modules_VideoManager {
+            get {
+                return ResourceManager.GetString("Modules_VideoManager", resourceCulture);
             }
         }
         

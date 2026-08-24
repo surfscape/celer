@@ -174,6 +174,10 @@
   <data name="Start" xml:space="preserve">
     <value>Iniciar</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="Menu_Settings" xml:space="preserve">
     <value>_Definições</value>
   </data>
@@ -197,5 +201,26 @@
   </data>
   <data name="QuickCenter_Actions" xml:space="preserve">
     <value>Ações</value>
+  </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Bem vindo ao Celer</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Estado do Sistema</value>
+  </data>
+  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Dashboard_Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="Dashboard_MemoryInUse" xml:space="preserve">
+    <value>Em utilização</value>
+  </data>
+  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
+    <value>Disponível</value>
+  </data>
+  <data name="Dashboard_DrivesTitle" xml:space="preserve">
+    <value>Discos</value>
   </data>
 </root>

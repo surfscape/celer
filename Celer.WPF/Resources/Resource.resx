@@ -284,4 +284,46 @@
   <data name="CloseCeler" xml:space="preserve">
     <value>Close Celer</value>
   </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Welcome to Celer</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>System Status</value>
+  </data>
+  <data name="Dashboard_PostTooltip" xml:space="preserve">
+    <value>How much time the system takes to post. A value over 70 seconds could mean a hardware issue/conflict.</value>
+  </data>
+  <data name="Dashboard_Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="Dashboard_Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="Dashboard_MemoryInUse" xml:space="preserve">
+    <value>In use</value>
+  </data>
+  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="Dashboard_DrivesTitle" xml:space="preserve">
+    <value>Drives</value>
+  </data>
+  <data name="Dashboard_DrivesRefresh" xml:space="preserve">
+    <value>Refresh drives</value>
+  </data>
+  <data name="Modules_PowerManager" xml:space="preserve">
+    <value>Power Manager</value>
+  </data>
+  <data name="Modules_VideoManager" xml:space="preserve">
+    <value>Video Manager</value>
+  </data>
+  <data name="Modules_MemoryManager" xml:space="preserve">
+    <value>Memory Manager</value>
+  </data>
+  <data name="Dashboard_LoadingMessage" xml:space="preserve">
+    <value>Retrieving system information...</value>
+  </data>
 </root>

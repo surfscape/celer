@@ -10,6 +10,7 @@
     xmlns:local="clr-namespace:Celer.Views.Pages.Modules"
     xmlns:local1="clr-namespace:Celer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:Celer.Resources"
     xmlns:sg="clr-namespace:SpacedGridControl;assembly=SpacedGridControl"
     xmlns:utils="clr-namespace:Celer.Utilities"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
@@ -69,8 +70,11 @@
             </Grid.RowDefinitions>
             <Border>
                 <StackPanel>
-                    <TextBlock FontWeight="Medium" Foreground="{DynamicResource TextFillColorSecondaryBrush}">Welcome to Celer</TextBlock>
-                    <TextBlock Style="{StaticResource Heading1}">System Status</TextBlock>
+                    <TextBlock
+                        FontWeight="Medium"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Text="{x:Static resx:Resource.Dashboard_Welcome}" />
+                    <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Resource.Dashboard_Title}" />
                 </StackPanel>
             </Border>
             <Border
@@ -90,7 +94,7 @@
                     <StackPanel
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
-                        ToolTip="How much time the system takes to post. A value over 70 seconds could mean a hardware issue/conflict.">
+                        ToolTip="{x:Static resx:Resource.Dashboard_PostTooltip}">
                         <iconPacks:PackIconLucide
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"
@@ -160,7 +164,7 @@
                                 <TextBlock
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="Processes" />
+                                    Text="{x:Static resx:Resource.Dashboard_Processes}" />
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     FontSize="17"
@@ -172,7 +176,7 @@
                                 <TextBlock
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="Threads" />
+                                    Text="{x:Static resx:Resource.Dashboard_Threads}" />
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     FontSize="17"
@@ -192,7 +196,7 @@
                     CornerRadius="6">
                     <StackPanel>
                         <UniformGrid Columns="2">
-                            <TextBlock Style="{StaticResource Heading2}" Text="Memory" />
+                            <TextBlock Style="{StaticResource Heading2}" Text="{x:Static resx:Resource.Dashboard_Memory}" />
                             <TextBlock
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
@@ -239,7 +243,7 @@
                                 <TextBlock
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="In Use " />
+                                    Text="{x:Static resx:Resource.Dashboard_MemoryInUse}" />
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     FontSize="17"
@@ -251,7 +255,7 @@
                                 <TextBlock
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="Available" />
+                                    Text="{x:Static resx:Resource.Dashboard_MemoryAvailable}" />
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     FontSize="17"
@@ -314,11 +318,11 @@
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             Text="{Binding GpuVendor}" />
                         <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Driver " />
+                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Driver" />
                             <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding GpuDriverVersion}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="DirectX " />
+                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="DirectX" />
                             <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding GpuDirectXVersion}" />
                         </StackPanel>
 
@@ -346,12 +350,12 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Style="{StaticResource Heading2}">Drives</TextBlock>
+                            <TextBlock Style="{StaticResource Heading2}" Text="{x:Static resx:Resource.Dashboard_DrivesTitle}" />
                             <Button
                                 Grid.Column="1"
                                 Padding="8"
                                 Command="{Binding GetDriveInfoCommand}"
-                                ToolTip="Refresh drives">
+                                ToolTip="{x:Static resx:Resource.Dashboard_DrivesRefresh}">
                                 <iconPacks:PackIconLucide
                                     Width="14"
                                     Height="14"
@@ -418,7 +422,7 @@
                                         HorizontalAlignment="Center"
                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Kind="Power" />
-                                    <TextBlock HorizontalAlignment="Center">Power Manager</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" Text="{x:Static resx:Resource.Modules_PowerManager}" />
                                 </StackPanel>
                             </Button>
                             <Button
@@ -432,7 +436,7 @@
                                         HorizontalAlignment="Center"
                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Kind="Gpu" />
-                                    <TextBlock HorizontalAlignment="Center">Video Manager</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" Text="{x:Static resx:Resource.Modules_VideoManager}" />
                                 </StackPanel>
                             </Button>
                             <Button
@@ -446,7 +450,7 @@
                                         HorizontalAlignment="Center"
                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Kind="MemoryStick" />
-                                    <TextBlock HorizontalAlignment="Center">Memory Manager</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" Text="{x:Static resx:Resource.Modules_MemoryManager}" />
                                 </StackPanel>
                             </Button>
                         </UniformGrid>
@@ -458,7 +462,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"
             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}">
-            <TextBlock VerticalAlignment="Center">Retrieving system information...</TextBlock>
+            <TextBlock VerticalAlignment="Center" Text="{x:Static resx:Resource.Dashboard_LoadingMessage}" />
         </Grid>
     </Grid>
 
