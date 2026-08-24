@@ -437,11 +437,19 @@ namespace Celer.ViewModels
 				try
 				{
 					subDir.Attributes = FileAttributes.Normal;
+					foreach (var file in subDir.GetFiles())
+					{
+						folderSize += file.Length;
+					}
 					subDir.Delete(true);
 					AddLog(LogType.Success, $"Deleted folder {subDir.FullName}");
 				}
 				catch (Exception ex)
 				{
+					foreach (var file in subDir.GetFiles())
+					{
+						folderSize -= file.Length;
+					}
 					AddLog(
 						 LogType.Error,
 						 $"Exception when deleting folder {subDir.FullName}: {ex.Message}"
