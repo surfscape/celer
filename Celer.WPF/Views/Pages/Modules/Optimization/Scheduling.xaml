@@ -37,8 +37,10 @@
                 </Button>
                 <ComboBox
                     MinWidth="170"
-                    ItemsSource="{Binding WinSeperationValues.Values}"
-                    SelectedIndex="{Binding SelectedWinSeperationIndex, Mode=TwoWay}" />
+                    DisplayMemberPath="Description"
+                    ItemsSource="{Binding PriorityOptions}"
+                    SelectedItem="{Binding SelectedOption, Mode=TwoWay}"
+                    SelectedValuePath="MaskValue" />
             </StackPanel>
         </components:CelerOption>
     </Grid>

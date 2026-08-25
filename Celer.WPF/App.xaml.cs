@@ -1,4 +1,5 @@
-﻿using Celer.Models.Preferences;
+﻿using Celer.Infrastructure.Windows;
+using Celer.Models.Preferences;
 using Celer.Properties;
 using Celer.Services;
 using Celer.ViewModels;
@@ -128,6 +129,9 @@ public partial class App : Application
 			services.AddTransient<SurfScapeGateway>();
 			services.AddSingleton<SettingsNavigation>();
 			services.AddTransient<Settings>();
+
+			// infrastructure
+			services.AddSingleton<IScheduler, Scheduler>();
 
 			// viewmodels for pages and views
 			services.AddSingleton<DashboardViewModel>();
