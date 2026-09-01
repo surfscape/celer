@@ -66,6 +66,7 @@ public partial class MainWindow : BaseWindow
 			Topmost = true;
 			Topmost = false;
 			Focus();
+			WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(true));
 		}
 		return IntPtr.Zero;
 	}
@@ -87,6 +88,7 @@ public partial class MainWindow : BaseWindow
 			e.Cancel = true;
 			Visibility = Visibility.Collapsed;
 			ProcessPowerManager.Enable();
+			WeakReferenceMessenger.Default.Send(new WindowVisibleMessage(false));
 		}
 		else
 			e.Cancel = false;
