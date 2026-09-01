@@ -62,7 +62,7 @@
                 Command="{Binding UserCleanRecycleBinCommand}"
                 IsEnabled="{Binding CanCleanRecycleBin}">
                 <StackPanel HorizontalAlignment="Stretch">
-                    <TextBlock HorizontalAlignment="Center" Text="{x:Static resx:Resource.RecycleBinEmpty}"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding RecycleBinActionLabel}"></TextBlock>
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="12"
