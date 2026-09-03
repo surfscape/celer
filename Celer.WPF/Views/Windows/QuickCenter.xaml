@@ -18,6 +18,7 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     IsWindowControlsVisible="False"
     ResizeMode="NoResize"
+    SizeToContent="Height"
     ShowInTaskbar="False"
     mc:Ignorable="d">
     <utils:BaseWindow.Resources>
@@ -80,13 +81,13 @@
         </StackPanel>
         <Border
             Grid.Row="1"
-            Padding="8"
+            Padding="4"
             Background="{DynamicResource LayerFillColorDefaultBrush}"
-            BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="0,1,0,0">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
-                    Padding="8"
+                    Padding="12"
                     Command="{Binding OpenSettingsCommand}"
                     Style="{DynamicResource TransparentButton}"
                     ToolTip="{x:Static resx:Resource.Menu_Settings}">
@@ -98,7 +99,7 @@
                 </Button>
                 <Button
                     Margin="8"
-                    Padding="8"
+                    Padding="12"
                     Command="{Binding CloseCelerCommand}"
                     Style="{DynamicResource TransparentButton}"
                     ToolTip="{x:Static resx:Resource.CloseCeler}">

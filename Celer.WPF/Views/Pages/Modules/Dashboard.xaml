@@ -364,7 +364,7 @@
                         </Grid>
                         <DockPanel Grid.Row="1">
                             <ListBox
-                                Margin="0,4,0,0"
+                                Margin="0,7,0,0"
                                 VerticalAlignment="Stretch"
                                 ItemTemplate="{StaticResource ItemTemplate}"
                                 ItemsSource="{Binding DiskData}"
@@ -392,7 +392,6 @@
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         <Setter Property="Margin" Value="14,-11,0,14" />
                                         <Setter Property="Padding" Value="0,10,0,0" />
-
                                     </Style>
                                 </ListBox.ItemContainerStyle>
                             </ListBox>

@@ -73,7 +73,7 @@
                             IsItemsHost="True" />
                         <Border
                             Grid.Column="1"
-                            Padding="0,0,4,4"
+                            Padding="0,0,0,0"
                             Background="{DynamicResource LayerFillColorDefaultBrush}"
                             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1,1,0,0"
