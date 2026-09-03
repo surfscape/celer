@@ -104,7 +104,7 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="FontFamily" Value="Cascadia Mono" />
                                             <Setter Property="TextWrapping" Value="Wrap" />
-                                            <Setter Property="Margin" Value="0,0,12,0"></Setter>
+                                            <Setter Property="Margin" Value="0,0,12,0" />
                                             <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding LogType}" Value="Success">
@@ -123,7 +123,10 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Grid Grid.Row="2" RowDefinitions="auto auto" Margin="0,0,12,0">
+                    <Grid
+                        Grid.Row="2"
+                        Margin="0,0,12,0"
+                        RowDefinitions="auto auto">
                         <TextBlock
                             Margin="0,0,0,8"
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
@@ -135,7 +138,7 @@
                             HorizontalAlignment="Right"
                             Command="{Binding CleanCommand}"
                             Content="Start Cleaning"
-                            IsEnabled="{Binding CanClean}"
+                            IsEnabled="{Binding CanCleanChecked}"
                             Style="{DynamicResource AccentButtonStyle}" />
                     </Grid>
                 </Grid>

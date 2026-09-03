@@ -29,6 +29,9 @@ namespace Celer.ViewModels
 		[ObservableProperty]
 		public partial bool CanClean { get; set; } = false;
 
+		[ObservableProperty]
+		public partial bool CanCleanChecked { get; set; } = false;
+
 		public class LogBook()
 		{
 			public DateTime LogDate { get; set; } = DateTime.Now;
@@ -53,8 +56,22 @@ namespace Celer.ViewModels
 				CanClean = m.Value;
 				LoadSignatures();
 			});
-		}
 
+		}
+		private void OnCleanItemChanged(CleanupItem item)
+		{
+			int checkedItems = Categories.Count(cat => cat.Items.Any(item => item.IsChecked.Equals(true)));
+
+			if (item.IsChecked || checkedItems >= 1)
+			{
+				CanCleanChecked = true;
+			}
+			else
+			{
+				CanCleanChecked = false;
+			}
+
+		}
 
 		/* TODO: Current implementation of log contains heavy performance issues and will be replaced with a better implementation.
             There's two issues, the log collection does not have a limit and thus depending on the tasks it will grow huge and start weighting on the UI thread to render all the log items.
@@ -71,15 +88,26 @@ namespace Celer.ViewModels
 				);
 			});
 		}
-
 		private void LoadSignatures()
 		{
+			foreach (var cleanItem in Categories)
+			{
+				foreach (var item in cleanItem.Items)
+					item.PropertyChanged -= (_, _) => OnCleanItemChanged(item);
+			}
 			Categories.Clear();
 			try
 			{
 				AddLog(LogType.Information, "Loading signatures...");
 				if (CleaningSignatureManager.GetSignatures() != string.Empty)
+				{
 					ParseJson(CleaningSignatureManager.GetSignatures());
+					foreach (var cleanItem in Categories)
+					{
+						foreach (var item in cleanItem.Items)
+							item.PropertyChanged += (_, _) => OnCleanItemChanged(item);
+					}
+				}
 				else
 					CanClean = false;
 
