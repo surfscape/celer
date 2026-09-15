@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,109 +118,212 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AmbientChecker_Description" xml:space="preserve">
-    <value>Execute uma pequena verificação para ver quais ferramentas de sistema estão disponíveis atualmente para o Celer.</value>
+    <value>Run a small check to see what system tools are currently available for Celer.</value>
   </data>
   <data name="AmbientChecker_DoneLabel" xml:space="preserve">
-    <value>Verificação completa!</value>
+    <value>Verification Done!</value>
   </data>
   <data name="AmbientChecker_StartLabel" xml:space="preserve">
-    <value>Iniciar Verificação</value>
+    <value>Start Verification</value>
   </data>
   <data name="Menu_AmbientChecker" xml:space="preserve">
-    <value>_Verificação de Ambiente</value>
+    <value>_Ambient Checker</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
   </data>
   <data name="AmbientChecker" xml:space="preserve">
-    <value>Verificação de Ambiente</value>
+    <value>Ambient Checker</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>Disponível</value>
+    <value>Available</value>
   </data>
   <data name="Installed" xml:space="preserve">
-    <value>Instalado</value>
+    <value>Installed</value>
   </data>
   <data name="NotFound" xml:space="preserve">
-    <value>Não encontrado</value>
+    <value>Not found</value>
   </data>
   <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
-    <value>Atualizar assinaturas automaticamente ao iniciar</value>
+    <value>Automatically update signatures on launch</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
-    <value>Eu li e aceito os {0} e a {1}.</value>
+    <value>I've read and accept the {0} and {1}.</value>
+    <comment>{0} - TermsOfUse key
+{1} - PrivacyPolicy key</comment>
   </data>
   <data name="Onboarding_LegalTitle" xml:space="preserve">
-    <value>Termos de Utilização</value>
+    <value>Terms of Use</value>
   </data>
   <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
-    <value>Celer é uma caixa de ferramentas para Windows 10/11 para lhe dar controle sobre o Windows, outra vez.</value>
+    <value>Celer is a toolbox for Windows 10/11 with the purpose of giving you control over Windows, once again.</value>
   </data>
   <data name="Onboarding_WelcomeTitle" xml:space="preserve">
-    <value>Bem-vindo(a) ao Celer!</value>
+    <value>Welcome to Celer!</value>
   </data>
   <data name="Onboarding_WindowTitle" xml:space="preserve">
-    <value>Configuração Inicial</value>
+    <value>Setup</value>
   </data>
   <data name="WaitMessage" xml:space="preserve">
-    <value>Em espera...</value>
+    <value>Waiting...</value>
   </data>
   <data name="TermsOfUse" xml:space="preserve">
-    <value>Termos de Utilização</value>
+    <value>Terms of Use</value>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
-    <value>Política de Privacidade</value>
+    <value>Privacy Policy</value>
   </data>
   <data name="Onboarding_FeaturesTitle" xml:space="preserve">
-    <value>Funcionalidades</value>
+    <value>Features</value>
+  </data>
+  <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
+    <value>(can be later changed in the settings)</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxTooltip" xml:space="preserve">
+    <value>Update signatures when Celer is launching up without the need of manually updating them from the Tools menu.</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
+    <value>Auto start with Windows</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
+    <value>Allow Celer to auto start with Windows. This enables you to use Celer Quick Center on the system tray.</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Iniciar</value>
+    <value>Start</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="GatewayTask_StartCeler" xml:space="preserve">
+    <value>Starting Celer</value>
+  </data>
+  <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
+    <value>Starting hardware services</value>
+  </data>
+  <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
+    <value>Checking for an internet connection</value>
+  </data>
+  <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
+    <value>Downloading cleaning signatures</value>
+  </data>
+  <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
+    <value>Signatures updated</value>
+  </data>
+  <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
+    <value>Couldn't retrieve signatures. Trying to get local signatures instead.</value>
+  </data>
+  <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
+    <value>Found local signatures</value>
+  </data>
+  <data name="GatewayTask_DisableCleaning" xml:space="preserve">
+    <value>No signatures found, cleaning has been disabled.</value>
+  </data>
+  <data name="GatewayTask_FailDxDiag" xml:space="preserve">
+    <value>Failed to run dxDiag</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MainWindow_GoBackTooltip" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MainWindow_MenuTooltip" xml:space="preserve">
+    <value>Open App Menu</value>
   </data>
   <data name="Menu_Settings" xml:space="preserve">
-    <value>_Definições</value>
+    <value>_Preferences</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View" xml:space="preserve">
-    <value>_Vista</value>
+    <value>_View</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Dashboard" xml:space="preserve">
+    <value>_Dashboard</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Cleaning" xml:space="preserve">
+    <value>_Cleaning</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Optimization" xml:space="preserve">
+    <value>_Optimization</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Maintenance" xml:space="preserve">
+    <value>_Maintenance</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Opsec" xml:space="preserve">
+    <value>_Privacy &amp; Security</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_Tools" xml:space="preserve">
-    <value>_Ferramentas</value>
+    <value>_Tools</value>
+    <comment>The underscore it required to support the AccessKey feature</comment>
+  </data>
+  <data name="Menu_View_Software" xml:space="preserve">
+    <value>_Software</value>
   </data>
   <data name="RecycleBinReady" xml:space="preserve">
-    <value>Esvaziar reciclagem</value>
+    <value>Empty recycle bin</value>
   </data>
   <data name="RecycleBinDone" xml:space="preserve">
-    <value>Limpo</value>
+    <value>Cleaned</value>
   </data>
   <data name="RecycleBinCleaning" xml:space="preserve">
-    <value>A limpar...</value>
+    <value>Cleaning...</value>
   </data>
   <data name="RecycleBinEmpty" xml:space="preserve">
-    <value>Reciclagem vazia</value>
+    <value>Recycle bin empty</value>
+  </data>
+  <data name="Battery_PluggedIn" xml:space="preserve">
+    <value>Plugged in</value>
+  </data>
+  <data name="Battery_Unplugged" xml:space="preserve">
+    <value>On battery</value>
   </data>
   <data name="QuickCenter_Actions" xml:space="preserve">
-    <value>Ações</value>
+    <value>Actions</value>
+  </data>
+  <data name="CloseCeler" xml:space="preserve">
+    <value>Close Celer</value>
   </data>
   <data name="Dashboard_Welcome" xml:space="preserve">
-    <value>Bem vindo ao Celer</value>
+    <value>Welcome to Celer</value>
   </data>
   <data name="Dashboard_Title" xml:space="preserve">
-    <value>Estado do Sistema</value>
+    <value>System Status</value>
   </data>
-  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Dashboard_PostTooltip" xml:space="preserve">
+    <value>How much time the system takes to post. A value over 70 seconds could mean a hardware issue/conflict.</value>
+  </data>
+  <data name="Dashboard_Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>Threads</value>
   </data>
   <data name="Dashboard_Memory" xml:space="preserve">
-    <value>Memória</value>
+    <value>Memory</value>
   </data>
   <data name="Dashboard_MemoryInUse" xml:space="preserve">
-    <value>Em utilização</value>
+    <value>In use</value>
   </data>
   <data name="Dashboard_MemoryAvailable" xml:space="preserve">
-    <value>Disponível</value>
+    <value>Available</value>
   </data>
   <data name="Dashboard_DrivesTitle" xml:space="preserve">
-    <value>Discos</value>
+    <value>Drives</value>
+  </data>
+  <data name="Dashboard_DrivesRefresh" xml:space="preserve">
+    <value>Refresh drives</value>
+  </data>
+  <data name="Modules_PowerManager" xml:space="preserve">
+    <value>Power Manager</value>
+  </data>
+  <data name="Modules_VideoManager" xml:space="preserve">
+    <value>Video Manager</value>
+  </data>
+  <data name="Modules_MemoryManager" xml:space="preserve">
+    <value>Memory Manager</value>
+  </data>
+  <data name="Dashboard_LoadingMessage" xml:space="preserve">
+    <value>Retrieving system information...</value>
   </data>
 </root>
