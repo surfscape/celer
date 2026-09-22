@@ -13,7 +13,7 @@
     <Grid>
         <StackPanel>
             <uc:CelerOption
-                Title="Language"
+                Title="Language (experimental)"
                 Description="Change the current language"
                 Icon="Languages">
                 <ComboBox
@@ -22,7 +22,6 @@
                     ItemsSource="{Binding Languages.Values}"
                     SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}" />
             </uc:CelerOption>
-            <TextBlock Text="{Binding CurrentLanguage}" />
             <uc:CelerOption
                 Title="Application theme"
                 Description="Change the current color scheme of the app, or use the system's theme"
