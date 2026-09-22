@@ -75,7 +75,6 @@ namespace Celer.Utilities
 				if (existing.WindowState == WindowState.Minimized)
 					existing.WindowState = WindowState.Normal;
 
-				existing.ShowDialog();
 				existing.Activate();
 				return;
 			}
