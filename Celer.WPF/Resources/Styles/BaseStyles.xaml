@@ -89,7 +89,7 @@
                                 <ContentPresenter
                                     x:Name="Content"
                                     MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=local:CompactTabControl}, Path=UserContentSize}"
-                                    Margin="16,16,16,0"
+                                    Margin="16"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Content="{TemplateBinding SelectedContent}"

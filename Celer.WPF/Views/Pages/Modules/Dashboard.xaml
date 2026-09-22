@@ -59,7 +59,6 @@
     </UserControl.Resources>
     <Grid VerticalAlignment="Stretch">
         <sg:SpacedGrid
-            Margin="0,0,0,16"
             RowSpacing="8"
             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=true}">
             <Grid.RowDefinitions>
