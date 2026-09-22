@@ -17,13 +17,13 @@
         <DockPanel Focusable="False" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}, ConverterParameter=True}">
             <ScrollViewer Margin="0,0,-16,0" VerticalScrollBarVisibility="Auto">
                 <ItemsControl
-                    Margin="-8,-8,8,8"
+                    Margin="-8,-8,8,0"
                     Focusable="False"
                     ItemsSource="{Binding Categories}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid
-                                Margin="8"
+                                Margin="8,8,8,0"
                                 Columns="2"
                                 Focusable="False" />
                         </ItemsPanelTemplate>
