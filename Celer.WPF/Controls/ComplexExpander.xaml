@@ -82,13 +82,13 @@
             <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderForeground}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderBrush}" />
             <Setter Property="BorderThickness" Value="{StaticResource ExpanderBorderThemeThickness}" />
-            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="Padding" Value="16" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="Border.CornerRadius" Value="6" />
             <Setter Property="IsExpanded" Value="False" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -142,7 +142,7 @@
                                     Background="{DynamicResource ExpanderContentBackground}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="1,0,1,1"
-                                    CornerRadius="0,0,4,4"
+                                    CornerRadius="0,0,6,6"
                                     Visibility="Collapsed">
                                     <ContentPresenter
                                         x:Name="ContentPresenter"
@@ -195,6 +195,7 @@
                                     <Condition Property="IsExpanded" Value="True" />
                                     <Condition Property="ExpandDirection" Value="Down" />
                                 </MultiTrigger.Conditions>
+                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="6,6,0,0" />
                                 <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
                                 <MultiTrigger.EnterActions>
                                     <BeginStoryboard>
@@ -237,9 +238,9 @@
                                     <Condition Property="IsExpanded" Value="True" />
                                     <Condition Property="ExpandDirection" Value="Up" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,0,4,4" />
+                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,0,6,6" />
                                 <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="1,1,1,0" />
-                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="4,4,0,0" />
+                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="6,6,0,0" />
                                 <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
                                 <MultiTrigger.EnterActions>
                                     <BeginStoryboard>
@@ -282,9 +283,9 @@
                                     <Condition Property="IsExpanded" Value="True" />
                                     <Condition Property="ExpandDirection" Value="Left" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,4,4,0" />
+                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,6,6,0" />
                                 <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="1,1,0,1" />
-                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="4,0,0,4" />
+                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="6,0,0,6" />
                                 <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
                                 <MultiTrigger.EnterActions>
                                     <BeginStoryboard>
@@ -327,9 +328,9 @@
                                     <Condition Property="IsExpanded" Value="True" />
                                     <Condition Property="ExpandDirection" Value="Right" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="4,0,0,4" />
+                                <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="6,0,0,6" />
                                 <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,1,1,1" />
-                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="0,4,4,0" />
+                                <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="0,6,6,0" />
                                 <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
                                 <MultiTrigger.EnterActions>
                                     <BeginStoryboard>
