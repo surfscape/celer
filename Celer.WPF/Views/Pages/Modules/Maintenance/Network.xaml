@@ -7,6 +7,8 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Pages.Modules.Maintenance"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sg="clr-namespace:SpacedGridControl;assembly=SpacedGridControl"
+    xmlns:uc="clr-namespace:Celer.Controls"
     xmlns:vm="clr-namespace:Celer.ViewModels"
     d:Background="white"
     d:DataContext="{d:DesignInstance Type=vm:MaintenanceVM.NetworkViewModel}"
@@ -23,63 +25,81 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Style="{StaticResource Heading2}">Network and Internet</TextBlock>
-            <UniformGrid Margin="0,12" Columns="3">
-                <StackPanel>
-                    <TextBlock
-                        FontSize="17"
-                        FontWeight="DemiBold"
-                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                        Text="Network Adapters" />
-                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding AdaptersFound}" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock
-                        FontSize="17"
-                        FontWeight="DemiBold"
-                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                        Text="Connection" />
-                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ConnectionStatus}" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock
-                        FontSize="17"
-                        FontWeight="DemiBold"
-                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                        Text="Internet Access" />
-                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding InternetConnectionStatus}" />
-                </StackPanel>
-            </UniformGrid>
-            <Button
-                Width="125"
-                Command="{Binding TestNetworkCommand}"
-                Content="Check" />
+            <sg:SpacedGrid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Padding="12"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Text="Network Adapters" />
+                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding AdaptersFound}" />
+                    </StackPanel>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    Padding="12"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Text="Connection" />
+                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ConnectionStatus}" />
+                    </StackPanel>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    Padding="12"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="17"
+                            FontWeight="DemiBold"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Text="Internet Access" />
+                        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding InternetConnectionStatus}" />
+                    </StackPanel>
+                </Border>
+            </sg:SpacedGrid>
         </StackPanel>
-        <Border
-            Grid.Row="1"
-            Margin="0,12,0,0"
-            Padding="12"
-            HorizontalAlignment="Left"
-            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="6">
-            <StackPanel>
-                <TextBlock Style="{StaticResource Heading2}">DNS Manager</TextBlock>
+        <StackPanel Grid.Row="1" Margin="0,16,0,0">
+            <TextBlock Style="{StaticResource Heading2}">Tweaks</TextBlock>
+            <uc:CelerOption
+                Title="DNS"
+                Description="Change the DNS system-wide"
+                Icon="CloudCog">
                 <StackPanel
                     Margin="0,6,0,12"
                     VerticalAlignment="Center"
                     Orientation="Horizontal">
                     <ComboBox
-                        Width="300"
+                        Width="225"
                         Height="30"
+                        MaxWidth="270"
                         ItemsSource="{Binding DnsServers}"
                         SelectedItem="{Binding SelectedDnsServer}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding Ipv4Primary}">
                                     <TextBlock FontWeight="Bold" Text="{Binding Name}" />
-                                    <TextBlock Text=" - " />
-                                    <TextBlock Text="{Binding IP}" />
                                     <TextBlock Text=" (" />
                                     <TextBlock Text="{Binding PingStatus}" />
                                     <TextBlock Text=" ms)" />
@@ -88,7 +108,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Button
-                        Margin="10,0,0,0"
+                        Margin="8,0,0,0"
                         Padding="8"
                         Command="{Binding UpdatePingCommand}"
                         ToolTip="Refresh Ping">
@@ -97,14 +117,23 @@
                             Height="14"
                             Kind="RefreshCw" />
                     </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
                     <Button
+                        Margin="8,0,0,0"
+                        Padding="8"
                         Command="{Binding SetDnsCommand}"
-                        Content="Apply DNS as system-wide"
-                        IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}" />
+                        IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}"
+                        Style="{DynamicResource AccentButtonStyle}"
+                        ToolTip="Apply">
+
+                        <iconPacks:PackIconLucide
+                            Width="14"
+                            Height="14"
+                            Kind="Check" />
+
+
+                    </Button>
                 </StackPanel>
-            </StackPanel>
-        </Border>
+            </uc:CelerOption>
+        </StackPanel>
     </Grid>
 </UserControl>

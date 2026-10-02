@@ -2,12 +2,13 @@
 
 namespace Celer.Models
 {
-    public partial class DnsServer(string name, string ip) : ObservableObject
-    {
-        public string Name { get; } = name;
-        public string IP { get; } = ip;
+	public partial class DnsServer(string name, string ipv4primary, string ipv4secondary) : ObservableObject
+	{
+		public string Name { get; } = name;
+		public string Ipv4Primary { get; } = ipv4primary;
+		public string Ipv4Secondary { get; } = ipv4secondary;
 
-        [ObservableProperty]
-        private string pingStatus = "N/A";
-    }
+		[ObservableProperty]
+		public partial string PingStatus { get; set; } = "N/A";
+	}
 }
