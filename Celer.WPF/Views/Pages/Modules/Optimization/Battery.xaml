@@ -11,7 +11,7 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:Celer.Views.Pages.Modules.Optimization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:Background="white"
+    d:Background="White"
     d:DataContext="{d:DesignInstance Type=Optimization:BatteryViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -44,67 +44,50 @@
                         SelectedItem="{Binding CurrentBattery}" />
                 </StackPanel>
                 <StackPanel>
-                    <StackPanel.Resources>
-                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                            <Setter Property="Margin" Value="0,0,0,8" />
-                        </Style>
-                    </StackPanel.Resources>
-                    <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
-                        <iconPacks:PackIconLucide
-                            Width="42"
-                            Height="42"
-                            Margin="0,0,16,0"
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                            Kind="{Binding CurrentBattery.Stats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
-                        <TextBlock
-                            Margin="0"
-                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                            Style="{StaticResource TitleLargeTextBlockStyle}"
-                            Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
-                    </StackPanel>
-                    <Grid Margin="0,8">
-                        <Grid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="0,0,16,0" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding CurrentBattery.Stats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
+                    <Grid ColumnDefinitions="*,auto">
+                        <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                            <iconPacks:PackIconLucide
+                                Width="42"
+                                Height="42"
+                                Margin="0,0,16,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Kind="{Binding CurrentBattery.Stats.Percentage, Converter={StaticResource BatteryIconConverter}}" />
+                            <TextBlock
+                                Margin="0"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Style="{StaticResource TitleLargeTextBlockStyle}"
+                                Text="{Binding CurrentBattery.Stats.Percentage, StringFormat={}{0}%}" />
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="16,0,0,0"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Margin="0,0,0,4"
+                                HorizontalAlignment="Right"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding CurrentBattery.Stats.IsCharging, StringFormat={}{0}, Converter={StaticResource ChargingConverter}}" />
                             <TextBlock
                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                 Text="{Binding CurrentBattery.Stats.EstimatedRunTime, StringFormat='Remaining Time: {0:g}'}"
                                 Visibility="{Binding CurrentBattery.Stats.IsCharging, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
                         </StackPanel>
-
-                        <Grid Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid>
-                                <ProgressBar
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource SystemFillColorSuccessBrush}"
-                                    Maximum="100"
-                                    Minimum="0"
-                                    Value="{Binding CurrentBattery.Stats.Health}" />
-                                <ProgressBar
-                                    Margin="0,0,8,0"
-                                    Panel.ZIndex="1"
-                                    Background="Transparent"
-                                    Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
-                                    Maximum="100"
-                                    Minimum="0"
-                                    Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
-                            </Grid>
-                        </Grid>
+                    </Grid>
+                    <Grid Margin="0,8,0,16">
+                        <ProgressBar
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource SystemFillColorSuccessBrush}"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="{Binding CurrentBattery.Stats.Health}" />
+                        <ProgressBar
+                            Panel.ZIndex="1"
+                            Background="Transparent"
+                            Foreground="{DynamicResource SmokeFillColorDefaultBrush}"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="{Binding CurrentBattery.Stats.RemainingChargeCapacityPercentage}" />
                     </Grid>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <StackPanel Margin="0,0,24,0" Orientation="Horizontal">
@@ -173,16 +156,15 @@
             </StackPanel>
             <ScrollViewer
                 Grid.Row="1"
-                Margin="0,0,-16,0"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="0,0,16,0">
+                <StackPanel Margin="0,0,6,16">
                     <controls:ComplexExpander
                         Title="Power Modes"
                         Margin="0,0,0,4"
                         Description="Optimize the system based on it's current workflow to balance performance and energy consumption"
                         Icon="Gauge">
-                        <StackPanel Margin="6,0,6,0">
+                        <StackPanel>
                             <Grid Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -194,7 +176,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="Legacy Power Plans" />
+                                        Text="Power Plans" />
                                     <TextBlock
                                         Margin="0,4,30,0"
                                         VerticalAlignment="Center"
@@ -207,7 +189,8 @@
                                     MinWidth="190"
                                     DisplayMemberPath="Name"
                                     ItemsSource="{Binding PowerPlans}"
-                                    SelectedValue="{Binding SelectedPowerPlan.Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedPowerPlan, Mode=TwoWay}"
+                                    SelectedValue="{Binding SelectedPowerPlan.Name}"
                                     SelectedValuePath="Name" />
                             </Grid>
                             <Border
@@ -251,12 +234,12 @@
                         Title="Advanced Settings"
                         Description="Change advanced energy parameters like fast startup, hibernation, and more"
                         Icon="Wrench">
-                        <StackPanel Margin="6,0,6,0">
-                            <StackPanel Margin="0,0,0,12">
-                                <CheckBox VerticalContentAlignment="Center" IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
+                        <StackPanel>
+                            <StackPanel>
+                                <CheckBox IsChecked="{Binding IsFastBootEnabled, Mode=TwoWay}">
                                     <CheckBox.Content>
                                         <StackPanel Margin="8,0,0,0">
-                                            <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Fast Startup</TextBlock>
+                                            <TextBlock Margin="0,0,0,2" Foreground="{DynamicResource TextFillColorPrimaryBrush}">Enable Fast Startup</TextBlock>
                                             <TextBlock
                                                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                 Style="{StaticResource BodyTextBlockStyle}"
@@ -267,7 +250,7 @@
                                     </CheckBox.Content>
                                 </CheckBox>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8">
+                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
                                 <CheckBox IsChecked="{Binding IsHibernationEnabled, Mode=TwoWay}">
                                     <CheckBox.Content>
                                         <StackPanel Margin="8,0,0,0">
