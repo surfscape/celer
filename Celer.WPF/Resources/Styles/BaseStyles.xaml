@@ -4,8 +4,40 @@
     xmlns:controls="clr-namespace:Celer.Controls"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:Celer.Utilities"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    xmlns:local="clr-namespace:Celer.Utilities">
+    <Style x:Key="DefaultControlFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="0"
+                        RadiusX="4"
+                        RadiusY="4"
+                        SnapsToDevicePixels="True"
+                        Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
+                        StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DefaultCollectionFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        RadiusX="4"
+                        RadiusY="4"
+                        SnapsToDevicePixels="True"
+                        Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
+                        StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" BasedOn="{DynamicResource DefaultControlFocusVisualStyle}" />
+
     <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Focusable" Value="False" />
     </Style>
@@ -108,7 +140,8 @@
                     <Setter Property="Header" Value="{Binding}" />
                     <Setter Property="Padding" Value="0" />
                     <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusMenu}" />
+                    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+                    <Setter Property="Focusable" Value="True" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
