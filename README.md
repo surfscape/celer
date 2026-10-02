@@ -64,7 +64,7 @@ The setup is hosted on GitHub and can be downloaded either through [GitHub Relea
 
 Beta 3 is currently in development and we keep track of it's development through [GitHub Projects](https://github.com/orgs/surfscape/projects/17/views/1).
 
-For long term view of the project, we have a [public GitHub Project]() that tracks every planned feature and it's level of urgency, where the highest urgency level means that specific feature will be planned for the next release.
+For long term view of the project, we have a [public GitHub Project](https://github.com/orgs/surfscape/projects/18) that tracks every planned feature and it's level of urgency, where the highest urgency level means that specific feature will be planned for the next release.
 
 ## Building
 
