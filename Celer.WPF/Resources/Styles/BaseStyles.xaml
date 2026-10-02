@@ -111,10 +111,11 @@
                             BorderThickness="1,1,0,0"
                             CornerRadius="8,0,0,0">
                             <ScrollViewer
+                                x:Name="PART_OuterScrollViewer"
                                 local:ScrollUtilities.SmoothScroll="True"
                                 Focusable="False"
                                 HorizontalScrollBarVisibility="Disabled"
-                                VerticalScrollBarVisibility="{Binding SelectedContent.VerticalScrollMode, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalScrollBarVisibility="{Binding SelectedContent.VerticalScrollMode, RelativeSource={RelativeSource TemplatedParent}, FallbackValue=Auto}"
                                 VirtualizingPanel.IsVirtualizing="True"
                                 VirtualizingPanel.ScrollUnit="Pixel"
                                 VirtualizingPanel.VirtualizationMode="Recycling">
