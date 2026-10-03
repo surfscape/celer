@@ -29,16 +29,13 @@ namespace Celer.ViewModels
 		public partial int SelectedTabIndex { get; set; } = 0;
 
 		[ObservableProperty]
-		public partial bool TabControlCompactMode { get; set; }
-
-		[ObservableProperty]
-		public partial bool IsCompact { get; set; } = false;
-
-		[ObservableProperty]
 		public partial bool CanGoBack { get; set; }
 
 		[ObservableProperty]
 		public partial bool CanTriggerUpdate { get; set; } = MainConfiguration.Default.EnableSurfScapeGateway;
+
+		[ObservableProperty]
+		public partial bool IsCompact { get; set; } = MainConfiguration.Default.SaveSidebarCompactMode && MainConfiguration.Default.SidebarCompactMode;
 
 		[ObservableProperty]
 		public partial ObservableCollection<TabModule> TabsModule { get; set; }
@@ -54,9 +51,7 @@ namespace Celer.ViewModels
 			_navigationService = navigationService;
 			_navigationService.NavigateTo = NavigateTo;
 			_serviceProvider = serviceProvider;
-			_navigationService.CompactModeChanged += OnCompactModeChanged;
 			_navigationService.NavigationChanged += OnNavigationChanged;
-			TabControlCompactMode = _navigationService.CompactMode;
 			WeakReferenceMessenger.Default.Register<SurfScapeGatewayChangedMessage>(this, (r, m) =>
 			{
 				CanTriggerUpdate = m.Value;
@@ -98,10 +93,6 @@ namespace Celer.ViewModels
 			});
 		}
 
-		private void OnCompactModeChanged(object? sender, bool isCompact)
-		{
-			TabControlCompactMode = isCompact;
-		}
 
 		private async Task NavigateTo(NavigationTabKey tabKey, string? subview)
 		{
@@ -135,13 +126,17 @@ namespace Celer.ViewModels
 		[RelayCommand]
 		private void ToggleCompactMode()
 		{
-			_navigationService.CompactMode = !_navigationService.CompactMode;
-			IsCompact = _navigationService.CompactMode;
+			IsCompact = !IsCompact;
+			if (MainConfiguration.Default.SaveSidebarCompactMode)
+			{
+				MainConfiguration.Default.SidebarCompactMode = IsCompact;
+				MainConfiguration.Default.Save();
+			}
 		}
 
 
 		[RelayCommand]
-		private void GoBack()
+		public void GoBack()
 		{
 			_navigationService.BackToParent();
 		}
