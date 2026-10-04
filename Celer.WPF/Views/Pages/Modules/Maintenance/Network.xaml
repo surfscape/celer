@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Style="{StaticResource Heading2}">Network and Internet</TextBlock>
-            <sg:SpacedGrid ColumnSpacing="8">
+            <sg:SpacedGrid ColumnSpacing="8" Margin="0,4,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -124,13 +124,10 @@
                         IsEnabled="{Binding SelectedDnsServer, Converter={StaticResource NullToBoolConverter}}"
                         Style="{DynamicResource AccentButtonStyle}"
                         ToolTip="Apply">
-
                         <iconPacks:PackIconLucide
                             Width="14"
                             Height="14"
                             Kind="Check" />
-
-
                     </Button>
                 </StackPanel>
             </uc:CelerOption>
