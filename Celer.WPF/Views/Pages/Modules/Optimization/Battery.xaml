@@ -193,41 +193,6 @@
                                     SelectedValue="{Binding SelectedPowerPlan.Name}"
                                     SelectedValuePath="Name" />
                             </Grid>
-                            <Border
-                                Margin="0,12"
-                                BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
-                                BorderThickness="0,1,0,0"
-                                Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
-                            <Grid Visibility="{Binding IsLegacyPowerPlansEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                        Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="New Power Modes" />
-                                    <TextBlock
-                                        Margin="0,4,30,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="Switch to the different power modes" />
-                                </StackPanel>
-                                <ComboBox
-                                    Grid.Column="1"
-                                    MinWidth="190"
-                                    DisplayMemberPath="Name" />
-                                <Button
-                                    Grid.Column="2"
-                                    Margin="8,0,8,0"
-                                    Command="{Binding ApplyPowerPlanCommand}"
-                                    Content="Apply"
-                                    Style="{DynamicResource AccentButtonStyle}" />
-                            </Grid>
                         </StackPanel>
                     </controls:ComplexExpander>
                     <controls:ComplexExpander
