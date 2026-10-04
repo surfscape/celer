@@ -18,8 +18,8 @@
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     xmlns:viewmodelsOpsec="clr-namespace:Celer.ViewModels.OpsecVM"
     Title="Celer"
-    Height="636"
     Width="980"
+    Height="636"
     MinWidth="980"
     MinHeight="636"
     d:Background="white"
@@ -55,7 +55,7 @@
                 Padding="14,12"
                 Command="{Binding ToggleCompactModeCommand}"
                 Style="{DynamicResource TransparentButton}"
-                ToolTip="{Binding TabControlCompactMode, Converter={StaticResource MenuStateToolTipConverter}}"
+                ToolTip="{Binding IsCompact, Converter={StaticResource MenuStateToolTipConverter}}"
                 WindowChrome.IsHitTestVisibleInChrome="True">
                 <iconPacks:PackIconLucide
                     Width="12"
@@ -195,7 +195,7 @@
         <Border>
             <Grid>
                 <local:CompactTabControl
-                    CompactMode="{Binding TabControlCompactMode, Mode=TwoWay}"
+                    CompactMode="{Binding IsCompact, Mode=TwoWay}"
                     ItemsSource="{Binding TabsModule}"
                     SelectedIndex="{Binding SelectedTabIndex}"
                     Style="{StaticResource CelerStripTabLeft}">
