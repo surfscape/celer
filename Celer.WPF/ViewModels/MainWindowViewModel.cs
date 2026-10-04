@@ -162,6 +162,12 @@ namespace Celer.ViewModels
 			HyperlinkExtensions.OpenLink(url);
 		}
 
+		[RelayCommand]
+		private static void CloseApp()
+		{
+			Application.Current.Shutdown();
+		}
+
 		public partial class QCMenuViewModel(QuickCenterViewModel quickCenterViewModel) : ObservableObject
 		{
 			[RelayCommand]
