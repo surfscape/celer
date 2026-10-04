@@ -4,6 +4,7 @@ using Celer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using static Celer.ViewModels.MainWindowViewModel;
 
@@ -33,6 +34,14 @@ public partial class MainWindow : BaseWindow
 		});
 		Activated += (_, _) => OnActivated();
 		Deactivated += (_, _) => OnDeactivated();
+		MouseUp += (s, e) => OnMouseUp(s, e);
+
+	}
+
+	private void OnMouseUp(object sender, MouseButtonEventArgs e)
+	{
+		if (e.ChangedButton == MouseButton.XButton1)
+			_viewModel.GoBack();
 	}
 
 	// This activates what is known as EcoQoS which lowers the process priority to reduce resources and power consumption.
@@ -79,7 +88,6 @@ public partial class MainWindow : BaseWindow
 			ProcessPowerManager.Disable();
 		}
 	}
-
 
 	protected override void OnClosing(CancelEventArgs e)
 	{
