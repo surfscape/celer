@@ -8,6 +8,7 @@ namespace Celer.Services
 	/// </summary>
 	public class NavigationService
 	{
+		public const string RootView = "Main";
 		/// <summary>
 		/// Callbacks used to switch the active subview of a tab. Only for tabs that host subviews
 		/// (see <see cref="ViewModels.BaseNavigationViewModel"/>) register here.
@@ -22,114 +23,67 @@ namespace Celer.Services
 
 		private readonly Dictionary<NavigationTabKey, Stack<string?>> _tabStacks = [];
 
-		private NavigationTabKey? _activeTab;
-		private string? _activeInnerView;
-		private bool _hasActivated;
+		private NavigationTabKey? _currentTab;
+		private string? _activeSubview;
+		public NavigationTabKey? CurrentTab => _currentTab;
 
 		/// <summary>
 		/// Registers a tab's viewmodel so it can take part in the navigation lifecycle.
 		/// </summary>
-		public void RegisterTab(NavigationTabKey tabKey, object viewModel)
+		public void RegisterTab(NavigationTabKey key, object viewModel, Func<string?, Task>? handler = null)
 		{
-			_tabViewModels[tabKey] = viewModel;
-
-			if (!_tabStacks.ContainsKey(tabKey))
-			{
-				var stack = new Stack<string?>();
-				stack.Push(null);
-				_tabStacks[tabKey] = stack;
-			}
+			_tabViewModels[key] = viewModel;
+			if (!_tabStacks.ContainsKey(key))
+				_tabStacks[key] = new Stack<string?>([null]);
+			if (handler is not null)
+				_subviewHosts[key] = handler;
 		}
 
-		/// <summary>
-		/// Registers the callback used to switch subviews within a tab. Only tabs that actually
-		/// have subviews need this; tab level lifecycle is handled by <see cref="RegisterTab"/>.
-		/// </summary>
-		public void RegisterSubviewHost(NavigationTabKey tabKey, Func<string?, Task> handler)
-		{
-			_subviewHosts[tabKey] = handler;
-			if (!_tabStacks.ContainsKey(tabKey))
-				_tabStacks[tabKey] = new Stack<string?>();
-			_tabStacks[tabKey].Clear();
-			_tabStacks[tabKey].Push(null);
-		}
+		public string? CurrentSubview => _currentTab == null ? null : PeekOrNull(_currentTab.Value);
 
-		public Func<NavigationTabKey, string?, Task>? NavigateTo { get; set; }
-
-		public NavigationTabKey? CurrentTab { get; private set; }
-
-		public string? CurrentInnerView
-		{
-			get
-			{
-				if (CurrentTab == null)
-					return null;
-
-				var stack = _tabStacks.TryGetValue(CurrentTab.Value, out var s) ? s : null;
-				return stack != null && stack.Count > 0 ? stack.Peek() : null;
-			}
-		}
-
-		public event Action<NavigationTabKey?, string?>? NavigationChanged;
+		public event Action<NavigationTabKey?>? NavigationChanged;
 
 		public bool CanGoBack
 		{
 			get
 			{
-				if (CurrentTab == null)
-					return false;
-
-				if (!_tabStacks.TryGetValue(CurrentTab.Value, out var stack))
-					return false;
-
-				var inner = stack.Count > 0 ? stack.Peek() : null;
-				return !string.IsNullOrEmpty(inner) && !string.Equals(inner, "Main", StringComparison.Ordinal);
+				var subview = _currentTab == null ? null : PeekOrNull(_currentTab.Value);
+				return !string.IsNullOrEmpty(subview) && !string.Equals(subview, RootView, StringComparison.Ordinal);
 			}
 		}
 
-		public Task Navigate(NavigationTabKey tabKey, string? innerViewName = null)
+		public async Task Navigate(NavigationTabKey tabKey, string? subviewName = null)
 		{
-			if (NavigateTo != null)
-				return NavigateTo(tabKey, innerViewName);
+			string? targetSubview = string.IsNullOrEmpty(subviewName) || subviewName == RootView ? null : subviewName;
 
-			return NavigateInternal(tabKey, innerViewName);
-		}
-
-		public async Task NavigateInternal(NavigationTabKey tabKey, string? innerViewName = null)
-		{
-			string? targetInner =
-				string.IsNullOrEmpty(innerViewName) || innerViewName == "Main" ? null : innerViewName;
-
-			if (_hasActivated && _activeTab == tabKey && _activeInnerView == targetInner)
+			if (_currentTab == tabKey && _activeSubview == targetSubview)
 				return;
 
 			if (!_tabStacks.TryGetValue(tabKey, out var stack))
-				_tabStacks[tabKey] = stack = new Stack<string?>();
+				_tabStacks[tabKey] = stack = new Stack<string?>([null]);
 
-			if (targetInner is null)
+			if (targetSubview is null)
 			{
 				stack.Clear();
 				stack.Push(null);
 			}
-			else if (stack.Count == 0 || stack.Peek() != targetInner)
+			else if (stack.Count == 0 || stack.Peek() != targetSubview)
 			{
-				stack.Push(targetInner);
+				stack.Push(targetSubview);
 			}
 
-			if (_activeTab is { } previousTab && previousTab != tabKey)
+			if (_currentTab is { } previousTab && previousTab != tabKey)
 				await NotifyNavigatedFrom(previousTab);
 
-			bool tabChanged = _activeTab != tabKey;
+			bool tabChanged = _currentTab != tabKey;
 
-			CurrentTab = tabKey;
-			_activeTab = tabKey;
-			_activeInnerView = stack.Count > 0 ? stack.Peek() : null;
-			_hasActivated = true;
+			_currentTab = tabKey;
+			_activeSubview = stack.Count > 0 ? stack.Peek() : null;
 
-			NavigationChanged?.Invoke(CurrentTab, _activeInnerView);
+			NavigationChanged?.Invoke(_currentTab);
 
 			if (_subviewHosts.TryGetValue(tabKey, out var host))
-				await host(_activeInnerView);
+				await host(_activeSubview);
 
 			if (tabChanged)
 				await NotifyNavigatedTo(tabKey);
@@ -147,38 +101,36 @@ namespace Celer.Services
 				await aware.OnNavigatedFrom();
 		}
 
-		public Task BackToParent()
+		public async Task BackToParent()
 		{
-			if (CurrentTab == null)
-				return Task.CompletedTask;
+			if (_currentTab == null)
+				return;
 
 			if (!CanGoBack)
-				return Task.CompletedTask;
+				return;
 
-			var stack = _tabStacks[CurrentTab.Value];
+			var stack = _tabStacks[_currentTab.Value];
 			if (stack.Count > 1)
 				stack.Pop();
 
-			var tab = CurrentTab.Value;
-			var currentInner = stack.Peek();
+			var tab = _currentTab.Value;
+			var currentSubview = PeekOrNull(tab);
 
-			_activeInnerView = currentInner;
+			_activeSubview = currentSubview;
 
-			NavigationChanged?.Invoke(tab, currentInner);
+			NavigationChanged?.Invoke(tab);
 
 			if (_subviewHosts.TryGetValue(tab, out var host))
 			{
-				return host(currentInner);
+				await host(currentSubview);
 			}
-
-			return Task.CompletedTask;
 		}
+		public string? GetSubviewForTab(NavigationTabKey tabKey) => PeekOrNull(tabKey);
 
-		public string? GetInnerViewForTab(NavigationTabKey tabKey)
+		private string? PeekOrNull(NavigationTabKey key)
 		{
-			if (!_tabStacks.TryGetValue(tabKey, out var stack) || stack.Count == 0)
+			if (!_tabStacks.TryGetValue(key, out var stack) || stack.Count == 0)
 				return null;
-
 			return stack.Peek();
 		}
 	}

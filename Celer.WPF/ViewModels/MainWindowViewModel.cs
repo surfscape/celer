@@ -49,7 +49,6 @@ namespace Celer.ViewModels
 		)
 		{
 			_navigationService = navigationService;
-			_navigationService.NavigateTo = NavigateTo;
 			_serviceProvider = serviceProvider;
 			_navigationService.NavigationChanged += OnNavigationChanged;
 			WeakReferenceMessenger.Default.Register<SurfScapeGatewayChangedMessage>(this, (r, m) =>
@@ -68,7 +67,9 @@ namespace Celer.ViewModels
 				];
 			foreach (var module in TabsModule)
 			{
-				if (module.Content is not null)
+				if (module.Content is BaseNavigationViewModel host)
+					_navigationService.RegisterTab(module.NavigationKey, module.Content, host.NavigateTo);
+				else if (module.Content is not null)
 					_navigationService.RegisterTab(module.NavigationKey, module.Content);
 			}
 
@@ -83,8 +84,8 @@ namespace Celer.ViewModels
 			{
 				try
 				{
-					var innerView = _navigationService.GetInnerViewForTab(tabKey);
-					await _navigationService.NavigateInternal(tabKey, innerView);
+					var subview = _navigationService.GetSubviewForTab(tabKey);
+					await _navigationService.Navigate(tabKey, subview);
 				}
 				catch (Exception ex)
 				{
@@ -93,16 +94,6 @@ namespace Celer.ViewModels
 			});
 		}
 
-
-		private async Task NavigateTo(NavigationTabKey tabKey, string? subview)
-		{
-			var tab = TabsModule.FirstOrDefault(tb => tb.NavigationKey == tabKey);
-			if (tab != null)
-			{
-				SelectedTabIndex = TabsModule.IndexOf(tab);
-				await _navigationService.NavigateInternal(tabKey, subview);
-			}
-		}
 		partial void OnSelectedTabIndexChanged(int value)
 		{
 			if (value < 0 || value >= TabsModule.Count)
@@ -115,12 +106,27 @@ namespace Celer.ViewModels
 			RequestNavigation(tabKey);
 		}
 
+		private void OnNavigationChanged(NavigationTabKey? tab)
+		{
+			CanGoBack = _navigationService.CanGoBack;
+			var index = TabsModule.IndexOf(TabsModule.FirstOrDefault(t => t.NavigationKey == tab));
+
+			if (index >= 0 && index != SelectedTabIndex)
+				SelectedTabIndex = index;
+		}
+
 		[RelayCommand]
 		private async Task NavigateToTab(string tab)
 		{
 			var found = TabsModule.FirstOrDefault(t => t.Title == tab);
 			if (found != null)
 				await _navigationService.Navigate(found.NavigationKey);
+		}
+
+		[RelayCommand]
+		public async Task GoBack()
+		{
+			await _navigationService.BackToParent();
 		}
 
 		[RelayCommand]
@@ -132,25 +138,6 @@ namespace Celer.ViewModels
 				MainConfiguration.Default.SidebarCompactMode = IsCompact;
 				MainConfiguration.Default.Save();
 			}
-		}
-
-
-		[RelayCommand]
-		public void GoBack()
-		{
-			_navigationService.BackToParent();
-		}
-
-		private void OnNavigationChanged(NavigationTabKey? tab, string? innerView)
-		{
-			CanGoBack = !string.IsNullOrEmpty(innerView) && !string.Equals(innerView, "Main", StringComparison.Ordinal);
-		}
-
-
-		[RelayCommand]
-		private static void CloseApp()
-		{
-			Application.Current.Shutdown();
 		}
 
 		[RelayCommand]

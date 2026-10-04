@@ -8,7 +8,7 @@ namespace Celer.ViewModels
 	{
 		private readonly Dictionary<string, SubviewDescriptor> _views;
 
-		protected override Dictionary<string, SubviewDescriptor> SubViews => _views;
+		protected override Dictionary<string, SubviewDescriptor> Subviews => _views;
 
 		public OptimizationViewModel(
 			NavigationService navigationService,

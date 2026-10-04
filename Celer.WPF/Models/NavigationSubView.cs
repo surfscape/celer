@@ -2,10 +2,10 @@
 
 namespace Celer.Models
 {
-    public class NavigationSubView(string name, string description, ObservableObject control)
-    {
-        public string Name { get; } = name;
-        public string Description { get; set; } = description;
-        public ObservableObject Control { get; } = control;
-    }
+	public class NavigationSubview(string name, string description, ObservableObject control)
+	{
+		public string Name { get; } = name;
+		public string Description { get; set; } = description;
+		public ObservableObject Control { get; } = control;
+	}
 }
