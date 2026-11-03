@@ -55,7 +55,8 @@ namespace Celer.ViewModels
 			{
 				CanTriggerUpdate = m.Value;
 			});
-			MenuViewModel = new QCMenuViewModel(_serviceProvider.GetRequiredService<QuickCenterViewModel>());
+			if(MainConfiguration.Default.EnableQuickCenter)
+				MenuViewModel = new QCMenuViewModel(_serviceProvider.GetRequiredService<QuickCenterViewModel>());
 			TabsModule =
 				[
 					new() { Title = "Dashboard", Icon = PackIconLucideKind.SquareActivity, Content = _serviceProvider.GetRequiredService<DashboardViewModel>(), VerticalScrollMode = ScrollBarVisibility.Disabled, NavigationKey = NavigationTabKey.Dashboard },
