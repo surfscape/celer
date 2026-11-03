@@ -15,7 +15,6 @@
 		<PublisherName>SurfScape</PublisherName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<SelfContained>false</SelfContained>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<ServerGarbageCollection>false</ServerGarbageCollection>
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<PublishReadyToRun>true</PublishReadyToRun>
@@ -49,6 +48,7 @@
 		<Resource Include="Resources\Assets\app.ico" />
 		<Resource Include="Resources\Assets\celer_256.png" />
 		<Resource Include="Resources\Assets\gateway_icon.png" />
+		<Resource Include="Resources\Signatures\cleaning.json" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="ByteSize" Version="2.1.2" />
