@@ -406,3 +406,4 @@ CelerSetup.exe
 
 # Gateway Local Signatures
 Resources/Signatures
+/Celer.WPF/Resources/Signatures/cleaning.json
