@@ -1,5 +1,6 @@
 ﻿using Celer.Properties;
 using Celer.Services;
+using Celer.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -16,6 +17,10 @@ namespace Celer.Views.Pages.Settings
 		partial void OnStartWithWindowsChanged(bool value)
 		{
 			MainConfiguration.Default.AutoStartup = value;
+			if (value)
+				UserLand.SetAutoStartup();
+			else
+				UserLand.RemoveAutoStartup();
 			MainConfiguration.Default.Save();
 		}
 
