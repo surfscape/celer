@@ -362,12 +362,7 @@ namespace Celer.ViewModels
 											await Task.Delay(300);
 										}
 									}
-									totalFreed += DeleteFilesWithPatterns(
-										resolvedPath,
-										action.Patterns!
-									);
-									if (processHelper == "explorer.exe")
-										Processes.StartExplorer();
+										totalFreed += DeleteFilesWithPatterns(resolvedPath,action.Patterns!);
 								}
 								else
 								{
@@ -383,6 +378,10 @@ namespace Celer.ViewModels
 									 LogType.Error,
 									 $"Exception while trying to delete the folder {resolvedPath} with content pattern: {ex.Message}"
 								 );
+							} finally
+							{
+								if (processHelper == "explorer.exe")
+									Processes.StartExplorer();
 							}
 							continue;
 						}
