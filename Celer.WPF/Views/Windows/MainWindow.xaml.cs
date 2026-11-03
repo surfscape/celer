@@ -41,7 +41,7 @@ public partial class MainWindow : BaseWindow
 	private void OnMouseUp(object sender, MouseButtonEventArgs e)
 	{
 		if (e.ChangedButton == MouseButton.XButton1)
-			_viewModel.GoBack();
+			Task.Run(() => _viewModel.GoBack());
 	}
 
 	// This activates what is known as EcoQoS which lowers the process priority to reduce resources and power consumption.
