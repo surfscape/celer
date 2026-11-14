@@ -60,7 +60,7 @@
 		<PackageReference Include="MahApps.Metro.IconPacks.Lucide" Version="6.2.1" />
 		<PackageReference Include="MahApps.Metro.IconPacks.RemixIcon" Version="6.2.1" />
 		<PackageReference Include="Metalama.Patterns.Wpf" Version="2026.1.31" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.14" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="11.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14" />
 		<PackageReference Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
 		<PackageReference Include="NetCore5.0.Microsoft.Expression.Drawing" Version="1.0.0" />
