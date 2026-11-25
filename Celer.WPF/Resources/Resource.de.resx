@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -276,5 +276,56 @@
   </data>
   <data name="Internal_Translators" xml:space="preserve">
     <value>Kevadesu</value>
+  </data>
+  <data name="PowerManager_BatteryHealthTooltip" xml:space="preserve">
+    <value>Akkuzustand</value>
+  </data>
+  <data name="PowerManager_PowerModeTitle" xml:space="preserve">
+    <value>Energiemodi</value>
+  </data>
+  <data name="PowerManager_PowerModeDescription" xml:space="preserve">
+    <value>Passt das System an den aktuellen Arbeitsablauf an, um Leistung und Energieverbrauch auszubalancieren</value>
+  </data>
+  <data name="PowerManager_PowerPlanTitle" xml:space="preserve">
+    <value>Energiepläne</value>
+  </data>
+  <data name="PowerManager_PowerPlanDescription" xml:space="preserve">
+    <value>Aktiver Leistungsplan von powercfg ändern</value>
+  </data>
+  <data name="PowerManager_AdvancedTitle" xml:space="preserve">
+    <value>Erweiterte Einstellungen</value>
+  </data>
+  <data name="PowerManager_AdvancedDescription" xml:space="preserve">
+    <value>Erweiterte Energieeinstellungen wie Schnellstart und Ruhezustand ändern</value>
+  </data>
+  <data name="PowerManager_FastStartupTitle" xml:space="preserve">
+    <value>Schnellstart aktivieren</value>
+  </data>
+  <data name="PowerManager_FastStartupDescription" xml:space="preserve">
+    <value>Überspringt einige Hardware-Überprüfungen, um den Startvorgang zu beschleunigen. Falls Hardware-Konflikte auftreten oder Sie ein Dual-Boot-System nutzen, wird empfohlen, diese Funktion auszuschalten.</value>
+  </data>
+  <data name="PowerManager_HibernationTitle" xml:space="preserve">
+    <value>Ruhezustand aktivieren</value>
+  </data>
+  <data name="PowerManager_HibernationDescription" xml:space="preserve">
+    <value>Speichert den aktuellen Zustand des Systems beim Herunterfahren auf dem Datenträger und setzt die Sitzung bei der erneuten Anmeldung wieder fort. Kann bei einem Dual-Boot-System mit Linux zu Problemen führen.</value>
+  </data>
+  <data name="PowerManager_BatteriesSelectorLabel" xml:space="preserve">
+    <value>Aktiver Akku</value>
+  </data>
+  <data name="PowerManager_BatteryChargedCapacityTooltip" xml:space="preserve">
+    <value>Aktuelle Ladekapazität</value>
+  </data>
+  <data name="PowerManager_BatteryFullChargedCapacityTooltip" xml:space="preserve">
+    <value>Maximale Ladekapazität</value>
+  </data>
+  <data name="PowerManager_BatteryFactoryCapacityTooltip" xml:space="preserve">
+    <value>Originale Kapazität</value>
+  </data>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="QuickCenter_Title" xml:space="preserve">
+    <value>Quick Center</value>
   </data>
 </root>
