@@ -232,4 +232,7 @@
   <data name="Dashboard_DrivesTitle" xml:space="preserve">
     <value>Laufwerke</value>
   </data>
+  <data name="Dashboard_DrivesRefresh" xml:space="preserve">
+    <value>Laufwerke aktualisieren</value>
+  </data>
 </root>
