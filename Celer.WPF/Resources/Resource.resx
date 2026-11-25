@@ -128,7 +128,7 @@
   </data>
   <data name="Menu_AmbientChecker" xml:space="preserve">
     <value>_Ambient Checker</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="AmbientChecker" xml:space="preserve">
     <value>Ambient Checker</value>
@@ -227,35 +227,35 @@
   </data>
   <data name="Menu_Settings" xml:space="preserve">
     <value>_Preferences</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View" xml:space="preserve">
     <value>_View</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Dashboard" xml:space="preserve">
     <value>_Dashboard</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Cleaning" xml:space="preserve">
     <value>_Cleaning</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Optimization" xml:space="preserve">
     <value>_Optimization</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Maintenance" xml:space="preserve">
     <value>_Maintenance</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Opsec" xml:space="preserve">
     <value>_Privacy &amp; Security</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_Tools" xml:space="preserve">
     <value>_Tools</value>
-    <comment>The underscore it required to support the AccessKey feature</comment>
+    <comment>The underscore is required to support the AccessKey feature</comment>
   </data>
   <data name="Menu_View_Software" xml:space="preserve">
     <value>_Software</value>
@@ -325,5 +325,29 @@
   </data>
   <data name="Dashboard_LoadingMessage" xml:space="preserve">
     <value>Retrieving system information...</value>
+  </data>
+  <data name="Cleaning_Title" xml:space="preserve">
+    <value>Cleaning</value>
+  </data>
+  <data name="Cleaning_Description" xml:space="preserve">
+    <value>Delete temporary files, third party app cache, and other unnecessary files.</value>
+  </data>
+  <data name="Cleaning_PrimaryButton" xml:space="preserve">
+    <value>Start Cleaning</value>
+  </data>
+  <data name="Dashboard_CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Dashboard_GPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="Dashboard_GPUDriver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Dashboard_GPUDirectX" xml:space="preserve">
+    <value>DirectX</value>
+  </data>
+  <data name="QuickCenter_Title" xml:space="preserve">
+    <value>Quick Center</value>
   </data>
 </root>

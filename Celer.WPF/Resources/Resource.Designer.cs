@@ -124,11 +124,47 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete temporary files, third party app cache, and other unnecessary files..
+        /// </summary>
+        public static string Cleaning_Description {
+            get {
+                return ResourceManager.GetString("Cleaning_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Cleaning.
+        /// </summary>
+        public static string Cleaning_PrimaryButton {
+            get {
+                return ResourceManager.GetString("Cleaning_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaning.
+        /// </summary>
+        public static string Cleaning_Title {
+            get {
+                return ResourceManager.GetString("Cleaning_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close Celer.
         /// </summary>
         public static string CloseCeler {
             get {
                 return ResourceManager.GetString("CloseCeler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CPU.
+        /// </summary>
+        public static string Dashboard_CPU {
+            get {
+                return ResourceManager.GetString("Dashboard_CPU", resourceCulture);
             }
         }
         
@@ -147,6 +183,33 @@ namespace Celer.Resources {
         public static string Dashboard_DrivesTitle {
             get {
                 return ResourceManager.GetString("Dashboard_DrivesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPU.
+        /// </summary>
+        public static string Dashboard_GPU {
+            get {
+                return ResourceManager.GetString("Dashboard_GPU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DirectX.
+        /// </summary>
+        public static string Dashboard_GPUDirectX {
+            get {
+                return ResourceManager.GetString("Dashboard_GPUDirectX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver.
+        /// </summary>
+        public static string Dashboard_GPUDriver {
+            get {
+                return ResourceManager.GetString("Dashboard_GPUDriver", resourceCulture);
             }
         }
         
@@ -588,6 +651,15 @@ namespace Celer.Resources {
         public static string QuickCenter_Actions {
             get {
                 return ResourceManager.GetString("QuickCenter_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Center.
+        /// </summary>
+        public static string QuickCenter_Title {
+            get {
+                return ResourceManager.GetString("QuickCenter_Title", resourceCulture);
             }
         }
         

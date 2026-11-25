@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Celer.Views.Pages.Modules"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:Celer.Utilities"
+    xmlns:resx="clr-namespace:Celer.Resources"
     xmlns:viewmodels="clr-namespace:Celer.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:CleanEngine}"
     mc:Ignorable="d">
@@ -20,8 +21,8 @@
         </Grid.RowDefinitions>
         <Border Padding="0,0,0,16">
             <StackPanel>
-                <TextBlock Style="{StaticResource Heading1}">Cleaning</TextBlock>
-                <TextBlock Style="{StaticResource Subheading}">Delete temporary files, third party app cache, and other unnecessary files.</TextBlock>
+                <TextBlock Style="{StaticResource Heading1}" Text="{x:Static resx:Resource.Cleaning_Title}"></TextBlock>
+                <TextBlock Style="{StaticResource Subheading}" Text="{x:Static resx:Resource.Cleaning_Description}"></TextBlock>
             </StackPanel>
         </Border>
         <Grid Grid.Row="1" VerticalAlignment="Stretch">
@@ -137,7 +138,7 @@
                             Grid.Row="1"
                             HorizontalAlignment="Right"
                             Command="{Binding CleanCommand}"
-                            Content="Start Cleaning"
+                            Content="{x:Static resx:Resource.Cleaning_PrimaryButton}"
                             IsEnabled="{Binding CanCleanChecked}"
                             Style="{DynamicResource AccentButtonStyle}" />
                     </Grid>
