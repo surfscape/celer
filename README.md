@@ -9,7 +9,7 @@
 <div align="center">
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPLv3.0-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/surfscape/celer/total) ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/surfscape/celer/latest/total)
-<a href="https://translate.codeberg.org/engage/celer/"><img src="https://translate.codeberg.org/widget/celer/celer-win/pt/svg-badge.svg" alt="Translation status"></a>
+<a href="https://translate.codeberg.org/engage/celer/"><img src="https://translate.codeberg.org/widget/celer/celer-win/en/svg-badge.svg" alt="Translation status"></a>
 
 </div>
 
