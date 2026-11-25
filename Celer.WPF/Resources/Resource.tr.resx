@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -58,4 +58,274 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmbientChecker_Description" xml:space="preserve">
+    <value>Celer için mevcut sistem araçlarını görmek için hızlı bir kontrol gerçekleştirin.</value>
+  </data>
+  <data name="AmbientChecker_DoneLabel" xml:space="preserve">
+    <value>Doğrulama tamamlandı!</value>
+  </data>
+  <data name="AmbientChecker_StartLabel" xml:space="preserve">
+    <value>Doğrulamayı başlat</value>
+  </data>
+  <data name="AmbientChecker" xml:space="preserve">
+    <value>Ortam denetleyicisi</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Mevcut</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Yüklü</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Bulunamadı</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
+    <value>Açılışta otomatik olarak imzaları güncelle</value>
+  </data>
+  <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
+    <value>{0} ve {1} okudum ve kabul ediyorum.</value>
+  </data>
+  <data name="Onboarding_LegalTitle" xml:space="preserve">
+    <value>Kullanım Şartları</value>
+  </data>
+  <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
+    <value>Celer, Windows10/11 için yeniden Windows üzerine kontrolü sağlamayı amaçlayan bir araç kutusudur.</value>
+  </data>
+  <data name="Onboarding_WelcomeTitle" xml:space="preserve">
+    <value>Celer'e hoşgeldiniz!</value>
+  </data>
+  <data name="Onboarding_WindowTitle" xml:space="preserve">
+    <value>Kurulum</value>
+  </data>
+  <data name="WaitMessage" xml:space="preserve">
+    <value>Bekleniyor…</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Kullanım Şartları</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Gizlilik Politikası</value>
+  </data>
+  <data name="Onboarding_FeaturesTitle" xml:space="preserve">
+    <value>Özellikler</value>
+  </data>
+  <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
+    <value>(sonradan ayarlardan değiştirilebilir)</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxTooltip" xml:space="preserve">
+    <value>Araçlar menüsünden el ile güncellemeye ihtiyaç duymadan Celer başlarken imzaları güncelle.</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
+    <value>Windows ile otomatik başla</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
+    <value>Celer'in Windows ile otomatik olarak başlamasına izin ver. Bu size sistem tepsisinde Celer Hızlı Merkez'i kullanmanıza izin verir.</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="GatewayTask_StartCeler" xml:space="preserve">
+    <value>Celer başlatılıyor</value>
+  </data>
+  <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
+    <value>Donanım hizmetleri başlatılıyor</value>
+  </data>
+  <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
+    <value>İnternet bağlantısı kontrol ediliyor</value>
+  </data>
+  <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
+    <value>Temizlik imzaları indiriliyor</value>
+  </data>
+  <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
+    <value>İmzalar güncellendi</value>
+  </data>
+  <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
+    <value>İmzalar alınamadı. Bunun yerine yerel imzalar alınmaya çalışılıyor.</value>
+  </data>
+  <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
+    <value>Yerel imzalar bulundu</value>
+  </data>
+  <data name="GatewayTask_DisableCleaning" xml:space="preserve">
+    <value>İmzalar bulunamadı, temizlik devre dışı bırakıldı.</value>
+  </data>
+  <data name="GatewayTask_FailDxDiag" xml:space="preserve">
+    <value>dxDiag çalıştırılamadı</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menü</value>
+  </data>
+  <data name="MainWindow_GoBackTooltip" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="MainWindow_MenuTooltip" xml:space="preserve">
+    <value>Uygulama menüsünü aç</value>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_Görünüm</value>
+  </data>
+  <data name="Menu_View_Dashboard" xml:space="preserve">
+    <value>_Kontrol paneli</value>
+  </data>
+  <data name="Menu_View_Cleaning" xml:space="preserve">
+    <value>_Temizlik</value>
+  </data>
+  <data name="Menu_View_Optimization" xml:space="preserve">
+    <value>_Optimizasyon</value>
+  </data>
+  <data name="Menu_View_Maintenance" xml:space="preserve">
+    <value>_Bakım</value>
+  </data>
+  <data name="Menu_View_Opsec" xml:space="preserve">
+    <value>_Gizlilik &amp; Güvenlik</value>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>_Araçlar</value>
+  </data>
+  <data name="Menu_View_Software" xml:space="preserve">
+    <value>_Yazılım</value>
+  </data>
+  <data name="RecycleBinReady" xml:space="preserve">
+    <value>Geri dönüşüm kutusunu boşalt</value>
+  </data>
+  <data name="RecycleBinDone" xml:space="preserve">
+    <value>Temizlendi</value>
+  </data>
+  <data name="RecycleBinCleaning" xml:space="preserve">
+    <value>Temizleniyor…</value>
+  </data>
+  <data name="RecycleBinEmpty" xml:space="preserve">
+    <value>Geri dönüşüm kutusu boş</value>
+  </data>
+  <data name="Battery_PluggedIn" xml:space="preserve">
+    <value>Takılı</value>
+  </data>
+  <data name="Battery_Unplugged" xml:space="preserve">
+    <value>Pilde</value>
+  </data>
+  <data name="QuickCenter_Actions" xml:space="preserve">
+    <value>Eylemler</value>
+  </data>
+  <data name="CloseCeler" xml:space="preserve">
+    <value>Celer'i kapat</value>
+  </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Celer'e hoşgeldiniz</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Sistem durumu</value>
+  </data>
+  <data name="Dashboard_PostTooltip" xml:space="preserve">
+    <value>Sistemin post yapması için gereken süre. 70 saniyenin üzerindeki bir değer bir donanım sorunu/çakışması anlamına gelebilir.</value>
+  </data>
+  <data name="Dashboard_Processes" xml:space="preserve">
+    <value>İşlemler</value>
+  </data>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>İzleçler</value>
+  </data>
+  <data name="Dashboard_Memory" xml:space="preserve">
+    <value>Bellek</value>
+  </data>
+  <data name="Dashboard_MemoryInUse" xml:space="preserve">
+    <value>Kullanımda</value>
+  </data>
+  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
+    <value>Mevcut</value>
+  </data>
+  <data name="Dashboard_DrivesTitle" xml:space="preserve">
+    <value>Sürücüler</value>
+  </data>
+  <data name="Dashboard_DrivesRefresh" xml:space="preserve">
+    <value>Sürücüleri yenile</value>
+  </data>
+  <data name="Modules_PowerManager" xml:space="preserve">
+    <value>Güç yöneticisi</value>
+  </data>
+  <data name="Modules_VideoManager" xml:space="preserve">
+    <value>Video yöneticisi</value>
+  </data>
+  <data name="Modules_MemoryManager" xml:space="preserve">
+    <value>Bellek yöneticisi</value>
+  </data>
+  <data name="Dashboard_LoadingMessage" xml:space="preserve">
+    <value>Sistem bilgisi alınıyor…</value>
+  </data>
+  <data name="Cleaning_Title" xml:space="preserve">
+    <value>Temizlik</value>
+  </data>
+  <data name="Cleaning_Description" xml:space="preserve">
+    <value>Geçici dosyalar, üçüncü taraf uygulama önbelleği, ve diğer gereksiz dosyaları sil.</value>
+  </data>
+  <data name="Cleaning_PrimaryButton" xml:space="preserve">
+    <value>Temizliğe başla</value>
+  </data>
+  <data name="Dashboard_CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Dashboard_GPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="Dashboard_GPUDriver" xml:space="preserve">
+    <value>Sürücü</value>
+  </data>
+  <data name="Dashboard_GPUDirectX" xml:space="preserve">
+    <value>DirectX</value>
+  </data>
+  <data name="QuickCenter_Title" xml:space="preserve">
+    <value>Hızlı Merkez</value>
+  </data>
+  <data name="Internal_Translators" xml:space="preserve">
+    <value>cott122</value>
+  </data>
+  <data name="PowerManager_BatteryHealthTooltip" xml:space="preserve">
+    <value>Pil sağlığı</value>
+  </data>
+  <data name="PowerManager_BatteryChargedCapacityTooltip" xml:space="preserve">
+    <value>Mevcut şarj edilmiş kapasite</value>
+  </data>
+  <data name="PowerManager_BatteryFullChargedCapacityTooltip" xml:space="preserve">
+    <value>Tam şarj edilmiş kapasite</value>
+  </data>
+  <data name="PowerManager_BatteryFactoryCapacityTooltip" xml:space="preserve">
+    <value>Orijinal kapasite</value>
+  </data>
+  <data name="PowerManager_PowerModeTitle" xml:space="preserve">
+    <value>Güç modları</value>
+  </data>
+  <data name="PowerManager_PowerModeDescription" xml:space="preserve">
+    <value>Performans ve enerji tüketimini dengelemek için sistemi mevcut iş akışına göre optimize et</value>
+  </data>
+  <data name="PowerManager_PowerPlanTitle" xml:space="preserve">
+    <value>Güç planları</value>
+  </data>
+  <data name="PowerManager_PowerPlanDescription" xml:space="preserve">
+    <value>powercfg tarafından sağlanan aktif güç planını değiştir</value>
+  </data>
+  <data name="PowerManager_AdvancedTitle" xml:space="preserve">
+    <value>Gelişmiş ayarlar</value>
+  </data>
+  <data name="PowerManager_AdvancedDescription" xml:space="preserve">
+    <value>Hızlı Başlatma ve hazırda bekletme gibi gelişmiş enerji parametrelerini değiştir</value>
+  </data>
+  <data name="PowerManager_FastStartupTitle" xml:space="preserve">
+    <value>Hızlı Başlatma'yı etkinleştir</value>
+  </data>
+  <data name="PowerManager_FastStartupDescription" xml:space="preserve">
+    <value>Başlangıç sürecini hızlandırmak için bazı donanım kontrollerini atlar. Eğer donanım çakışmalarınız varsa veya bir dual boot sisteminde iseniz, bu özelliği devre dışı bırakmanız önerilir.</value>
+  </data>
+  <data name="PowerManager_HibernationTitle" xml:space="preserve">
+    <value>Hazırda Bekletme'yi etkinleştir</value>
+  </data>
+  <data name="PowerManager_HibernationDescription" xml:space="preserve">
+    <value>Bilgisayar kapanırken mevcut sistem durumunu diske kaydeder ve yeniden oturum açılınca kaldığı yerden devam eder. Linux ile dual boot yaparken sorunlar çıkarabilir.</value>
+  </data>
+  <data name="PowerManager_BatteriesSelectorLabel" xml:space="preserve">
+    <value>Aktif pil</value>
+  </data>
+  <data name="Menu_AmbientChecker" xml:space="preserve">
+    <value>_Ortam denetleyicisi</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>_Seçenekler</value>
+  </data>
 </root>
