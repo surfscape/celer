@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -134,8 +134,8 @@
     <value>A iniciar serviços de hardware</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
+    <value>A verificar por uma ligação de internet</value>
   </data>
   <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
     <value>A fazer download das assinaturas de limpeza</value>
@@ -221,8 +221,8 @@
   <data name="Dashboard_Title" xml:space="preserve">
     <value>Estado do Sistema</value>
   </data>
-  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
+    <value>Quanto tempo demora para o sistema dar port. Um valor acima de 70 segundo pode significar algum problema/defeito de hardware.</value>
   </data>
   <data name="Dashboard_Processes" xml:space="preserve">
     <value>Processos</value>
@@ -283,5 +283,38 @@
   </data>
   <data name="QuickCenter_Title" xml:space="preserve">
     <value>Quick Center</value>
+  </data>
+  <data name="PowerManager_BatteryHealthTooltip" xml:space="preserve">
+    <value>Saúde da bateria</value>
+  </data>
+  <data name="PowerManager_BatteryChargedCapacityTooltip" xml:space="preserve">
+    <value>Capacidade atual de carga</value>
+  </data>
+  <data name="PowerManager_BatteryFullChargedCapacityTooltip" xml:space="preserve">
+    <value>Capacidade total de carga</value>
+  </data>
+  <data name="PowerManager_BatteryFactoryCapacityTooltip" xml:space="preserve">
+    <value>Capacidade original</value>
+  </data>
+  <data name="PowerManager_PowerModeTitle" xml:space="preserve">
+    <value>Modos de Energia</value>
+  </data>
+  <data name="PowerManager_PowerModeDescription" xml:space="preserve">
+    <value>Otimizar o sistema com base na carga de trabalho atual, de modo a equilibrar performance e consumo energético</value>
+  </data>
+  <data name="PowerManager_PowerPlanTitle" xml:space="preserve">
+    <value>Planos de Energia</value>
+  </data>
+  <data name="PowerManager_PowerPlanDescription" xml:space="preserve">
+    <value>Troque o plano de energia ativo fornecido pelo powercfg</value>
+  </data>
+  <data name="PowerManager_AdvancedTitle" xml:space="preserve">
+    <value>Definições Avançadas</value>
+  </data>
+  <data name="PowerManager_AdvancedDescription" xml:space="preserve">
+    <value>Troque parâmetros avançados de energia como inicialização rápida e hibernação</value>
+  </data>
+  <data name="PowerManager_FastStartupTitle" xml:space="preserve">
+    <value>Ativar Inicialização Rápida</value>
   </data>
 </root>
