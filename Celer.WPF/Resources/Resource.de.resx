@@ -86,7 +86,7 @@
     <value>Nutzungsbedingungen</value>
   </data>
   <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
-    <value>Celer ist ein Werkzeugkasten für Windows 10/11, um Ihnen wieder die Kontrolle über Windows zu geben.</value>
+    <value>Celer ist ein Werkzeugkasten für Windows 10/11, um Ihnen wieder die Kontrolle über Windows zurückzugeben.</value>
   </data>
   <data name="Onboarding_WelcomeTitle" xml:space="preserve">
     <value>Willkommen bei Celer!</value>
@@ -125,13 +125,13 @@
     <value>Celer wird gestartet</value>
   </data>
   <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
-    <value>Es werden Hardware-Dienste gestartet</value>
+    <value>Hardware-Dienste werden gestartet</value>
   </data>
   <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
-    <value>Es wird nach einer Internet-Verbindung geprüft</value>
+    <value>Internet-Verbindung wird geprüft</value>
   </data>
   <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
-    <value>Es werden Reinigungs-Signaturen heruntergeladen</value>
+    <value>Reinigungs-Signaturen werden heruntergeladen</value>
   </data>
   <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
     <value>Signaturen aktualisiert</value>
@@ -234,5 +234,44 @@
   </data>
   <data name="Dashboard_DrivesRefresh" xml:space="preserve">
     <value>Laufwerke aktualisieren</value>
+  </data>
+  <data name="Modules_VideoManager" xml:space="preserve">
+    <value>Videoverwaltung</value>
+  </data>
+  <data name="Dashboard_LoadingMessage" xml:space="preserve">
+    <value>Systeminformationen werden abgerufen…</value>
+  </data>
+  <data name="Cleaning_Title" xml:space="preserve">
+    <value>Reinigung</value>
+  </data>
+  <data name="Cleaning_Description" xml:space="preserve">
+    <value>Temporärdateien, Cache von Drittanbieter-Anwendungen und weitere unnötige Dateien löschen.</value>
+  </data>
+  <data name="Cleaning_PrimaryButton" xml:space="preserve">
+    <value>Reinigung starten</value>
+  </data>
+  <data name="Dashboard_CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Dashboard_GPU" xml:space="preserve">
+    <value>Grafikprozessor</value>
+  </data>
+  <data name="Dashboard_GPUDriver" xml:space="preserve">
+    <value>Treiber</value>
+  </data>
+  <data name="Dashboard_GPUDirectX" xml:space="preserve">
+    <value>DirectX</value>
+  </data>
+  <data name="AmbientChecker_Description" xml:space="preserve">
+    <value>Eine kleine Überprüfung durchführen, um zu sehen, welche Systemwerkzeuge Celer derzeit zur Verfügung stehen.</value>
+  </data>
+  <data name="AmbientChecker_DoneLabel" xml:space="preserve">
+    <value>Überprüfung abgeschlossen!</value>
+  </data>
+  <data name="Modules_PowerManager" xml:space="preserve">
+    <value>Energieverwaltung</value>
+  </data>
+  <data name="Modules_MemoryManager" xml:space="preserve">
+    <value>Speicherverwaltung</value>
   </data>
 </root>
