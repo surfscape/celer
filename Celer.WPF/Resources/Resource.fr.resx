@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -65,7 +65,7 @@
     <value>Exécuter une petite vérification pour voir quelles utilitaires de système sont actuellement disponibles pour Celer.</value>
   </data>
   <data name="AmbientChecker_DoneLabel" xml:space="preserve">
-    <value>Vérification réussie!</value>
+    <value>Vérification réussie !</value>
   </data>
   <data name="AmbientChecker_StartLabel" xml:space="preserve">
     <value>Démarrer la vérification</value>
@@ -282,5 +282,50 @@
   </data>
   <data name="QuickCenter_Title" xml:space="preserve">
     <value>Quick Center</value>
+  </data>
+  <data name="PowerManager_BatteryChargedCapacityTooltip" xml:space="preserve">
+    <value>Capacité actuelle de charge</value>
+  </data>
+  <data name="PowerManager_BatteryFullChargedCapacityTooltip" xml:space="preserve">
+    <value>Capacité totale de charge</value>
+  </data>
+  <data name="PowerManager_BatteryFactoryCapacityTooltip" xml:space="preserve">
+    <value>Capacité originale</value>
+  </data>
+  <data name="PowerManager_PowerModeTitle" xml:space="preserve">
+    <value>Modes d'énergie</value>
+  </data>
+  <data name="PowerManager_PowerModeDescription" xml:space="preserve">
+    <value>Optimiser le système selon le flux de travail actuel, pour équilibrer la performance et la consommation d'énergie</value>
+  </data>
+  <data name="PowerManager_PowerPlanTitle" xml:space="preserve">
+    <value>Plans d'énergie</value>
+  </data>
+  <data name="PowerManager_PowerPlanDescription" xml:space="preserve">
+    <value>Changer le plan d'énergie actif fourni par powercfg</value>
+  </data>
+  <data name="PowerManager_AdvancedTitle" xml:space="preserve">
+    <value>Paramètres avancés</value>
+  </data>
+  <data name="PowerManager_AdvancedDescription" xml:space="preserve">
+    <value>Changer des paramètres d'énergie avancés comme le démarrage rapide et l'hibernation</value>
+  </data>
+  <data name="PowerManager_FastStartupTitle" xml:space="preserve">
+    <value>Activer le démarrage rapide</value>
+  </data>
+  <data name="PowerManager_FastStartupDescription" xml:space="preserve">
+    <value>Saute quelques vérifications matérielles pour accélérer le démarrage. Si vous avez des conflits du matériel, ou si vous êtes sur un système de dual boot, nous vous recommandons de désactiver cette fonctionnalité.</value>
+  </data>
+  <data name="PowerManager_HibernationTitle" xml:space="preserve">
+    <value>Activer l'hibernation</value>
+  </data>
+  <data name="PowerManager_HibernationDescription" xml:space="preserve">
+    <value>Enregistre l'état actuel du système sur le disque quand l'ordinateur s'éteint, et le restaure dès que vous rallumez l'ordinateur. Cela peut causer des problèmes sur un système en dual boot avec Linux.</value>
+  </data>
+  <data name="PowerManager_BatteriesSelectorLabel" xml:space="preserve">
+    <value>Batterie active</value>
+  </data>
+  <data name="PowerManager_BatteryHealthTooltip" xml:space="preserve">
+    <value>Santé de la batterie</value>
   </data>
 </root>
