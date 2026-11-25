@@ -214,4 +214,22 @@
   <data name="Dashboard_Title" xml:space="preserve">
     <value>Systemstatus</value>
   </data>
+  <data name="Dashboard_PostTooltip" xml:space="preserve">
+    <value>Wie lange das System zum aufstarten braucht. Ein Wert von über 70 Sekunden könnte auf ein:en Hardwareproblem/-konflikt hindeuten.</value>
+  </data>
+  <data name="Dashboard_Processes" xml:space="preserve">
+    <value>Prozesse</value>
+  </data>
+  <data name="Dashboard_Memory" xml:space="preserve">
+    <value>Arbeitsspeicher</value>
+  </data>
+  <data name="Dashboard_MemoryInUse" xml:space="preserve">
+    <value>In Verwendung</value>
+  </data>
+  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
+    <value>Verfügbar</value>
+  </data>
+  <data name="Dashboard_DrivesTitle" xml:space="preserve">
+    <value>Laufwerke</value>
+  </data>
 </root>
