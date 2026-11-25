@@ -119,5 +119,13 @@
   </resheader>
   <data name="Internal_Translators" xml:space="preserve">
     <value>daudix</value>
+  <data name="AmbientChecker_Description" xml:space="preserve">
+    <value>Запустить небольшую проверку что-бы убедиться, какие системные инструменты доступны Celer.</value>
+  </data>
+  <data name="AmbientChecker_DoneLabel" xml:space="preserve">
+    <value>Верификация завершена!</value>
+  </data>
+  <data name="AmbientChecker_StartLabel" xml:space="preserve">
+    <value>Начать верификацию</value>
   </data>
 </root>
