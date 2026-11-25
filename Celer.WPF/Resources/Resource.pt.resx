@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AmbientChecker_Description" xml:space="preserve">
-    <value>Execute uma pequena verificação para ver quais ferramentas de sistema estão disponíveis atualmente para o Celer.</value>
+    <value>Executar uma verificação rápida para ver quais as ferramentas de sistema estão disponíveis para o Celer.</value>
   </data>
   <data name="AmbientChecker_DoneLabel" xml:space="preserve">
     <value>Verificação completa!</value>
@@ -315,5 +315,31 @@
   </data>
   <data name="Internal_Translators" xml:space="preserve">
     <value>ReduxFlakes</value>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="Cleaning_Title" xml:space="preserve">
+    <value>Limpeza</value>
+  </data>
+  <data name="Cleaning_Description" xml:space="preserve">
+    <value>Apagar ficheiros temporários, cache de aplicações de terceiros, e outros ficheiros desnecessários.</value>
+  </data>
+  <data name="Cleaning_PrimaryButton" xml:space="preserve">
+    <value>Começar Limpeza</value>
+  </data>
+  <data name="Dashboard_CPU" xml:space="preserve">
+    <value>Processador</value>
+  </data>
+  <data name="Dashboard_GPU" xml:space="preserve">
+    <value>Gráfica</value>
+  </data>
+  <data name="Dashboard_GPUDriver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Dashboard_GPUDirectX" xml:space="preserve">
+    <value>DirectX</value>
+  </data>
+  <data name="QuickCenter_Title" xml:space="preserve">
+    <value>Quick Center</value>
   </data>
 </root>
