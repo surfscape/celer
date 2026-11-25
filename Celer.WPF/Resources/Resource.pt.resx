@@ -284,5 +284,31 @@
     <value>Quick Center</value>
   <data name="Internal_Translators" xml:space="preserve">
     <value>ReduxFlakes</value>
+  <data name="Dashboard_Threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="Cleaning_Title" xml:space="preserve">
+    <value>Limpeza</value>
+  </data>
+  <data name="Cleaning_Description" xml:space="preserve">
+    <value>Apagar ficheiros temporários, cache de aplicações de terceiros, e outros ficheiros desnecessários.</value>
+  </data>
+  <data name="Cleaning_PrimaryButton" xml:space="preserve">
+    <value>Começar Limpeza</value>
+  </data>
+  <data name="Dashboard_CPU" xml:space="preserve">
+    <value>Processador</value>
+  </data>
+  <data name="Dashboard_GPU" xml:space="preserve">
+    <value>Gráfica</value>
+  </data>
+  <data name="Dashboard_GPUDriver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Dashboard_GPUDirectX" xml:space="preserve">
+    <value>DirectX</value>
+  </data>
+  <data name="QuickCenter_Title" xml:space="preserve">
+    <value>Quick Center</value>
   </data>
 </root>
