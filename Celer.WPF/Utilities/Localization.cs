@@ -6,10 +6,12 @@ namespace Celer.Utilities
     {
         public readonly static Dictionary<string, string> languages = new()
         {
-            { "en", "English (UK)" },
-            { "pt", "Português (Portugal)" }
-        };
-
+			{ "de", "Deutsch" },
+			{ "en", "English (UK)" },
+			{ "fr", "Français" },
+            { "pt", "Português (Portugal)" },
+			{ "ru", "Pусский" },
+		};
 
         public static string GetCurrentLangugageByValue(string key)
         {

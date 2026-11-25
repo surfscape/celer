@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -349,5 +349,54 @@
   </data>
   <data name="QuickCenter_Title" xml:space="preserve">
     <value>Quick Center</value>
+  </data>
+  <data name="Internal_Translators" xml:space="preserve">
+    <value>SurfScape</value>
+    <comment>Used to credit translator(s)</comment>
+  </data>
+  <data name="PowerManager_BatteryHealthTooltip" xml:space="preserve">
+    <value>Battery health</value>
+  </data>
+  <data name="PowerManager_BatteryChargedCapacityTooltip" xml:space="preserve">
+    <value>Current charged capacity</value>
+  </data>
+  <data name="PowerManager_BatteryFullChargedCapacityTooltip" xml:space="preserve">
+    <value>Full charged capacity</value>
+  </data>
+  <data name="PowerManager_BatteryFactoryCapacityTooltip" xml:space="preserve">
+    <value>Original capacity</value>
+  </data>
+  <data name="PowerManager_PowerModeTitle" xml:space="preserve">
+    <value>Power Modes</value>
+  </data>
+  <data name="PowerManager_PowerModeDescription" xml:space="preserve">
+    <value>Optimize the system based on it's current workflow to balance performance and energy consumption</value>
+  </data>
+  <data name="PowerManager_PowerPlanTitle" xml:space="preserve">
+    <value>Power Plans</value>
+  </data>
+  <data name="PowerManager_PowerPlanDescription" xml:space="preserve">
+    <value>Change the active power plan provided by powercfg</value>
+  </data>
+  <data name="PowerManager_AdvancedTitle" xml:space="preserve">
+    <value>Advanced Settings</value>
+  </data>
+  <data name="PowerManager_AdvancedDescription" xml:space="preserve">
+    <value>Change advanced energy parameters like fast startup and hibernation</value>
+  </data>
+  <data name="PowerManager_FastStartupTitle" xml:space="preserve">
+    <value>Enable Fast Startup</value>
+  </data>
+  <data name="PowerManager_FastStartupDescription" xml:space="preserve">
+    <value>Skips some hardware checks to speedup the startup process. If you have hardware conflits or you're on a dual boot system, it's recommended to disable this feature.</value>
+  </data>
+  <data name="PowerManager_HibernationTitle" xml:space="preserve">
+    <value>Enable Hibernation</value>
+  </data>
+  <data name="PowerManager_HibernationDescription" xml:space="preserve">
+    <value>Saves the current state of the system into disk when the PC shuts down and resumes when logged back in. It can cause issues when dual booting with Linux.</value>
+  </data>
+  <data name="PowerManager_BatteriesSelectorLabel" xml:space="preserve">
+    <value>Active Battery</value>
   </data>
 </root>

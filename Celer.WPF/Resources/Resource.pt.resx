@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -171,58 +171,6 @@
   <data name="Onboarding_FeaturesTitle" xml:space="preserve">
     <value>Funcionalidades</value>
   </data>
-  <data name="Start" xml:space="preserve">
-    <value>Iniciar</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
-    <value>A verificar por uma ligação com a internet</value>
-  </data>
-  <data name="Menu_Settings" xml:space="preserve">
-    <value>_Definições</value>
-  </data>
-  <data name="Menu_View" xml:space="preserve">
-    <value>_Vista</value>
-  </data>
-  <data name="Menu_Tools" xml:space="preserve">
-    <value>_Ferramentas</value>
-  </data>
-  <data name="RecycleBinReady" xml:space="preserve">
-    <value>Esvaziar reciclagem</value>
-  </data>
-  <data name="RecycleBinDone" xml:space="preserve">
-    <value>Limpo</value>
-  </data>
-  <data name="RecycleBinCleaning" xml:space="preserve">
-    <value>A limpar…</value>
-  </data>
-  <data name="RecycleBinEmpty" xml:space="preserve">
-    <value>Reciclagem vazia</value>
-  </data>
-  <data name="QuickCenter_Actions" xml:space="preserve">
-    <value>Ações</value>
-  </data>
-  <data name="Dashboard_Welcome" xml:space="preserve">
-    <value>Bem vindo ao Celer</value>
-  </data>
-  <data name="Dashboard_Title" xml:space="preserve">
-    <value>Estado do Sistema</value>
-  </data>
-  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
-    <value>Quanto tempo o sistema demora para dar post. Um valor acima de 70 segundo pode significar algum problema ou conflito de hardware.</value>
-  </data>
-  <data name="Dashboard_Memory" xml:space="preserve">
-    <value>Memória</value>
-  </data>
-  <data name="Dashboard_MemoryInUse" xml:space="preserve">
-    <value>Em utilização</value>
-  </data>
-  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
-    <value>Disponível</value>
-  </data>
-  <data name="Dashboard_DrivesTitle" xml:space="preserve">
-    <value>Discos</value>
-  </data>
   <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
     <value>(pode ser depois alterado nas definições)</value>
   </data>
@@ -235,11 +183,18 @@
   <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
     <value>Permite ao Celer abrir automaticamente quando o Windows inicia. Isto permite que possa utilizar o Celer Quick Center na barra de tarefas.</value>
   </data>
+  <data name="Start" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
   <data name="GatewayTask_StartCeler" xml:space="preserve">
     <value>A iniciar o Celer</value>
   </data>
   <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
     <value>A iniciar serviços de hardware</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GatewayTask_CheckInternetConnection" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
     <value>A fazer download das assinaturas de limpeza</value>
@@ -268,6 +223,12 @@
   <data name="MainWindow_MenuTooltip" xml:space="preserve">
     <value>Abrir o menu da aplicação</value>
   </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>_Definições</value>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_Vista</value>
+  </data>
   <data name="Menu_View_Dashboard" xml:space="preserve">
     <value>_Painel de Controle</value>
   </data>
@@ -283,8 +244,23 @@
   <data name="Menu_View_Opsec" xml:space="preserve">
     <value>_Privacidade &amp; Segurança</value>
   </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>_Ferramentas</value>
+  </data>
   <data name="Menu_View_Software" xml:space="preserve">
     <value>_Aplicações</value>
+  </data>
+  <data name="RecycleBinReady" xml:space="preserve">
+    <value>Esvaziar reciclagem</value>
+  </data>
+  <data name="RecycleBinDone" xml:space="preserve">
+    <value>Limpo</value>
+  </data>
+  <data name="RecycleBinCleaning" xml:space="preserve">
+    <value>A limpar…</value>
+  </data>
+  <data name="RecycleBinEmpty" xml:space="preserve">
+    <value>Reciclagem vazia</value>
   </data>
   <data name="Battery_PluggedIn" xml:space="preserve">
     <value>Ligado à corrente</value>
@@ -292,11 +268,35 @@
   <data name="Battery_Unplugged" xml:space="preserve">
     <value>Na bateria</value>
   </data>
+  <data name="QuickCenter_Actions" xml:space="preserve">
+    <value>Ações</value>
+  </data>
   <data name="CloseCeler" xml:space="preserve">
     <value>Fechar Celer</value>
   </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Bem vindo ao Celer</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Estado do Sistema</value>
+  </data>
+  <data name="Dashboard_PostTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="Dashboard_Processes" xml:space="preserve">
     <value>Processos</value>
+  </data>
+  <data name="Dashboard_Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="Dashboard_MemoryInUse" xml:space="preserve">
+    <value>Em utilização</value>
+  </data>
+  <data name="Dashboard_MemoryAvailable" xml:space="preserve">
+    <value>Disponível</value>
+  </data>
+  <data name="Dashboard_DrivesTitle" xml:space="preserve">
+    <value>Discos</value>
   </data>
   <data name="Dashboard_DrivesRefresh" xml:space="preserve">
     <value>Atualizar discos</value>
@@ -312,5 +312,8 @@
   </data>
   <data name="Dashboard_LoadingMessage" xml:space="preserve">
     <value>A obter informações do sistema…</value>
+  </data>
+  <data name="Internal_Translators" xml:space="preserve">
+    <value>ReduxFlakes</value>
   </data>
 </root>

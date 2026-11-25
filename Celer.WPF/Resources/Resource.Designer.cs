@@ -214,7 +214,7 @@ namespace Celer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Retrieving system information....
+        ///   Looks up a localized string similar to Retrieving system information….
         /// </summary>
         public static string Dashboard_LoadingMessage {
             get {
@@ -381,6 +381,15 @@ namespace Celer.Resources {
         public static string Installed {
             get {
                 return ResourceManager.GetString("Installed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SurfScape.
+        /// </summary>
+        public static string Internal_Translators {
+            get {
+                return ResourceManager.GetString("Internal_Translators", resourceCulture);
             }
         }
         
@@ -637,6 +646,141 @@ namespace Celer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change advanced energy parameters like fast startup and hibernation.
+        /// </summary>
+        public static string PowerManager_AdvancedDescription {
+            get {
+                return ResourceManager.GetString("PowerManager_AdvancedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Settings.
+        /// </summary>
+        public static string PowerManager_AdvancedTitle {
+            get {
+                return ResourceManager.GetString("PowerManager_AdvancedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Battery.
+        /// </summary>
+        public static string PowerManager_BatteriesSelectorLabel {
+            get {
+                return ResourceManager.GetString("PowerManager_BatteriesSelectorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current charged capacity.
+        /// </summary>
+        public static string PowerManager_BatteryChargedCapacityTooltip {
+            get {
+                return ResourceManager.GetString("PowerManager_BatteryChargedCapacityTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original capacity.
+        /// </summary>
+        public static string PowerManager_BatteryFactoryCapacityTooltip {
+            get {
+                return ResourceManager.GetString("PowerManager_BatteryFactoryCapacityTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full charged capacity.
+        /// </summary>
+        public static string PowerManager_BatteryFullChargedCapacityTooltip {
+            get {
+                return ResourceManager.GetString("PowerManager_BatteryFullChargedCapacityTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Battery health.
+        /// </summary>
+        public static string PowerManager_BatteryHealthTooltip {
+            get {
+                return ResourceManager.GetString("PowerManager_BatteryHealthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skips some hardware checks to speedup the startup process. If you have hardware conflits or you&apos;re on a dual boot system, it&apos;s recommended to disable this feature..
+        /// </summary>
+        public static string PowerManager_FastStartupDescription {
+            get {
+                return ResourceManager.GetString("PowerManager_FastStartupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Fast Startup.
+        /// </summary>
+        public static string PowerManager_FastStartupTitle {
+            get {
+                return ResourceManager.GetString("PowerManager_FastStartupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves the current state of the system into disk when the PC shuts down and resumes when logged back in. It can cause issues when dual booting with Linux..
+        /// </summary>
+        public static string PowerManager_HibernationDescription {
+            get {
+                return ResourceManager.GetString("PowerManager_HibernationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Hibernation.
+        /// </summary>
+        public static string PowerManager_HibernationTitle {
+            get {
+                return ResourceManager.GetString("PowerManager_HibernationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optimize the system based on it&apos;s current workflow to balance performance and energy consumption.
+        /// </summary>
+        public static string PowerManager_PowerModeDescription {
+            get {
+                return ResourceManager.GetString("PowerManager_PowerModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Modes.
+        /// </summary>
+        public static string PowerManager_PowerModeTitle {
+            get {
+                return ResourceManager.GetString("PowerManager_PowerModeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the active power plan provided by powercfg.
+        /// </summary>
+        public static string PowerManager_PowerPlanDescription {
+            get {
+                return ResourceManager.GetString("PowerManager_PowerPlanDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Plans.
+        /// </summary>
+        public static string PowerManager_PowerPlanTitle {
+            get {
+                return ResourceManager.GetString("PowerManager_PowerPlanTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Privacy Policy.
         /// </summary>
         public static string PrivacyPolicy {
@@ -664,7 +808,7 @@ namespace Celer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cleaning....
+        ///   Looks up a localized string similar to Cleaning….
         /// </summary>
         public static string RecycleBinCleaning {
             get {
@@ -718,7 +862,7 @@ namespace Celer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting....
+        ///   Looks up a localized string similar to Waiting….
         /// </summary>
         public static string WaitMessage {
             get {
