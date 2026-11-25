@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -58,4 +58,160 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmbientChecker_StartLabel" xml:space="preserve">
+    <value>Überprüfung starten</value>
+  </data>
+  <data name="Menu_AmbientChecker" xml:space="preserve">
+    <value>_Umgebungsprüfer</value>
+  </data>
+  <data name="AmbientChecker" xml:space="preserve">
+    <value>Umgebungsprüfer</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Verfügbar</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Installiert</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Nicht gefunden</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxLabel" xml:space="preserve">
+    <value>Beim Start automatisch Signaturen aktualisieren</value>
+  </data>
+  <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
+    <value>Ich habe die {0} und die {1} gelesen und akzeptiert.</value>
+  </data>
+  <data name="Onboarding_LegalTitle" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="Onboarding_WelcomeIntroduction" xml:space="preserve">
+    <value>Celer ist ein Werkzeugkasten für Windows 10/11, um Ihnen wieder die Kontrolle über Windows zu geben.</value>
+  </data>
+  <data name="Onboarding_WelcomeTitle" xml:space="preserve">
+    <value>Willkommen bei Celer!</value>
+  </data>
+  <data name="Onboarding_WindowTitle" xml:space="preserve">
+    <value>Einrichtung</value>
+  </data>
+  <data name="WaitMessage" xml:space="preserve">
+    <value>Warten…</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
+  </data>
+  <data name="Onboarding_FeaturesTitle" xml:space="preserve">
+    <value>Funktionen</value>
+  </data>
+  <data name="Onboarding_FeaturesSubheading" xml:space="preserve">
+    <value>(kann später in den Einstellungen geändert werden)</value>
+  </data>
+  <data name="Onboarding_AutoDownloadsCheckboxTooltip" xml:space="preserve">
+    <value>Signaturen beim Start von Celer aktualisieren, ohne dass man sie manuell im Werkzeug-Menü aktualisieren muss.</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
+    <value>Automatischer Start mit Windows</value>
+  </data>
+  <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
+    <value>Celer erlauben mit Windows zusammen zu starten. Dies ermöglicht die Nutzung von Celer Quick Center von der Taskleiste.</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Starten</value>
+  </data>
+  <data name="GatewayTask_StartCeler" xml:space="preserve">
+    <value>Celer wird gestartet</value>
+  </data>
+  <data name="GatewayTask_StartHardwareServices" xml:space="preserve">
+    <value>Es werden Hardware-Dienste gestartet</value>
+  </data>
+  <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
+    <value>Es wird nach einer Internet-Verbindung geprüft</value>
+  </data>
+  <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
+    <value>Es werden Reinigungs-Signaturen heruntergeladen</value>
+  </data>
+  <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
+    <value>Signaturen aktualisiert</value>
+  </data>
+  <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
+    <value>Die Signaturen konnten nicht erhalten werden. Es werden stattdessen lokale Signaturen probiert.</value>
+  </data>
+  <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
+    <value>Lokale Signaturen gefunden</value>
+  </data>
+  <data name="GatewayTask_DisableCleaning" xml:space="preserve">
+    <value>Keine Signaturen gefunden, Reinigung wurde deaktiviert.</value>
+  </data>
+  <data name="GatewayTask_FailDxDiag" xml:space="preserve">
+    <value>dxDiag konnte nicht ausgeführt werden</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menü</value>
+  </data>
+  <data name="MainWindow_GoBackTooltip" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="MainWindow_MenuTooltip" xml:space="preserve">
+    <value>App-Menü öffnen</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>_Einstellungen</value>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_Ansicht</value>
+  </data>
+  <data name="Menu_View_Dashboard" xml:space="preserve">
+    <value>_Dashboard</value>
+  </data>
+  <data name="Menu_View_Cleaning" xml:space="preserve">
+    <value>_Reinigung</value>
+  </data>
+  <data name="Menu_View_Optimization" xml:space="preserve">
+    <value>_Optimierung</value>
+  </data>
+  <data name="Menu_View_Maintenance" xml:space="preserve">
+    <value>_Wartung</value>
+  </data>
+  <data name="Menu_View_Opsec" xml:space="preserve">
+    <value>_Privatsphäre &amp; Sicherheit</value>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>_Werkzeuge</value>
+  </data>
+  <data name="Menu_View_Software" xml:space="preserve">
+    <value>_Anwendungen</value>
+  </data>
+  <data name="RecycleBinReady" xml:space="preserve">
+    <value>Papierkorb leeren</value>
+  </data>
+  <data name="RecycleBinDone" xml:space="preserve">
+    <value>Gereinigt</value>
+  </data>
+  <data name="RecycleBinCleaning" xml:space="preserve">
+    <value>Reinigung…</value>
+  </data>
+  <data name="RecycleBinEmpty" xml:space="preserve">
+    <value>Papierkorb leer</value>
+  </data>
+  <data name="Battery_PluggedIn" xml:space="preserve">
+    <value>Eingesteckt</value>
+  </data>
+  <data name="Battery_Unplugged" xml:space="preserve">
+    <value>Akkubetrieb</value>
+  </data>
+  <data name="QuickCenter_Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="CloseCeler" xml:space="preserve">
+    <value>Celer schließen</value>
+  </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Willkommen bei Celer</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Systemstatus</value>
+  </data>
 </root>
