@@ -86,7 +86,7 @@
     <value>Beim Start automatisch Signaturen aktualisieren</value>
   </data>
   <data name="Onboarding_LegalCheckboxLabel" xml:space="preserve">
-    <value>Ich habe die {0} und die {1} gelesen und akzeptiert.</value>
+    <value>Ich habe die {0} und die {1} gelesen und akzeptiere sie.</value>
   </data>
   <data name="Onboarding_LegalTitle" xml:space="preserve">
     <value>Nutzungsbedingungen</value>
@@ -101,7 +101,7 @@
     <value>Einrichtung</value>
   </data>
   <data name="WaitMessage" xml:space="preserve">
-    <value>Warten…</value>
+    <value>Wartet…</value>
   </data>
   <data name="TermsOfUse" xml:space="preserve">
     <value>Nutzungsbedingungen</value>
@@ -119,7 +119,7 @@
     <value>Signaturen beim Start von Celer aktualisieren, ohne dass man sie manuell im Werkzeug-Menü aktualisieren muss.</value>
   </data>
   <data name="Onboarding_AutoStartupCheckboxLabel" xml:space="preserve">
-    <value>Automatischer Start mit Windows</value>
+    <value>Mit Windows starten</value>
   </data>
   <data name="Onboarding_AutoStartupCheckboxTooltip" xml:space="preserve">
     <value>Celer erlauben mit Windows zusammen zu starten. Dies ermöglicht die Nutzung von Celer Quick Center von der Taskleiste.</value>
@@ -134,22 +134,22 @@
     <value>Hardware-Dienste werden gestartet</value>
   </data>
   <data name="GatewayTask_CheckInternetConnection" xml:space="preserve">
-    <value>Internet-Verbindung wird geprüft</value>
+    <value>Internetverbindung wird geprüft</value>
   </data>
   <data name="GatewayTask_DownloadCleaningSignatures" xml:space="preserve">
-    <value>Reinigungs-Signaturen werden heruntergeladen</value>
+    <value>Bereinigungssignaturen werden heruntergeladen</value>
   </data>
   <data name="GatewayTask_CleaningSignaturesUpdated" xml:space="preserve">
     <value>Signaturen aktualisiert</value>
   </data>
   <data name="GatewayTask_CheckLocalSignatures" xml:space="preserve">
-    <value>Die Signaturen konnten nicht erhalten werden. Es werden stattdessen lokale Signaturen probiert.</value>
+    <value>Signaturen konnten nicht abgerufen werden. Es wird versucht, lokale Signaturen zu verwenden.</value>
   </data>
   <data name="GatewayTask_FoundLocalSignatures" xml:space="preserve">
     <value>Lokale Signaturen gefunden</value>
   </data>
   <data name="GatewayTask_DisableCleaning" xml:space="preserve">
-    <value>Keine Signaturen gefunden, Reinigung wurde deaktiviert.</value>
+    <value>Keine Signaturen gefunden. Bereinigung wurde deaktiviert.</value>
   </data>
   <data name="GatewayTask_FailDxDiag" xml:space="preserve">
     <value>dxDiag konnte nicht ausgeführt werden</value>
@@ -173,7 +173,7 @@
     <value>_Dashboard</value>
   </data>
   <data name="Menu_View_Cleaning" xml:space="preserve">
-    <value>_Reinigung</value>
+    <value>_Bereinigung</value>
   </data>
   <data name="Menu_View_Optimization" xml:space="preserve">
     <value>_Optimierung</value>
@@ -194,16 +194,16 @@
     <value>Papierkorb leeren</value>
   </data>
   <data name="RecycleBinDone" xml:space="preserve">
-    <value>Gereinigt</value>
+    <value>Geleert</value>
   </data>
   <data name="RecycleBinCleaning" xml:space="preserve">
-    <value>Reinigung…</value>
+    <value>Wird geleert…</value>
   </data>
   <data name="RecycleBinEmpty" xml:space="preserve">
     <value>Papierkorb leer</value>
   </data>
   <data name="Battery_PluggedIn" xml:space="preserve">
-    <value>Eingesteckt</value>
+    <value>Netzbetrieb</value>
   </data>
   <data name="Battery_Unplugged" xml:space="preserve">
     <value>Akkubetrieb</value>
@@ -221,7 +221,7 @@
     <value>Systemstatus</value>
   </data>
   <data name="Dashboard_PostTooltip" xml:space="preserve">
-    <value>Wie lange das System zum aufstarten braucht. Ein Wert von über 70 Sekunden könnte auf ein:en Hardwareproblem/-konflikt hindeuten.</value>
+    <value>Wie lange der Selbsttest beim Einschalten (POST) dauert. Ein Wert über 70 Sekunden kann auf ein Hardwareproblem oder einen Hardwarekonflikt hindeuten.</value>
   </data>
   <data name="Dashboard_Processes" xml:space="preserve">
     <value>Prozesse</value>
@@ -254,19 +254,19 @@
     <value>Systeminformationen werden abgerufen…</value>
   </data>
   <data name="Cleaning_Title" xml:space="preserve">
-    <value>Reinigung</value>
+    <value>Bereinigung</value>
   </data>
   <data name="Cleaning_Description" xml:space="preserve">
-    <value>Temporärdateien, Cache von Drittanbieter-Anwendungen und weitere unnötige Dateien löschen.</value>
+    <value>Temporäre Dateien, Cache von Drittanbieter-Anwendungen und weitere unnötige Dateien löschen.</value>
   </data>
   <data name="Cleaning_PrimaryButton" xml:space="preserve">
-    <value>Reinigung starten</value>
+    <value>Bereinigung starten</value>
   </data>
   <data name="Dashboard_CPU" xml:space="preserve">
     <value>CPU</value>
   </data>
   <data name="Dashboard_GPU" xml:space="preserve">
-    <value>Grafikprozessor</value>
+    <value>GPU</value>
   </data>
   <data name="Dashboard_GPUDriver" xml:space="preserve">
     <value>Treiber</value>
